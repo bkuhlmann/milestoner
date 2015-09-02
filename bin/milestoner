@@ -1,0 +1,8 @@
+#!/usr/bin/ruby
+
+require "milestoner"
+require "milestoner/cli"
+require "milestoner/identity"
+
+Process.setproctitle Milestoner::Identity.label_version
+Milestoner::CLI.start

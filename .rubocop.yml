@@ -1,0 +1,12 @@
+Style/CaseIndentation:
+  IndentOneStep: true
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses
+Style/SingleLineBlockParams:
+  Enabled: false
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Metrics/LineLength:
+  Max: 120
