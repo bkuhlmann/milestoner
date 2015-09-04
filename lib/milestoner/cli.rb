@@ -11,7 +11,6 @@ module Milestoner
 
     package_name Milestoner::Identity.label
 
-    # Initialize.
     def initialize args = [], options = {}, config = {}
       super args, options, config
     end

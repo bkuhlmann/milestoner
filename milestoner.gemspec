@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://www.alchemists.io"
-  spec.summary = "TODO: Add gem summary here."
-  spec.description = "TODO: Add gem description here."
+  spec.summary = "A tool for automating and releasing Git repository milestones."
+  spec.description = "A tool for automating and releasing Git repository milestones."
   spec.license = "MIT"
 
   if ENV["RUBY_GEM_SECURITY"] == "enabled"
@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop"
   spec.add_development_dependency "codeclimate-test-reporter"
 
-  spec.files = Dir["lib/**/*", "vendor/**/*"]
+  spec.files = Dir["lib/**/*"]
   spec.extra_rdoc_files = Dir["README*", "LICENSE*"]
   spec.executables << "milestoner"
   spec.require_paths = ["lib"]
