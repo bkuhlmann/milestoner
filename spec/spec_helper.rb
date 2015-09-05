@@ -12,6 +12,7 @@ require "pry-state"
 require "pry-stack_explorer"
 require "pry-remote"
 require "pry-rescue"
+require "climate_control"
 
 Dir[File.join(File.dirname(__FILE__), "support/kit/**/*.rb")].each { |file| require file }
 
