@@ -11,8 +11,12 @@ module Milestoner
       /\A(#{commit_prefixes.join "|"})/
     end
 
+    def self.version_regex
+      /\A\d{1}\.\d{1}\.\d{1}\z/
+    end
+
     def initialize version
-      @version = version
+      @version = validate_version version
     end
 
     def version_label
@@ -49,6 +53,12 @@ module Milestoner
     end
 
     private
+
+    def validate_version version
+      message = "Invalid version: #{version}. Use: <major>.<minor>.<maintenance>."
+      raise(VersionError, message) unless version.match(self.class.version_regex)
+      version
+    end
 
     def index_for_prefix message
       self.class.commit_prefixes.index message[self.class.commit_prefix_regex]

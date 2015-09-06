@@ -30,9 +30,29 @@ describe Milestoner::Release, :temp_dir do
     end
   end
 
+  describe ".version_regex" do
+    it "answers regex for valid version formats" do
+      expect(described_class.version_regex).to eq(/\A\d{1}\.\d{1}\.\d{1}\z/)
+    end
+  end
+
   describe "#initialize" do
     it "answers initialized version" do
       expect(subject.version).to eq("0.1.0")
+    end
+
+    it "raises version error when version is invalid" do
+      message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
+      result = -> { described_class.new "bogus" }
+
+      expect(&result).to raise_error(Milestoner::VersionError, message)
+    end
+
+    it "raises version error when version valid but contains extra characters" do
+      message = "Invalid version: what-v0.1.0-bogus. Use: <major>.<minor>.<maintenance>."
+      result = -> { described_class.new "what-v0.1.0-bogus" }
+
+      expect(&result).to raise_error(Milestoner::VersionError, message)
     end
   end
 

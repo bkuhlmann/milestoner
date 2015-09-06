@@ -22,6 +22,8 @@ module Milestoner
       release = Milestoner::Release.new version
       release.tag sign: options[:sign]
       say "Repository tagged: #{release.version_label}."
+    rescue Milestoner::VersionError => version_error
+      error version_error.message
     end
 
     desc "-v, [--version]", "Show version."
