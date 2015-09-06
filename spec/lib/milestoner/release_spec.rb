@@ -3,6 +3,8 @@ require "spec_helper"
 describe Milestoner::Release, :temp_dir do
   let(:repo_dir) { File.join temp_dir, "tester" }
   let(:version) { "0.1.0" }
+  let(:git_name) { "Testy Tester" }
+  let(:git_email) { "tester@example.com" }
   let(:tag_details) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first }
   subject { described_class.new version }
 
@@ -13,6 +15,8 @@ describe Milestoner::Release, :temp_dir do
       FileUtils.touch "two.txt"
       FileUtils.touch "three.txt"
       `git init`
+      `git config --local user.name "#{git_name}"`
+      `git config --local user.email "#{git_email}"`
       `git add --all .`
       `git commit --all --message "Added dummy files."`
     end
@@ -197,7 +201,8 @@ describe Milestoner::Release, :temp_dir do
 
     context "when signed" do
       let(:gpg_dir) { File.join temp_dir, ".gnupg" }
-      let(:gpg_email) { "tester@example.com" }
+      let(:git_email) { "tester@example.com" }
+      let(:gpg_key) { `gpg --list-keys #{git_email} | grep pub | awk '{print $2}' | cut -d'/' -f 2`.chomp }
       let(:gpg_passphrase) { "testonly" }
       before do
         FileUtils.mkdir gpg_dir
@@ -221,10 +226,10 @@ describe Milestoner::Release, :temp_dir do
             gpg << "y\n"
 
             gpg.wait_for :output, /Real name/i
-            gpg << "Testy Tester\n"
+            gpg << "#{git_name}\n"
 
             gpg.wait_for :output, /Email address/i
-            gpg << "#{gpg_email}\n"
+            gpg << "#{git_email}\n"
 
             gpg.wait_for :output, /Comment/i
             gpg << "Test\n"
@@ -243,8 +248,7 @@ describe Milestoner::Release, :temp_dir do
 
             File.open(File.join(gpg_dir, "gpg.conf"), "a") { |file| file.write "passphrase #{gpg_passphrase}\n" }
 
-            key = `gpg --list-keys #{gpg_email} | grep pub | awk '{print $2}' | cut -d'/' -f 2`.chomp
-            `git config --local user.signingkey #{key}`
+            `git config --local user.signingkey #{gpg_key}`
           end
         end
       end
