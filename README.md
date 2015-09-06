@@ -28,8 +28,16 @@ A tool for automating and releasing Git repository milestones.
 
 # Features
 
+- Provides [Semantic Versioning](http://semver.org) for Git repositories in the form of `v<major>.<minor>.</maintenance>` tags.
+  Example: `v0.1.0`.
+- Provides optional support for signing tags using GPG signing key.
+- Automatically includes commits since last tag (or HEAD if no tags exist) within each tag message.
+
 # Requirements
 
+0. A UNIX-based system.
+0. [MRI 2.x.x](http://www.ruby-lang.org).
+0. [GnuPG](https://www.gnupg.org).
 
 # Setup
 
@@ -45,8 +53,17 @@ For an insecure install, type the following (not recommended):
 
     gem install milestoner
 
-
 # Usage
+
+From the command line, type: milestoner help
+
+    milestoner -h, [--help=HELP]  # Show this message or get help for a command.
+    milestoner -t, [--tag=TAG]    # Tag repository with new version.
+    milestoner -v, [--version]    # Show version.
+
+For more gem creation options, type: milestoner help tag
+
+    -s, [--sign], [--no-sign]  # Sign tag with GPG key.
 
 # Tests
 
