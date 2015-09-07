@@ -42,9 +42,10 @@ module Milestoner
       pusher = Milestoner::Pusher.new
 
       if tagger.create(sign: options[:sign]) && pusher.push
-        say "Repository tagged: #{tagger.version_label}."
-        say "Repository tags pushed."
+        say "Repository tagged and pushed: #{tagger.version_label}."
         say "Milestone published!"
+      else
+        tagger.destroy
       end
     rescue Milestoner::VersionError => version_error
       error version_error.message

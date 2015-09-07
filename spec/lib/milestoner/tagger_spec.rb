@@ -263,4 +263,14 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
   end
+
+  describe "#destroy" do
+    it "destroys existing tag" do
+      Dir.chdir(repo_dir) do
+        subject.create
+        subject.destroy
+        expect(`git tag`).to eq("")
+      end
+    end
+  end
 end

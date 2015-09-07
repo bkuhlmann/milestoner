@@ -42,6 +42,10 @@ module Milestoner
       `git tag #{tag_options sign: sign}`
     end
 
+    def destroy
+      `git tag --delete #{version_label}`
+    end
+
     private
 
     def validate_version version
