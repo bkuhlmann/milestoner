@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Milestoner::Release, :temp_dir do
+describe Milestoner::Tagger, :temp_dir do
   let(:repo_dir) { File.join temp_dir, "tester" }
   let(:version) { "0.1.0" }
   let(:git_name) { "Testy Tester" }
@@ -152,22 +152,22 @@ describe Milestoner::Release, :temp_dir do
     end
   end
 
-  describe "#tag" do
-    it "tags repository" do
+  describe "#create" do
+    it "creates new tag for repository" do
       Dir.chdir(repo_dir) do
-        subject.tag
+        subject.create
         expect(tag_details).to match(/tag\sv0\.1\.0/)
       end
     end
 
     it "uses tag message" do
       Dir.chdir(repo_dir) do
-        subject.tag
+        subject.create
         expect(tag_details).to match(/Version\s0\.1\.0\./)
       end
     end
 
-    it "uses tag message with commits since last tag" do
+    it "uses tag message and includes commits since last tag" do
       Dir.chdir(repo_dir) do
         `git rm one.txt`
         `git commit --all --message "Removed one."`
@@ -178,7 +178,7 @@ describe Milestoner::Release, :temp_dir do
         `printf "Three." > three.txt`
         `git commit --all --message "Fixed three."`
 
-        subject.tag
+        subject.create
 
         expect(tag_details).to match(/
           Version\s0\.1\.0\.\n\n
@@ -193,7 +193,7 @@ describe Milestoner::Release, :temp_dir do
     context "when not signed" do
       it "does not sign tag" do
         Dir.chdir(repo_dir) do
-          subject.tag
+          subject.create
           expect(tag_details).to_not match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
         end
       end
@@ -256,7 +256,7 @@ describe Milestoner::Release, :temp_dir do
       it "signs tag" do
         ClimateControl.modify GNUPGHOME: gpg_dir do
           Dir.chdir(repo_dir) do
-            subject.tag sign: true
+            subject.create sign: true
             expect(tag_details).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
           end
         end

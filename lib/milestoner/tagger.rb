@@ -1,6 +1,6 @@
 module Milestoner
-  # Handles the release of new project milestones.
-  class Release
+  # Handles the tagging of a project repository.
+  class Tagger
     attr_reader :version
 
     def self.commit_prefixes
@@ -38,7 +38,7 @@ module Milestoner
       groups.values.flatten
     end
 
-    def tag sign: false
+    def create sign: false
       `git tag #{tag_options sign: sign}`
     end
 

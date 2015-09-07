@@ -15,13 +15,13 @@ module Milestoner
       super args, options, config
     end
 
-    desc "-t, [--tag=TAG]", "Tag repository with new version."
+    desc "-t, [--tag=TAG]", "Tag local repository with new version."
     map %w(-t --tag) => :tag
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def tag version
-      release = Milestoner::Release.new version
-      release.tag sign: options[:sign]
-      say "Repository tagged: #{release.version_label}."
+      tagger = Milestoner::Tagger.new version
+      tagger.create sign: options[:sign]
+      say "Repository tagged: #{tagger.version_label}."
     rescue Milestoner::VersionError => version_error
       error version_error.message
     end
@@ -38,11 +38,11 @@ module Milestoner
     map %w(-P --publish) => :publish
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def publish version
-      release = Milestoner::Release.new version
+      tagger = Milestoner::Tagger.new version
       pusher = Milestoner::Pusher.new
 
-      if release.tag(sign: options[:sign]) && pusher.push
-        say "Repository tagged: #{release.version_label}."
+      if tagger.create(sign: options[:sign]) && pusher.push
+        say "Repository tagged: #{tagger.version_label}."
         say "Repository tags pushed."
         say "Milestone published!"
       end
