@@ -32,6 +32,10 @@ module Milestoner
       !(response.nil? || response.empty?)
     end
 
+    def duplicate?
+      system "git rev-parse #{version_label} > /dev/null 2>&1"
+    end
+
     def commits
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
@@ -39,6 +43,7 @@ module Milestoner
     end
 
     def create sign: false
+      fail(DuplicateTagError, "Duplicate tag exists: #{version_label}.") if duplicate?
       `git tag #{tag_options sign: sign}`
     end
 

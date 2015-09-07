@@ -24,6 +24,8 @@ module Milestoner
       say "Repository tagged: #{tagger.version_label}."
     rescue Milestoner::VersionError => version_error
       error version_error.message
+    rescue Milestoner::DuplicateTagError => tag_error
+      error tag_error.message
     end
 
     desc "-p, [--push]", "Push tags to remote repository."
@@ -40,15 +42,11 @@ module Milestoner
     def publish version
       tagger = Milestoner::Tagger.new version
       pusher = Milestoner::Pusher.new
-
-      if tagger.create(sign: options[:sign]) && pusher.push
-        say "Repository tagged and pushed: #{tagger.version_label}."
-        say "Milestone published!"
-      else
-        tagger.destroy
-      end
+      tag_and_push tagger, pusher, options
     rescue Milestoner::VersionError => version_error
       error version_error.message
+    rescue Milestoner::DuplicateTagError => tag_error
+      error tag_error.message
     end
 
     desc "-v, [--version]", "Show version."
@@ -61,6 +59,17 @@ module Milestoner
     map %w(-h --help) => :help
     def help task = nil
       say && super
+    end
+
+    private
+
+    def tag_and_push tagger, pusher, options
+      if tagger.create(sign: options[:sign]) && pusher.push
+        say "Repository tagged and pushed: #{tagger.version_label}."
+        say "Milestone published!"
+      else
+        tagger.destroy
+      end
     end
   end
 end

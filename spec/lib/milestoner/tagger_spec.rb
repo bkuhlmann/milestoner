@@ -45,14 +45,14 @@ describe Milestoner::Tagger, :temp_dir do
       expect(subject.version).to eq("0.1.0")
     end
 
-    it "raises version error when version is invalid" do
+    it "fails with version error when version is invalid" do
       message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
       result = -> { described_class.new "bogus" }
 
       expect(&result).to raise_error(Milestoner::VersionError, message)
     end
 
-    it "raises version error when version valid but contains extra characters" do
+    it "fails with version error when version is valid but contains extra characters" do
       message = "Invalid version: what-v0.1.0-bogus. Use: <major>.<minor>.<maintenance>."
       result = -> { described_class.new "what-v0.1.0-bogus" }
 
@@ -83,6 +83,21 @@ describe Milestoner::Tagger, :temp_dir do
     it "answers false when tags don't exist" do
       Dir.chdir(repo_dir) do
         expect(subject.tagged?).to eq(false)
+      end
+    end
+  end
+
+  describe "#duplicate?" do
+    it "answers true when tag is identical" do
+      Dir.chdir(repo_dir) do
+        subject.create
+        expect(subject.duplicate?).to eq(true)
+      end
+    end
+
+    it "answers false when tag doesn't exist" do
+      Dir.chdir(repo_dir) do
+        expect(subject.duplicate?).to eq(false)
       end
     end
   end
@@ -259,6 +274,17 @@ describe Milestoner::Tagger, :temp_dir do
             subject.create sign: true
             expect(tag_details).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
           end
+        end
+      end
+    end
+
+    context "when duplicate tag exists" do
+      it "fails with duplicate tag error" do
+        Dir.chdir(repo_dir) do
+          subject.create
+          result = -> { subject.create }
+
+          expect(&result).to raise_error(Milestoner::DuplicateTagError, "Duplicate tag exists: v0.1.0.")
         end
       end
     end
