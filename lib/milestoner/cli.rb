@@ -26,6 +26,14 @@ module Milestoner
       error version_error.message
     end
 
+    desc "-p, [--push]", "Push tags to remote repository."
+    map %w(-p --push) => :push
+    def push
+      pusher = Milestoner::Pusher.new
+      pusher.push
+      info "Tags pushed to remote repository."
+    end
+
     desc "-v, [--version]", "Show version."
     map %w(-v --version) => :version
     def version
