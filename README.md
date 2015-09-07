@@ -57,13 +57,23 @@ For an insecure install, type the following (not recommended):
 
 From the command line, type: milestoner help
 
-    milestoner -h, [--help=HELP]  # Show this message or get help for a command.
-    milestoner -t, [--tag=TAG]    # Tag repository with new version.
-    milestoner -v, [--version]    # Show version.
+    milestoner -P, [--publish=PUBLISH]  # Tag and push to remote repository.
+    milestoner -h, [--help=HELP]        # Show this message or get help for a command.
+    milestoner -p, [--push]             # Push tags to remote repository.
+    milestoner -t, [--tag=TAG]          # Tag local repository with new version.
+    milestoner -v, [--version]          # Show version.
 
-For more gem creation options, type: milestoner help tag
+For tag options, type: milestoner help tag
 
     -s, [--sign], [--no-sign]  # Sign tag with GPG key.
+
+For publish options, type: milestoner help publish
+
+    -s, [--sign], [--no-sign]  # Sign tag with GPG key.
+
+When using Milestoner, the `--publish` command is intended to be the only command necessary for publishing a new
+release as it handles all of the steps necessary for tagging and pushing a new release. Should individual steps
+be needed, then the `--tag` and `--push` options are available.
 
 # Tests
 
