@@ -40,12 +40,9 @@ module Milestoner
     end
 
     def commits_sorted
-      prefix_regex = self.class.commit_prefix_regex
-
-      commits.split("\n").sort do |a, b|
-        next 1 unless a.match(prefix_regex) && b.match(prefix_regex)
-        sort_by_prefix a, b
-      end
+      groups = build_commit_prefix_groups
+      group_by_commit_prefix! groups
+      groups.values.flatten
     end
 
     def tag sign: false
@@ -60,20 +57,18 @@ module Milestoner
       version
     end
 
-    def index_for_prefix message
-      self.class.commit_prefixes.index message[self.class.commit_prefix_regex]
+    def build_commit_prefix_groups
+      groups = self.class.commit_prefixes.map.with_object({}) do |prefix, group|
+        group.merge! prefix => []
+      end
+      groups.merge! "Other" => []
     end
 
-    def sort_by_prefix a, b
-      a_index = index_for_prefix a
-      b_index = index_for_prefix b
-
-      case
-        when a_index > b_index then 1
-        when a_index == b_index then 0
-        when a_index < b_index then -1
-        else
-          a <=> b
+    def group_by_commit_prefix! groups = {}
+      commits.split("\n").each do |commit|
+        prefix = commit[self.class.commit_prefix_regex]
+        key = groups.key?(prefix) ? prefix : "Other"
+        groups[key] << commit
       end
     end
 

@@ -132,22 +132,21 @@ describe Milestoner::Release, :temp_dir do
     before { allow(subject).to receive(:commits).and_return(unsorted_commits) }
 
     it "answers sorted commits" do
-      skip "Needs Travis CI investigation."
       expect(subject.commits_sorted).to eq([
-        "Fixed issues with current directory not being cleaned after build.",
         "Fixed README typos.",
-        "Added spec helper methods.",
+        "Fixed issues with current directory not being cleaned after build.",
         "Added upgrade notes to README.",
+        "Added spec helper methods.",
+        "Updated gem dependencies.",
         "Updated version release notes.",
         "Updated and restored original deploy functionality.",
-        "Updated gem dependencies.",
         "Removed unused stylesheets.",
         "Removed unnecessary spacing.",
-        "Refactored common functionality to module.",
         "Refactored strings to use double quotes instead of single quotes.",
+        "Refactored common functionality to module.",
         "Refactored authorization to base controller.",
-        "Another bogus commit message.",
         "Bogus commit message.",
+        "Another bogus commit message.",
         "This is not a good commit message."
       ])
     end
