@@ -33,13 +33,6 @@ module Milestoner
     end
 
     def commits
-      command = "git log --oneline --reverse --no-merges --format='%s'"
-
-      return `#{command}` unless tagged?
-      `#{command} $(git describe --abbrev=0 --tags --always)..HEAD`
-    end
-
-    def commits_sorted
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
       groups.values.flatten
@@ -57,6 +50,14 @@ module Milestoner
       version
     end
 
+    def raw_commits
+      tag_command = "$(git describe --abbrev=0 --tags --always)..HEAD"
+      full_command = "git log --oneline --reverse --no-merges --format='%s' #{tag_command}"
+      full_command.gsub!(tag_command, "") unless tagged?
+
+      `#{full_command}`.split("\n")
+    end
+
     def build_commit_prefix_groups
       groups = self.class.commit_prefixes.map.with_object({}) do |prefix, group|
         group.merge! prefix => []
@@ -65,7 +66,7 @@ module Milestoner
     end
 
     def group_by_commit_prefix! groups = {}
-      commits.split("\n").each do |commit|
+      raw_commits.each do |commit|
         prefix = commit[self.class.commit_prefix_regex]
         key = groups.key?(prefix) ? prefix : "Other"
         groups[key] << commit
@@ -73,7 +74,7 @@ module Milestoner
     end
 
     def tag_message
-      commit_list = commits_sorted.map { |commit| "- #{commit}\n" }
+      commit_list = commits.map { |commit| "- #{commit}\n" }
       %(#{version_message}\n\n#{commit_list.join})
     end
 

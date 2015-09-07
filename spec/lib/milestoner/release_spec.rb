@@ -95,7 +95,7 @@ describe Milestoner::Release, :temp_dir do
           `git rm one.txt`
           `git commit --all --message "Removed one.txt."`
 
-          expect(subject.commits).to eq("Removed one.txt.\n")
+          expect(subject.commits).to contain_exactly("Removed one.txt.")
         end
       end
     end
@@ -103,52 +103,52 @@ describe Milestoner::Release, :temp_dir do
     context "when not tagged" do
       it "answers all known commits" do
         Dir.chdir(repo_dir) do
-          expect(subject.commits).to eq("Added dummy files.\n")
+          expect(subject.commits).to contain_exactly("Added dummy files.")
         end
       end
     end
-  end
 
-  describe "#commits_sorted" do
-    let :unsorted_commits do
-      [
-        "Refactored strings to use double quotes instead of single quotes.",
-        "Updated gem dependencies.",
-        "Fixed README typos.",
-        "Updated version release notes.",
-        "Removed unused stylesheets.",
-        "Bogus commit message.",
-        "Another bogus commit message.",
-        "Added upgrade notes to README.",
-        "Refactored common functionality to module.",
-        "Removed unnecessary spacing.",
-        "Added spec helper methods.",
-        "This is not a good commit message.",
-        "Refactored authorization to base controller.",
-        "Updated and restored original deploy functionality.",
-        "Fixed issues with current directory not being cleaned after build."
-      ].join("\n")
-    end
-    before { allow(subject).to receive(:commits).and_return(unsorted_commits) }
+    context "when grouped/sorted" do
+      let :raw_commits do
+        [
+          "Refactored strings to use double quotes instead of single quotes.",
+          "Updated gem dependencies.",
+          "Fixed README typos.",
+          "Updated version release notes.",
+          "Removed unused stylesheets.",
+          "Bogus commit message.",
+          "Another bogus commit message.",
+          "Added upgrade notes to README.",
+          "Refactored common functionality to module.",
+          "Removed unnecessary spacing.",
+          "Added spec helper methods.",
+          "This is not a good commit message.",
+          "Refactored authorization to base controller.",
+          "Updated and restored original deploy functionality.",
+          "Fixed issues with current directory not being cleaned after build."
+        ]
+      end
+      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
-    it "answers sorted commits" do
-      expect(subject.commits_sorted).to eq([
-        "Fixed README typos.",
-        "Fixed issues with current directory not being cleaned after build.",
-        "Added upgrade notes to README.",
-        "Added spec helper methods.",
-        "Updated gem dependencies.",
-        "Updated version release notes.",
-        "Updated and restored original deploy functionality.",
-        "Removed unused stylesheets.",
-        "Removed unnecessary spacing.",
-        "Refactored strings to use double quotes instead of single quotes.",
-        "Refactored common functionality to module.",
-        "Refactored authorization to base controller.",
-        "Bogus commit message.",
-        "Another bogus commit message.",
-        "This is not a good commit message."
-      ])
+      it "answers sorted commits" do
+        expect(subject.commits).to eq([
+          "Fixed README typos.",
+          "Fixed issues with current directory not being cleaned after build.",
+          "Added upgrade notes to README.",
+          "Added spec helper methods.",
+          "Updated gem dependencies.",
+          "Updated version release notes.",
+          "Updated and restored original deploy functionality.",
+          "Removed unused stylesheets.",
+          "Removed unnecessary spacing.",
+          "Refactored strings to use double quotes instead of single quotes.",
+          "Refactored common functionality to module.",
+          "Refactored authorization to base controller.",
+          "Bogus commit message.",
+          "Another bogus commit message.",
+          "This is not a good commit message."
+        ])
+      end
     end
   end
 
