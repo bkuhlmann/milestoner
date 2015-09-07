@@ -56,7 +56,7 @@ module Milestoner
 
     def validate_version version
       message = "Invalid version: #{version}. Use: <major>.<minor>.<maintenance>."
-      raise(VersionError, message) unless version.match(self.class.version_regex)
+      fail(VersionError, message) unless version.match(self.class.version_regex)
       version
     end
 
