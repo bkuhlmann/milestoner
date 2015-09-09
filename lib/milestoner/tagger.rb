@@ -42,6 +42,10 @@ module Milestoner
       groups.values.flatten.uniq
     end
 
+    def commit_list
+      commits.map { |commit| "- #{commit}" }
+    end
+
     def create sign: false
       fail(DuplicateTagError, "Duplicate tag exists: #{version_label}.") if duplicate?
       `git tag #{tag_options sign: sign}`
@@ -83,8 +87,7 @@ module Milestoner
     end
 
     def tag_message
-      commit_list = commits.map { |commit| "- #{commit}\n" }
-      %(#{version_message}\n\n#{commit_list.join})
+      %(#{version_message}\n\n#{commit_list.join "\n"})
     end
 
     def tag_options sign: false

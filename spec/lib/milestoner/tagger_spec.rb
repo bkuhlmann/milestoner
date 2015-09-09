@@ -186,6 +186,15 @@ describe Milestoner::Tagger, :temp_dir do
     end
   end
 
+  describe "#commit_list" do
+    let(:raw_commits) { %w(One Two Three) }
+    before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+    it "answers a formatted list of commit messages" do
+      expect(subject.commit_list).to contain_exactly("- One", "- Two", "- Three")
+    end
+  end
+
   describe "#create" do
     it "creates new tag for repository" do
       Dir.chdir(repo_dir) do

@@ -15,6 +15,14 @@ module Milestoner
       super args, options, config
     end
 
+    desc "-c, [--commits]", "Show commits to be included in tag message for next milestone."
+    map %w(-c --commits) => :commits
+    def commits version
+      tagger = Milestoner::Tagger.new version
+      say "Milestone #{version} Commits:"
+      tagger.commit_list.each { |commit| say commit }
+    end
+
     desc "-t, [--tag=TAG]", "Tag local repository with new version."
     map %w(-t --tag) => :tag
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
