@@ -48,7 +48,15 @@ module Milestoner
 
     def create sign: false
       fail(DuplicateTagError, "Duplicate tag exists: #{version_label}.") if duplicate?
-      `git tag #{tag_options sign: sign}`
+
+      begin
+        message_file = Tempfile.new Milestoner::Identity.name
+        File.open(message_file, "w") { |file| file.write tag_message }
+        `git tag #{tag_options message_file, sign: sign}`
+      ensure
+        message_file.close
+        message_file.unlink
+      end
     end
 
     def destroy
@@ -92,8 +100,8 @@ module Milestoner
       %(#{version_message}\n\n#{commit_list.join "\n"})
     end
 
-    def tag_options sign: false
-      options = %(--sign --annotate "#{version_label}" --message "#{tag_message}")
+    def tag_options message_file, sign: false
+      options = %(--sign --annotate "#{version_label}" --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
       options
     end

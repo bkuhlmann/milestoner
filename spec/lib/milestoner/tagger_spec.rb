@@ -252,6 +252,21 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
 
+    it "does not execute backticks in commit subject when adding tag message" do
+      Dir.chdir(repo_dir) do
+        `printf "Test" > two.txt`
+        %x(git commit --all --message 'Updated two.txt with \`bogus command\` in message.')
+
+        subject.create
+
+        expect(tag_details).to match(/
+          Version\s0\.1\.0\.\n\n
+          \-\sAdded\sdummy\sfiles\.\n
+          \-\sUpdated\stwo\.txt\swith\s\`bogus\scommand\`\sin\smessage\.\n\n\n
+        /x)
+      end
+    end
+
     context "when not signed" do
       it "does not sign tag" do
         Dir.chdir(repo_dir) do
