@@ -165,6 +165,25 @@ describe Milestoner::Tagger, :temp_dir do
         ])
       end
     end
+
+    context "when duplicate commits exist" do
+      let :raw_commits do
+        [
+          "Added spec helper methods.",
+          "Updated gem dependencies.",
+          "Updated gem dependencies.",
+          "Updated gem dependencies."
+        ]
+      end
+      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      it "answers commits with duplicates removed" do
+        expect(subject.commits).to eq([
+          "Added spec helper methods.",
+          "Updated gem dependencies."
+        ])
+      end
+    end
   end
 
   describe "#create" do

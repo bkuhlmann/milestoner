@@ -39,7 +39,7 @@ module Milestoner
     def commits
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
-      groups.values.flatten
+      groups.values.flatten.uniq
     end
 
     def create sign: false
