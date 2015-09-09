@@ -15,7 +15,7 @@ module Milestoner
       super args, options, config
     end
 
-    desc "-c, [--commits]", "Show commits to be included in tag message for next milestone."
+    desc "-c, [--commits]", "Show tag message commits for next milestone."
     map %w(-c --commits) => :commits
     def commits version
       tagger = Milestoner::Tagger.new version

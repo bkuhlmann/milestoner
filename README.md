@@ -28,10 +28,15 @@ A tool for automating and releasing Git repository milestones.
 
 # Features
 
-- Provides [Semantic Versioning](http://semver.org) for Git repositories in the form of `v<major>.<minor>.</maintenance>` tags.
-  Example: `v0.1.0`.
-- Provides optional support for signing tags using GPG signing key.
+- Provides [Semantic Versioning](http://semver.org) for Git repositories in the form of
+  `v<major>.<minor>.</maintenance>` tags. Example: `v0.1.0`.
+- Provides optional security for signing tags using GPG signing key.
 - Automatically includes commits since last tag (or HEAD if no tags exist) within each tag message.
+- Groups commit messages by consistent prefixes in order defined: "Fixed", "Added", "Updated", "Removed", "Refactored".
+  Otherwise, they are alphabetically sorted.
+- Alphabetically sorts commit messages within each prefix group.
+- Ensures duplicate commit messages are removed (if any).
+- Sanitizes commit messages by removing extra spaces and `[ci skip]` text.
 
 # Requirements
 
@@ -58,6 +63,7 @@ For an insecure install, type the following (not recommended):
 From the command line, type: milestoner help
 
     milestoner -P, [--publish=PUBLISH]  # Tag and push to remote repository.
+    milestoner -c, [--commits]          # Show tag message commits for next milestone.
     milestoner -h, [--help=HELP]        # Show this message or get help for a command.
     milestoner -p, [--push]             # Push tags to remote repository.
     milestoner -t, [--tag=TAG]          # Tag local repository with new version.
