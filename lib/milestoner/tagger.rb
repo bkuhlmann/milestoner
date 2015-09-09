@@ -72,17 +72,19 @@ module Milestoner
     end
 
     def build_commit_prefix_groups
-      groups = self.class.commit_prefixes.map.with_object({}) do |prefix, group|
-        group.merge! prefix => []
-      end
+      groups = self.class.commit_prefixes.map.with_object({}) { |prefix, group| group.merge! prefix => [] }
       groups.merge! "Other" => []
+    end
+
+    def sanitize_commit commit
+      commit.gsub(/\[ci\sskip\]/, "").squeeze(" ").strip
     end
 
     def group_by_commit_prefix! groups = {}
       raw_commits.each do |commit|
         prefix = commit[self.class.commit_prefix_regex]
         key = groups.key?(prefix) ? prefix : "Other"
-        groups[key] << commit
+        groups[key] << sanitize_commit(commit)
       end
     end
 

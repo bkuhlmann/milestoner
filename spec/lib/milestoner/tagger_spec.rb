@@ -184,6 +184,25 @@ describe Milestoner::Tagger, :temp_dir do
         ])
       end
     end
+
+    context "when commit messages include [ci skip] strings" do
+      let :raw_commits do
+        [
+          "Fixed failing [ci skip] CI builds.",
+          "Added spec helper methods. [ci skip]",
+          "[ci skip] Updated gem dependencies."
+        ]
+      end
+      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      it "answers commits with duplicates removed" do
+        expect(subject.commits).to eq([
+          "Fixed failing CI builds.",
+          "Added spec helper methods.",
+          "Updated gem dependencies."
+        ])
+      end
+    end
   end
 
   describe "#commit_list" do
