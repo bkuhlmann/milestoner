@@ -123,9 +123,10 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
 
-    context "when grouped/sorted" do
+    context "when using prefixed commits" do
       let :raw_commits do
         [
+          "This is not a good commit message.",
           "Refactored strings to use double quotes instead of single quotes.",
           "Updated gem dependencies.",
           "Fixed README typos.",
@@ -137,7 +138,6 @@ describe Milestoner::Tagger, :temp_dir do
           "Refactored common functionality to module.",
           "Removed unnecessary spacing.",
           "Added spec helper methods.",
-          "This is not a good commit message.",
           "Refactored authorization to base controller.",
           "Updated and restored original deploy functionality.",
           "Fixed issues with current directory not being cleaned after build."
@@ -145,22 +145,22 @@ describe Milestoner::Tagger, :temp_dir do
       end
       before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
-      it "answers sorted commits" do
+      it "answers commits grouped by prefix and alpha-sorted per group" do
         expect(subject.commits).to eq([
           "Fixed README typos.",
           "Fixed issues with current directory not being cleaned after build.",
-          "Added upgrade notes to README.",
           "Added spec helper methods.",
+          "Added upgrade notes to README.",
+          "Updated and restored original deploy functionality.",
           "Updated gem dependencies.",
           "Updated version release notes.",
-          "Updated and restored original deploy functionality.",
-          "Removed unused stylesheets.",
           "Removed unnecessary spacing.",
-          "Refactored strings to use double quotes instead of single quotes.",
-          "Refactored common functionality to module.",
+          "Removed unused stylesheets.",
           "Refactored authorization to base controller.",
-          "Bogus commit message.",
+          "Refactored common functionality to module.",
+          "Refactored strings to use double quotes instead of single quotes.",
           "Another bogus commit message.",
+          "Bogus commit message.",
           "This is not a good commit message."
         ])
       end

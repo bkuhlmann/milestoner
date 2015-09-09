@@ -39,6 +39,7 @@ module Milestoner
     def commits
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
+      sort_by_commit_prefix! groups
       groups.values.flatten.uniq
     end
 
@@ -94,6 +95,10 @@ module Milestoner
         key = groups.key?(prefix) ? prefix : "Other"
         groups[key] << sanitize_commit(commit)
       end
+    end
+
+    def sort_by_commit_prefix! groups = {}
+      groups.each { |_, values| values.sort! }
     end
 
     def tag_message
