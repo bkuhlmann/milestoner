@@ -1,6 +1,8 @@
 module Milestoner
   # Handles the tagging of a project repository.
   class Tagger
+    include Aids::Git
+
     attr_reader :version
 
     def self.commit_prefixes
@@ -16,6 +18,7 @@ module Milestoner
     end
 
     def initialize version
+      fail(GitError) unless git_supported?
       @version = validate_version version
     end
 

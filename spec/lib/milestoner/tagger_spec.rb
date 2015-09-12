@@ -45,6 +45,13 @@ describe Milestoner::Tagger, :temp_dir do
       expect(subject.version).to eq("0.1.0")
     end
 
+    it "fails with Git error when not a Git repository" do
+      Dir.chdir temp_dir do
+        result = -> { described_class.new "0.1.0" }
+        expect(&result).to raise_error(Milestoner::GitError)
+      end
+    end
+
     it "fails with version error when version is invalid" do
       message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
       result = -> { described_class.new "bogus" }
