@@ -1,3 +1,4 @@
+require "milestoner/aids/git"
 require "milestoner/identity"
 require "milestoner/exceptions"
 require "milestoner/pusher"
