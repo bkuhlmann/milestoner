@@ -3,23 +3,16 @@ module Milestoner
   class Tagger
     include Aids::Git
 
-    attr_reader :version
-
-    def self.commit_prefixes
-      %w(Fixed Added Updated Removed Refactored) # Order is important for controlling the sort.
-    end
-
-    def self.commit_prefix_regex
-      /\A(#{commit_prefixes.join "|"})/
-    end
+    attr_reader :version, :commit_prefixes
 
     def self.version_regex
       /\A\d{1}\.\d{1}\.\d{1}\z/
     end
 
-    def initialize version
+    def initialize version, commit_prefixes: []
       fail(Errors::Git) unless git_supported?
       @version = validate_version version
+      @commit_prefixes = commit_prefixes
     end
 
     def version_label
@@ -28,6 +21,11 @@ module Milestoner
 
     def version_message
       "Version #{version}."
+    end
+
+    def commit_prefix_regex
+      return // if commit_prefixes.empty?
+      Regexp.union commit_prefixes
     end
 
     def tagged?
@@ -84,7 +82,7 @@ module Milestoner
     end
 
     def build_commit_prefix_groups
-      groups = self.class.commit_prefixes.map.with_object({}) { |prefix, group| group.merge! prefix => [] }
+      groups = commit_prefixes.map.with_object({}) { |prefix, group| group.merge! prefix => [] }
       groups.merge! "Other" => []
     end
 
@@ -94,7 +92,7 @@ module Milestoner
 
     def group_by_commit_prefix! groups = {}
       raw_commits.each do |commit|
-        prefix = commit[self.class.commit_prefix_regex]
+        prefix = commit[commit_prefix_regex]
         key = groups.key?(prefix) ? prefix : "Other"
         groups[key] << sanitize_commit(commit)
       end

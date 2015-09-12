@@ -3,10 +3,11 @@ require "spec_helper"
 describe Milestoner::Tagger, :temp_dir do
   let(:repo_dir) { File.join temp_dir, "tester" }
   let(:version) { "0.1.0" }
+  let(:prefixes) { %w(Fixed Added Updated Removed Refactored) }
   let(:git_name) { "Testy Tester" }
   let(:git_email) { "tester@example.com" }
   let(:tag_details) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first }
-  subject { described_class.new version }
+  subject { described_class.new version, commit_prefixes: prefixes }
 
   before do
     FileUtils.mkdir repo_dir
@@ -19,18 +20,6 @@ describe Milestoner::Tagger, :temp_dir do
       `git config --local user.email "#{git_email}"`
       `git add --all .`
       `git commit --all --message "Added dummy files."`
-    end
-  end
-
-  describe ".commit_prefixes" do
-    it "answers git commit prefixes in specific order" do
-      expect(described_class.commit_prefixes).to eq(%w(Fixed Added Updated Removed Refactored))
-    end
-  end
-
-  describe ".commit_prefix_regex" do
-    it "answers regex for matching specific git commit prefixes" do
-      expect(described_class.commit_prefix_regex).to eq(/\A(Fixed|Added|Updated|Removed|Refactored)/)
     end
   end
 
@@ -76,6 +65,22 @@ describe Milestoner::Tagger, :temp_dir do
   describe "#version_message" do
     it "answers version message" do
       expect(subject.version_message).to eq("Version 0.1.0.")
+    end
+  end
+
+  describe "#commit_prefix_regex" do
+    context "with prefixes" do
+      it "answers regex for matching specific git commit prefixes" do
+        expect(subject.commit_prefix_regex).to eq(/Fixed|Added|Updated|Removed|Refactored/)
+      end
+    end
+
+    context "without prefixes" do
+      let(:prefixes) { [] }
+
+      it "answers regex for matching specific git commit prefixes" do
+        expect(subject.commit_prefix_regex).to eq(//)
+      end
     end
   end
 
@@ -130,7 +135,7 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
 
-    context "when using prefixed commits" do
+    context "with prefixed commits" do
       let :raw_commits do
         [
           "This is not a good commit message.",
@@ -173,7 +178,27 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
 
-    context "when duplicate commits exist" do
+    context "with prefixed commits using special characters" do
+      let(:prefixes) { ["[one]", "$\#{@", "with spaces"] }
+      let(:raw_commits) { ["Apple", "with spaces yes", "$\#{@ junk", "[one] more"] }
+      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      it "answers commits grouped by prefix and alpha-sorted per group" do
+        expect(subject.commits).to eq(["[one] more", "$\#{@ junk", "with spaces yes", "Apple"])
+      end
+    end
+
+    context "without prefixed commits" do
+      let(:prefixes) { [] }
+      let(:raw_commits) { %w(One Two Three) }
+      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      it "answers alphabetically sorted commits" do
+        expect(subject.commits).to eq(%w(One Three Two))
+      end
+    end
+
+    context "with duplicate commit messages" do
       let :raw_commits do
         [
           "Added spec helper methods.",
@@ -192,7 +217,7 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
 
-    context "when commit messages include [ci skip] strings" do
+    context "with commit messages that include [ci skip] strings" do
       let :raw_commits do
         [
           "Fixed failing [ci skip] CI builds.",
@@ -202,7 +227,7 @@ describe Milestoner::Tagger, :temp_dir do
       end
       before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
-      it "answers commits with duplicates removed" do
+      it "answers commits messages with [ci skip] strings removed" do
         expect(subject.commits).to eq([
           "Fixed failing CI builds.",
           "Added spec helper methods.",
