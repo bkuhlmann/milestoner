@@ -18,7 +18,7 @@ module Milestoner
     end
 
     def initialize version
-      fail(GitError) unless git_supported?
+      fail(Errors::Git) unless git_supported?
       @version = validate_version version
     end
 
@@ -51,7 +51,7 @@ module Milestoner
     end
 
     def create sign: false
-      fail(DuplicateTagError, "Duplicate tag exists: #{version_label}.") if duplicate?
+      fail(Errors::DuplicateTag, "Duplicate tag exists: #{version_label}.") if duplicate?
 
       begin
         message_file = Tempfile.new Milestoner::Identity.name
@@ -71,7 +71,7 @@ module Milestoner
 
     def validate_version version
       message = "Invalid version: #{version}. Use: <major>.<minor>.<maintenance>."
-      fail(VersionError, message) unless version.match(self.class.version_regex)
+      fail(Errors::Version, message) unless version.match(self.class.version_regex)
       version
     end
 

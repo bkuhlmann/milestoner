@@ -21,8 +21,8 @@ module Milestoner
       tagger = Milestoner::Tagger.new version
       say "Milestone #{version} Commits:"
       tagger.commit_list.each { |commit| say commit }
-    rescue Milestoner::GitError => git_error
-      error git_error.message
+    rescue Milestoner::Errors::Base => base_error
+      error base_error.message
     end
 
     desc "-t, [--tag=TAG]", "Tag local repository with new version."
@@ -32,12 +32,8 @@ module Milestoner
       tagger = Milestoner::Tagger.new version
       tagger.create sign: options[:sign]
       say "Repository tagged: #{tagger.version_label}."
-    rescue Milestoner::GitError => git_error
-      error git_error.message
-    rescue Milestoner::VersionError => version_error
-      error version_error.message
-    rescue Milestoner::DuplicateTagError => tag_error
-      error tag_error.message
+    rescue Milestoner::Errors::Base => base_error
+      error base_error.message
     end
 
     desc "-p, [--push]", "Push tags to remote repository."
@@ -46,8 +42,8 @@ module Milestoner
       pusher = Milestoner::Pusher.new
       pusher.push
       info "Tags pushed to remote repository."
-    rescue Milestoner::GitError => git_error
-      error git_error.message
+    rescue Milestoner::Errors::Base => base_error
+      error base_error.message
     end
 
     desc "-P, [--publish=PUBLISH]", "Tag and push to remote repository."
@@ -57,12 +53,8 @@ module Milestoner
       tagger = Milestoner::Tagger.new version
       pusher = Milestoner::Pusher.new
       tag_and_push tagger, pusher, options
-    rescue Milestoner::GitError => git_error
-      error git_error.message
-    rescue Milestoner::VersionError => version_error
-      error version_error.message
-    rescue Milestoner::DuplicateTagError => tag_error
-      error tag_error.message
+    rescue Milestoner::Errors::Base => base_error
+      error base_error.message
     end
 
     desc "-v, [--version]", "Show version."

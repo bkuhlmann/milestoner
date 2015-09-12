@@ -48,7 +48,7 @@ describe Milestoner::Tagger, :temp_dir do
     it "fails with Git error when not a Git repository" do
       Dir.chdir temp_dir do
         result = -> { described_class.new "0.1.0" }
-        expect(&result).to raise_error(Milestoner::GitError)
+        expect(&result).to raise_error(Milestoner::Errors::Git)
       end
     end
 
@@ -56,14 +56,14 @@ describe Milestoner::Tagger, :temp_dir do
       message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
       result = -> { described_class.new "bogus" }
 
-      expect(&result).to raise_error(Milestoner::VersionError, message)
+      expect(&result).to raise_error(Milestoner::Errors::Version, message)
     end
 
     it "fails with version error when version is valid but contains extra characters" do
       message = "Invalid version: what-v0.1.0-bogus. Use: <major>.<minor>.<maintenance>."
       result = -> { described_class.new "what-v0.1.0-bogus" }
 
-      expect(&result).to raise_error(Milestoner::VersionError, message)
+      expect(&result).to raise_error(Milestoner::Errors::Version, message)
     end
   end
 
@@ -353,7 +353,7 @@ describe Milestoner::Tagger, :temp_dir do
           subject.create
           result = -> { subject.create }
 
-          expect(&result).to raise_error(Milestoner::DuplicateTagError, "Duplicate tag exists: v0.1.0.")
+          expect(&result).to raise_error(Milestoner::Errors::DuplicateTag, "Duplicate tag exists: v0.1.0.")
         end
       end
     end
