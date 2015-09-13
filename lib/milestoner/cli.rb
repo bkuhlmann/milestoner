@@ -57,6 +57,13 @@ module Milestoner
       error base_error.message
     end
 
+    desc "-e, [--edit]", "Edit gem settings in default editor (assumes $EDITOR environment variable)."
+    map %w(-e --edit) => :edit
+    def edit
+      info "Editing: #{configuration.computed_file_path}..."
+      `#{editor} #{configuration.computed_file_path}`
+    end
+
     desc "-v, [--version]", "Show version."
     map %w(-v --version) => :version
     def version
