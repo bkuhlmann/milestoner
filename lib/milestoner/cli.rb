@@ -13,7 +13,7 @@ module Milestoner
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = Milestoner::Configuration.new ".#{Milestoner::Identity.name}rc", defaults: defaults
+      @configuration = Milestoner::Configuration.new Milestoner::Identity.file_name, defaults: defaults
       @tagger = Milestoner::Tagger.new configuration.settings[:version],
                                        commit_prefixes: configuration.settings[:git_commit_prefixes]
       @pusher = Milestoner::Pusher.new
