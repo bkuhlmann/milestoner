@@ -9,7 +9,7 @@ module Milestoner
     include Thor::Actions
     include ThorPlus::Actions
 
-    package_name Milestoner::Identity.label
+    package_name Milestoner::Identity.label_version
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
@@ -24,7 +24,6 @@ module Milestoner
     desc "-c, [--commits]", "Show commits for next milestone."
     map %w(-c --commits) => :commits
     def commits
-      say "Commits For Next Milestone:"
       tagger.commit_list.each { |commit| say commit }
     rescue Milestoner::Errors::Base => base_error
       error base_error.message
@@ -40,7 +39,7 @@ module Milestoner
       error base_error.message
     end
 
-    desc "-p, [--push]", "Push tags to remote repository."
+    desc "-p, [--push]", "Push local tag to remote repository."
     map %w(-p --push) => :push
     def push
       pusher.push
@@ -49,7 +48,7 @@ module Milestoner
       error base_error.message
     end
 
-    desc "-P, [--publish=PUBLISH]", "Tag and push to remote repository."
+    desc "-P, [--publish=PUBLISH]", "Tag and push milestone to remote repository."
     map %w(-P --publish) => :publish
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def publish version = configuration.settings[:version]
@@ -58,14 +57,14 @@ module Milestoner
       error base_error.message
     end
 
-    desc "-e, [--edit]", "Edit gem settings in default editor (assumes $EDITOR environment variable)."
+    desc "-e, [--edit]", "Edit #{Milestoner::Identity.label} settings in default editor."
     map %w(-e --edit) => :edit
     def edit
       info "Editing: #{configuration.computed_file_path}..."
       `#{editor} #{configuration.computed_file_path}`
     end
 
-    desc "-v, [--version]", "Show version."
+    desc "-v, [--version]", "Show #{Milestoner::Identity.label} version."
     map %w(-v --version) => :version
     def version
       say Milestoner::Identity.label_version
