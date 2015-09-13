@@ -9,7 +9,7 @@ module Milestoner
     include Thor::Actions
     include ThorPlus::Actions
 
-    package_name Milestoner::Identity.label_version
+    package_name Milestoner::Identity.version_label
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
@@ -65,7 +65,7 @@ module Milestoner
     desc "-v, [--version]", "Show #{Milestoner::Identity.label} version."
     map %w(-v --version) => :version
     def version
-      say Milestoner::Identity.label_version
+      say Milestoner::Identity.version_label
     end
 
     desc "-h, [--help=HELP]", "Show this message or get help for a command."

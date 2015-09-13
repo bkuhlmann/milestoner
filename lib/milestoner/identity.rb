@@ -13,7 +13,7 @@ module Milestoner
       "0.3.0"
     end
 
-    def self.label_version
+    def self.version_label
       [label, version].join " "
     end
   end
