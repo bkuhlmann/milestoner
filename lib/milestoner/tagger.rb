@@ -3,24 +3,24 @@ module Milestoner
   class Tagger
     include Aids::Git
 
-    attr_reader :version, :commit_prefixes
+    attr_reader :version_number, :commit_prefixes
 
     def self.version_regex
       /\A\d{1}\.\d{1}\.\d{1}\z/
     end
 
-    def initialize version, commit_prefixes: []
+    def initialize version = nil, commit_prefixes: []
       fail(Errors::Git) unless git_supported?
-      @version = validate_version version
+      @version_number = version
       @commit_prefixes = commit_prefixes
     end
 
     def version_label
-      "v#{version}"
+      "v#{version_number}"
     end
 
     def version_message
-      "Version #{version}."
+      "Version #{version_number}."
     end
 
     def commit_prefix_regex
@@ -48,7 +48,8 @@ module Milestoner
       commits.map { |commit| "- #{commit}" }
     end
 
-    def create sign: false
+    def create version = version_number, sign: false
+      @version_number = validate_version version
       fail(Errors::DuplicateTag, "Duplicate tag exists: #{version_label}.") if duplicate?
 
       begin

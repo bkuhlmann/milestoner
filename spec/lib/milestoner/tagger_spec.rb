@@ -6,7 +6,7 @@ describe Milestoner::Tagger, :temp_dir do
   let(:prefixes) { %w(Fixed Added Updated Removed Refactored) }
   let(:git_name) { "Testy Tester" }
   let(:git_email) { "tester@example.com" }
-  let(:tag_details) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first }
+  let(:tag_details) { ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first } }
   subject { described_class.new version, commit_prefixes: prefixes }
 
   before do
@@ -30,8 +30,12 @@ describe Milestoner::Tagger, :temp_dir do
   end
 
   describe "#initialize" do
-    it "answers initialized version" do
-      expect(subject.version).to eq("0.1.0")
+    it "answers initialized version number" do
+      expect(subject.version_number).to eq("0.1.0")
+    end
+
+    it "answers initialized commit prefixes" do
+      expect(subject.commit_prefixes).to eq(prefixes)
     end
 
     it "fails with Git error when not a Git repository" do
@@ -39,20 +43,6 @@ describe Milestoner::Tagger, :temp_dir do
         result = -> { described_class.new "0.1.0" }
         expect(&result).to raise_error(Milestoner::Errors::Git)
       end
-    end
-
-    it "fails with version error when version is invalid" do
-      message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
-      result = -> { described_class.new "bogus" }
-
-      expect(&result).to raise_error(Milestoner::Errors::Version, message)
-    end
-
-    it "fails with version error when version is valid but contains extra characters" do
-      message = "Invalid version: what-v0.1.0-bogus. Use: <major>.<minor>.<maintenance>."
-      result = -> { described_class.new "what-v0.1.0-bogus" }
-
-      expect(&result).to raise_error(Milestoner::Errors::Version, message)
     end
   end
 
@@ -247,17 +237,24 @@ describe Milestoner::Tagger, :temp_dir do
   end
 
   describe "#create" do
-    it "creates new tag for repository" do
+    it "creates, with initialized version, new tag for repository" do
       Dir.chdir(repo_dir) do
         subject.create
-        expect(tag_details).to match(/tag\sv0\.1\.0/)
+        expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
+      end
+    end
+
+    it "creates, with given version, new tag for repository" do
+      Dir.chdir(repo_dir) do
+        subject.create "0.2.0"
+        expect(tag_details.call("0.2.0")).to match(/tag\sv0\.2\.0/)
       end
     end
 
     it "uses tag message" do
       Dir.chdir(repo_dir) do
         subject.create
-        expect(tag_details).to match(/Version\s0\.1\.0\./)
+        expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0\./)
       end
     end
 
@@ -274,7 +271,7 @@ describe Milestoner::Tagger, :temp_dir do
 
         subject.create
 
-        expect(tag_details).to match(/
+        expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\.\n\n
           \-\sFixed\sthree\.\n
           \-\sAdded\sdummy\sfiles\.\n
@@ -291,7 +288,7 @@ describe Milestoner::Tagger, :temp_dir do
 
         subject.create
 
-        expect(tag_details).to match(/
+        expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\.\n\n
           \-\sAdded\sdummy\sfiles\.\n
           \-\sUpdated\stwo\.txt\swith\s\`bogus\scommand\`\sin\smessage\.\n\n\n
@@ -303,7 +300,7 @@ describe Milestoner::Tagger, :temp_dir do
       it "does not sign tag" do
         Dir.chdir(repo_dir) do
           subject.create
-          expect(tag_details).to_not match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
+          expect(tag_details.call("0.1.0")).to_not match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
         end
       end
     end
@@ -366,7 +363,7 @@ describe Milestoner::Tagger, :temp_dir do
         ClimateControl.modify GNUPGHOME: gpg_dir do
           Dir.chdir(repo_dir) do
             subject.create sign: true
-            expect(tag_details).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
+            expect(tag_details.call("0.1.0")).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
           end
         end
       end
@@ -381,6 +378,21 @@ describe Milestoner::Tagger, :temp_dir do
           expect(&result).to raise_error(Milestoner::Errors::DuplicateTag, "Duplicate tag exists: v0.1.0.")
         end
       end
+    end
+
+    it "fails with version error when initialized version is invalid" do
+      message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
+      subject = described_class.new "bogus"
+      result = -> { subject.create }
+
+      expect(&result).to raise_error(Milestoner::Errors::Version, message)
+    end
+
+    it "fails with version error when creating with invalid version" do
+      message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
+      result = -> { subject.create "bogus" }
+
+      expect(&result).to raise_error(Milestoner::Errors::Version, message)
     end
   end
 
