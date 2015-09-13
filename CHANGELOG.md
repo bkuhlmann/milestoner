@@ -1,3 +1,13 @@
+# v0.4.0 (2015-09-13)
+
+- Added --edit option for editing gem configuration.
+- Added .milestonerrc git_tag_sign setting.
+- Added .milestonerrc version setting..
+- Added Git error support.
+- Added gem configuration error support.
+- Added global and local gem configuration and CLI support.
+- Updated CLI command descriptions.
+
 # v0.3.0 (2015-09-08)
 
 - Fixed bug where commit messages with backticks were executed.
