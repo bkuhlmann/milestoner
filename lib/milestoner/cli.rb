@@ -33,7 +33,7 @@ module Milestoner
     map %w(-t --tag) => :tag
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def tag version = configuration.settings[:version]
-      tagger.create version, sign: options[:sign]
+      tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version_label}."
     rescue Milestoner::Errors::Base => base_error
       error base_error.message
@@ -83,12 +83,17 @@ module Milestoner
     def defaults
       {
         version: "",
-        git_commit_prefixes: %w(Fixed Added Updated Removed Refactored)
+        git_commit_prefixes: %w(Fixed Added Updated Removed Refactored),
+        git_tag_sign: false
       }
     end
 
+    def sign_tag? sign
+      sign | configuration.settings[:git_tag_sign]
+    end
+
     def tag_and_push version, options
-      if tagger.create(version, sign: options[:sign]) && pusher.push
+      if tagger.create(version, sign: sign_tag?(options[:sign])) && pusher.push
         info "Repository tagged and pushed: #{tagger.version_label}."
         info "Milestone published!"
       else
