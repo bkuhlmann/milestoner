@@ -17,8 +17,6 @@ module Milestoner
       @tagger = Milestoner::Tagger.new configuration.settings[:version],
                                        commit_prefixes: configuration.settings[:git_commit_prefixes]
       @pusher = Milestoner::Pusher.new
-    rescue Milestoner::Errors::Base => base_error
-      error base_error.message
     end
 
     desc "-c, [--commits]", "Show commits for next milestone."

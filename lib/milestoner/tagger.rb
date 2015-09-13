@@ -10,7 +10,6 @@ module Milestoner
     end
 
     def initialize version = nil, commit_prefixes: []
-      fail(Errors::Git) unless git_supported?
       @version_number = version
       @commit_prefixes = commit_prefixes
     end
@@ -29,15 +28,18 @@ module Milestoner
     end
 
     def tagged?
+      fail(Errors::Git) unless git_supported?
       response = `git tag`
       !(response.nil? || response.empty?)
     end
 
     def duplicate?
+      fail(Errors::Git) unless git_supported?
       system "git rev-parse #{version_label} > /dev/null 2>&1"
     end
 
     def commits
+      fail(Errors::Git) unless git_supported?
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
       sort_by_commit_prefix! groups
@@ -49,20 +51,14 @@ module Milestoner
     end
 
     def create version = version_number, sign: false
+      fail(Errors::Git) unless git_supported?
       @version_number = validate_version version
       fail(Errors::DuplicateTag, "Duplicate tag exists: #{version_label}.") if duplicate?
-
-      begin
-        message_file = Tempfile.new Milestoner::Identity.name
-        File.open(message_file, "w") { |file| file.write tag_message }
-        `git tag #{tag_options message_file, sign: sign}`
-      ensure
-        message_file.close
-        message_file.unlink
-      end
+      create_tag sign: sign
     end
 
     def destroy
+      fail(Errors::Git) unless git_supported?
       `git tag --delete #{version_label}`
     end
 
@@ -111,6 +107,15 @@ module Milestoner
       options = %(--sign --annotate "#{version_label}" --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
       options
+    end
+
+    def create_tag sign: false
+      message_file = Tempfile.new Milestoner::Identity.name
+      File.open(message_file, "w") { |file| file.write tag_message }
+      `git tag #{tag_options message_file, sign: sign}`
+    ensure
+      message_file.close
+      message_file.unlink
     end
   end
 end

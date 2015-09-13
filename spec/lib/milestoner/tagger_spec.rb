@@ -37,13 +37,6 @@ describe Milestoner::Tagger, :temp_dir do
     it "answers initialized commit prefixes" do
       expect(subject.commit_prefixes).to eq(prefixes)
     end
-
-    it "fails with Git error when not a Git repository" do
-      Dir.chdir temp_dir do
-        result = -> { described_class.new "0.1.0" }
-        expect(&result).to raise_error(Milestoner::Errors::Git)
-      end
-    end
   end
 
   describe "#version_label" do
@@ -87,6 +80,13 @@ describe Milestoner::Tagger, :temp_dir do
         expect(subject.tagged?).to eq(false)
       end
     end
+
+    it "fails with Git error when not a Git repository" do
+      Dir.chdir temp_dir do
+        result = -> { subject.tagged? }
+        expect(&result).to raise_error(Milestoner::Errors::Git)
+      end
+    end
   end
 
   describe "#duplicate?" do
@@ -100,6 +100,13 @@ describe Milestoner::Tagger, :temp_dir do
     it "answers false when tag doesn't exist" do
       Dir.chdir(repo_dir) do
         expect(subject.duplicate?).to eq(false)
+      end
+    end
+
+    it "fails with Git error when not a Git repository" do
+      Dir.chdir temp_dir do
+        result = -> { subject.duplicate? }
+        expect(&result).to raise_error(Milestoner::Errors::Git)
       end
     end
   end
@@ -223,6 +230,13 @@ describe Milestoner::Tagger, :temp_dir do
           "Added spec helper methods.",
           "Updated gem dependencies."
         ])
+      end
+    end
+
+    it "fails with Git error when not a Git repository" do
+      Dir.chdir temp_dir do
+        result = -> { subject.commits }
+        expect(&result).to raise_error(Milestoner::Errors::Git)
       end
     end
   end
@@ -380,6 +394,13 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
 
+    it "fails with Git error when not a Git repository" do
+      Dir.chdir temp_dir do
+        result = -> { subject.create }
+        expect(&result).to raise_error(Milestoner::Errors::Git)
+      end
+    end
+
     it "fails with version error when initialized version is invalid" do
       message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
       subject = described_class.new "bogus"
@@ -402,6 +423,13 @@ describe Milestoner::Tagger, :temp_dir do
         subject.create
         subject.destroy
         expect(`git tag`).to eq("")
+      end
+    end
+
+    it "fails with Git error when not a Git repository" do
+      Dir.chdir temp_dir do
+        result = -> { subject.destroy }
+        expect(&result).to raise_error(Milestoner::Errors::Git)
       end
     end
   end

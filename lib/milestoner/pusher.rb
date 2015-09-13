@@ -4,11 +4,11 @@ module Milestoner
     include Aids::Git
 
     def initialize kernel: Kernel
-      fail(Errors::Git) unless git_supported?
       @kernel = kernel
     end
 
     def push
+      fail(Errors::Git) unless git_supported?
       kernel.system "git push --tags"
     end
 
