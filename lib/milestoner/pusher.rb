@@ -9,6 +9,7 @@ module Milestoner
 
     def push
       fail(Errors::Git) unless git_supported?
+      fail(Errors::Git, "Git remote repository is not configured.") unless git_remote?
       kernel.system "git push --tags"
     end
 
