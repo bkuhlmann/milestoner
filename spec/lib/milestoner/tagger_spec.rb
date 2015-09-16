@@ -426,6 +426,13 @@ describe Milestoner::Tagger, :temp_dir do
       end
     end
 
+    it "only destroys tag if is a duplicate" do
+      Dir.chdir(repo_dir) do
+        _, stderr = subject.destroy
+        expect(stderr).to eq(nil)
+      end
+    end
+
     it "fails with Git error when not a Git repository" do
       Dir.chdir temp_dir do
         result = -> { subject.destroy }

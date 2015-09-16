@@ -1,3 +1,5 @@
+require "open3"
+
 module Milestoner
   # Handles the tagging of a project repository.
   class Tagger
@@ -59,7 +61,7 @@ module Milestoner
 
     def destroy
       fail(Errors::Git) unless git_supported?
-      `git tag --delete #{version_label}`
+      Open3.capture3 "git tag --delete #{version_label}" if duplicate?
     end
 
     private
