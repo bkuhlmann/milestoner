@@ -17,6 +17,7 @@ module Milestoner
       @tagger = Milestoner::Tagger.new configuration.settings[:version],
                                        commit_prefixes: configuration.settings[:git_commit_prefixes]
       @pusher = Milestoner::Pusher.new
+      @publisher = Milestoner::Publisher.new tagger, pusher
     end
 
     desc "-c, [--commits]", "Show commits for next milestone."
@@ -50,7 +51,9 @@ module Milestoner
     map %w(-P --publish) => :publish
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def publish version = configuration.settings[:version]
-      tag_and_push version, options
+      publisher.publish version, sign: sign_tag?(options[:sign])
+      info "Repository tagged and pushed: #{tagger.version_label}."
+      info "Milestone published!"
     rescue Milestoner::Errors::Base => base_error
       error base_error.message
     end
@@ -76,7 +79,7 @@ module Milestoner
 
     private
 
-    attr_reader :configuration, :tagger, :pusher
+    attr_reader :configuration, :tagger, :pusher, :publisher
 
     def defaults
       {
@@ -88,15 +91,6 @@ module Milestoner
 
     def sign_tag? sign
       sign | configuration.settings[:git_tag_sign]
-    end
-
-    def tag_and_push version, options
-      if tagger.create(version, sign: sign_tag?(options[:sign])) && pusher.push
-        info "Repository tagged and pushed: #{tagger.version_label}."
-        info "Milestone published!"
-      else
-        tagger.destroy
-      end
     end
   end
 end
