@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://www.alchemists.io"
-  spec.summary = "A tool for automating and releasing Git repository milestones."
-  spec.description = "A tool for automating and releasing Git repository milestones."
+  spec.summary = "A command line interface for releasing Git repository milestones."
+  spec.description = "A command line interface for releasing Git repository milestones."
   spec.license = "MIT"
 
   if ENV["RUBY_GEM_SECURITY"] == "enabled"

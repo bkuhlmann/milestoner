@@ -1,3 +1,10 @@
+# v0.5.0 (2015-09-16)
+
+- Fixed bug when pushing to a non-existent remote repository.
+- Fixed git error when attempting to delete a non-existent tag.
+- Added Git aid for detecting if remote repository is configured.
+- Added a publisher which knows how to tag and push a tag.
+
 # v0.4.0 (2015-09-13)
 
 - Added --edit option for editing gem configuration.
