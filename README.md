@@ -6,7 +6,7 @@
 [![Gemnasium Status](https://gemnasium.com/bkuhlmann/milestoner.svg)](https://gemnasium.com/bkuhlmann/milestoner)
 [![Travis CI Status](https://secure.travis-ci.org/bkuhlmann/milestoner.svg)](http://travis-ci.org/bkuhlmann/milestoner)
 
-A tool for automating and releasing Git repository milestones.
+A command line interface for releasing Git repository milestones.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
