@@ -17,7 +17,7 @@ module Milestoner
       @tagger = Milestoner::Tagger.new configuration.settings[:version],
                                        commit_prefixes: configuration.settings[:git_commit_prefixes]
       @pusher = Milestoner::Pusher.new
-      @publisher = Milestoner::Publisher.new tagger, pusher
+      @publisher = Milestoner::Publisher.new tagger: tagger, pusher: pusher
     end
 
     desc "-c, [--commits]", "Show commits for next milestone."

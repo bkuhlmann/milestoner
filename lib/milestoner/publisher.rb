@@ -1,7 +1,7 @@
 module Milestoner
   # Handles the tagging and pushing of a milestone to a remote repository.
   class Publisher
-    def initialize tagger, pusher
+    def initialize tagger: Tagger.new, pusher: Pusher.new
       @tagger = tagger
       @pusher = pusher
     end

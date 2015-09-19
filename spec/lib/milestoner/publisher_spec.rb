@@ -4,7 +4,7 @@ describe Milestoner::Publisher do
   let(:version) { "0.1.0" }
   let(:tagger) { instance_spy Milestoner::Tagger }
   let(:pusher) { instance_spy Milestoner::Pusher }
-  subject { described_class.new tagger, pusher }
+  subject { described_class.new tagger: tagger, pusher: pusher }
 
   describe "#publish" do
     it "creates tag" do
