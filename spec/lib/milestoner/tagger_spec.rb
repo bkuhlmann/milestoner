@@ -1,27 +1,10 @@
 require "spec_helper"
 
-describe Milestoner::Tagger, :temp_dir do
-  let(:repo_dir) { File.join temp_dir, "tester" }
+describe Milestoner::Tagger, :temp_dir, :git_repo do
   let(:version) { "0.1.0" }
   let(:prefixes) { %w(Fixed Added Updated Removed Refactored) }
-  let(:git_name) { "Testy Tester" }
-  let(:git_email) { "tester@example.com" }
   let(:tag_details) { ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first } }
   subject { described_class.new version, commit_prefixes: prefixes }
-
-  before do
-    FileUtils.mkdir repo_dir
-    Dir.chdir(repo_dir) do
-      FileUtils.touch "one.txt"
-      FileUtils.touch "two.txt"
-      FileUtils.touch "three.txt"
-      `git init`
-      `git config --local user.name "#{git_name}"`
-      `git config --local user.email "#{git_email}"`
-      `git add --all .`
-      `git commit --all --message "Added dummy files."`
-    end
-  end
 
   describe ".version_regex" do
     it "answers regex for valid version formats" do
@@ -69,14 +52,14 @@ describe Milestoner::Tagger, :temp_dir do
 
   describe "#tagged?" do
     it "answers true when tags exist" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         `git tag v0.0.0`
         expect(subject.tagged?).to eq(true)
       end
     end
 
     it "answers false when tags don't exist" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         expect(subject.tagged?).to eq(false)
       end
     end
@@ -91,14 +74,14 @@ describe Milestoner::Tagger, :temp_dir do
 
   describe "#duplicate?" do
     it "answers true when tag is identical" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         subject.create
         expect(subject.duplicate?).to eq(true)
       end
     end
 
     it "answers false when tag doesn't exist" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         expect(subject.duplicate?).to eq(false)
       end
     end
@@ -114,7 +97,7 @@ describe Milestoner::Tagger, :temp_dir do
   describe "#commits" do
     context "when tagged" do
       it "answers commits since last tag" do
-        Dir.chdir(repo_dir) do
+        Dir.chdir(git_repo_dir) do
           `git tag v0.0.0`
           `git rm one.txt`
           `git commit --all --message "Removed one.txt."`
@@ -126,7 +109,7 @@ describe Milestoner::Tagger, :temp_dir do
 
     context "when not tagged" do
       it "answers all known commits" do
-        Dir.chdir(repo_dir) do
+        Dir.chdir(git_repo_dir) do
           expect(subject.commits).to contain_exactly("Added dummy files.")
         end
       end
@@ -252,28 +235,28 @@ describe Milestoner::Tagger, :temp_dir do
 
   describe "#create" do
     it "creates, with initialized version, new tag for repository" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         subject.create
         expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
       end
     end
 
     it "creates, with given version, new tag for repository" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         subject.create "0.2.0"
         expect(tag_details.call("0.2.0")).to match(/tag\sv0\.2\.0/)
       end
     end
 
     it "uses tag message" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         subject.create
         expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0\./)
       end
     end
 
     it "uses tag message and includes commits since last tag" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         `git rm one.txt`
         `git commit --all --message "Removed one."`
 
@@ -296,7 +279,7 @@ describe Milestoner::Tagger, :temp_dir do
     end
 
     it "does not execute backticks in commit subject when adding tag message" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         `printf "Test" > two.txt`
         %x(git commit --all --message 'Updated two.txt with \`bogus command\` in message.')
 
@@ -312,7 +295,7 @@ describe Milestoner::Tagger, :temp_dir do
 
     context "when not signed" do
       it "does not sign tag" do
-        Dir.chdir(repo_dir) do
+        Dir.chdir(git_repo_dir) do
           subject.create
           expect(tag_details.call("0.1.0")).to_not match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
         end
@@ -328,7 +311,7 @@ describe Milestoner::Tagger, :temp_dir do
         FileUtils.mkdir gpg_dir
 
         ClimateControl.modify GNUPGHOME: gpg_dir do
-          Dir.chdir(repo_dir) do
+          Dir.chdir(git_repo_dir) do
             gpg = Greenletters::Process.new "gpg --gen-key", transcript: $stdout
 
             gpg.start!
@@ -346,10 +329,10 @@ describe Milestoner::Tagger, :temp_dir do
             gpg << "y\n"
 
             gpg.wait_for :output, /Real name/i
-            gpg << "#{git_name}\n"
+            gpg << "#{git_user_name}\n"
 
             gpg.wait_for :output, /Email address/i
-            gpg << "#{git_email}\n"
+            gpg << "#{git_user_email}\n"
 
             gpg.wait_for :output, /Comment/i
             gpg << "Test\n"
@@ -375,7 +358,7 @@ describe Milestoner::Tagger, :temp_dir do
 
       it "signs tag" do
         ClimateControl.modify GNUPGHOME: gpg_dir do
-          Dir.chdir(repo_dir) do
+          Dir.chdir(git_repo_dir) do
             subject.create sign: true
             expect(tag_details.call("0.1.0")).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
           end
@@ -385,7 +368,7 @@ describe Milestoner::Tagger, :temp_dir do
 
     context "when duplicate tag exists" do
       it "fails with duplicate tag error" do
-        Dir.chdir(repo_dir) do
+        Dir.chdir(git_repo_dir) do
           subject.create
           result = -> { subject.create }
 
@@ -419,7 +402,7 @@ describe Milestoner::Tagger, :temp_dir do
 
   describe "#destroy" do
     it "destroys existing tag" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         subject.create
         subject.destroy
         expect(`git tag`).to eq("")
@@ -427,7 +410,7 @@ describe Milestoner::Tagger, :temp_dir do
     end
 
     it "only destroys tag if is a duplicate" do
-      Dir.chdir(repo_dir) do
+      Dir.chdir(git_repo_dir) do
         _, stderr = subject.destroy
         expect(stderr).to eq(nil)
       end
