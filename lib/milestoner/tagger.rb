@@ -74,7 +74,7 @@ module Milestoner
 
     def raw_commits
       tag_command = "$(git describe --abbrev=0 --tags --always)..HEAD"
-      full_command = "git log --oneline --reverse --no-merges --format='%s' #{tag_command}"
+      full_command = "git log --oneline --no-merges --format='%s' #{tag_command}"
       full_command.gsub!(tag_command, "") unless tagged?
 
       `#{full_command}`.split("\n")
@@ -112,7 +112,7 @@ module Milestoner
     end
 
     def create_tag sign: false
-      message_file = Tempfile.new Milestoner::Identity.name
+      message_file = Tempfile.new Identity.name
       File.open(message_file, "w") { |file| file.write tag_message }
       `git tag #{tag_options message_file, sign: sign}`
     ensure
