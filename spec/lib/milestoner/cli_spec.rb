@@ -1,0 +1,203 @@
+require "spec_helper"
+require "milestoner/cli"
+
+describe Milestoner::CLI do
+  describe ".start" do
+    let(:command) { nil }
+    let(:options) { [] }
+    let(:command_line) { options.unshift command }
+    let(:results) { -> { described_class.start command_line } }
+
+    shared_examples_for "a Git repository error" do
+      it "prints invalid repository error" do
+        Dir.chdir(temp_dir) do
+          expect(&results).to output(/error\s+Invalid\sGit\srepository\./).to_stdout
+        end
+      end
+    end
+
+    shared_examples_for "a version error" do
+      let(:options) { [] }
+
+      it "prints invalid version error", :git_repo do
+        Dir.chdir(git_repo_dir) do
+          error = /error\s+Invalid\sversion\:\s\.\sUse\:\s\<major\>\.\<minor\>\.\<maintenance\>/
+          expect(&results).to output(error).to_stdout
+        end
+      end
+    end
+
+    shared_examples_for "a commits command" do
+      it "prints commits for new tag", :git_repo do
+        Dir.chdir(git_repo_dir) do
+          expect(&results).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
+        end
+      end
+
+      it_behaves_like "a Git repository error"
+    end
+
+    shared_examples_for "a signed tag" do
+      let(:options) { ["0.1.0", "-s"] }
+      let(:tagger) { instance_spy Milestoner::Tagger }
+      before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
+
+      it "signs tag" do
+        results.call
+        expect(tagger).to have_received(:create).with("0.1.0", sign: true)
+      end
+    end
+
+    shared_examples_for "a tag command" do
+      it "prints repository has been tagged" do
+        Dir.chdir(git_repo_dir) do
+          expect(&results).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
+        end
+      end
+
+      it_behaves_like "a signed tag"
+      it_behaves_like "a version error"
+      it_behaves_like "a Git repository error"
+    end
+
+    shared_examples_for "a push command" do
+      it "prints repository has been tagged", :git_repo do
+        Dir.chdir(git_repo_dir) do
+          expect(&results).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
+        end
+      end
+
+      it_behaves_like "a Git repository error"
+    end
+
+    shared_examples_for "a publish command" do
+      it "prints repository has been tagged", :git_repo do
+        Dir.chdir(git_repo_dir) do
+          text = /
+            \s+info\s+Repository\stagged\sand\spushed\:\sv0\.1\.0\.\n
+            \s+info\s+Milestone\spublished\!\n
+          /x
+
+          expect(&results).to output(text).to_stdout
+        end
+      end
+
+      it_behaves_like "a signed tag"
+      it_behaves_like "a version error"
+      it_behaves_like "a Git repository error"
+    end
+
+    shared_examples_for "an edit command" do
+      let(:global_configuration_path) { File.join ENV["HOME"], ".milestonerrc" }
+
+      it "edits global configuration", :git_repo do
+        ClimateControl.modify EDITOR: %(printf "%s\n") do
+          Dir.chdir(git_repo_dir) do
+            expect(&results).to output(/info\s+Editing\:\s#{global_configuration_path}\.\.\./).to_stdout
+          end
+        end
+      end
+    end
+
+    shared_examples_for "a version command" do
+      it "prints version" do
+        expect(&results).to output(/Milestoner\s#{Milestoner::Identity.version}\n/).to_stdout
+      end
+    end
+
+    shared_examples_for "a help command" do
+      it "prints help text" do
+        text = /
+          \nMilestoner\s#{Milestoner::Identity.version}\scommands\:\n
+          .+\-P\,\s\[\-\-publish\=PUBLISH\].+Tag\sand\spush\smilestone\sto\sremote\srepository\.\n
+          .+\-c\,\s\[\-\-commits\].+Show\scommits\sfor\snext\smilestone\.\n
+          .+\-e\,\s\[\-\-edit\].+Edit\sMilestoner\ssettings\sin\sdefault\seditor\.\n
+          .+\-h\,\s\[\-\-help\=HELP\].+Show\sthis\smessage\sor\sget\shelp\sfor\sa\scommand\.\n
+          .+\-p\,\s\[\-\-push\].+Push\slocal\stag\sto\sremote\srepository\.\n
+          .+\-t\,\s\[\-\-tag\=TAG\].+Tag\slocal\srepository\swith\snew\sversion\.\n
+          .+\-v\,\s\[\-\-version\].+Show\sMilestoner\sversion\.\n
+        /x
+
+        expect(&results).to output(text).to_stdout
+      end
+    end
+
+    describe "--commits" do
+      let(:command) { "--commits" }
+      it_behaves_like "a commits command"
+    end
+
+    describe "-c" do
+      let(:command) { "-c" }
+      it_behaves_like "a commits command"
+    end
+
+    describe "--tag", :git_repo do
+      let(:command) { "--tag" }
+      let(:options) { ["0.1.0"] }
+      it_behaves_like "a tag command"
+    end
+
+    describe "-t", :git_repo do
+      let(:command) { "-t" }
+      let(:options) { ["0.1.0"] }
+      it_behaves_like "a tag command"
+    end
+
+    describe "--push" do
+      let(:command) { "--push" }
+      it_behaves_like "a push command"
+    end
+
+    describe "-p" do
+      let(:command) { "-p" }
+      it_behaves_like "a push command"
+    end
+
+    describe "--publish" do
+      let(:command) { "--publish" }
+      let(:options) { ["0.1.0"] }
+      it_behaves_like "a publish command"
+    end
+
+    describe "-P" do
+      let(:command) { "-P" }
+      let(:options) { ["0.1.0"] }
+      it_behaves_like "a publish command"
+    end
+
+    describe "--edit" do
+      let(:command) { "--edit" }
+      it_behaves_like "an edit command"
+    end
+
+    describe "-e" do
+      let(:command) { "-e" }
+      it_behaves_like "an edit command"
+    end
+
+    describe "--version" do
+      let(:command) { "--version" }
+      it_behaves_like "a version command"
+    end
+
+    describe "-v" do
+      let(:command) { "-v" }
+      it_behaves_like "a version command"
+    end
+
+    describe "--help" do
+      let(:command) { "--help" }
+      it_behaves_like "a help command"
+    end
+
+    describe "-h" do
+      let(:command) { "-h" }
+      it_behaves_like "a help command"
+    end
+
+    context "with no options given" do
+      it_behaves_like "a help command"
+    end
+  end
+end
