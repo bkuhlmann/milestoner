@@ -21,13 +21,5 @@ describe Milestoner::Publisher do
       subject.publish version
       expect(pusher).to have_received(:push)
     end
-
-    it "destroys tag when exception occurs", :aggregate_failures do
-      allow(tagger).to receive(:create).and_raise(Milestoner::Errors::Git)
-      result = -> { subject.publish version }
-
-      expect(&result).to raise_error(Milestoner::Errors::Git)
-      expect(tagger).to have_received(:destroy)
-    end
   end
 end

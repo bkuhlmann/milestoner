@@ -9,8 +9,6 @@ module Milestoner
     def publish version, sign: false
       tagger.create version, sign: sign
       pusher.push
-    ensure
-      tagger.destroy
     end
 
     private
