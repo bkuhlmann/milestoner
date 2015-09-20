@@ -1,3 +1,9 @@
+# v1.0.0 (2015-09-19)
+
+- Fixed Git tag being deleted when publishing.
+- Updated Publisher class to accept an optional tagger and pusher.
+- Refactored code to use relative namespaces.
+
 # v0.5.0 (2015-09-16)
 
 - Fixed bug when pushing to a non-existent remote repository.

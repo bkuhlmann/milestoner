@@ -37,12 +37,13 @@ A command line interface for releasing Git repository milestones.
   Git tag message.
 - Ensures Git commit messages are grouped by prefix, in order defined, for each Git tag message (prefixes can be
   customized): "Fixed", "Added", "Updated", "Removed", "Refactored".
+- Ensures Git commit merge messages are excluded within each Git tag message.
 - Ensures Git commit messages are alphabetically sorted within each Git tag message.
 - Ensures duplicate Git commit messages are removed (if any) within each Git tag message.
 - Ensures Git commit messages are sanitized by removing extra spaces and `[ci skip]` text within each Git tag message.
 - Provides optional security for signing Git tags with [GnuPG](https://www.gnupg.org) signing key.
 
-[![asciicast](https://asciinema.org/a/ecyzvq1uvy3mn6mrknd36f5b7.png)](https://asciinema.org/a/ecyzvq1uvy3mn6mrknd36f5b7)
+[![asciicast](https://asciinema.org/a/ay79m2qsfc2z15zdlw7w6r5fv.png)](https://asciinema.org/a/ay79m2qsfc2z15zdlw7w6r5fv)
 
 # Requirements
 

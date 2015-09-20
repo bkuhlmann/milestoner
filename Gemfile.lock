@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    milestoner (0.5.0)
+    milestoner (1.0.0)
       thor
       thor_plus
 
