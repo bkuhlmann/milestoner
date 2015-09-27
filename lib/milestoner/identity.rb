@@ -1,5 +1,5 @@
 module Milestoner
-  # The canonical source of gem information.
+  # Gem identity information.
   module Identity
     def self.name
       "milestoner"
