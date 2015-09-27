@@ -8,7 +8,7 @@ module Milestoner
     attr_reader :version_number, :commit_prefixes
 
     def self.version_regex
-      /\A\d{1}\.\d{1}\.\d{1}\z/
+      /\A\d+\.\d+\.\d+\z/
     end
 
     def initialize version = nil, commit_prefixes: []

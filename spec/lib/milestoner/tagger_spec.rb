@@ -8,7 +8,7 @@ describe Milestoner::Tagger, :temp_dir, :git_repo do
 
   describe ".version_regex" do
     it "answers regex for valid version formats" do
-      expect(described_class.version_regex).to eq(/\A\d{1}\.\d{1}\.\d{1}\z/)
+      expect(described_class.version_regex).to eq(/\A\d+\.\d+\.\d+\z/)
     end
   end
 
