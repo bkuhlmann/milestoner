@@ -24,6 +24,7 @@ RSpec.configure do |config|
         FileUtils.touch "two.txt"
         FileUtils.touch "three.txt"
         `git init`
+        `rm -rf .git/hooks`
         `git config --local user.name "#{git_user_name}"`
         `git config --local user.email "#{git_user_email}"`
         `git config remote.origin.url git@github.com:example/example.git`
