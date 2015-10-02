@@ -273,7 +273,7 @@ describe Milestoner::Tagger, :temp_dir, :git_repo do
           \-\sFixed\sthree\.\n
           \-\sAdded\sdummy\sfiles\.\n
           \-\sUpdated\stwo\.\n
-          \-\sRemoved\sone\.\n\n\n
+          \-\sRemoved\sone\.\n\n\n\n
         /x)
       end
     end
@@ -288,7 +288,7 @@ describe Milestoner::Tagger, :temp_dir, :git_repo do
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\.\n\n
           \-\sAdded\sdummy\sfiles\.\n
-          \-\sUpdated\stwo\.txt\swith\s\`bogus\scommand\`\sin\smessage\.\n\n\n
+          \-\sUpdated\stwo\.txt\swith\s\`bogus\scommand\`\sin\smessage\.\n\n\n\n
         /x)
       end
     end

@@ -102,11 +102,11 @@ module Milestoner
     end
 
     def tag_message
-      %(#{version_message}\n\n#{commit_list.join "\n"})
+      %(#{version_message}\n\n#{commit_list.join "\n"}\n\n)
     end
 
     def tag_options message_file, sign: false
-      options = %(--sign --annotate "#{version_label}" --file "#{message_file.path}")
+      options = %(--sign --annotate "#{version_label}" --cleanup verbatim --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
       options
     end
