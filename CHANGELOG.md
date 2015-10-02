@@ -1,3 +1,10 @@
+# v1.1.0 (2015-10-01)
+
+- Fixed RSpec example status persistence file path.
+- Fixed issue with version format limited to single digits.
+- Added carriage return after tag message bodies.
+- Updated to Gemsmith 5.6.0.
+
 # v1.0.0 (2015-09-19)
 
 - Fixed Git tag being deleted when publishing.
