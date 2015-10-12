@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.platform = Gem::Platform::RUBY
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
-  spec.homepage = "https://www.alchemists.io"
+  spec.homepage = "https://github.com/bkuhlmann/milestoner"
   spec.summary = "A command line interface for releasing Git repository milestones."
   spec.description = "A command line interface for releasing Git repository milestones."
   spec.license = "MIT"
