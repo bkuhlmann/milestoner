@@ -59,7 +59,7 @@ GEM
       rb-inotify (>= 0.9)
     lumberjack (1.0.9)
     method_source (0.8.2)
-    minitest (5.8.1)
+    minitest (5.8.2)
     nenv (0.2.0)
     notiffany (0.0.8)
       nenv (~> 0.1)
