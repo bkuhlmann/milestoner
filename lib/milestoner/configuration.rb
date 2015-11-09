@@ -1,7 +1,11 @@
 module Milestoner
   # Default configuration for gem with support for custom settings.
   class Configuration
-    def initialize file_name = ".unknownrc", defaults: {}
+    def self.file_name
+      ".milestonerrc"
+    end
+
+    def initialize file_name = self.class.file_name, defaults: {}
       @file_name = file_name
       @defaults = defaults
     end
