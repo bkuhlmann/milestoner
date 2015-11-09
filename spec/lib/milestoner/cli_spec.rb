@@ -3,9 +3,9 @@ require "milestoner/cli"
 
 describe Milestoner::CLI do
   describe ".start" do
-    let(:command) { nil }
+    let(:version) { "0.1.0" }
     let(:options) { [] }
-    let(:command_line) { options.unshift command }
+    let(:command_line) { Array(command).concat options }
     let(:results) { -> { described_class.start command_line } }
 
     shared_examples_for "a Git repository error" do
@@ -37,27 +37,46 @@ describe Milestoner::CLI do
       it_behaves_like "a Git repository error"
     end
 
+    shared_examples_for "an unsigned tag" do
+      let(:tagger) { instance_spy Milestoner::Tagger }
+      before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
+
+      it "creates an unsigned tag" do
+        ClimateControl.modify HOME: temp_dir do
+          results.call
+          expect(tagger).to have_received(:create).with(version, sign: false)
+        end
+      end
+    end
+
     shared_examples_for "a signed tag" do
-      let(:options) { ["0.1.0", "-s"] }
+      let(:options) { [version, "-s"] }
       let(:tagger) { instance_spy Milestoner::Tagger }
       before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
 
       it "signs tag" do
-        results.call
-        expect(tagger).to have_received(:create).with("0.1.0", sign: true)
+        ClimateControl.modify HOME: temp_dir do
+          results.call
+          expect(tagger).to have_received(:create).with(version, sign: true)
+        end
       end
     end
 
     shared_examples_for "a tag command" do
-      it "prints repository has been tagged" do
-        Dir.chdir(git_repo_dir) do
-          expect(&results).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
-        end
-      end
+      let(:options) { [version] }
 
+      it_behaves_like "an unsigned tag"
       it_behaves_like "a signed tag"
       it_behaves_like "a version error"
       it_behaves_like "a Git repository error"
+
+      it "prints repository has been tagged" do
+        ClimateControl.modify HOME: temp_dir do
+          Dir.chdir(git_repo_dir) do
+            expect(&results).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
+          end
+        end
+      end
     end
 
     shared_examples_for "a push command" do
@@ -71,20 +90,25 @@ describe Milestoner::CLI do
     end
 
     shared_examples_for "a publish command" do
-      it "prints repository has been tagged", :git_repo do
-        Dir.chdir(git_repo_dir) do
-          text = /
-            \s+info\s+Repository\stagged\sand\spushed\:\sv0\.1\.0\.\n
-            \s+info\s+Milestone\spublished\!\n
-          /x
+      let(:options) { [version] }
 
-          expect(&results).to output(text).to_stdout
-        end
-      end
-
+      it_behaves_like "an unsigned tag"
       it_behaves_like "a signed tag"
       it_behaves_like "a version error"
       it_behaves_like "a Git repository error"
+
+      it "prints repository has been tagged and published", :git_repo do
+        ClimateControl.modify HOME: temp_dir do
+          Dir.chdir(git_repo_dir) do
+            text = /
+              \s+info\s+Repository\stagged\sand\spushed\:\sv0\.1\.0\.\n
+              \s+info\s+Milestone\spublished\!\n
+            /x
+
+            expect(&results).to output(text).to_stdout
+          end
+        end
+      end
     end
 
     shared_examples_for "an edit command" do
@@ -134,13 +158,11 @@ describe Milestoner::CLI do
 
     describe "--tag", :git_repo do
       let(:command) { "--tag" }
-      let(:options) { ["0.1.0"] }
       it_behaves_like "a tag command"
     end
 
     describe "-t", :git_repo do
       let(:command) { "-t" }
-      let(:options) { ["0.1.0"] }
       it_behaves_like "a tag command"
     end
 
@@ -156,13 +178,11 @@ describe Milestoner::CLI do
 
     describe "--publish" do
       let(:command) { "--publish" }
-      let(:options) { ["0.1.0"] }
       it_behaves_like "a publish command"
     end
 
     describe "-P" do
       let(:command) { "-P" }
-      let(:options) { ["0.1.0"] }
       it_behaves_like "a publish command"
     end
 
@@ -196,7 +216,8 @@ describe Milestoner::CLI do
       it_behaves_like "a help command"
     end
 
-    context "with no options given" do
+    context "with no command" do
+      let(:command) { nil }
       it_behaves_like "a help command"
     end
   end
