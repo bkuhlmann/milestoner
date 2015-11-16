@@ -4,15 +4,9 @@ describe Milestoner::Configuration, :temp_dir do
   let(:file_name) { ".testrc" }
   subject { described_class.new }
 
-  describe ".file_name" do
-    it "answers file name" do
-      expect(described_class.file_name).to eq(".milestonerrc")
-    end
-  end
-
   describe "#global_file_path" do
     it "answers default file path" do
-      expect(subject.global_file_path).to eq(File.join(ENV["HOME"], described_class.file_name))
+      expect(subject.global_file_path).to eq(File.join(ENV["HOME"], Milestoner::Identity.file_name))
     end
 
     it "answers custom file path" do
@@ -23,7 +17,7 @@ describe Milestoner::Configuration, :temp_dir do
 
   describe "#local_file_path" do
     it "answers default file path" do
-      expect(subject.local_file_path).to eq(File.join(Dir.pwd, described_class.file_name))
+      expect(subject.local_file_path).to eq(File.join(Dir.pwd, Milestoner::Identity.file_name))
     end
 
     it "answers custom file path" do
@@ -34,7 +28,7 @@ describe Milestoner::Configuration, :temp_dir do
 
   describe "#computed_file_path" do
     context "when local configuration exists" do
-      let(:local_file) { File.join temp_dir, described_class.file_name }
+      let(:local_file) { File.join temp_dir, Milestoner::Identity.file_name }
       before { FileUtils.touch local_file }
 
       it "answers local file path" do

@@ -112,7 +112,7 @@ describe Milestoner::CLI do
     end
 
     shared_examples_for "an edit command" do
-      let(:global_configuration_path) { File.join ENV["HOME"], Milestoner::Configuration.file_name }
+      let(:global_configuration_path) { File.join ENV["HOME"], Milestoner::Identity.file_name }
 
       it "edits global configuration", :git_repo do
         ClimateControl.modify EDITOR: %(printf "%s\n") do
