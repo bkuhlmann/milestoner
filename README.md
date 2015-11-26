@@ -44,7 +44,7 @@ A command line interface for releasing Git repository milestones.
 - Ensures Git commit messages are sanitized by removing extra spaces and `[ci skip]` text within each Git tag message.
 - Provides optional security for signing Git tags with [GnuPG](https://www.gnupg.org) signing key.
 
-[![asciicast](https://asciinema.org/a/ay79m2qsfc2z15zdlw7w6r5fv.png)](https://asciinema.org/a/ay79m2qsfc2z15zdlw7w6r5fv)
+[![asciicast](https://asciinema.org/a/26561.png)](https://asciinema.org/a/26561)
 
 # Requirements
 
