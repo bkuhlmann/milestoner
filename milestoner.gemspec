@@ -17,8 +17,8 @@ Gem::Specification.new do |spec|
     spec.cert_chain = [File.expand_path("~/.ssh/gem-public.pem")]
   end
 
-  spec.add_dependency "thor"
-  spec.add_dependency "thor_plus"
+  spec.add_dependency "thor", "~> 0.19"
+  spec.add_dependency "thor_plus", "~> 2.1"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "gemsmith"
   spec.add_development_dependency "pry"
