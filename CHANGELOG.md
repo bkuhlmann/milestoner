@@ -1,3 +1,18 @@
+# v1.2.0 (2015-11-27)
+
+- Fixed failing specs when global config is used.
+- Fixed gemspec homepage URL.
+- Added Patreon badge to README.
+- Added Rubocop Style/StringLiteralsInInterpolation cop.
+- Added gemspec version requirements for Thor-related gems.
+- Updated Code Climate to run when CI ENV is set.
+- Updated Code of Conduct 1.3.0.
+- Updated README to use asciinema public URL.
+- Updated README with Tocer generated Table of Contents.
+- Removed RSpec GPG test output.
+- Removed `Milestoner::Configuration.file_name`.
+- Removed unnecessary exclusions from .gitignore.
+
 # v1.1.0 (2015-10-01)
 
 - Fixed RSpec example status persistence file path.

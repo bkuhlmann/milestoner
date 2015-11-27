@@ -100,11 +100,11 @@ can be created at a global and/or local level. Example:
 - Global: `~/.milestonerrc`
 - Local: `<project repository root>/.milestonerrc`
 
-Order of precedence for any setting is resolved as follows (with the first taking top priority):
+Order of precedence for any setting is resolved as follows (with the last taking top priority):
 
-0. CLI option. Example: A version passed to either the `--tag` or `--publish` commands.
-0. Local project repository `.milestonerrc`.
 0. Global `~/.milestonerrc`.
+0. Local project repository `.milestonerrc`.
+0. CLI option. Example: A version passed to either the `--tag` or `--publish` commands.
 
 Any setting provided to the CLI during runtime would trump a local/global setting and a local setting would trump a
 global setting. The global setting is the weakest of all but great for situations where custom settings should be
@@ -113,7 +113,6 @@ no inheritance when local *and* global settings exist at the same time.
 
 The `.milestonerrc` uses the following default settings:
 
-    ---
     :version: ""
     :git_commit_prefixes:
       - Fixed
