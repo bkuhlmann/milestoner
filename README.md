@@ -4,7 +4,7 @@
 [![Code Climate GPA](https://codeclimate.com/github/bkuhlmann/milestoner.svg)](https://codeclimate.com/github/bkuhlmann/milestoner)
 [![Code Climate Coverage](https://codeclimate.com/github/bkuhlmann/milestoner/coverage.svg)](https://codeclimate.com/github/bkuhlmann/milestoner)
 [![Gemnasium Status](https://gemnasium.com/bkuhlmann/milestoner.svg)](https://gemnasium.com/bkuhlmann/milestoner)
-[![Travis CI Status](https://secure.travis-ci.org/bkuhlmann/milestoner.svg)](http://travis-ci.org/bkuhlmann/milestoner)
+[![Travis CI Status](https://secure.travis-ci.org/bkuhlmann/milestoner.svg)](https://travis-ci.org/bkuhlmann/milestoner)
 [![Patreon](https://img.shields.io/badge/patreon-donate-brightgreen.svg)](https://www.patreon.com/bkuhlmann)
 
 A command line interface for releasing Git repository milestones.
@@ -49,7 +49,7 @@ A command line interface for releasing Git repository milestones.
 # Requirements
 
 0. A UNIX-based system.
-0. [MRI 2.x.x](http://www.ruby-lang.org).
+0. [MRI 2.x.x](https://www.ruby-lang.org).
 0. [GnuPG](https://www.gnupg.org).
 
 # Setup
