@@ -19,6 +19,7 @@ A command line interface for releasing Git repository milestones.
 - [Usage](#usage)
   - [Command Line Interface (CLI)](#command-line-interface-cli)
   - [Customization](#customization)
+- [Security](#security)
 - [Tests](#tests)
 - [Versioning](#versioning)
 - [Code of Conduct](#code-of-conduct)
@@ -32,12 +33,17 @@ A command line interface for releasing Git repository milestones.
 # Features
 
 - Ensures [Semantic Versioning](http://semver.org) of Git repository tags:
-    - Format: `v<major>.<minor>.</maintenance>`.
+    - Format: `v<major>.<minor>.<maintenance>`.
     - Example: `v0.1.0`.
 - Ensures Git commits since last tag (or since initialization of repository if no tags exist) are included within each
   Git tag message.
-- Ensures Git commit messages are grouped by prefix, in order defined, for each Git tag message (prefixes can be
-  customized): "Fixed", "Added", "Updated", "Removed", "Refactored".
+- Ensures Git commit messages are grouped by prefix, in order defined, for each Git tag message. Prefix defaults (can be
+  customized):
+    - Fixed
+    - Added
+    - Updated
+    - Removed
+    - Refactored
 - Ensures Git commit merge messages are excluded within each Git tag message.
 - Ensures Git commit messages are alphabetically sorted within each Git tag message.
 - Ensures duplicate Git commit messages are removed (if any) within each Git tag message.
@@ -88,9 +94,9 @@ For publish options, type: `milestoner help publish`
 
     -s, [--sign], [--no-sign]  # Sign tag with GPG key.
 
-When using Milestoner, the `--publish` command is intended to be the only command necessary for publishing a new
-release as it handles all of the steps necessary for tagging and pushing a new release. Should individual steps
-be needed, then the `--tag` and `--push` options are available.
+When using Milestoner, the `--publish` command is intended to be the only command necessary for publishing a new release
+as it handles all of the steps necessary for tagging and pushing a new milestone. Should individual steps be needed,
+then the `--tag` and `--push` options are available.
 
 ## Customization
 
@@ -127,7 +133,7 @@ Each `.milestonerrc` setting can be configured as follows:
 - `version`: By default it is left blank so you'll be prompted by the CLI. However, it can be nice to bump this version
   prior to each release and have the current version checked into source code at a per project level. The version, if
   set, will be used to tag the repository. If the version is a duplicate, an error will be thrown. When supplying a
-  version, use this format: `<major>.<minor>.</maintenance>`. Example: `0.1.0`.
+  version, use this format: `<major>.<minor>.<maintenance>`. Example: `0.1.0`.
 - `git_commit_prefixes`: Should the default prefixes not be desired, you can define Git commit prefixes that match your
   style. *NOTE: Prefix order is important with the first prefix defined taking precedence over the second and so forth.*
   Special characters are allowed for prefixes but should be enclosed in quotes if used. To disable prefix usage
@@ -135,6 +141,34 @@ Each `.milestonerrc` setting can be configured as follows:
 - `git_tag_sign`: Defaults to `false` but can be enabled by setting to `true`. When enabled, a Git tag will require GPG
   signing for enhanced security and include a signed signature as part of the Git tag. This is useful for public
   milestones where the author of a milestone can be verified to ensure milestone integrity/security.
+
+# Security
+
+To securely sign your Git tags, install and configure [GPG](https://www.gnupg.org):
+
+    brew install gpg
+    gpg --gen-key
+
+When creating your GPG key, choose these settings:
+
+- Key kind: RSA and RSA (default)
+- Key size: 4096
+- Key validity: 0
+- Real Name: `<your name>`
+- Email: `<your email>`
+- Passphrase: `<your passphrase>`
+
+To obtain your key, run the following and take the part after the forward slash:
+
+    gpg --list-keys | grep pub
+
+Add your key to your global Git configuration in the `[user]` section. Example:
+
+    [user]
+      signingkey = <your GPG key>
+
+Now, when publishing a new milestone (i.e. `milestoner --publish <version> --sign`), signing of your Git tag will happen
+automatically. You will be prompted for the GPG Passphrase each time but that is to be expected.
 
 # Tests
 
