@@ -130,19 +130,9 @@ RSpec.describe Milestoner::CLI do
     end
 
     shared_examples_for "a help command" do
-      it "prints help text" do
-        text = /
-          \nMilestoner\s#{Milestoner::Identity.version}\scommands\:\n
-          .+\-P\,\s\[\-\-publish\=PUBLISH\].+Tag\sand\spush\smilestone\sto\sremote\srepository\.\n
-          .+\-c\,\s\[\-\-commits\].+Show\scommits\sfor\snext\smilestone\.\n
-          .+\-e\,\s\[\-\-edit\].+Edit\sMilestoner\ssettings\sin\sdefault\seditor\.\n
-          .+\-h\,\s\[\-\-help\=HELP\].+Show\sthis\smessage\sor\sget\shelp\sfor\sa\scommand\.\n
-          .+\-p\,\s\[\-\-push\].+Push\slocal\stag\sto\sremote\srepository\.\n
-          .+\-t\,\s\[\-\-tag\=TAG\].+Tag\slocal\srepository\swith\snew\sversion\.\n
-          .+\-v\,\s\[\-\-version\].+Show\sMilestoner\sversion\.\n
-        /x
-
-        expect(&results).to output(text).to_stdout
+      it "prints usage" do
+        regex = /#{Milestoner::Identity.label}\s#{Milestoner::Identity.version}\scommands:\n/
+        expect(&results).to output(regex).to_stdout
       end
     end
 
