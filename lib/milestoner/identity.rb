@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Milestoner
   # Gem identity information.
   module Identity

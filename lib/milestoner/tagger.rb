@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "open3"
 
 module Milestoner
@@ -73,11 +75,11 @@ module Milestoner
     end
 
     def raw_commits
+      log_command = "git log --oneline --no-merges --format='%s'"
       tag_command = "$(git describe --abbrev=0 --tags --always)..HEAD"
-      full_command = "git log --oneline --no-merges --format='%s' #{tag_command}"
-      full_command.gsub!(tag_command, "") unless tagged?
+      commits_command = tagged? ? "#{log_command} #{tag_command}" : log_command
 
-      `#{full_command}`.split("\n")
+      `#{commits_command}`.split("\n")
     end
 
     def build_commit_prefix_groups

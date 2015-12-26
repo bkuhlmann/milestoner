@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Milestoner
   module Errors
     # Raised for projects not initialized as Git repositories.

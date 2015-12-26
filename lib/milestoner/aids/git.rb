@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Milestoner
   module Aids
     # Augments an object with Git support.

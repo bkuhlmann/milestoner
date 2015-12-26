@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Milestoner
   # Handles publishing of Git tags to remote repository.
   class Pusher

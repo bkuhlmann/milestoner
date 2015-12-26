@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Milestoner
   # Handles the tagging and pushing of a milestone to a remote repository.
   class Publisher

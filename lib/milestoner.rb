@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "milestoner/aids/git"
 require "milestoner/errors/base"
 require "milestoner/errors/configuration"
