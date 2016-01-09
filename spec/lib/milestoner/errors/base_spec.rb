@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Milestoner::Errors::Base do
+RSpec.describe Milestoner::Errors::Base do
   subject { described_class.new }
 
   describe "#message" do

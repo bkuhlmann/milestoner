@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Milestoner::Aids::Git, :temp_dir do
+RSpec.describe Milestoner::Aids::Git, :temp_dir do
   subject { instance_double("dummy").extend Milestoner::Aids::Git }
   let(:git_dir) { File.join temp_dir, ".git" }
 

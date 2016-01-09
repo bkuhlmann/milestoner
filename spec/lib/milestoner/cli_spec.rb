@@ -1,7 +1,7 @@
 require "spec_helper"
 require "milestoner/cli"
 
-describe Milestoner::CLI do
+RSpec.describe Milestoner::CLI do
   describe ".start" do
     let(:version) { "0.1.0" }
     let(:options) { [] }

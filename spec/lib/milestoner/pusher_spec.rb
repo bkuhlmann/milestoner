@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Milestoner::Pusher, :temp_dir do
+RSpec.describe Milestoner::Pusher, :temp_dir do
   subject { described_class.new }
 
   describe "#push" do

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Milestoner::Configuration, :temp_dir do
+RSpec.describe Milestoner::Configuration, :temp_dir do
   let(:file_name) { ".testrc" }
   subject { described_class.new }
 

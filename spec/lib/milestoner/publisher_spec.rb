@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Milestoner::Publisher do
+RSpec.describe Milestoner::Publisher do
   let(:version) { "0.1.0" }
   let(:tagger) { instance_spy Milestoner::Tagger }
   let(:pusher) { instance_spy Milestoner::Pusher }
