@@ -1,3 +1,15 @@
+# v2.0.0 (2016-01-17)
+
+- Fixed README URLs to use HTTPS schemes where possible.
+- Added GPG security documentation to README.
+- Added IRB development console Rake task support.
+- Added Ruby 2.3.0 frozen string literal support.
+- Updated tagger specs to skip GPG sign spec when on CI.
+- Updated to Ruby 2.3.0.
+- Removed RSpec default monkey patching behavior.
+- Removed Ruby 2.1.x and 2.2.x support.
+- Removed verbosity from CLI help command specs.
+
 # v1.2.0 (2015-11-27)
 
 - Fixed failing specs when global config is used.

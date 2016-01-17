@@ -138,23 +138,25 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits grouped by prefix and alpha-sorted per group" do
-        expect(subject.commits).to eq([
-          "Fixed README typos.",
-          "Fixed issues with current directory not being cleaned after build.",
-          "Added spec helper methods.",
-          "Added upgrade notes to README.",
-          "Updated and restored original deploy functionality.",
-          "Updated gem dependencies.",
-          "Updated version release notes.",
-          "Removed unnecessary spacing.",
-          "Removed unused stylesheets.",
-          "Refactored authorization to base controller.",
-          "Refactored common functionality to module.",
-          "Refactored strings to use double quotes instead of single quotes.",
-          "Another bogus commit message.",
-          "Bogus commit message.",
-          "This is not a good commit message."
-        ])
+        expect(subject.commits).to eq(
+          [
+            "Fixed README typos.",
+            "Fixed issues with current directory not being cleaned after build.",
+            "Added spec helper methods.",
+            "Added upgrade notes to README.",
+            "Updated and restored original deploy functionality.",
+            "Updated gem dependencies.",
+            "Updated version release notes.",
+            "Removed unnecessary spacing.",
+            "Removed unused stylesheets.",
+            "Refactored authorization to base controller.",
+            "Refactored common functionality to module.",
+            "Refactored strings to use double quotes instead of single quotes.",
+            "Another bogus commit message.",
+            "Bogus commit message.",
+            "This is not a good commit message."
+          ]
+        )
       end
     end
 
@@ -190,10 +192,12 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits with duplicates removed" do
-        expect(subject.commits).to eq([
-          "Added spec helper methods.",
-          "Updated gem dependencies."
-        ])
+        expect(subject.commits).to eq(
+          [
+            "Added spec helper methods.",
+            "Updated gem dependencies."
+          ]
+        )
       end
     end
 
@@ -208,11 +212,13 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits messages with [ci skip] strings removed" do
-        expect(subject.commits).to eq([
-          "Fixed failing CI builds.",
-          "Added spec helper methods.",
-          "Updated gem dependencies."
-        ])
+        expect(subject.commits).to eq(
+          [
+            "Fixed failing CI builds.",
+            "Added spec helper methods.",
+            "Updated gem dependencies."
+          ]
+        )
       end
     end
 
