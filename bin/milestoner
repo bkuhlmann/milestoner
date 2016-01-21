@@ -1,5 +1,4 @@
-#!/usr/bin/ruby
-# frozen_string_literal: true
+#! /usr/bin/ruby
 
 require "milestoner"
 require "milestoner/cli"

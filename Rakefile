@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # require "gemsmith/rake/setup"
 require "bundler/gem_tasks"
 
