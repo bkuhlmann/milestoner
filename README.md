@@ -14,6 +14,7 @@ A command line interface for releasing Git repository milestones.
 # Table of Contents
 
 - [Features](#features)
+- [Screencasts](#screencasts)
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Usage](#usage)
@@ -49,6 +50,8 @@ A command line interface for releasing Git repository milestones.
 - Ensures duplicate Git commit messages are removed (if any) within each Git tag message.
 - Ensures Git commit messages are sanitized by removing extra spaces and `[ci skip]` text within each Git tag message.
 - Provides optional security for signing Git tags with [GnuPG](https://www.gnupg.org) signing key.
+
+# Screencasts
 
 [![asciicast](https://asciinema.org/a/26561.png)](https://asciinema.org/a/26561)
 
