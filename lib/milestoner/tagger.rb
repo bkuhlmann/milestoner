@@ -62,6 +62,12 @@ module Milestoner
       create_tag sign: sign
     end
 
+    def delete version = version_number
+      @version_number = validate_version version
+      fail(Errors::Git) unless git_supported?
+      Open3.capture3 "git tag --delete #{version_label}" if duplicate?
+    end
+
     def destroy
       fail(Errors::Git) unless git_supported?
       Open3.capture3 "git tag --delete #{version_label}" if duplicate?

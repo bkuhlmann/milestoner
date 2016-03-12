@@ -421,6 +421,73 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
   end
 
+  describe "#delete" do
+    context "with initialized version" do
+      it "does not update version number" do
+        Dir.chdir(git_repo_dir) do
+          subject.delete
+          expect(subject.version_number).to eq(version)
+        end
+      end
+
+      it "deletes existing tag" do
+        Dir.chdir(git_repo_dir) do
+          subject.create
+          subject.delete
+          expect(`git tag`).to eq("")
+        end
+      end
+
+      it "only deletes duplicate tag" do
+        Dir.chdir(git_repo_dir) do
+          _, stderr = subject.delete
+          expect(stderr).to eq(nil)
+        end
+      end
+
+      it "fails when not a Git repository" do
+        Dir.chdir temp_dir do
+          result = -> { subject.delete }
+          expect(&result).to raise_error(Milestoner::Errors::Git, "Invalid Git repository.")
+        end
+      end
+    end
+
+    context "with custom version" do
+      let(:version) { "1.1.1" }
+      subject { described_class.new }
+
+      it "updates version number" do
+        Dir.chdir(git_repo_dir) do
+          subject.delete version
+          expect(subject.version_number).to eq(version)
+        end
+      end
+
+      it "deletes existing tag" do
+        Dir.chdir(git_repo_dir) do
+          subject.create version
+          subject.delete version
+          expect(`git tag`).to eq("")
+        end
+      end
+
+      it "only deletes duplicate tag" do
+        Dir.chdir(git_repo_dir) do
+          _, stderr = subject.delete version
+          expect(stderr).to eq(nil)
+        end
+      end
+
+      it "fails when not a Git repository" do
+        Dir.chdir temp_dir do
+          result = -> { subject.delete version }
+          expect(&result).to raise_error(Milestoner::Errors::Git, "Invalid Git repository.")
+        end
+      end
+    end
+  end
+
   describe "#destroy" do
     it "destroys existing tag" do
       Dir.chdir(git_repo_dir) do
