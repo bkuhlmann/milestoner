@@ -242,17 +242,21 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   end
 
   describe "#create" do
-    it "creates, with initialized version, new tag for repository" do
-      Dir.chdir(git_repo_dir) do
-        subject.create
-        expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
+    context "with initialized version" do
+      it "creates new tag" do
+        Dir.chdir(git_repo_dir) do
+          subject.create
+          expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
+        end
       end
     end
 
-    it "creates, with given version, new tag for repository" do
-      Dir.chdir(git_repo_dir) do
-        subject.create "0.2.0"
-        expect(tag_details.call("0.2.0")).to match(/tag\sv0\.2\.0/)
+    context "with custom version" do
+      it "creates new tag" do
+        Dir.chdir(git_repo_dir) do
+          subject.create "0.2.0"
+          expect(tag_details.call("0.2.0")).to match(/tag\sv0\.2\.0/)
+        end
       end
     end
 
