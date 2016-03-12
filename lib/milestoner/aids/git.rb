@@ -8,6 +8,10 @@ module Milestoner
         File.exist? File.join(Dir.pwd, ".git")
       end
 
+      def git_commits?
+        system "git log > /dev/null 2>&1"
+      end
+
       def git_remote?
         !`git config remote.origin.url`.empty?
       end

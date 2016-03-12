@@ -22,6 +22,22 @@ RSpec.describe Milestoner::Aids::Git, :temp_dir do
     end
   end
 
+  describe "#git_commits?" do
+    context "when repository has commits", :git_repo do
+      it "answers true" do
+        Dir.chdir(git_repo_dir) { expect(subject.git_commits?).to eq(true) }
+      end
+    end
+
+    context "when repository doesn't have commits" do
+      before { Dir.chdir(temp_dir) { `git init` } }
+
+      it "answers false" do
+        Dir.chdir(temp_dir) { expect(subject.git_commits?).to eq(false) }
+      end
+    end
+  end
+
   describe "#git_remote?" do
     before { Dir.chdir(temp_dir) { `git init` } }
 
