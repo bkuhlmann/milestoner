@@ -9,19 +9,32 @@ RSpec.describe Milestoner::Publisher do
   subject { described_class.new tagger: tagger, pusher: pusher }
 
   describe "#publish" do
-    it "creates tag" do
-      subject.publish version
-      expect(tagger).to have_received(:create).with(version, sign: false)
+    context "without error" do
+      it "creates tag" do
+        subject.publish version
+        expect(tagger).to have_received(:create).with(version, sign: false)
+      end
+
+      it "creates signed tag" do
+        subject.publish version, sign: true
+        expect(tagger).to have_received(:create).with(version, sign: true)
+      end
+
+      it "pushes tag to remote repository" do
+        subject.publish version
+        expect(pusher).to have_received(:push)
+      end
     end
 
-    it "creates signed tag" do
-      subject.publish version, sign: true
-      expect(tagger).to have_received(:create).with(version, sign: true)
-    end
+    context "with error" do
+      before { allow(tagger).to receive(:create).and_raise(Milestoner::Errors::Git) }
 
-    it "pushed tag" do
-      subject.publish version
-      expect(pusher).to have_received(:push)
+      it "deletes tag and raises error", :aggregate_failures do
+        result = -> { subject.publish version }
+
+        expect(&result).to raise_error(Milestoner::Errors::Git)
+        expect(tagger).to have_received(:delete).with(version)
+      end
     end
   end
 end
