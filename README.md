@@ -36,8 +36,7 @@ A command line interface for releasing Git repository milestones.
 - Ensures [Semantic Versioning](http://semver.org) of Git repository tags:
     - Format: `v<major>.<minor>.<maintenance>`.
     - Example: `v0.1.0`.
-- Ensures Git commits since last tag (or since initialization of repository if no tags exist) are included within each
-  Git tag message.
+- Ensures Git commits since last tag (or initialization of repository) are included within each Git tag message.
 - Ensures Git commit messages are grouped by prefix, in order defined, for each Git tag message. Prefix defaults (can be
   customized):
     - Fixed

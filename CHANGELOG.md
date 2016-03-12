@@ -1,3 +1,16 @@
+# v2.2.0 (2016-03-13)
+
+- Fixed contributing guideline links.
+- Added Git aid commit check.
+- Added Git tag auto-delete for Git error when publishing.
+- Added Git tag create failure when no commits exist.
+- Added GitHub issue and pull request templates.
+- Added README Screencasts section.
+- Added Rubocop Style/SignalException cop style.
+- Added tag delete support.
+- Updated README secure gem install documentation.
+- Updated to Code of Conduct, Version 1.4.0.
+
 # v2.1.0 (2016-01-20)
 
 - Fixed secure gem install issues.
