@@ -69,8 +69,8 @@ module Milestoner
     end
 
     def destroy
-      fail(Errors::Git) unless git_supported?
-      Open3.capture3 "git tag --delete #{version_label}" if duplicate?
+      warn "[DEPRECATION]: #destroy is deprecated, use #delete instead."
+      delete
     end
 
     private

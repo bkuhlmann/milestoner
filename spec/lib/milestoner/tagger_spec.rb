@@ -489,26 +489,11 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   end
 
   describe "#destroy" do
-    it "destroys existing tag" do
-      Dir.chdir(git_repo_dir) do
-        subject.create
-        subject.destroy
-        expect(`git tag`).to eq("")
-      end
-    end
+    before { allow(subject).to receive(:delete) }
 
-    it "only destroys tag if is a duplicate" do
-      Dir.chdir(git_repo_dir) do
-        _, stderr = subject.destroy
-        expect(stderr).to eq(nil)
-      end
-    end
-
-    it "fails with Git error when not a Git repository" do
-      Dir.chdir temp_dir do
-        result = -> { subject.destroy }
-        expect(&result).to raise_error(Milestoner::Errors::Git)
-      end
+    it "delegates to #delete" do
+      subject.destroy
+      expect(subject).to have_received(:delete)
     end
   end
 end
