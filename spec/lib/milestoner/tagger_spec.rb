@@ -389,14 +389,23 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
-    it "fails with Git error when not a Git repository" do
+    it "fails with invalid Git repository" do
       Dir.chdir temp_dir do
         result = -> { subject.create }
-        expect(&result).to raise_error(Milestoner::Errors::Git)
+        expect(&result).to raise_error(Milestoner::Errors::Git, "Invalid Git repository.")
       end
     end
 
-    it "fails with version error when initialized version is invalid" do
+    it "fails with no Git commits" do
+      Dir.chdir temp_dir do
+        `git init`
+        result = -> { subject.create }
+
+        expect(&result).to raise_error(Milestoner::Errors::Git, "Unable to tag without commits.")
+      end
+    end
+
+    it "fails with invalid initialized version" do
       message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
       subject = described_class.new "bogus"
       result = -> { subject.create }
@@ -404,7 +413,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       expect(&result).to raise_error(Milestoner::Errors::Version, message)
     end
 
-    it "fails with version error when creating with invalid version" do
+    it "fails with invalid version" do
       message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
       result = -> { subject.create "bogus" }
 

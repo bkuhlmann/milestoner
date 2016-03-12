@@ -55,8 +55,9 @@ module Milestoner
     end
 
     def create version = version_number, sign: false
-      fail(Errors::Git) unless git_supported?
       @version_number = validate_version version
+      fail(Errors::Git) unless git_supported?
+      fail(Errors::Git, "Unable to tag without commits.") unless git_commits?
       fail(Errors::DuplicateTag, "Duplicate tag exists: #{version_label}.") if duplicate?
       create_tag sign: sign
     end
