@@ -23,13 +23,27 @@ RSpec.describe Milestoner::Pusher, :temp_dir do
       end
     end
 
-    it "fails with Git error when remote repository is not defined" do
-      Dir.chdir temp_dir do
-        `git init`
-        subject = described_class.new
-        result = -> { subject.push }
+    context "when remote repository is not defined " do
+      subject { described_class.new }
 
-        expect(&result).to raise_error(Milestoner::Errors::Git, "Git remote repository is not configured.")
+      it "fails with Git error when remote repository is not defined" do
+        Dir.chdir temp_dir do
+          `git init`
+          result = -> { subject.push }
+
+          expect(&result).to raise_error(Milestoner::Errors::Git, "Git remote repository not configured.")
+        end
+      end
+    end
+
+    context "when push is unsuccessful" do
+      let(:kernel) { class_spy Kernel, system: false }
+
+      it "fails with Git error when push is unsuccessful", :git_repo do
+        Dir.chdir git_repo_dir do
+          result = -> { subject.push }
+          expect(&result).to raise_error(Milestoner::Errors::Git, "Git tags could not be pushed to remote repository.")
+        end
       end
     end
   end
