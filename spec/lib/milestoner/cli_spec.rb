@@ -82,7 +82,20 @@ RSpec.describe Milestoner::CLI do
     end
 
     shared_examples_for "a push command" do
+      let(:pusher) { instance_spy Milestoner::Pusher }
+
+      it "pushes tags", :git_repo do
+        allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
+
+        Dir.chdir(git_repo_dir) do
+          results.call
+          expect(pusher).to have_received(:push)
+        end
+      end
+
       it "prints repository has been tagged", :git_repo do
+        allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
+
         Dir.chdir(git_repo_dir) do
           expect(&results).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
         end
@@ -93,6 +106,7 @@ RSpec.describe Milestoner::CLI do
 
     shared_examples_for "a publish command" do
       let(:options) { [version] }
+      let(:pusher) { instance_spy Milestoner::Pusher }
 
       it_behaves_like "an unsigned tag"
       it_behaves_like "a signed tag"
@@ -100,6 +114,8 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "a Git repository error"
 
       it "prints repository has been tagged and published", :git_repo do
+        allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
+
         ClimateControl.modify HOME: temp_dir do
           Dir.chdir(git_repo_dir) do
             text = /
