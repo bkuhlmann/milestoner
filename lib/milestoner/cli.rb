@@ -22,8 +22,8 @@ module Milestoner
       @publisher = Publisher.new tagger: tagger, pusher: pusher
     end
 
-    desc "-c, [--commits]", "Show commits for next milestone."
-    map %w(-c --commits) => :commits
+    desc "-C, [--commits]", "Show commits for next milestone."
+    map %w(-C --commits) => :commits
     def commits
       tagger.commit_list.each { |commit| say commit }
     rescue Errors::Base => base_error

@@ -159,8 +159,8 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "a commits command"
     end
 
-    describe "-c" do
-      let(:command) { "-c" }
+    describe "-C" do
+      let(:command) { "-C" }
       it_behaves_like "a commits command"
     end
 
