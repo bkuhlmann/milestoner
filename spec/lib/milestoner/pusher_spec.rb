@@ -6,13 +6,13 @@ RSpec.describe Milestoner::Pusher, :temp_dir do
   subject { described_class.new }
 
   describe "#push" do
-    let(:kernel) { class_spy Kernel }
-    subject { described_class.new kernel: kernel }
+    let(:shell) { class_spy Kernel }
+    subject { described_class.new shell: shell }
 
     it "pushes tags to remote repository", :git_repo do
       Dir.chdir git_repo_dir do
         subject.push
-        expect(kernel).to have_received(:system).with("git push --tags")
+        expect(shell).to have_received(:system).with("git push --tags")
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe Milestoner::Pusher, :temp_dir do
     end
 
     context "when push is unsuccessful" do
-      let(:kernel) { class_spy Kernel, system: false }
+      let(:shell) { class_spy Kernel, system: false }
 
       it "fails with Git error when push is unsuccessful", :git_repo do
         Dir.chdir git_repo_dir do
