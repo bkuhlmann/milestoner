@@ -71,7 +71,7 @@ module Milestoner
       end
     end
 
-    desc "-v, [--version]", "Show #{Identity.label} version."
+    desc "-v, [--version]", "Show gem version."
     map %w(-v --version) => :version
     def version
       say Identity.version_label
