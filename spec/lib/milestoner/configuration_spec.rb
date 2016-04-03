@@ -28,6 +28,36 @@ RSpec.describe Milestoner::Configuration, :temp_dir do
     end
   end
 
+  describe "#global?" do
+    it "answers true when global configuration file exists" do
+      ClimateControl.modify HOME: temp_dir do
+        FileUtils.touch subject.global_file_path
+        expect(subject.global?).to eq(true)
+      end
+    end
+
+    it "answers false when global configuration file doesn't exist" do
+      ClimateControl.modify HOME: temp_dir do
+        expect(subject.global?).to eq(false)
+      end
+    end
+  end
+
+  describe "#local?" do
+    it "answers true when local configuration file exists" do
+      Dir.chdir temp_dir do
+        FileUtils.touch subject.local_file_path
+        expect(subject.local?).to eq(true)
+      end
+    end
+
+    it "answers false when local configuration file doesn't exist" do
+      Dir.chdir temp_dir do
+        expect(subject.local?).to eq(false)
+      end
+    end
+  end
+
   describe "#computed_file_path" do
     context "when local configuration exists" do
       let(:local_file) { File.join temp_dir, Milestoner::Identity.file_name }
