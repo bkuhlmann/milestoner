@@ -491,13 +491,4 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
   end
-
-  describe "#destroy" do
-    before { allow(subject).to receive(:delete) }
-
-    it "delegates to #delete" do
-      subject.destroy
-      expect(subject).to have_received(:delete)
-    end
-  end
 end

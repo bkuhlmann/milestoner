@@ -68,11 +68,6 @@ module Milestoner
       Open3.capture3 "git tag --delete #{version_label}" if duplicate?
     end
 
-    def destroy
-      warn "[DEPRECATION]: #destroy is deprecated, use #delete instead."
-      delete
-    end
-
     private
 
     def validate_version version
