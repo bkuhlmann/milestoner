@@ -4,6 +4,7 @@ PATH
     milestoner (2.2.0)
       thor (~> 0.19)
       thor_plus (~> 3.0)
+      versionaire (~> 1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -132,6 +133,7 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.0.3)
+    versionaire (1.1.0)
     wirb (2.0.0)
       paint (>= 0.9, < 2.0)
 
