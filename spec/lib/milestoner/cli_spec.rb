@@ -129,6 +129,18 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
+    shared_examples_for "a config command" do
+      let(:global_configuration_path) { File.join ENV["HOME"], Milestoner::Identity.file_name }
+
+      context "with no options" do
+        it "prints configuration file path" do
+          ClimateControl.modify HOME: temp_dir do
+            expect(&results).to output(/Global and local gem configuration not defined/).to_stdout
+          end
+        end
+      end
+    end
+
     shared_examples_for "an edit command" do
       let(:global_configuration_path) { File.join ENV["HOME"], Milestoner::Identity.file_name }
 
@@ -192,6 +204,16 @@ RSpec.describe Milestoner::CLI do
     describe "-P" do
       let(:command) { "-P" }
       it_behaves_like "a publish command"
+    end
+
+    describe "--config" do
+      let(:command) { "--config" }
+      it_behaves_like "a config command"
+    end
+
+    describe "-c" do
+      let(:command) { "-c" }
+      it_behaves_like "a config command"
     end
 
     describe "--edit" do

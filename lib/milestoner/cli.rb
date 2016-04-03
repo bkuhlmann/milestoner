@@ -60,6 +60,17 @@ module Milestoner
       error base_error.message
     end
 
+    desc "-c, [--config]", "Show/manage gem configuration."
+    map %w(-c --config) => :config
+    method_option :edit, aliases: "-e", desc: "Edit gem configuration.", type: :boolean, default: false
+    def config
+      if options[:edit]
+        `#{editor} #{configuration.computed_file_path}`
+      else
+        print_config_info
+      end
+    end
+
     desc "-e, [--edit]", "Edit #{Identity.label} settings in default editor."
     map %w(-e --edit) => :edit
     def edit
@@ -93,6 +104,14 @@ module Milestoner
 
     def sign_tag? sign
       sign | configuration.settings[:git_tag_sign]
+    end
+
+    def print_config_info
+      case
+        when configuration.global? then say("Using global configuration: #{configuration.computed_file_path}.")
+        when configuration.local? then say("Use local configuration: #{configuration.computed_file_path}.")
+        else say("Global and local gem configuration not defined, using defaults instead.")
+      end
     end
   end
 end
