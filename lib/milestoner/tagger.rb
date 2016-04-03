@@ -5,17 +5,16 @@ require "open3"
 module Milestoner
   # Handles the tagging of a project repository.
   class Tagger
-    include Aids::Git
-
     attr_reader :version_number, :commit_prefixes
 
     def self.version_regex
       /\A\d+\.\d+\.\d+\z/
     end
 
-    def initialize version = nil, commit_prefixes: []
+    def initialize version = nil, commit_prefixes: [], git: Git.new
       @version_number = version
       @commit_prefixes = commit_prefixes
+      @git = git
     end
 
     def version_label
@@ -32,18 +31,18 @@ module Milestoner
     end
 
     def tagged?
-      fail(Errors::Git) unless git_supported?
+      fail(Errors::Git) unless git.supported?
       response = `git tag`
       !(response.nil? || response.empty?)
     end
 
     def duplicate?
-      fail(Errors::Git) unless git_supported?
+      fail(Errors::Git) unless git.supported?
       system "git rev-parse #{version_label} > /dev/null 2>&1"
     end
 
     def commits
-      fail(Errors::Git) unless git_supported?
+      fail(Errors::Git) unless git.supported?
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
       sort_by_commit_prefix! groups
@@ -56,19 +55,21 @@ module Milestoner
 
     def create version = version_number, sign: false
       @version_number = validate_version version
-      fail(Errors::Git) unless git_supported?
-      fail(Errors::Git, "Unable to tag without commits.") unless git_commits?
+      fail(Errors::Git) unless git.supported?
+      fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
       fail(Errors::DuplicateTag, "Duplicate tag exists: #{version_label}.") if duplicate?
       create_tag sign: sign
     end
 
     def delete version = version_number
       @version_number = validate_version version
-      fail(Errors::Git) unless git_supported?
+      fail(Errors::Git) unless git.supported?
       Open3.capture3 "git tag --delete #{version_label}" if duplicate?
     end
 
     private
+
+    attr_reader :git
 
     def validate_version version
       message = "Invalid version: #{version}. Use: <major>.<minor>.<maintenance>."
