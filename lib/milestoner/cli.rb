@@ -26,8 +26,8 @@ module Milestoner
     map %w(-C --commits) => :commits
     def commits
       tagger.commit_list.each { |commit| say commit }
-    rescue Errors::Base => base_error
-      error base_error.message
+    rescue StandardError => exception
+      error exception.message
     end
 
     desc "-t, [--tag=TAG]", "Tag local repository with new version."
@@ -36,8 +36,8 @@ module Milestoner
     def tag version = configuration.settings[:version]
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version_label}."
-    rescue Errors::Base => base_error
-      error base_error.message
+    rescue StandardError => exception
+      error exception.message
     end
 
     desc "-p, [--push]", "Push local tag to remote repository."
@@ -45,8 +45,8 @@ module Milestoner
     def push
       pusher.push
       info "Tags pushed to remote repository."
-    rescue Errors::Base => base_error
-      error base_error.message
+    rescue StandardError => exception
+      error exception.message
     end
 
     desc "-P, [--publish=PUBLISH]", "Tag and push milestone to remote repository."
@@ -56,8 +56,8 @@ module Milestoner
       publisher.publish version, sign: sign_tag?(options[:sign])
       info "Repository tagged and pushed: #{tagger.version_label}."
       info "Milestone published!"
-    rescue Errors::Base => base_error
-      error base_error.message
+    rescue StandardError => exception
+      error exception.message
     end
 
     desc "-c, [--config]", "Show/manage gem configuration."
@@ -89,7 +89,7 @@ module Milestoner
 
     def defaults
       {
-        version: "",
+        version: "0.1.0",
         git_commit_prefixes: %w(Fixed Added Updated Removed Refactored),
         git_tag_sign: false
       }
@@ -101,8 +101,8 @@ module Milestoner
 
     def print_config_info
       case
-        when configuration.global? then say("Using global configuration: #{configuration.computed_file_path}.")
         when configuration.local? then say("Use local configuration: #{configuration.computed_file_path}.")
+        when configuration.global? then say("Using global configuration: #{configuration.computed_file_path}.")
         else say("Global and local gem configuration not defined, using defaults instead.")
       end
     end

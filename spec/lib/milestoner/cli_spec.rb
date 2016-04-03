@@ -19,12 +19,11 @@ RSpec.describe Milestoner::CLI do
     end
 
     shared_examples_for "a version error" do
-      let(:options) { [] }
+      let(:version) { "bogus" }
 
       it "prints invalid version error", :git_repo do
         Dir.chdir(git_repo_dir) do
-          error = /error\s+Invalid\sversion\:\s\.\sUse\:\s\<major\>\.\<minor\>\.\<maintenance\>/
-          expect(&results).to output(error).to_stdout
+          expect(&results).to output(/Invalid version conversion\: bogus/).to_stdout
         end
       end
     end
