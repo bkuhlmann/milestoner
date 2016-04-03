@@ -71,13 +71,6 @@ module Milestoner
       end
     end
 
-    desc "-e, [--edit]", "Edit #{Identity.label} settings in default editor."
-    map %w(-e --edit) => :edit
-    def edit
-      info "Editing: #{configuration.computed_file_path}..."
-      `#{editor} #{configuration.computed_file_path}`
-    end
-
     desc "-v, [--version]", "Show #{Identity.label} version."
     map %w(-v --version) => :version
     def version

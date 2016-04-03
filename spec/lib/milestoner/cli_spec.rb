@@ -141,18 +141,6 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "an edit command" do
-      let(:global_configuration_path) { File.join ENV["HOME"], Milestoner::Identity.file_name }
-
-      it "edits global configuration", :git_repo do
-        ClimateControl.modify EDITOR: %(printf "%s\n") do
-          Dir.chdir(git_repo_dir) do
-            expect(&results).to output(/info\s+Editing\:\s#{global_configuration_path}\.\.\./).to_stdout
-          end
-        end
-      end
-    end
-
     shared_examples_for "a version command" do
       it "prints version" do
         expect(&results).to output(/Milestoner\s#{Milestoner::Identity.version}\n/).to_stdout
@@ -214,16 +202,6 @@ RSpec.describe Milestoner::CLI do
     describe "-c" do
       let(:command) { "-c" }
       it_behaves_like "a config command"
-    end
-
-    describe "--edit" do
-      let(:command) { "--edit" }
-      it_behaves_like "an edit command"
-    end
-
-    describe "-e" do
-      let(:command) { "-e" }
-      it_behaves_like "an edit command"
     end
 
     describe "--version" do
