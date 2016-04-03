@@ -3,36 +3,23 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
-  let(:version) { "0.1.0" }
+  let(:version) { Versionaire::Version.new minor: 1 }
   let(:prefixes) { %w(Fixed Added Updated Removed Refactored) }
   let(:tag_details) { ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first } }
   subject { described_class.new version, commit_prefixes: prefixes }
 
-  describe ".version_regex" do
-    it "answers regex for valid version formats" do
-      expect(described_class.version_regex).to eq(/\A\d+\.\d+\.\d+\z/)
-    end
-  end
-
   describe "#initialize" do
-    it "answers initialized version number" do
-      expect(subject.version_number).to eq("0.1.0")
+    it "answers default version" do
+      expect(subject.version).to eq(version)
     end
 
-    it "answers initialized commit prefixes" do
+    it "answers default commit prefixes" do
       expect(subject.commit_prefixes).to eq(prefixes)
     end
-  end
 
-  describe "#version_label" do
-    it "answers version label" do
-      expect(subject.version_label).to eq("v0.1.0")
-    end
-  end
-
-  describe "#version_message" do
-    it "answers version message" do
-      expect(subject.version_message).to eq("Version 0.1.0.")
+    it "fails with invalid version" do
+      result = -> { described_class.new "bogus" }
+      expect(&result).to raise_error(Versionaire::Errors::Conversion)
     end
   end
 
@@ -409,19 +396,9 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
-    it "fails with invalid initialized version" do
-      message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
-      subject = described_class.new "bogus"
-      result = -> { subject.create }
-
-      expect(&result).to raise_error(Milestoner::Errors::Version, message)
-    end
-
     it "fails with invalid version" do
-      message = "Invalid version: bogus. Use: <major>.<minor>.<maintenance>."
       result = -> { subject.create "bogus" }
-
-      expect(&result).to raise_error(Milestoner::Errors::Version, message)
+      expect(&result).to raise_error(Versionaire::Errors::Conversion)
     end
   end
 
@@ -430,7 +407,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       it "does not update version number" do
         Dir.chdir(git_repo_dir) do
           subject.delete
-          expect(subject.version_number).to eq(version)
+          expect(subject.version).to eq(version)
         end
       end
 
@@ -458,13 +435,13 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     context "with custom version" do
-      let(:version) { "1.1.1" }
+      let(:version) { Versionaire::Version "1.1.1" }
       subject { described_class.new }
 
       it "updates version number" do
         Dir.chdir(git_repo_dir) do
           subject.delete version
-          expect(subject.version_number).to eq(version)
+          expect(subject.version).to eq(version)
         end
       end
 
@@ -488,6 +465,13 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           result = -> { subject.delete version }
           expect(&result).to raise_error(Milestoner::Errors::Git, "Invalid Git repository.")
         end
+      end
+    end
+
+    context "with invalid version" do
+      it "raises Versionaire error" do
+        result = -> { subject.delete "bogus" }
+        expect(&result).to raise_error(Versionaire::Errors::Conversion)
       end
     end
   end
