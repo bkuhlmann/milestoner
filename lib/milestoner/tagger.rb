@@ -52,7 +52,7 @@ module Milestoner
       fail(Errors::Git) unless git.supported?
       fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
       fail(Errors::DuplicateTag, "Duplicate tag exists: #{version.label}.") if duplicate?
-      create_tag sign: sign
+      git_tag sign: sign
     end
 
     def delete raw_version = version
@@ -94,20 +94,20 @@ module Milestoner
       groups.each { |_, values| values.sort! }
     end
 
-    def tag_message
+    def git_message
       %(Version #{version}.\n\n#{commit_list.join "\n"}\n\n)
     end
 
-    def tag_options message_file, sign: false
+    def git_options message_file, sign: false
       options = %(--sign --annotate "#{version.label}" --cleanup verbatim --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
       options
     end
 
-    def create_tag sign: false
+    def git_tag sign: false
       message_file = Tempfile.new Identity.name
-      File.open(message_file, "w") { |file| file.write tag_message }
-      `git tag #{tag_options message_file, sign: sign}`
+      File.open(message_file, "w") { |file| file.write git_message }
+      `git tag #{git_options message_file, sign: sign}`
     ensure
       message_file.close
       message_file.unlink
