@@ -33,7 +33,7 @@ A command line interface for releasing Git repository milestones.
 
 # Features
 
-- Ensures [Semantic Versioning](http://semver.org) of Git repository tags:
+- Uses [Versionaire](https://github.com/bkuhlmann/versionaire) for [Semantic Versioning](http://semver.org).
     - Format: `v<major>.<minor>.<maintenance>`.
     - Example: `v0.1.0`.
 - Ensures Git commits since last tag (or initialization of repository) are included within each Git tag message.
@@ -52,7 +52,7 @@ A command line interface for releasing Git repository milestones.
 
 # Screencasts
 
-[![asciicast](https://asciinema.org/a/26561.png)](https://asciinema.org/a/26561)
+[![asciicast](https://asciinema.org/a/41207.png)](https://asciinema.org/a/41207)
 
 # Requirements
 
@@ -80,19 +80,23 @@ For an insecure install, type the following (not recommended):
 
 From the command line, type: `milestoner help`
 
+    milestoner -C, [--commits]          # Show commits for next milestone.
     milestoner -P, [--publish=PUBLISH]  # Tag and push milestone to remote repository.
-    milestoner -c, [--commits]          # Show commits for next milestone.
-    milestoner -e, [--edit]             # Edit Milestoner settings in default editor.
+    milestoner -c, [--config]           # Show/manage gem configuration.
     milestoner -h, [--help=HELP]        # Show this message or get help for a command.
     milestoner -p, [--push]             # Push local tag to remote repository.
     milestoner -t, [--tag=TAG]          # Tag local repository with new version.
-    milestoner -v, [--version]          # Show Milestoner version.
+    milestoner -v, [--version]          # Show gem version.
 
-For tag options, type: `milestoner help tag`
+For config options, type: `milestoner help --config`
+
+    -e, [--edit], [--no-edit]  # Edit gem configuration.
+
+For tag options, type: `milestoner help --tag`
 
     -s, [--sign], [--no-sign]  # Sign tag with GPG key.
 
-For publish options, type: `milestoner help publish`
+For publish options, type: `milestoner help --publish`
 
     -s, [--sign], [--no-sign]  # Sign tag with GPG key.
 
@@ -121,7 +125,7 @@ no inheritance when local *and* global settings exist at the same time.
 
 The `.milestonerrc` uses the following default settings:
 
-    :version: ""
+    :version: "0.1.0"
     :git_commit_prefixes:
       - Fixed
       - Added
@@ -132,10 +136,9 @@ The `.milestonerrc` uses the following default settings:
 
 Each `.milestonerrc` setting can be configured as follows:
 
-- `version`: By default it is left blank so you'll be prompted by the CLI. However, it can be nice to bump this version
-  prior to each release and have the current version checked into source code at a per project level. The version, if
-  set, will be used to tag the repository. If the version is a duplicate, an error will be thrown. When supplying a
-  version, use this format: `<major>.<minor>.<maintenance>`. Example: `0.1.0`.
+- `version`: Useful if desired to have the current version checked into source code per project. The version, if set,
+  will be used to tag the repository. If the version is a duplicate, an error will be thrown. When supplying a version,
+  it *must* be semantic: `<major>.<minor>.<maintenance>`. Example: `0.1.0`.
 - `git_commit_prefixes`: Should the default prefixes not be desired, you can define Git commit prefixes that match your
   style. *NOTE: Prefix order is important with the first prefix defined taking precedence over the second and so forth.*
   Special characters are allowed for prefixes but should be enclosed in quotes if used. To disable prefix usage

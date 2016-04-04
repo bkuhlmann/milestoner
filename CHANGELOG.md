@@ -1,3 +1,22 @@
+# v3.0.0 (2016-04-03)
+
+- Fixed CLI specs so pusher is spied upon.
+- Added --config, -c command.
+- Added Versionaire gem dependency.
+- Added bond, wirb, hirb, and awesome_print development dependencies.
+- Added failure when Git is unable to push tags to remote repository.
+- Added global and local configuration file detection.
+- Updated GitHub issue and pull request templates.
+- Removed --edit, -e command.
+- Removed -c alias (use -C instead).
+- Removed `Tagger#destroy`.
+- Removed gem label from version information.
+- Refactored CLI to use Versionaire version.
+- Refactored Git module to class object.
+- Refactored Pusher to use shell instead of kernel keyword.
+- Refactored Tagger git tag construction.
+- Refactored Tagger to use Versionaire version.
+
 # v2.2.0 (2016-03-13)
 
 - Fixed contributing guideline links.
