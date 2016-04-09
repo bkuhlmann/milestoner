@@ -23,7 +23,7 @@ module Milestoner
     end
 
     desc "-C, [--commits]", "Show commits for next milestone."
-    map %w(-C --commits) => :commits
+    map %w[-C --commits] => :commits
     def commits
       tagger.commit_list.each { |commit| say commit }
     rescue StandardError => exception
@@ -31,7 +31,7 @@ module Milestoner
     end
 
     desc "-t, [--tag=TAG]", "Tag local repository with new version."
-    map %w(-t --tag) => :tag
+    map %w[-t --tag] => :tag
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def tag version = configuration.settings[:version]
       tagger.create version, sign: sign_tag?(options[:sign])
@@ -41,7 +41,7 @@ module Milestoner
     end
 
     desc "-p, [--push]", "Push local tag to remote repository."
-    map %w(-p --push) => :push
+    map %w[-p --push] => :push
     def push
       pusher.push
       info "Tags pushed to remote repository."
@@ -50,7 +50,7 @@ module Milestoner
     end
 
     desc "-P, [--publish=PUBLISH]", "Tag and push milestone to remote repository."
-    map %w(-P --publish) => :publish
+    map %w[-P --publish] => :publish
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def publish version = configuration.settings[:version]
       publisher.publish version, sign: sign_tag?(options[:sign])
@@ -61,7 +61,7 @@ module Milestoner
     end
 
     desc "-c, [--config]", "Show/manage gem configuration."
-    map %w(-c --config) => :config
+    map %w[-c --config] => :config
     method_option :edit, aliases: "-e", desc: "Edit gem configuration.", type: :boolean, default: false
     def config
       if options[:edit]
@@ -72,15 +72,15 @@ module Milestoner
     end
 
     desc "-v, [--version]", "Show gem version."
-    map %w(-v --version) => :version
+    map %w[-v --version] => :version
     def version
       say Identity.version_label
     end
 
     desc "-h, [--help=HELP]", "Show this message or get help for a command."
-    map %w(-h --help) => :help
+    map %w[-h --help] => :help
     def help task = nil
-      say && super
+      say and super
     end
 
     private
@@ -90,7 +90,7 @@ module Milestoner
     def defaults
       {
         version: "0.1.0",
-        git_commit_prefixes: %w(Fixed Added Updated Removed Refactored),
+        git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
         git_tag_sign: false
       }
     end

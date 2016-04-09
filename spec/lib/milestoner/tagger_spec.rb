@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   let(:version) { Versionaire::Version.new minor: 1 }
-  let(:prefixes) { %w(Fixed Added Updated Removed Refactored) }
+  let(:prefixes) { %w[Fixed Added Updated Removed Refactored] }
   let(:tag_details) { ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first } }
   subject { described_class.new version, commit_prefixes: prefixes }
 
@@ -161,11 +161,11 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     context "without prefixed commits" do
       let(:prefixes) { [] }
-      let(:raw_commits) { %w(One Two Three) }
+      let(:raw_commits) { %w[One Two Three] }
       before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers alphabetically sorted commits" do
-        expect(subject.commits).to eq(%w(One Three Two))
+        expect(subject.commits).to eq(%w[One Three Two])
       end
     end
 
@@ -220,7 +220,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   end
 
   describe "#commit_list" do
-    let(:raw_commits) { %w(One Two Three) }
+    let(:raw_commits) { %w[One Two Three] }
     before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
 
     it "answers a formatted list of commit messages" do

@@ -144,13 +144,13 @@ RSpec.describe Milestoner::Configuration, :temp_dir do
     end
 
     context "when using file and default settings" do
-      let(:global_defaults) { {two: %w(red black white), four: 4} }
+      let(:global_defaults) { {two: %w[red black white], four: 4} }
       let(:defaults) { {one: 1, two: 2, three: 3} }
       before { File.open(global_file, "w") { |file| file << global_defaults.to_yaml } }
 
       it "answers merged settings with file taking precedence over defaults" do
         ClimateControl.modify HOME: temp_dir do
-          expect(subject.settings).to eq(one: 1, two: %w(red black white), three: 3, four: 4)
+          expect(subject.settings).to eq(one: 1, two: %w[red black white], three: 3, four: 4)
         end
       end
     end
