@@ -100,10 +100,9 @@ module Milestoner
     end
 
     def print_config_info
-      case
-        when configuration.local? then say("Use local configuration: #{configuration.computed_file_path}.")
-        when configuration.global? then say("Using global configuration: #{configuration.computed_file_path}.")
-        else say("Global and local gem configuration not defined, using defaults instead.")
+      if configuration.local? then say("Use local configuration: #{configuration.computed_file_path}.")
+      elsif configuration.global? then say("Using global configuration: #{configuration.computed_file_path}.")
+      else say("Global and local gem configuration not defined, using defaults instead.")
       end
     end
   end
