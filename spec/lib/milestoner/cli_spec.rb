@@ -10,7 +10,7 @@ RSpec.describe Milestoner::CLI do
     let(:command_line) { Array(command).concat options }
     let(:results) { -> { described_class.start command_line } }
 
-    shared_examples_for "a Git repository error" do
+    shared_examples_for "a Git repository error", :temp_dir do
       it "prints invalid repository error" do
         Dir.chdir(temp_dir) do
           expect(&results).to output(/error\s+Invalid\sGit\srepository\./).to_stdout
@@ -18,18 +18,18 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a version error" do
+    shared_examples_for "a version error", :git_repo do
       let(:version) { "bogus" }
 
-      it "prints invalid version error", :git_repo do
+      it "prints invalid version error" do
         Dir.chdir(git_repo_dir) do
           expect(&results).to output(/Invalid version conversion\: bogus/).to_stdout
         end
       end
     end
 
-    shared_examples_for "a commits command" do
-      it "prints commits for new tag", :git_repo do
+    shared_examples_for "a commits command", :git_repo do
+      it "prints commits for new tag" do
         Dir.chdir(git_repo_dir) do
           expect(&results).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
         end
@@ -38,7 +38,7 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "a Git repository error"
     end
 
-    shared_examples_for "an unsigned tag" do
+    shared_examples_for "an unsigned tag", :temp_dir do
       let(:tagger) { instance_spy Milestoner::Tagger }
       before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
 
@@ -50,7 +50,7 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a signed tag" do
+    shared_examples_for "a signed tag", :temp_dir do
       let(:options) { [version, "-s"] }
       let(:tagger) { instance_spy Milestoner::Tagger }
       before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
@@ -63,7 +63,7 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a tag command" do
+    shared_examples_for "a tag command", :git_repo do
       let(:options) { [version] }
 
       it_behaves_like "an unsigned tag"
@@ -80,10 +80,10 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a push command" do
+    shared_examples_for "a push command", :git_repo do
       let(:pusher) { instance_spy Milestoner::Pusher }
 
-      it "pushes tags", :git_repo do
+      it "pushes tags" do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         Dir.chdir(git_repo_dir) do
@@ -92,7 +92,7 @@ RSpec.describe Milestoner::CLI do
         end
       end
 
-      it "prints repository has been tagged", :git_repo do
+      it "prints repository has been tagged" do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         Dir.chdir(git_repo_dir) do
@@ -103,7 +103,7 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "a Git repository error"
     end
 
-    shared_examples_for "a publish command" do
+    shared_examples_for "a publish command", :git_repo do
       let(:options) { [version] }
       let(:pusher) { instance_spy Milestoner::Pusher }
 
@@ -112,7 +112,7 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "a version error"
       it_behaves_like "a Git repository error"
 
-      it "prints repository has been tagged and published", :git_repo do
+      it "prints repository has been tagged and published" do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         ClimateControl.modify HOME: temp_dir do
@@ -128,7 +128,7 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a config command" do
+    shared_examples_for "a config command", :temp_dir do
       let(:global_configuration_path) { File.join ENV["HOME"], Milestoner::Identity.file_name }
 
       context "with no options" do
@@ -163,12 +163,12 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "a commits command"
     end
 
-    describe "--tag", :git_repo do
+    describe "--tag" do
       let(:command) { "--tag" }
       it_behaves_like "a tag command"
     end
 
-    describe "-t", :git_repo do
+    describe "-t" do
       let(:command) { "-t" }
       it_behaves_like "a tag command"
     end
