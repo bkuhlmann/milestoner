@@ -310,7 +310,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         let(:gpg_passphrase) { "testonly" }
         before do
           FileUtils.mkdir gpg_dir
-          FileUtils.chmod 0700, gpg_dir
+          FileUtils.chmod 0o700, gpg_dir
 
           ClimateControl.modify GNUPGHOME: gpg_dir do
             Dir.chdir(git_repo_dir) do
