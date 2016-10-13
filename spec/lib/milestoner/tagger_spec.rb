@@ -302,66 +302,22 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     context "when signed" do
-      # Skip when on CI -- Unable to generate sufficient entropy for signed keys.
+      # FIX: Research how to generate sufficient entropy for signed keys on a CI machine.
       unless ENV["CI"]
         let(:gpg_dir) { File.join temp_dir, ".gnupg" }
+        let(:gpg_script) { File.join temp_dir, "..", "..", "spec", "support", "gpg_script" }
         let(:git_email) { "tester@example.com" }
         let(:gpg_key) { `gpg --list-keys #{git_email} | grep pub | awk '{print $2}' | cut -d'/' -f 2`.chomp }
-        let(:gpg_passphrase) { "testonly" }
-        before do
-          FileUtils.mkdir gpg_dir
-          FileUtils.chmod 0o700, gpg_dir
-
-          ClimateControl.modify GNUPGHOME: gpg_dir do
-            Dir.chdir(git_repo_dir) do
-              gpg = Greenletters::Process.new "gpg --gen-key"
-
-              gpg.start!
-
-              gpg.wait_for :output, /Please select what kind of key you want/i
-              gpg << "1\n"
-
-              gpg.wait_for :output, /RSA keys may be between 1024 and 4096 bits long/i
-              gpg << "1024\n"
-
-              gpg.wait_for :output, /Please specify how long the key should be valid/i
-              gpg << "0\n"
-
-              gpg.wait_for :output, /Is this correct/i
-              gpg << "y\n"
-
-              gpg.wait_for :output, /Real name/i
-              gpg << "#{git_user_name}\n"
-
-              gpg.wait_for :output, /Email address/i
-              gpg << "#{git_user_email}\n"
-
-              gpg.wait_for :output, /Comment/i
-              gpg << "Test\n"
-
-              gpg.wait_for :output, /Change.+/i
-              gpg << "O\n"
-
-              gpg.wait_for :output, /Enter passphrase/i
-              gpg << "#{gpg_passphrase}\n"
-
-              gpg.wait_for :output, /Repeat passphrase/i
-              gpg << "#{gpg_passphrase}\n"
-
-              gpg.wait_for :output, /We need to generate a lot of random bytes/i
-              gpg.wait_for :output, /public and secret key created and signed/i
-
-              File.open(File.join(gpg_dir, "gpg.conf"), "a") { |file| file.write "passphrase #{gpg_passphrase}\n" }
-
-              `git config --local user.signingkey #{gpg_key}`
-            end
-          end
-        end
 
         it "signs tag" do
           ClimateControl.modify GNUPGHOME: gpg_dir do
             Dir.chdir(git_repo_dir) do
+              FileUtils.mkdir gpg_dir
+              FileUtils.chmod 0o700, gpg_dir
+              `gpg --batch --quiet --gen-key #{gpg_script}`
+              `git config --local user.signingkey #{gpg_key}`
               subject.create sign: true
+
               expect(tag_details.call("0.1.0")).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
             end
           end
