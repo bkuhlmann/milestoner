@@ -38,7 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "terminal-notifier"
   spec.add_development_dependency "terminal-notifier-guard"
   spec.add_development_dependency "climate_control"
-  spec.add_development_dependency "greenletters"
   spec.add_development_dependency "rubocop", "~> 0.41"
   spec.add_development_dependency "codeclimate-test-reporter"
 

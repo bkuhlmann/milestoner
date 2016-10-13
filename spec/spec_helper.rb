@@ -11,7 +11,6 @@ require "pry"
 require "pry-byebug"
 require "pry-state"
 require "climate_control"
-require "greenletters"
 require "milestoner"
 
 Dir[File.join(File.dirname(__FILE__), "support/shared_contexts/**/*.rb")].each { |file| require file }

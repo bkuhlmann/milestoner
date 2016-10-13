@@ -35,7 +35,6 @@ GEM
       thor_plus (~> 3.0)
       tocer (~> 2.2)
       versionaire (~> 1.2)
-    greenletters (0.3.0)
     guard (2.14.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -137,7 +136,6 @@ DEPENDENCIES
   climate_control
   codeclimate-test-reporter
   gemsmith (~> 7.7)
-  greenletters
   guard-rspec
   hirb
   milestoner!
