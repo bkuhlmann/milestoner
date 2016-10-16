@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_context "Git Repository", :git_repo do
-  let(:temp_dir) { File.expand_path "../../../../tmp/rspec", __FILE__ }
+  let(:temp_dir) { File.join Bundler.root, "tmp", "rspec" }
   let(:git_repo_dir) { File.join temp_dir, "tester" }
   let(:git_user_name) { "Testy Tester" }
   let(:git_user_email) { "tester@example.com" }
