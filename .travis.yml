@@ -7,6 +7,7 @@ rvm:
 before_install:
   - sudo apt-get update
   - sudo apt-get install gnupg
+before_script: sudo find / -type f > /dev/null &
 script: bundle exec rake
 notifications:
   email: false
