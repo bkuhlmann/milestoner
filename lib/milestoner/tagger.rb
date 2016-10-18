@@ -20,7 +20,7 @@ module Milestoner
     end
 
     def commit_prefix_regex
-      return // if commit_prefixes.empty?
+      return Regexp.new("") if commit_prefixes.empty?
       Regexp.union commit_prefixes
     end
 
@@ -65,12 +65,21 @@ module Milestoner
 
     attr_reader :git
 
-    def raw_commits
-      log_command = "git log --oneline --no-merges --format='%s'"
-      tag_command = "$(git describe --abbrev=0 --tags --always)..HEAD"
-      commits_command = tagged? ? "#{log_command} #{tag_command}" : log_command
+    def git_log_command
+      "git log --oneline --no-merges --format='%s'"
+    end
 
-      `#{commits_command}`.split("\n")
+    def git_tag_command
+      "$(git describe --abbrev=0 --tags --always)..HEAD"
+    end
+
+    def git_commits_command
+      return "#{git_log_command} #{git_tag_command}" if tagged?
+      git_log_command
+    end
+
+    def raw_commits
+      `#{git_commits_command}`.split("\n")
     end
 
     def build_commit_prefix_groups
