@@ -336,6 +336,17 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
+    context "when GPG program is missing" do
+      it "signs tag" do
+        Dir.chdir(git_repo_dir) do
+          `git config --local gpg.program /dev/null`
+          result = -> { subject.create sign: true }
+
+          expect(&result).to raise_error(Milestoner::Errors::Git, "Unable to create tag: v0.1.0.")
+        end
+      end
+    end
+
     it "fails with invalid Git repository" do
       Dir.chdir temp_dir do
         result = -> { subject.create }

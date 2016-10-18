@@ -107,7 +107,8 @@ module Milestoner
     def git_tag sign: false
       message_file = Tempfile.new Identity.name
       File.open(message_file, "w") { |file| file.write git_message }
-      `git tag #{git_options message_file, sign: sign}`
+      status = system "git tag #{git_options message_file, sign: sign}"
+      fail(Errors::Git, "Unable to create tag: #{version.label}.") unless status
     ensure
       message_file.close
       message_file.unlink
