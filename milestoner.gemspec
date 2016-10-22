@@ -11,7 +11,6 @@ Gem::Specification.new do |spec|
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://github.com/bkuhlmann/milestoner"
   spec.summary = "A command line interface for releasing Git repository milestones."
-  spec.description = "A command line interface for releasing Git repository milestones."
   spec.license = "MIT"
 
   if File.exist?(Gem.default_key_path) && File.exist?(Gem.default_cert_path)
