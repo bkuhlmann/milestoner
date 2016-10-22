@@ -32,7 +32,7 @@ GEM
       milestoner (~> 3.0)
       refinements (~> 2.2)
       thor (~> 0.19)
-      thor_plus (~> 3.0)
+      thor_plus (~> 3.1)
       tocer (~> 2.2)
       versionaire (~> 1.2)
     guard (2.14.0)
@@ -129,21 +129,21 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  awesome_print
-  bond
-  climate_control
-  codeclimate-test-reporter
+  awesome_print (~> 1.7)
+  bond (~> 0.5)
+  climate_control (~> 0.0)
+  codeclimate-test-reporter (~> 0.6)
   gemsmith (~> 7.7)
-  guard-rspec
-  hirb
+  guard-rspec (~> 4.7)
+  hirb (~> 0.7)
   milestoner!
-  pry
-  pry-byebug
-  pry-state
+  pry (~> 0.10)
+  pry-byebug (~> 3.4)
+  pry-state (~> 0.1)
   rake (~> 11.0)
   rspec (~> 3.5)
   rubocop (~> 0.44)
-  wirb
+  wirb (~> 2.0)
 
 BUNDLED WITH
-   1.13.5
+   1.13.6
