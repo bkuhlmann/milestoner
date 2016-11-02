@@ -134,7 +134,7 @@ RSpec.describe Milestoner::CLI do
       context "with no options" do
         it "prints configuration file path" do
           ClimateControl.modify HOME: temp_dir do
-            expect(&results).to output(/Global and local gem configuration not defined/).to_stdout
+            expect(&results).to output(/Local or global gem configuration not defined/).to_stdout
           end
         end
       end
