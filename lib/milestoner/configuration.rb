@@ -16,16 +16,16 @@ module Milestoner
       File.join ENV["HOME"], file_name
     end
 
-    def global?
-      File.exist? global_file_path
+    def computed_file_path
+      local? ? local_file_path : global_file_path
     end
 
     def local?
       File.exist? local_file_path
     end
 
-    def computed_file_path
-      File.exist?(local_file_path) ? local_file_path : global_file_path
+    def global?
+      File.exist? global_file_path
     end
 
     def settings

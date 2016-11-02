@@ -6,17 +6,6 @@ RSpec.describe Milestoner::Configuration, :temp_dir do
   let(:file_name) { ".testrc" }
   subject { described_class.new }
 
-  describe "#global_file_path" do
-    it "answers default file path" do
-      expect(subject.global_file_path).to eq(File.join(ENV["HOME"], Milestoner::Identity.file_name))
-    end
-
-    it "answers custom file path" do
-      subject = described_class.new file_name
-      expect(subject.global_file_path).to eq(File.join(ENV["HOME"], file_name))
-    end
-  end
-
   describe "#local_file_path" do
     it "answers default file path" do
       expect(subject.local_file_path).to eq(File.join(Dir.pwd, Milestoner::Identity.file_name))
@@ -28,33 +17,14 @@ RSpec.describe Milestoner::Configuration, :temp_dir do
     end
   end
 
-  describe "#global?" do
-    it "answers true when global configuration file exists" do
-      ClimateControl.modify HOME: temp_dir do
-        FileUtils.touch subject.global_file_path
-        expect(subject.global?).to eq(true)
-      end
+  describe "#global_file_path" do
+    it "answers default file path" do
+      expect(subject.global_file_path).to eq(File.join(ENV["HOME"], Milestoner::Identity.file_name))
     end
 
-    it "answers false when global configuration file doesn't exist" do
-      ClimateControl.modify HOME: temp_dir do
-        expect(subject.global?).to eq(false)
-      end
-    end
-  end
-
-  describe "#local?" do
-    it "answers true when local configuration file exists" do
-      Dir.chdir temp_dir do
-        FileUtils.touch subject.local_file_path
-        expect(subject.local?).to eq(true)
-      end
-    end
-
-    it "answers false when local configuration file doesn't exist" do
-      Dir.chdir temp_dir do
-        expect(subject.local?).to eq(false)
-      end
+    it "answers custom file path" do
+      subject = described_class.new file_name
+      expect(subject.global_file_path).to eq(File.join(ENV["HOME"], file_name))
     end
   end
 
@@ -75,6 +45,36 @@ RSpec.describe Milestoner::Configuration, :temp_dir do
         Dir.chdir temp_dir do
           expect(subject.computed_file_path).to eq(subject.global_file_path)
         end
+      end
+    end
+  end
+
+  describe "#local?" do
+    it "answers true when local configuration file exists" do
+      Dir.chdir temp_dir do
+        FileUtils.touch subject.local_file_path
+        expect(subject.local?).to eq(true)
+      end
+    end
+
+    it "answers false when local configuration file doesn't exist" do
+      Dir.chdir temp_dir do
+        expect(subject.local?).to eq(false)
+      end
+    end
+  end
+
+  describe "#global?" do
+    it "answers true when global configuration file exists" do
+      ClimateControl.modify HOME: temp_dir do
+        FileUtils.touch subject.global_file_path
+        expect(subject.global?).to eq(true)
+      end
+    end
+
+    it "answers false when global configuration file doesn't exist" do
+      ClimateControl.modify HOME: temp_dir do
+        expect(subject.global?).to eq(false)
       end
     end
   end
