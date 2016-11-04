@@ -4,6 +4,7 @@ require "yaml"
 require "thor"
 require "thor/actions"
 require "thor_plus/actions"
+require "runcom"
 
 module Milestoner
   # The Command Line Interface (CLI) for the gem.
@@ -21,11 +22,12 @@ module Milestoner
       }
     end
 
+    # rubocop:disable Metrics/AbcSize
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = Configuration.new Identity.file_name, defaults: self.class.defaults
-      @tagger = Tagger.new configuration.settings[:version],
-                           commit_prefixes: configuration.settings[:git_commit_prefixes]
+      @configuration = Runcom::Configuration.new file_name: Identity.file_name, defaults: self.class.defaults
+      @tagger = Tagger.new configuration.to_h[:version],
+                           commit_prefixes: configuration.to_h[:git_commit_prefixes]
       @pusher = Pusher.new
       @publisher = Publisher.new tagger: tagger, pusher: pusher
     end
@@ -41,7 +43,7 @@ module Milestoner
     desc "-t, [--tag=TAG]", "Tag local repository with new version."
     map %w[-t --tag] => :tag
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
-    def tag version = configuration.settings[:version]
+    def tag version = configuration.to_h[:version]
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version_label}."
     rescue StandardError => exception
@@ -60,7 +62,7 @@ module Milestoner
     desc "-P, [--publish=PUBLISH]", "Tag and push milestone to remote repository."
     map %w[-P --publish] => :publish
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
-    def publish version = configuration.settings[:version]
+    def publish version = configuration.to_h[:version]
       publisher.publish version, sign: sign_tag?(options[:sign])
       info "Repository tagged and pushed: #{tagger.version_label}."
       info "Milestone published!"
@@ -68,14 +70,14 @@ module Milestoner
       error exception.message
     end
 
-    desc "-c, [--config]", "Show/manage gem configuration."
+    desc "-c, [--config]", "Manage gem configuration."
     map %w[-c --config] => :config
     method_option :edit, aliases: "-e", desc: "Edit gem configuration.", type: :boolean, default: false
+    method_option :info, aliases: "-i", desc: "Print gem configuration info.", type: :boolean, default: false
     def config
-      if options[:edit]
-        `#{editor} #{configuration.computed_file_path}`
-      else
-        print_config_info
+      if options.edit? then `#{editor} #{configuration.computed_path}`
+      elsif options.info? then say("Using: #{configuration.computed_path}.")
+      else help(:config)
       end
     end
 
@@ -96,14 +98,7 @@ module Milestoner
     attr_reader :configuration, :tagger, :pusher, :publisher
 
     def sign_tag? sign
-      sign | configuration.settings[:git_tag_sign]
-    end
-
-    def print_config_info
-      if configuration.local? then say("Using local configuration: #{configuration.computed_file_path}.")
-      elsif configuration.global? then say("Using global configuration: #{configuration.computed_file_path}.")
-      else say("Local or global gem configuration not defined, using defaults instead.")
-      end
+      sign | configuration.to_h[:git_tag_sign]
     end
   end
 end
