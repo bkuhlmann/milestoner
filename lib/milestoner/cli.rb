@@ -13,9 +13,17 @@ module Milestoner
 
     package_name Identity.version_label
 
+    def self.defaults
+      {
+        version: "0.1.0",
+        git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
+        git_tag_sign: false
+      }
+    end
+
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = Configuration.new Identity.file_name, defaults: defaults
+      @configuration = Configuration.new Identity.file_name, defaults: self.class.defaults
       @tagger = Tagger.new configuration.settings[:version],
                            commit_prefixes: configuration.settings[:git_commit_prefixes]
       @pusher = Pusher.new
@@ -86,14 +94,6 @@ module Milestoner
     private
 
     attr_reader :configuration, :tagger, :pusher, :publisher
-
-    def defaults
-      {
-        version: "0.1.0",
-        git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
-        git_tag_sign: false
-      }
-    end
 
     def sign_tag? sign
       sign | configuration.settings[:git_tag_sign]
