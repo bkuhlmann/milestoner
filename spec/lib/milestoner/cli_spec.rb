@@ -8,12 +8,12 @@ RSpec.describe Milestoner::CLI do
     let(:version) { "0.1.0" }
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
-    let(:results) { -> { described_class.start command_line } }
+    let(:cli) { -> { described_class.start command_line } }
 
     shared_examples_for "a Git repository error", :temp_dir do
       it "prints invalid repository error" do
         Dir.chdir(temp_dir) do
-          expect(&results).to output(/error\s+Invalid\sGit\srepository\./).to_stdout
+          expect(&cli).to output(/error\s+Invalid\sGit\srepository\./).to_stdout
         end
       end
     end
@@ -23,7 +23,7 @@ RSpec.describe Milestoner::CLI do
 
       it "prints invalid version error" do
         Dir.chdir(git_repo_dir) do
-          expect(&results).to output(/Invalid version conversion\: bogus/).to_stdout
+          expect(&cli).to output(/Invalid version conversion\: bogus/).to_stdout
         end
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe Milestoner::CLI do
     shared_examples_for "a commits command", :git_repo do
       it "prints commits for new tag" do
         Dir.chdir(git_repo_dir) do
-          expect(&results).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
+          expect(&cli).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
         end
       end
 
@@ -44,7 +44,7 @@ RSpec.describe Milestoner::CLI do
 
       it "creates an unsigned tag" do
         ClimateControl.modify HOME: temp_dir do
-          results.call
+          cli.call
           expect(tagger).to have_received(:create).with(version, sign: false)
         end
       end
@@ -57,7 +57,7 @@ RSpec.describe Milestoner::CLI do
 
       it "signs tag" do
         ClimateControl.modify HOME: temp_dir do
-          results.call
+          cli.call
           expect(tagger).to have_received(:create).with(version, sign: true)
         end
       end
@@ -74,7 +74,7 @@ RSpec.describe Milestoner::CLI do
       it "prints repository has been tagged" do
         ClimateControl.modify HOME: temp_dir do
           Dir.chdir(git_repo_dir) do
-            expect(&results).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
+            expect(&cli).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
           end
         end
       end
@@ -87,7 +87,7 @@ RSpec.describe Milestoner::CLI do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         Dir.chdir(git_repo_dir) do
-          results.call
+          cli.call
           expect(pusher).to have_received(:push)
         end
       end
@@ -96,7 +96,7 @@ RSpec.describe Milestoner::CLI do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         Dir.chdir(git_repo_dir) do
-          expect(&results).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
+          expect(&cli).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
         end
       end
 
@@ -122,7 +122,7 @@ RSpec.describe Milestoner::CLI do
               \s+info\s+Milestone\spublished\!\n
             /x
 
-            expect(&results).to output(text).to_stdout
+            expect(&cli).to output(text).to_stdout
           end
         end
       end
@@ -137,28 +137,28 @@ RSpec.describe Milestoner::CLI do
 
         it "prints configuration path" do
           Dir.chdir(temp_dir) do
-            expect(&results).to output("Using: #{configuration_path}.\n").to_stdout
+            expect(&cli).to output("Using: #{configuration_path}.\n").to_stdout
           end
         end
       end
 
       context "with no options" do
         it "prints help text" do
-          expect(&results).to output(/Manage gem configuration./).to_stdout
+          expect(&cli).to output(/Manage gem configuration./).to_stdout
         end
       end
     end
 
     shared_examples_for "a version command" do
       it "prints version" do
-        expect(&results).to output(/Milestoner\s#{Milestoner::Identity.version}\n/).to_stdout
+        expect(&cli).to output(/Milestoner\s#{Milestoner::Identity.version}\n/).to_stdout
       end
     end
 
     shared_examples_for "a help command" do
       it "prints usage" do
         regex = /#{Milestoner::Identity.label}\s#{Milestoner::Identity.version}\scommands:\n/
-        expect(&results).to output(regex).to_stdout
+        expect(&cli).to output(regex).to_stdout
       end
     end
 
