@@ -40,7 +40,7 @@ module Milestoner
       error exception.message
     end
 
-    desc "-t, [--tag=TAG]", "Tag local repository with new version."
+    desc "-t, [--tag=VERSION]", "Tag local repository with new version."
     map %w[-t --tag] => :tag
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def tag version = configuration.to_h[:version]
@@ -59,7 +59,7 @@ module Milestoner
       error exception.message
     end
 
-    desc "-P, [--publish=PUBLISH]", "Tag and push milestone to remote repository."
+    desc "-P, [--publish=VERSION]", "Tag and push milestone to remote repository."
     map %w[-P --publish] => :publish
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
     def publish version = configuration.to_h[:version]
@@ -87,7 +87,7 @@ module Milestoner
       say Identity.version_label
     end
 
-    desc "-h, [--help=HELP]", "Show this message or get help for a command."
+    desc "-h, [--help=COMMAND]", "Show this message or get help for a command."
     map %w[-h --help] => :help
     def help task = nil
       say and super
