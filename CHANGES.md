@@ -1,3 +1,41 @@
+# v4.0.0 (2016-11-05)
+
+- Fixed CLI spec RSpec metadata.
+- Fixed Rakefile to safely load Gemsmith tasks.
+- Fixed Rubocop Style/NumericLiteralPrefix issue.
+- Fixed creating signed tag when GPG program is invalid.
+- Added Runcom support.
+- Added Travis CI random number generation.
+- Added batch script for GPG key generation.
+- Added frozen string literal pragma.
+- Updated CLI command option documentation.
+- Updated README versioning documentation.
+- Updated RSpec temp directory to use Bundler root path.
+- Updated Rubocop PercentLiteralDelimiters and AndOr styles.
+- Updated Tagger spec to use GPG key gen batch script.
+- Updated gemspec with conservative versions.
+- Updated order of local and global configuration information.
+- Updated to Gemsmith 7.7.0.
+- Updated to RSpec 3.5.0.
+- Updated to Rubocop 0.44.
+- Updated to Ruby 2.3.1.
+- Updated to Thor+ 4.0.0.
+- Updated to Versionaire 2.0.0.
+- Removed CHANGELOG.md (use CHANGES.md instead).
+- Removed Greenletters gem.
+- Removed Rake console task.
+- Removed `Milestoner::Configuration`.
+- Removed `Milestoner::Errors::Version`.
+- Removed gemspec description.
+- Removed rb-fsevent development dependency from gemspec.
+- Removed terminal notifier gems from gemspec.
+- Refactored CLI defaults as class method.
+- Refactored CLI subject.
+- Refactored RSpec spec helper configuration.
+- Refactored gemspec to use default security keys.
+- Refactored order of local and global methods.
+- Refactored tagger implementation.
+
 # v3.0.0 (2016-04-03)
 
 - Fixed CLI specs so pusher is spied upon.
