@@ -3,7 +3,7 @@
 module Milestoner
   # Handles publishing of Git tags to remote repository.
   class Pusher
-    def initialize git: Git.new, shell: Kernel
+    def initialize git: Git::Kit.new, shell: Kernel
       @git = git
       @shell = shell
     end

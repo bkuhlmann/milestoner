@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Milestoner::Git, :temp_dir do
+RSpec.describe Milestoner::Git::Kit, :temp_dir do
   subject { described_class.new }
   let(:git_dir) { File.join temp_dir, ".git" }
 

@@ -13,7 +13,7 @@ module Milestoner
 
     def_delegator :version, :label, :version_label
 
-    def initialize version = "0.1.0", commit_prefixes: [], git: Git.new
+    def initialize version = "0.1.0", commit_prefixes: [], git: Git::Kit.new
       @version = Versionaire::Version version
       @commit_prefixes = commit_prefixes
       @git = git
