@@ -9,6 +9,7 @@ before_install:
   - sudo apt-get install gnupg
 before_script: sudo find / -type f > /dev/null &
 script: bundle exec rake
+after_script: bundle exec codeclimate-test-reporter
 notifications:
   email: false
   slack:
