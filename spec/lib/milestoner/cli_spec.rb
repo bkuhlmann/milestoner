@@ -8,7 +8,12 @@ RSpec.describe Milestoner::CLI do
     let(:version) { "0.1.0" }
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
-    let(:cli) { -> { described_class.start command_line } }
+    let :cli do
+      lambda do
+        load "milestoner/cli.rb" # Ensures clean Thor `.method_option` evaluation per spec.
+        described_class.start command_line
+      end
+    end
 
     shared_examples_for "a Git repository error", :temp_dir do
       it "prints invalid repository error" do

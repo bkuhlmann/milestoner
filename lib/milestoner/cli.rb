@@ -14,8 +14,8 @@ module Milestoner
 
     package_name Identity.version_label
 
-    def self.defaults
-      {
+    def self.configuration
+      Runcom::Configuration.new file_name: Identity.file_name, defaults: {
         version: "0.1.0",
         git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
         git_tag_sign: false
@@ -25,9 +25,8 @@ module Milestoner
     # rubocop:disable Metrics/AbcSize
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = Runcom::Configuration.new file_name: Identity.file_name, defaults: self.class.defaults
-      @tagger = Tagger.new configuration.to_h[:version],
-                           commit_prefixes: configuration.to_h[:git_commit_prefixes]
+      @tagger = Tagger.new self.class.configuration.to_h[:version],
+                           commit_prefixes: self.class.configuration.to_h[:git_commit_prefixes]
       @pusher = Pusher.new
       @publisher = Publisher.new tagger: tagger, pusher: pusher
     end
@@ -43,7 +42,7 @@ module Milestoner
     desc "-t, [--tag=VERSION]", "Tag local repository with new version."
     map %w[-t --tag] => :tag
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
-    def tag version = configuration.to_h[:version]
+    def tag version = self.class.configuration.to_h[:version]
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version_label}."
     rescue StandardError => exception
@@ -62,7 +61,7 @@ module Milestoner
     desc "-P, [--publish=VERSION]", "Tag and push milestone to remote repository."
     map %w[-P --publish] => :publish
     method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
-    def publish version = configuration.to_h[:version]
+    def publish version = self.class.configuration.to_h[:version]
       publisher.publish version, sign: sign_tag?(options[:sign])
       info "Repository tagged and pushed: #{tagger.version_label}."
       info "Milestone published!"
@@ -75,8 +74,10 @@ module Milestoner
     method_option :edit, aliases: "-e", desc: "Edit gem configuration.", type: :boolean, default: false
     method_option :info, aliases: "-i", desc: "Print gem configuration info.", type: :boolean, default: false
     def config
-      if options.edit? then `#{editor} #{configuration.computed_path}`
-      elsif options.info? then say("Using: #{configuration.computed_path}.")
+      path = self.class.configuration.computed_path
+
+      if options.edit? then `#{editor} #{path}`
+      elsif options.info? then say("Using: #{path}.")
       else help(:config)
       end
     end
@@ -98,7 +99,7 @@ module Milestoner
     attr_reader :configuration, :tagger, :pusher, :publisher
 
     def sign_tag? sign
-      sign | configuration.to_h[:git_tag_sign]
+      sign | self.class.configuration.to_h[:git_tag_sign]
     end
   end
 end
