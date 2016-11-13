@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "runcom", "~> 0.3"
   spec.add_dependency "versionaire", "~> 2.1"
   spec.add_development_dependency "rake", "~> 11.0"
-  spec.add_development_dependency "gemsmith", "~> 8.0"
+  spec.add_development_dependency "gemsmith", "~> 8.1"
   spec.add_development_dependency "pry", "~> 0.10"
   spec.add_development_dependency "pry-byebug", "~> 3.4"
   spec.add_development_dependency "pry-state", "~> 0.1"
