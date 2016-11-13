@@ -1,3 +1,17 @@
+# v4.1.0 (2016-11-13)
+
+- Fixed Ruby pragma.
+- Added Code Climate engine support.
+- Added Git config support.
+- Added Reek support.
+- Updated RSpec Git repo shared context syntax.
+- Updated `--config` command to use computed path.
+- Updated to Code Climate Test Reporter 1.0.0.
+- Updated to Gemsmith 8.0.0.
+- Removed CLI defaults (using configuration instead).
+- Refactored `Git` as `Git::Kit`.
+- Refactored source requirements.
+
 # v4.0.0 (2016-11-05)
 
 - Fixed CLI spec RSpec metadata.
