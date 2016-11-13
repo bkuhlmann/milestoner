@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "milestoner/cli"
 
 RSpec.describe Milestoner::CLI do
   describe ".start" do

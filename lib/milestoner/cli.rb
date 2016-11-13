@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "yaml"
 require "thor"
 require "thor/actions"
 require "thor_plus/actions"
