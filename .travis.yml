@@ -2,13 +2,10 @@ language: ruby
 env:
   global:
   - secure: BNWaeKaRO+vfluTolhKchMeq8Sfd4xNWdI4T09Y/c0GwNDrYb5CnIn+nZdcFPSJmoNZ5+muFnew5xDVW+ntc0DwOyZjMRxvMSMkP3MOJfN991nPwsenEVreIhLgv+hKsFts1V6CbGNhk41dvU7zaDGAi7lhiErgQVvabfLDX49g8UBWutYUGMYUGzQy/Yy2y+KO4uwiEqfZJ0+gDDUx6Z9rlzEVyEMczaZxMK8OCTLYL5AYllWN8E+XBCTr+eWM8dCrphBgT2Eshg8+98A0qze26iS+86cDL9AmyibVWVjjyvx/s2ZY2V0O5ktRF1Qc8QCl641jG2lX4h7lKdN5ZcCPXR87Kot4Yo9z448oiNUWaXodbimbzzgfKKtgb1bZ2FBT/oIQjXEtvyJKVsx1lWMTavwt/LAiZ4d6jyI2BP2Dt3nLLsbJoTanMBj8/cSW598dSTjsXYvMP3eRFf9BQpTIe6vJJHibRLvV5430fP9Kv+foV6Un2pFp5QBTGpqny6bZLL+SoE+IQ/8As9+jQcVzQOu+WGj/3ocN4TsXGMjRkGtM5K/ZUUNjN4f460NZE6HvhzIW5YHfUZGNdi4CT4oFwhZFZ4YvTmX3ZkSbBMjnRyUsm1TMTILPmBmm/JfKSJJHqvj5VMH7Cgk3lslRk2YtnrxQm3D9Z0p00+hATHi0=
-rvm:
-- 2.3.0
 before_install:
   - sudo apt-get update
   - sudo apt-get install gnupg
 before_script: sudo find / -type f > /dev/null &
-script: bundle exec rake
 after_script: bundle exec codeclimate-test-reporter
 notifications:
   email: false
