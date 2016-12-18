@@ -1,3 +1,15 @@
+# v4.2.0 (2016-12-18)
+
+- Fixed Rakefile support for RSpec, Reek, Rubocop, and SCSS Lint.
+- Added `Gemfile.lock` to `.gitignore`.
+- Updated Travis CI configuration to use defaults.
+- Updated gem dependencies.
+- Updated to Gemsmith 8.2.x.
+- Updated to Rake 12.x.x.
+- Updated to Rubocop 0.46.x.
+- Updated to Ruby 2.3.2.
+- Updated to Ruby 2.3.3.
+
 # v4.1.1 (2016-11-13)
 
 - Fixed gem requirements order.
