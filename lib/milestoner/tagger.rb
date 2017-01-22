@@ -108,7 +108,8 @@ module Milestoner
     end
 
     def git_options message_file, sign: false
-      options = %(--sign --annotate "#{version.label}" --cleanup verbatim --file "#{message_file.path}")
+      options = %(--sign --annotate "#{version.label}" ) +
+                %(--cleanup verbatim --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
       options
     end

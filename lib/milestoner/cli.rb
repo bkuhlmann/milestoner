@@ -40,7 +40,11 @@ module Milestoner
 
     desc "-t, [--tag=VERSION]", "Tag local repository with new version."
     map %w[-t --tag] => :tag
-    method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
+    method_option :sign,
+                  aliases: "-s",
+                  desc: "Sign tag with GPG key.",
+                  type: :boolean,
+                  default: false
     def tag version = self.class.configuration.to_h[:version]
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version_label}."
@@ -59,7 +63,11 @@ module Milestoner
 
     desc "-P, [--publish=VERSION]", "Tag and push milestone to remote repository."
     map %w[-P --publish] => :publish
-    method_option :sign, aliases: "-s", desc: "Sign tag with GPG key.", type: :boolean, default: false
+    method_option :sign,
+                  aliases: "-s",
+                  desc: "Sign tag with GPG key.",
+                  type: :boolean,
+                  default: false
     def publish version = self.class.configuration.to_h[:version]
       publisher.publish version, sign: sign_tag?(options[:sign])
       info "Repository tagged and pushed: #{tagger.version_label}."

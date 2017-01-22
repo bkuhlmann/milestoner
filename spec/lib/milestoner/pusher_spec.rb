@@ -31,7 +31,10 @@ RSpec.describe Milestoner::Pusher, :temp_dir do
           `git init`
           result = -> { subject.push }
 
-          expect(&result).to raise_error(Milestoner::Errors::Git, "Git remote repository not configured.")
+          expect(&result).to raise_error(
+            Milestoner::Errors::Git,
+            "Git remote repository not configured."
+          )
         end
       end
     end
@@ -42,7 +45,11 @@ RSpec.describe Milestoner::Pusher, :temp_dir do
       it "fails with Git error when push is unsuccessful", :git_repo do
         Dir.chdir git_repo_dir do
           result = -> { subject.push }
-          expect(&result).to raise_error(Milestoner::Errors::Git, "Git tags could not be pushed to remote repository.")
+
+          expect(&result).to raise_error(
+            Milestoner::Errors::Git,
+            "Git tags could not be pushed to remote repository."
+          )
         end
       end
     end

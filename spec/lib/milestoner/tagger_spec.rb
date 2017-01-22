@@ -5,7 +5,11 @@ require "spec_helper"
 RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   let(:version) { Versionaire::Version.new minor: 1 }
   let(:prefixes) { %w[Fixed Added Updated Removed Refactored] }
-  let(:tag_details) { ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first } }
+
+  let :tag_details do
+    ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first }
+  end
+
   subject { described_class.new version, commit_prefixes: prefixes }
 
   describe "#initialize" do
@@ -307,7 +311,9 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         let(:gpg_dir) { File.join temp_dir, ".gnupg" }
         let(:gpg_script) { File.join temp_dir, "..", "..", "spec", "support", "gpg_script" }
         let(:git_email) { "tester@example.com" }
-        let(:gpg_key) { `gpg --list-keys #{git_email} | grep pub | awk '{print $2}' | cut -d'/' -f 2`.chomp }
+        let :gpg_key do
+          `gpg --list-keys #{git_email} | grep pub | awk '{print $2}' | cut -d'/' -f 2`.chomp
+        end
 
         it "signs tag" do
           ClimateControl.modify GNUPGHOME: gpg_dir do
@@ -331,7 +337,10 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           subject.create
           result = -> { subject.create }
 
-          expect(&result).to raise_error(Milestoner::Errors::DuplicateTag, "Duplicate tag exists: v0.1.0.")
+          expect(&result).to raise_error(
+            Milestoner::Errors::DuplicateTag,
+            "Duplicate tag exists: v0.1.0."
+          )
         end
       end
     end
@@ -342,7 +351,10 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           `git config --local gpg.program /dev/null`
           result = -> { subject.create sign: true }
 
-          expect(&result).to raise_error(Milestoner::Errors::Git, "Unable to create tag: v0.1.0.")
+          expect(&result).to raise_error(
+            Milestoner::Errors::Git,
+            "Unable to create tag: v0.1.0."
+          )
         end
       end
     end

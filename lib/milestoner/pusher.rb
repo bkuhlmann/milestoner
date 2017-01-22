@@ -11,7 +11,10 @@ module Milestoner
     def push
       fail(Errors::Git) unless git.supported?
       fail(Errors::Git, "Git remote repository not configured.") unless git.remote?
-      fail(Errors::Git, "Git tags could not be pushed to remote repository.") unless shell.system("git push --tags")
+
+      return if shell.system("git push --tags")
+
+      fail(Errors::Git, "Git tags could not be pushed to remote repository.")
     end
 
     private
