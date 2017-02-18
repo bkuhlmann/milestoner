@@ -14,7 +14,6 @@ RSpec.shared_context "Git Repository", :git_repo do
       FileUtils.touch "two.txt"
       FileUtils.touch "three.txt"
       `git init`
-      `rm -rf .git/hooks`
       `git config user.name "#{git_user_name}"`
       `git config user.email "#{git_user_email}"`
       `git config core.hooksPath /dev/null`
