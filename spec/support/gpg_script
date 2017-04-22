@@ -3,6 +3,7 @@ Key-Type: 1
 Key-Length: 2048
 Subkey-Type: 1
 Subkey-Length: 2048
-Name-Real: Testy McTester
-Name-Email: tester@example.com
+Name-Real: Test Tester
+Name-Email: test@alchemists.io
 Expire-Date: 0
+Passphrase: M2nLjXmzGRGquNXDY8c8VE89KFxi8TDB8u496pcA
