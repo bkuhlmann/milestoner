@@ -43,36 +43,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
   end
 
-  describe "#tagged?" do
-    it "answers true when tags exist" do
-      Dir.chdir(git_repo_dir) do
-        `git tag v0.0.0`
-        expect(subject.tagged?).to eq(true)
-      end
-    end
-
-    it "answers false when tags don't exist" do
-      Dir.chdir(git_repo_dir) do
-        expect(subject.tagged?).to eq(false)
-      end
-    end
-  end
-
-  describe "#duplicate?" do
-    it "answers true when tag is identical" do
-      Dir.chdir(git_repo_dir) do
-        subject.create
-        expect(subject.duplicate?).to eq(true)
-      end
-    end
-
-    it "answers false when tag doesn't exist" do
-      Dir.chdir(git_repo_dir) do
-        expect(subject.duplicate?).to eq(false)
-      end
-    end
-  end
-
   describe "#commits" do
     context "when tagged" do
       it "answers commits since last tag" do
@@ -285,13 +255,12 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     context "when signed" do
-      # FIX: Research how to generate sufficient entropy for signed keys on a CI machine.
+      # FIX: Need to generate sufficient entropy for signed keys on a CI machine.
       unless ENV["CI"]
         let(:gpg_dir) { File.join temp_dir, ".gnupg" }
         let(:gpg_script) { File.join temp_dir, "..", "..", "spec", "support", "gpg_script" }
-        let(:git_email) { "tester@example.com" }
         let :gpg_key do
-          `gpg --list-keys #{git_email} | grep pub | awk '{print $2}' | cut -d'/' -f 2`.chomp
+          `gpg --list-secret-keys #{git_user_email} | grep "[A-F0-9]$" | tr -d ' '`.chomp
         end
 
         it "signs tag" do
@@ -299,7 +268,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
             Dir.chdir(git_repo_dir) do
               FileUtils.mkdir gpg_dir
               FileUtils.chmod 0o700, gpg_dir
-              `gpg --batch --quiet --gen-key #{gpg_script}`
+              `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
               `git config --local user.signingkey #{gpg_key}`
               subject.create sign: true
 

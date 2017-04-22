@@ -24,15 +24,6 @@ module Milestoner
       Regexp.union commit_prefixes
     end
 
-    def tagged?
-      response = `git tag`
-      !(response.nil? || response.empty?)
-    end
-
-    def duplicate?
-      system "git rev-parse #{version.label} > /dev/null 2>&1"
-    end
-
     def commits
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
@@ -47,13 +38,13 @@ module Milestoner
     def create raw_version = version, sign: false
       @version = Versionaire::Version raw_version
       fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
-      fail(Errors::DuplicateTag, "Duplicate tag exists: #{version.label}.") if duplicate?
+      fail(Errors::DuplicateTag, "Duplicate tag exists: #{version.label}.") if git_duplicate_tag?
       git_tag sign: sign
     end
 
     def delete raw_version = version
       @version = Versionaire::Version raw_version
-      Open3.capture3 "git tag --delete #{version.label}" if duplicate?
+      Open3.capture3 "git tag --delete #{version.label}" if git_duplicate_tag?
     end
 
     private
@@ -69,12 +60,16 @@ module Milestoner
     end
 
     def git_commits_command
-      return "#{git_log_command} #{git_tag_command}" if tagged?
+      return "#{git_log_command} #{git_tag_command}" if git.tagged?
       git_log_command
     end
 
     def raw_commits
       `#{git_commits_command}`.split("\n")
+    end
+
+    def git_duplicate_tag?
+      git.tag? version.label
     end
 
     def build_commit_prefix_groups
