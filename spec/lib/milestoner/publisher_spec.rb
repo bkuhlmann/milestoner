@@ -9,7 +9,7 @@ RSpec.describe Milestoner::Publisher do
   subject { described_class.new tagger: tagger, pusher: pusher }
 
   describe "#publish" do
-    context "without error" do
+    context "with success" do
       it "creates tag" do
         subject.publish version
         expect(tagger).to have_received(:create).with(version, sign: false)
@@ -26,7 +26,7 @@ RSpec.describe Milestoner::Publisher do
       end
     end
 
-    context "with error" do
+    context "with failure" do
       before { allow(tagger).to receive(:create).and_raise(Milestoner::Errors::Git) }
 
       it "deletes tag and raises error", :aggregate_failures do
