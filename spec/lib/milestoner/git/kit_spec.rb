@@ -6,7 +6,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
   subject { described_class.new }
   let(:git_dir) { File.join temp_dir, ".git" }
 
-  describe "#git_supported?" do
+  describe "#supported?" do
     context "when .git directory exists" do
       before { FileUtils.mkdir_p git_dir }
 
@@ -22,7 +22,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
     end
   end
 
-  describe "#git_commits?" do
+  describe "#commits?" do
     context "when repository has commits", :git_repo do
       it "answers true" do
         Dir.chdir(git_repo_dir) { expect(subject.commits?).to eq(true) }
@@ -38,7 +38,85 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
     end
   end
 
-  describe "#git_remote?" do
+  describe "push_tags", :git_repo do
+    it "successfully pushes tags" do
+      allow(subject).to receive(:`).and_return("")
+      expect(subject.push_tags).to eq("")
+    end
+
+    it "fails to push tags" do
+      allow(subject).to receive(:`).and_return("error")
+      expect(subject.push_tags).to eq("error")
+    end
+  end
+
+  describe "#tagged?", :git_repo do
+    context "with exiting tags" do
+      it "answers true" do
+        Dir.chdir git_repo_dir do
+          `git tag v0.1.0`
+          expect(subject.tagged?).to eq(true)
+        end
+      end
+    end
+
+    context "without existing tags" do
+      it "answers false" do
+        Dir.chdir git_repo_dir do
+          expect(subject.tagged?).to eq(false)
+        end
+      end
+    end
+
+    context "with uninitialized repository" do
+      it "answers false" do
+        ClimateControl.modify GIT_DIR: temp_dir do
+          expect(subject.tagged?).to eq(false)
+        end
+      end
+    end
+  end
+
+  describe "#tag_local?", :git_repo do
+    let(:tag) { "v0.1.0" }
+
+    context "with matching tag" do
+      it "answers true" do
+        Dir.chdir(git_repo_dir) do
+          `git tag #{tag}`
+          expect(subject.tag_local?(tag)).to eq(true)
+        end
+      end
+    end
+
+    context "without matching tag" do
+      it "answers false" do
+        Dir.chdir(git_repo_dir) do
+          expect(subject.tag_local?(tag)).to eq(false)
+        end
+      end
+    end
+  end
+
+  describe "#tag_remote?", :git_repo do
+    context "with matching tag" do
+      it "answers true" do
+        Dir.chdir(git_repo_dir) do
+          expect(subject.tag_remote?("v1.0.0")).to eq(true)
+        end
+      end
+    end
+
+    context "without matching tag" do
+      it "answers false" do
+        Dir.chdir(git_repo_dir) do
+          expect(subject.tag_remote?("v0.1.0")).to eq(false)
+        end
+      end
+    end
+  end
+
+  describe "#remote?" do
     before { Dir.chdir(temp_dir) { `git init` } }
 
     context "when remote repository is defined" do
