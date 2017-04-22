@@ -8,6 +8,7 @@ module Milestoner
       @pusher = pusher
     end
 
+    # :reek:BooleanParameter
     def publish version, sign: false
       tagger.create version, sign: sign
       pusher.push

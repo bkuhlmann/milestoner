@@ -6,6 +6,7 @@ require "versionaire"
 
 module Milestoner
   # Handles the tagging of a project repository.
+  # :reek:TooManyMethods
   class Tagger
     extend Forwardable
 
@@ -26,8 +27,8 @@ module Milestoner
 
     def commits
       groups = build_commit_prefix_groups
-      group_by_commit_prefix! groups
-      sort_by_commit_prefix! groups
+      group_by_commit_prefix groups
+      sort_by_commit_prefix groups
       groups.values.flatten.uniq
     end
 
@@ -35,6 +36,7 @@ module Milestoner
       commits.map { |commit| "- #{commit}" }
     end
 
+    # :reek:BooleanParameter
     def create raw_version = version, sign: false
       @version = Versionaire::Version raw_version
       fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
@@ -77,11 +79,12 @@ module Milestoner
       groups.merge! "Other" => []
     end
 
+    # :reek:UtilityFunction
     def sanitize_commit commit
       commit.gsub(/\[ci\sskip\]/, "").squeeze(" ").strip
     end
 
-    def group_by_commit_prefix! groups = {}
+    def group_by_commit_prefix groups = {}
       raw_commits.each do |commit|
         prefix = commit[commit_prefix_regex]
         key = groups.key?(prefix) ? prefix : "Other"
@@ -89,7 +92,8 @@ module Milestoner
       end
     end
 
-    def sort_by_commit_prefix! groups = {}
+    # :reek:UtilityFunction
+    def sort_by_commit_prefix groups = {}
       groups.each { |_, values| values.sort! }
     end
 
@@ -97,6 +101,8 @@ module Milestoner
       %(Version #{version}.\n\n#{commit_list.join "\n"}\n\n)
     end
 
+    # :reek:BooleanParameter
+    # :reek:ControlParameter
     def git_options message_file, sign: false
       options = %(--sign --annotate "#{version.label}" ) +
                 %(--cleanup verbatim --file "#{message_file.path}")
@@ -104,6 +110,8 @@ module Milestoner
       options
     end
 
+    # :reek:BooleanParameter
+    # :reek:TooManyStatements
     def git_tag sign: false
       message_file = Tempfile.new Identity.name
       File.open(message_file, "w") { |file| file.write git_message }
