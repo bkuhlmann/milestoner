@@ -14,14 +14,6 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a Git repository error", :temp_dir do
-      it "prints invalid repository error" do
-        Dir.chdir(temp_dir) do
-          expect(&cli).to output(/error\s+Invalid\sGit\srepository\./).to_stdout
-        end
-      end
-    end
-
     shared_examples_for "a version error", :git_repo do
       let(:version) { "bogus" }
 
@@ -38,8 +30,6 @@ RSpec.describe Milestoner::CLI do
           expect(&cli).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
         end
       end
-
-      it_behaves_like "a Git repository error"
     end
 
     shared_examples_for "an unsigned tag", :temp_dir do
@@ -73,7 +63,6 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "an unsigned tag"
       it_behaves_like "a signed tag"
       it_behaves_like "a version error"
-      it_behaves_like "a Git repository error"
 
       it "prints repository has been tagged" do
         ClimateControl.modify HOME: temp_dir do
@@ -103,8 +92,6 @@ RSpec.describe Milestoner::CLI do
           expect(&cli).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
         end
       end
-
-      it_behaves_like "a Git repository error"
     end
 
     shared_examples_for "a publish command", :git_repo do
@@ -114,7 +101,6 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "an unsigned tag"
       it_behaves_like "a signed tag"
       it_behaves_like "a version error"
-      it_behaves_like "a Git repository error"
 
       it "prints repository has been tagged and published" do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
@@ -132,15 +118,15 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a config command", :temp_dir do
-      let(:configuration_path) { File.join temp_dir, Milestoner::Identity.file_name }
+    shared_examples_for "a config command", :git_repo do
+      let(:configuration_path) { File.join git_repo_dir, Milestoner::Identity.file_name }
       before { FileUtils.touch configuration_path }
 
       context "with info option" do
         let(:options) { %w[-i] }
 
         it "prints configuration path" do
-          Dir.chdir(temp_dir) do
+          Dir.chdir(git_repo_dir) do
             expect(&cli).to output("#{configuration_path}\n").to_stdout
           end
         end

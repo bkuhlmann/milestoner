@@ -25,18 +25,15 @@ module Milestoner
     end
 
     def tagged?
-      fail(Errors::Git) unless git.supported?
       response = `git tag`
       !(response.nil? || response.empty?)
     end
 
     def duplicate?
-      fail(Errors::Git) unless git.supported?
       system "git rev-parse #{version.label} > /dev/null 2>&1"
     end
 
     def commits
-      fail(Errors::Git) unless git.supported?
       groups = build_commit_prefix_groups
       group_by_commit_prefix! groups
       sort_by_commit_prefix! groups
@@ -49,7 +46,6 @@ module Milestoner
 
     def create raw_version = version, sign: false
       @version = Versionaire::Version raw_version
-      fail(Errors::Git) unless git.supported?
       fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
       fail(Errors::DuplicateTag, "Duplicate tag exists: #{version.label}.") if duplicate?
       git_tag sign: sign
@@ -57,7 +53,6 @@ module Milestoner
 
     def delete raw_version = version
       @version = Versionaire::Version raw_version
-      fail(Errors::Git) unless git.supported?
       Open3.capture3 "git tag --delete #{version.label}" if duplicate?
     end
 

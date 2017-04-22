@@ -56,13 +56,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         expect(subject.tagged?).to eq(false)
       end
     end
-
-    it "fails with Git error when not a Git repository" do
-      Dir.chdir temp_dir do
-        result = -> { subject.tagged? }
-        expect(&result).to raise_error(Milestoner::Errors::Git)
-      end
-    end
   end
 
   describe "#duplicate?" do
@@ -76,13 +69,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "answers false when tag doesn't exist" do
       Dir.chdir(git_repo_dir) do
         expect(subject.duplicate?).to eq(false)
-      end
-    end
-
-    it "fails with Git error when not a Git repository" do
-      Dir.chdir temp_dir do
-        result = -> { subject.duplicate? }
-        expect(&result).to raise_error(Milestoner::Errors::Git)
       end
     end
   end
@@ -212,13 +198,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
             "Updated gem dependencies."
           ]
         )
-      end
-    end
-
-    it "fails with Git error when not a Git repository" do
-      Dir.chdir temp_dir do
-        result = -> { subject.commits }
-        expect(&result).to raise_error(Milestoner::Errors::Git)
       end
     end
   end
@@ -359,13 +338,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
-    it "fails with invalid Git repository" do
-      Dir.chdir temp_dir do
-        result = -> { subject.create }
-        expect(&result).to raise_error(Milestoner::Errors::Git, "Invalid Git repository.")
-      end
-    end
-
     it "fails with no Git commits" do
       Dir.chdir temp_dir do
         `git init`
@@ -404,13 +376,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           expect(stderr).to eq(nil)
         end
       end
-
-      it "fails when not a Git repository" do
-        Dir.chdir temp_dir do
-          result = -> { subject.delete }
-          expect(&result).to raise_error(Milestoner::Errors::Git, "Invalid Git repository.")
-        end
-      end
     end
 
     context "with custom version" do
@@ -436,13 +401,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         Dir.chdir(git_repo_dir) do
           _, stderr = subject.delete version
           expect(stderr).to eq(nil)
-        end
-      end
-
-      it "fails when not a Git repository" do
-        Dir.chdir temp_dir do
-          result = -> { subject.delete version }
-          expect(&result).to raise_error(Milestoner::Errors::Git, "Invalid Git repository.")
         end
       end
     end
