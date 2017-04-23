@@ -2,6 +2,7 @@
 
 require "forwardable"
 require "open3"
+require "thor"
 require "versionaire"
 
 module Milestoner
@@ -18,6 +19,7 @@ module Milestoner
       @version = Versionaire::Version version
       @commit_prefixes = commit_prefixes
       @git = git
+      @shell = Thor::Shell::Color.new
     end
 
     def commit_prefix_regex
@@ -40,18 +42,13 @@ module Milestoner
     def create raw_version = version, sign: false
       @version = Versionaire::Version raw_version
       fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
-      fail(Errors::DuplicateTag, "Duplicate tag exists: #{version.label}.") if git_duplicate_tag?
+      return if existing_tag?
       git_tag sign: sign
-    end
-
-    def delete raw_version = version
-      @version = Versionaire::Version raw_version
-      Open3.capture3 "git tag --delete #{version.label}" if git_duplicate_tag?
     end
 
     private
 
-    attr_reader :git
+    attr_reader :git, :shell
 
     def git_log_command
       "git log --oneline --no-merges --format='%s'"
@@ -68,10 +65,6 @@ module Milestoner
 
     def raw_commits
       `#{git_commits_command}`.split("\n")
-    end
-
-    def git_duplicate_tag?
-      git.tag? version.label
     end
 
     def build_commit_prefix_groups
@@ -104,10 +97,16 @@ module Milestoner
     # :reek:BooleanParameter
     # :reek:ControlParameter
     def git_options message_file, sign: false
-      options = %(--sign --annotate "#{version.label}" ) +
+      options = %(--sign --annotate "#{version_label}" ) +
                 %(--cleanup verbatim --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
       options
+    end
+
+    def existing_tag?
+      return false unless git.tag_local?(version_label)
+      shell.say_status :warn, "Local tag exists: #{version_label}. Skipped.", :yellow
+      true
     end
 
     # :reek:BooleanParameter
@@ -116,7 +115,7 @@ module Milestoner
       message_file = Tempfile.new Identity.name
       File.open(message_file, "w") { |file| file.write git_message }
       status = system "git tag #{git_options message_file, sign: sign}"
-      fail(Errors::Git, "Unable to create tag: #{version.label}.") unless status
+      fail(Errors::Git, "Unable to create tag: #{version_label}.") unless status
     ensure
       message_file.close
       message_file.unlink

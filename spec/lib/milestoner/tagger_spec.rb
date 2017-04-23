@@ -182,32 +182,28 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   end
 
   describe "#create" do
-    context "with initialized version" do
-      it "creates new tag" do
-        Dir.chdir(git_repo_dir) do
-          subject.create
-          expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
-        end
+    it "creates default tag" do
+      Dir.chdir(git_repo_dir) do
+        subject.create
+        expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
       end
     end
 
-    context "with custom version" do
-      it "creates new tag" do
-        Dir.chdir(git_repo_dir) do
-          subject.create "0.2.0"
-          expect(tag_details.call("0.2.0")).to match(/tag\sv0\.2\.0/)
-        end
+    it "creates custom tag" do
+      Dir.chdir(git_repo_dir) do
+        subject.create "0.2.0"
+        expect(tag_details.call("0.2.0")).to match(/tag\sv0\.2\.0/)
       end
     end
 
-    it "uses tag message" do
+    it "creates tag message" do
       Dir.chdir(git_repo_dir) do
         subject.create
         expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0\./)
       end
     end
 
-    it "uses tag message and includes commits since last tag" do
+    it "creates tag message with commits since last tag" do
       Dir.chdir(git_repo_dir) do
         `git rm one.txt`
         `git commit --all --message "Removed one."`
@@ -279,17 +275,19 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
-    context "when duplicate tag exists" do
-      it "fails with duplicate tag error" do
-        Dir.chdir(git_repo_dir) do
-          subject.create
-          result = -> { subject.create }
+    it "prints warning with existing local tag" do
+      Dir.chdir(git_repo_dir) do
+        subject.create
+        result = -> { subject.create }
 
-          expect(&result).to raise_error(
-            Milestoner::Errors::DuplicateTag,
-            "Duplicate tag exists: v0.1.0."
-          )
-        end
+        expect(&result).to output(/warn.+Local\stag.+v0\.1\.0.+/).to_stdout
+      end
+    end
+
+    it "doesn't print warning without existing local tag" do
+      Dir.chdir(git_repo_dir) do
+        result = -> { subject.create }
+        expect(&result).to_not output(/warn.+Local\stag.+v0\.1\.0.+/).to_stdout
       end
     end
 
@@ -319,66 +317,6 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "fails with invalid version" do
       result = -> { subject.create "bogus" }
       expect(&result).to raise_error(Versionaire::Errors::Conversion)
-    end
-  end
-
-  describe "#delete" do
-    context "with initialized version" do
-      it "does not update version number" do
-        Dir.chdir(git_repo_dir) do
-          subject.delete
-          expect(subject.version).to eq(version)
-        end
-      end
-
-      it "deletes existing tag" do
-        Dir.chdir(git_repo_dir) do
-          subject.create
-          subject.delete
-          expect(`git tag`).to eq("")
-        end
-      end
-
-      it "only deletes duplicate tag" do
-        Dir.chdir(git_repo_dir) do
-          _, stderr = subject.delete
-          expect(stderr).to eq(nil)
-        end
-      end
-    end
-
-    context "with custom version" do
-      let(:version) { Versionaire::Version "1.1.1" }
-      subject { described_class.new }
-
-      it "updates version number" do
-        Dir.chdir(git_repo_dir) do
-          subject.delete version
-          expect(subject.version).to eq(version)
-        end
-      end
-
-      it "deletes existing tag" do
-        Dir.chdir(git_repo_dir) do
-          subject.create version
-          subject.delete version
-          expect(`git tag`).to eq("")
-        end
-      end
-
-      it "only deletes duplicate tag" do
-        Dir.chdir(git_repo_dir) do
-          _, stderr = subject.delete version
-          expect(stderr).to eq(nil)
-        end
-      end
-    end
-
-    context "with invalid version" do
-      it "raises Versionaire error" do
-        result = -> { subject.delete "bogus" }
-        expect(&result).to raise_error(Versionaire::Errors::Conversion)
-      end
     end
   end
 end

@@ -12,9 +12,6 @@ module Milestoner
     def publish version, sign: false
       tagger.create version, sign: sign
       pusher.push
-    rescue Errors::Git => error
-      tagger.delete version
-      raise error.class, error.message
     end
 
     private
