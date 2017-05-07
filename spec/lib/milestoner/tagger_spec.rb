@@ -3,27 +3,22 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
-  let(:version) { Versionaire::Version.new minor: 1 }
+  let(:version) { Versionaire::Version "0.1.0" }
   let(:prefixes) { %w[Fixed Added Updated Removed Refactored] }
 
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first }
   end
 
-  subject { described_class.new version, commit_prefixes: prefixes }
+  subject { described_class.new commit_prefixes: prefixes }
 
   describe "#initialize" do
-    it "answers default version" do
-      expect(subject.version).to eq(version)
+    it "answers nil version" do
+      expect(subject.version).to eq(nil)
     end
 
     it "answers default commit prefixes" do
       expect(subject.commit_prefixes).to eq(prefixes)
-    end
-
-    it "fails with invalid version" do
-      result = -> { described_class.new "bogus" }
-      expect(&result).to raise_error(Versionaire::Errors::Conversion)
     end
   end
 
@@ -184,7 +179,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   describe "#create" do
     it "creates default tag" do
       Dir.chdir(git_repo_dir) do
-        subject.create
+        subject.create version
         expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
       end
     end
@@ -198,7 +193,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     it "creates tag message" do
       Dir.chdir(git_repo_dir) do
-        subject.create
+        subject.create version
         expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0\./)
       end
     end
@@ -214,7 +209,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         `printf "Three." > three.txt`
         `git commit --all --message "Fixed three."`
 
-        subject.create
+        subject.create version
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\.\n\n
@@ -231,7 +226,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         `printf "Test" > two.txt`
         %x(git commit --all --message 'Updated two.txt with \`bogus command\` in message.')
 
-        subject.create
+        subject.create version
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\.\n\n
@@ -244,7 +239,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     context "when not signed" do
       it "does not sign tag" do
         Dir.chdir(git_repo_dir) do
-          subject.create
+          subject.create version
           expect(tag_details.call("0.1.0")).to_not match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
         end
       end
@@ -265,7 +260,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
               FileUtils.chmod 0o700, gpg_dir
               `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
               `git config --local user.signingkey #{gpg_key}`
-              subject.create sign: true
+              subject.create version, sign: true
 
               expect(tag_details.call("0.1.0")).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
             end
@@ -276,8 +271,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     it "prints warning with existing local tag" do
       Dir.chdir(git_repo_dir) do
-        subject.create
-        result = -> { subject.create }
+        subject.create version
+        result = -> { subject.create version }
 
         expect(&result).to output(/warn.+Local\stag.+v0\.1\.0.+/).to_stdout
       end
@@ -285,7 +280,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     it "doesn't print warning without existing local tag" do
       Dir.chdir(git_repo_dir) do
-        result = -> { subject.create }
+        result = -> { subject.create version }
         expect(&result).to_not output(/warn.+Local\stag.+v0\.1\.0.+/).to_stdout
       end
     end
@@ -294,7 +289,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       it "signs tag" do
         Dir.chdir(git_repo_dir) do
           `git config --local gpg.program /dev/null`
-          result = -> { subject.create sign: true }
+          result = -> { subject.create version, sign: true }
 
           expect(&result).to raise_error(
             Milestoner::Errors::Git,
@@ -307,7 +302,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "fails with no Git commits" do
       Dir.chdir temp_dir do
         `git init`
-        result = -> { subject.create }
+        result = -> { subject.create version }
 
         expect(&result).to raise_error(Milestoner::Errors::Git, "Unable to tag without commits.")
       end

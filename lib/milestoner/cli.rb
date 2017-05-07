@@ -24,9 +24,7 @@ module Milestoner
     # rubocop:disable Metrics/AbcSize
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      configuration = self.class.configuration.to_h
-      @tagger = Tagger.new configuration[:version],
-                           commit_prefixes: configuration[:git_commit_prefixes]
+      @tagger = Tagger.new commit_prefixes: self.class.configuration.to_h[:git_commit_prefixes]
       @pusher = Pusher.new
       @publisher = Publisher.new tagger: tagger, pusher: pusher
     end

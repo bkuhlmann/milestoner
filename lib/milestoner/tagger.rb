@@ -15,8 +15,7 @@ module Milestoner
 
     def_delegator :version, :label, :version_label
 
-    def initialize version = "0.1.0", commit_prefixes: [], git: Git::Kit.new
-      @version = Versionaire::Version version
+    def initialize commit_prefixes: [], git: Git::Kit.new
       @commit_prefixes = commit_prefixes
       @git = git
       @shell = Thor::Shell::Color.new
@@ -39,8 +38,8 @@ module Milestoner
     end
 
     # :reek:BooleanParameter
-    def create raw_version = version, sign: false
-      @version = Versionaire::Version raw_version
+    def create version, sign: false
+      @version = Versionaire::Version version
       fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
       return if existing_tag?
       git_tag sign: sign
