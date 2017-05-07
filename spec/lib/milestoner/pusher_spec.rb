@@ -2,45 +2,36 @@
 
 require "spec_helper"
 
-RSpec.describe Milestoner::Pusher, :temp_dir do
-  subject { described_class.new }
+RSpec.describe Milestoner::Pusher do
+  let(:git) { instance_spy Milestoner::Git::Kit }
+  subject { described_class.new git: git }
 
   describe "#push" do
-    let(:shell) { class_spy Kernel }
-    subject { described_class.new shell: shell }
+    it "successfully pushes tags to remote repository" do
+      allow(git).to receive(:push_tags).and_return("")
+      result = -> { subject.push }
 
-    it "successfully pushes tags to remote repository", :git_repo do
-      Dir.chdir git_repo_dir do
-        subject.push
-        expect(shell).to have_received(:system).with("git push --tags")
-      end
+      expect(&result).to output("").to_stdout
     end
 
-    it "fails immediately when remote repository is not defined" do
-      Dir.chdir temp_dir do
-        `git init`
-        result = -> { subject.push }
+    it "fails when remote repository is not configured" do
+      allow(git).to receive(:remote?).and_return(false)
+      result = -> { subject.push }
 
-        expect(&result).to raise_error(
-          Milestoner::Errors::Git,
-          "Git remote repository not configured."
-        )
-      end
+      expect(&result).to raise_error(
+        Milestoner::Errors::Git,
+        "Git remote repository not configured."
+      )
     end
 
-    context "with Git push tags failure" do
-      let(:shell) { class_spy Kernel, system: false }
+    it "fails when push fails" do
+      allow(git).to receive(:push_tags).and_return("error")
+      result = -> { subject.push }
 
-      it "fails to push tags to remote repository", :git_repo do
-        Dir.chdir git_repo_dir do
-          result = -> { subject.push }
-
-          expect(&result).to raise_error(
-            Milestoner::Errors::Git,
-            "Git tags could not be pushed to remote repository."
-          )
-        end
-      end
+      expect(&result).to raise_error(
+        Milestoner::Errors::Git,
+        "Git tags could not be pushed to remote repository."
+      )
     end
   end
 end
