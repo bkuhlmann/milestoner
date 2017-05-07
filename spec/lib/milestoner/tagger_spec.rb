@@ -251,15 +251,14 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     context "when signed" do
-      # FIX: Need to generate sufficient entropy for signed keys on a CI machine.
-      unless ENV["CI"]
-        let(:gpg_dir) { File.join temp_dir, ".gnupg" }
-        let(:gpg_script) { File.join temp_dir, "..", "..", "spec", "support", "gpg_script" }
-        let :gpg_key do
-          `gpg --list-secret-keys #{git_user_email} | grep "[A-F0-9]$" | tr -d ' '`.chomp
-        end
+      let(:gpg_dir) { File.join temp_dir, ".gnupg" }
+      let(:gpg_script) { File.join temp_dir, "..", "..", "spec", "support", "gpg_script" }
+      let :gpg_key do
+        `gpg --list-secret-keys #{git_user_email} | grep "[A-F0-9]$" | tr -d ' '`.chomp
+      end
 
-        it "signs tag" do
+      it "signs tag" do
+        skip "Needs non-interactive support for local and remote builds" do
           ClimateControl.modify GNUPGHOME: gpg_dir do
             Dir.chdir(git_repo_dir) do
               FileUtils.mkdir gpg_dir
