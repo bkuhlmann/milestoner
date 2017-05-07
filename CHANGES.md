@@ -1,3 +1,36 @@
+# v5.1.0 (2017-05-07)
+
+- Fixed Reek DuplicateMethodCall issue.
+- Fixed Travis CI configuration to not update gems.
+- Added Git tag support.
+- Added Pusher version.
+- Added Reek issues to affected objects.
+- Added code quality Rake task.
+- Added existing local tag check.
+- Added passphrase to GPG test script.
+- Added version release changes.
+- Updated Git test respository configuration.
+- Updated Guardfile to always run RSpec with documentation format.
+- Updated README semantic versioning order.
+- Updated RSpec configuration to output documentation when running.
+- Updated RSpec spec helper to enable color output.
+- Updated Rubocop configuration.
+- Updated Rubocop to import from global configuration.
+- Updated contributing documentation.
+- Updated signed tag spec to be skipped.
+- Updated to Gemsmith 9.0.0.
+- Updated to Ruby 2.4.1.
+- Removed Code Climate code comment checks.
+- Removed Git repository validation.
+- Removed Reek TODO file.
+- Removed `.bundle` directory from `.gitignore`.
+- Removed default version from Tagger.
+- Removed deletion of Git hooks for testing purposes.
+- Removed shell from pusher.
+- Refactored Git tag check.
+- Refactored context descriptions.
+- Refactored tagger spec context and descriptions.
+
 # v5.0.0 (2017-01-22)
 
 - Updated Rubocop Metrics/LineLength to 100 characters.
