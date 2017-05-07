@@ -17,45 +17,39 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       expect(subject.version).to eq(nil)
     end
 
-    it "answers default commit prefixes" do
+    it "answers commit prefixes" do
       expect(subject.commit_prefixes).to eq(prefixes)
     end
   end
 
   describe "#commit_prefix_regex" do
-    context "with prefixes" do
-      it "answers regex for matching specific git commit prefixes" do
-        expect(subject.commit_prefix_regex).to eq(/Fixed|Added|Updated|Removed|Refactored/)
-      end
+    it "answers regex for for commit prefixes" do
+      expect(subject.commit_prefix_regex).to eq(/Fixed|Added|Updated|Removed|Refactored/)
     end
 
     context "without prefixes" do
       let(:prefixes) { [] }
 
-      it "answers regex for matching specific git commit prefixes" do
+      it "answers empty regex" do
         expect(subject.commit_prefix_regex).to eq(//)
       end
     end
   end
 
   describe "#commits" do
-    context "when tagged" do
-      it "answers commits since last tag" do
-        Dir.chdir(git_repo_dir) do
-          `git tag v0.0.0`
-          `git rm one.txt`
-          `git commit --all --message "Removed one.txt."`
+    it "answers commits since last tag when tagged" do
+      Dir.chdir(git_repo_dir) do
+        `git tag v0.0.0`
+        `git rm one.txt`
+        `git commit --all --message "Removed one.txt."`
 
-          expect(subject.commits).to contain_exactly("Removed one.txt.")
-        end
+        expect(subject.commits).to contain_exactly("Removed one.txt.")
       end
     end
 
-    context "when not tagged" do
-      it "answers all known commits" do
-        Dir.chdir(git_repo_dir) do
-          expect(subject.commits).to contain_exactly("Added dummy files.")
-        end
+    it "answers all commits when not tagged" do
+      Dir.chdir(git_repo_dir) do
+        expect(subject.commits).to contain_exactly("Added dummy files.")
       end
     end
 
@@ -269,7 +263,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
-    it "prints warning with existing local tag" do
+    it "prints warning with existing tag" do
       Dir.chdir(git_repo_dir) do
         subject.create version
         result = -> { subject.create version }
@@ -278,7 +272,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
-    it "doesn't print warning without existing local tag" do
+    it "doesn't print warning without existing tag" do
       Dir.chdir(git_repo_dir) do
         result = -> { subject.create version }
         expect(&result).to_not output(/warn.+Local\stag.+v0\.1\.0.+/).to_stdout
