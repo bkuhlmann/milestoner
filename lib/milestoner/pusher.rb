@@ -7,14 +7,21 @@ module Milestoner
       @git = git
     end
 
-    def push
-      fail(Errors::Git, "Git remote repository not configured.") unless git.remote?
+    def push version
+      version = Versionaire::Version version
+
+      fail(Errors::Git, "Remote repository not configured.") unless git.remote?
+      fail(Errors::Git, "Remote tag exists: #{version.label}.") if tag_exists?(version)
       return if git.push_tags.empty?
-      fail(Errors::Git, "Git tags could not be pushed to remote repository.")
+      fail(Errors::Git, "Tags could not be pushed to remote repository.")
     end
 
     private
 
-    attr_reader :git
+    attr_reader :git, :version
+
+    def tag_exists? version
+      git.tag_remote? version.label
+    end
   end
 end

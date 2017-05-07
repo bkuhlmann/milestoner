@@ -55,8 +55,8 @@ module Milestoner
 
     desc "-p, [--push]", "Push local tag to remote repository."
     map %w[-p --push] => :push
-    def push
-      pusher.push
+    def push version = self.class.configuration.to_h[:version]
+      pusher.push version
       info "Tags pushed to remote repository."
     rescue StandardError => exception
       error exception.message
