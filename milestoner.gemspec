@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "runcom", "~> 0.6"
   spec.add_dependency "versionaire", "~> 3.1"
   spec.add_development_dependency "rake", "~> 12.0"
-  spec.add_development_dependency "gemsmith", "~> 9.4"
+  spec.add_development_dependency "gemsmith", "~> 9.5"
   spec.add_development_dependency "pry", "~> 0.10"
   spec.add_development_dependency "pry-byebug", "~> 3.4"
   spec.add_development_dependency "pry-state", "~> 0.1"
@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rspec", "~> 4.7"
   spec.add_development_dependency "climate_control", "~> 0.1"
   spec.add_development_dependency "reek", "~> 4.6"
-  spec.add_development_dependency "rubocop", "~> 0.48"
+  spec.add_development_dependency "rubocop", "~> 0.49"
   spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0"
 
   spec.files = Dir["lib/**/*"]
