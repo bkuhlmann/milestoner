@@ -4,7 +4,7 @@
 [![Code Climate GPA](https://codeclimate.com/github/bkuhlmann/milestoner.svg)](https://codeclimate.com/github/bkuhlmann/milestoner)
 [![Code Climate Coverage](https://codeclimate.com/github/bkuhlmann/milestoner/coverage.svg)](https://codeclimate.com/github/bkuhlmann/milestoner)
 [![Gemnasium Status](https://gemnasium.com/bkuhlmann/milestoner.svg)](https://gemnasium.com/bkuhlmann/milestoner)
-[![Travis CI Status](https://secure.travis-ci.org/bkuhlmann/milestoner.svg)](https://travis-ci.org/bkuhlmann/milestoner)
+[![Circle CI Status](https://circleci.com/gh/bkuhlmann/milestoner.svg?style=svg)](https://circleci.com/gh/bkuhlmann/milestoner)
 [![Patreon](https://img.shields.io/badge/patreon-donate-brightgreen.svg)](https://www.patreon.com/bkuhlmann)
 
 A command line interface for releasing Git repository milestones.
