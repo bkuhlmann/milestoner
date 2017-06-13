@@ -118,20 +118,7 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a config command", :git_repo do
-      let(:configuration_path) { File.join git_repo_dir, Milestoner::Identity.file_name }
-      before { FileUtils.touch configuration_path }
-
-      context "with info option" do
-        let(:options) { %w[-i] }
-
-        it "prints configuration path" do
-          Dir.chdir(git_repo_dir) do
-            expect(&cli).to output("#{configuration_path}\n").to_stdout
-          end
-        end
-      end
-
+    shared_examples_for "a config command", :temp_dir do
       context "with no options" do
         it "prints help text" do
           expect(&cli).to output(/Manage gem configuration./).to_stdout
