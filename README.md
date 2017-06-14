@@ -111,25 +111,14 @@ milestone. Should individual steps be needed, then the `--tag` and `--push` opti
 
 ## Customization
 
-Should the default settings not be desired, customization is allowed via the `.milestonerrc` file.
-The `.milestonerrc` can be created at a global and/or local level. Example:
+This gem can be configured via a global configuration:
 
-- Global: `~/.milestonerrc`
-- Local: `<project repository root>/.milestonerrc`
+    ~/.config/milestoner/configuration.yml
 
-Order of precedence for any setting is resolved as follows (with the last taking top priority):
+It can also be configured via [XDG environment variables](https://github.com/bkuhlmann/runcom#xdg)
+as provided by the [Runcom](https://github.com/bkuhlmann/runcom) gem.
 
-0. Global `~/.milestonerrc`.
-0. Local project repository `.milestonerrc`.
-0. CLI option. Example: A version passed to either the `--tag` or `--publish` commands.
-
-Any setting provided to the CLI during runtime would trump a local/global setting and a local
-setting would trump a global setting. The global setting is the weakest of all but great for
-situations where custom settings should be applied to *all* projects. It is important to note that
-local settings completely trump any global settings -- there is no inheritance when local *and*
-global settings exist at the same time.
-
-The `.milestonerrc` uses the following default settings:
+The default configuration is as follows:
 
     :version: "0.1.0"
     :git_commit_prefixes:
@@ -140,7 +129,10 @@ The `.milestonerrc` uses the following default settings:
       - Refactored
     :git_tag_sign: false
 
-Each `.milestonerrc` setting can be configured as follows:
+Feel free to take this default configuration, modify, and save as your own custom
+`configuration.yml`.
+
+The `configuration.yml` file can be configured as follows:
 
 - `version`: Useful if desired to have the current version checked into source code per project. The
   version, if set, will be used to tag the repository. If the version is a duplicate, an error will
