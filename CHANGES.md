@@ -1,3 +1,11 @@
+# v6.0.0 (2017-06-17)
+
+- Added Circle CI support.
+- Updated README usage configuration documenation.
+- Updated gem dependencies.
+- Updated to Runcom 1.1.0.
+- Removed Travis CI support.
+
 # v5.1.0 (2017-05-07)
 
 - Fixed Reek DuplicateMethodCall issue.
