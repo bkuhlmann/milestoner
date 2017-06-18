@@ -7,19 +7,15 @@ RSpec.describe Milestoner::CLI do
     let(:version) { "0.1.0" }
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
-    let :cli do
-      lambda do
-        load "milestoner/cli.rb" # Ensures clean Thor `.method_option` evaluation per spec.
-        described_class.start command_line
-      end
-    end
+    let(:cli) { described_class.start command_line }
 
     shared_examples_for "a version error", :git_repo do
       let(:version) { "bogus" }
 
       it "prints invalid version error" do
         Dir.chdir(git_repo_dir) do
-          expect(&cli).to output(/Invalid version conversion\: bogus/).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/Invalid version conversion\: bogus/).to_stdout
         end
       end
     end
@@ -27,7 +23,8 @@ RSpec.describe Milestoner::CLI do
     shared_examples_for "a commits command", :git_repo do
       it "prints commits for new tag" do
         Dir.chdir(git_repo_dir) do
-          expect(&cli).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
         end
       end
     end
@@ -38,7 +35,7 @@ RSpec.describe Milestoner::CLI do
 
       it "creates an unsigned tag" do
         ClimateControl.modify HOME: temp_dir do
-          cli.call
+          cli
           expect(tagger).to have_received(:create).with(version, sign: false)
         end
       end
@@ -51,7 +48,7 @@ RSpec.describe Milestoner::CLI do
 
       it "signs tag" do
         ClimateControl.modify HOME: temp_dir do
-          cli.call
+          cli
           expect(tagger).to have_received(:create).with(version, sign: true)
         end
       end
@@ -67,7 +64,8 @@ RSpec.describe Milestoner::CLI do
       it "prints repository has been tagged" do
         ClimateControl.modify HOME: temp_dir do
           Dir.chdir(git_repo_dir) do
-            expect(&cli).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
+            result = -> { cli }
+            expect(&result).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
           end
         end
       end
@@ -80,7 +78,7 @@ RSpec.describe Milestoner::CLI do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         Dir.chdir(git_repo_dir) do
-          cli.call
+          cli
           expect(pusher).to have_received(:push)
         end
       end
@@ -89,7 +87,8 @@ RSpec.describe Milestoner::CLI do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         Dir.chdir(git_repo_dir) do
-          expect(&cli).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
         end
       end
     end
@@ -112,7 +111,9 @@ RSpec.describe Milestoner::CLI do
               \s+info\s+Milestone\spublished\!\n
             /x
 
-            expect(&cli).to output(text).to_stdout
+            result = -> { cli }
+
+            expect(&result).to output(text).to_stdout
           end
         end
       end
@@ -121,21 +122,25 @@ RSpec.describe Milestoner::CLI do
     shared_examples_for "a config command", :temp_dir do
       context "with no options" do
         it "prints help text" do
-          expect(&cli).to output(/Manage gem configuration./).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/Manage gem configuration./).to_stdout
         end
       end
     end
 
     shared_examples_for "a version command" do
       it "prints version" do
-        expect(&cli).to output(/Milestoner\s#{Milestoner::Identity.version}\n/).to_stdout
+        result = -> { cli }
+        expect(&result).to output(/Milestoner\s#{Milestoner::Identity.version}\n/).to_stdout
       end
     end
 
     shared_examples_for "a help command" do
       it "prints usage" do
         regex = /#{Milestoner::Identity.label}\s#{Milestoner::Identity.version}\scommands:\n/
-        expect(&cli).to output(regex).to_stdout
+        result = -> { cli }
+
+        expect(&result).to output(regex).to_stdout
       end
     end
 
