@@ -11,27 +11,27 @@ A command line interface for releasing Git repository milestones.
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
 
-# Table of Contents
+## Table of Contents
 
-- [Features](#features)
-- [Screencasts](#screencasts)
-- [Requirements](#requirements)
-- [Setup](#setup)
-- [Usage](#usage)
-  - [Command Line Interface (CLI)](#command-line-interface-cli)
-  - [Customization](#customization)
-- [Security](#security)
-- [Tests](#tests)
-- [Versioning](#versioning)
-- [Code of Conduct](#code-of-conduct)
-- [Contributions](#contributions)
-- [License](#license)
-- [History](#history)
-- [Credits](#credits)
+  - [Features](#features)
+  - [Screencasts](#screencasts)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+  - [Usage](#usage)
+    - [Command Line Interface (CLI)](#command-line-interface-cli)
+    - [Customization](#customization)
+  - [Security](#security)
+  - [Tests](#tests)
+  - [Versioning](#versioning)
+  - [Code of Conduct](#code-of-conduct)
+  - [Contributions](#contributions)
+  - [License](#license)
+  - [History](#history)
+  - [Credits](#credits)
 
 <!-- Tocer[finish]: Auto-generated, don't remove. -->
 
-# Features
+## Features
 
 - Uses [Versionaire](https://github.com/bkuhlmann/versionaire) for
   [Semantic Versioning](http://semver.org).
@@ -53,17 +53,17 @@ A command line interface for releasing Git repository milestones.
   each Git tag message.
 - Provides optional security for signing Git tags with [GnuPG](https://www.gnupg.org) signing key.
 
-# Screencasts
+## Screencasts
 
 [![asciicast](https://asciinema.org/a/91752.png)](https://asciinema.org/a/91752)
 
-# Requirements
+## Requirements
 
 0. A UNIX-based system.
 0. [Ruby 2.4.x](https://www.ruby-lang.org).
 0. [GnuPG](https://www.gnupg.org).
 
-# Setup
+## Setup
 
 For a secure install, type the following (recommended):
 
@@ -78,9 +78,9 @@ For an insecure install, type the following (not recommended):
 
     gem install milestoner
 
-# Usage
+## Usage
 
-## Command Line Interface (CLI)
+### Command Line Interface (CLI)
 
 From the command line, type: `milestoner help`
 
@@ -109,7 +109,7 @@ When using Milestoner, the `--publish` command is intended to be the only comman
 publishing a new release as it handles all of the steps necessary for tagging and pushing a new
 milestone. Should individual steps be needed, then the `--tag` and `--push` options are available.
 
-## Customization
+### Customization
 
 This gem can be configured via a global configuration:
 
@@ -148,7 +148,7 @@ The `configuration.yml` file can be configured as follows:
   Git tag. This is useful for public milestones where the author of a milestone can be verified to
   ensure milestone integrity/security.
 
-# Security
+## Security
 
 To securely sign your Git tags, install and configure [GPG](https://www.gnupg.org):
 
@@ -177,13 +177,13 @@ Now, when publishing a new milestone (i.e. `milestoner --publish <version> --sig
 Git tag will happen automatically. You will be prompted for the GPG Passphrase each time but that is
 to be expected.
 
-# Tests
+## Tests
 
 To test, run:
 
     bundle exec spec
 
-# Versioning
+## Versioning
 
 Read [Semantic Versioning](http://semver.org) for details. Briefly, it means:
 
@@ -191,26 +191,26 @@ Read [Semantic Versioning](http://semver.org) for details. Briefly, it means:
 - Minor (x.Y.z) - Incremented for new, backwards compatible, public API enhancements/fixes.
 - Patch (x.y.Z) - Incremented for small, backwards compatible, bug fixes.
 
-# Code of Conduct
+## Code of Conduct
 
 Please note that this project is released with a [CODE OF CONDUCT](CODE_OF_CONDUCT.md). By
 participating in this project you agree to abide by its terms.
 
-# Contributions
+## Contributions
 
 Read [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-# License
+## License
 
 Copyright (c) 2015 [Alchemists](https://www.alchemists.io).
 Read [LICENSE](LICENSE.md) for details.
 
-# History
+## History
 
 Read [CHANGES](CHANGES.md) for details.
 Built with [Gemsmith](https://github.com/bkuhlmann/gemsmith).
 
-# Credits
+## Credits
 
 Developed by [Brooke Kuhlmann](https://www.alchemists.io) at
 [Alchemists](https://www.alchemists.io).
