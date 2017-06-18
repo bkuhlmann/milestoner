@@ -131,13 +131,13 @@ RSpec.describe Milestoner::CLI do
     shared_examples_for "a version command" do
       it "prints version" do
         result = -> { cli }
-        expect(&result).to output(/Milestoner\s#{Milestoner::Identity.version}\n/).to_stdout
+        expect(&result).to output(/#{Milestoner::Identity.version_label}\n/).to_stdout
       end
     end
 
     shared_examples_for "a help command" do
       it "prints usage" do
-        regex = /#{Milestoner::Identity.label}\s#{Milestoner::Identity.version}\scommands:\n/
+        regex = /#{Milestoner::Identity.version_label}\scommands:\n/
         result = -> { cli }
 
         expect(&result).to output(regex).to_stdout
