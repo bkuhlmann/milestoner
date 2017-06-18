@@ -2,14 +2,12 @@
 
 require "thor"
 require "thor/actions"
-require "thor_plus/actions"
 require "runcom"
 
 module Milestoner
   # The Command Line Interface (CLI) for the gem.
   class CLI < Thor
     include Thor::Actions
-    include ThorPlus::Actions
 
     package_name Identity.version_label
 
@@ -34,7 +32,7 @@ module Milestoner
     def commits
       tagger.commit_list.each { |commit| say commit }
     rescue StandardError => exception
-      error exception.message
+      say_status :error, exception.message, :red
     end
 
     desc "-t, [--tag=VERSION]", "Tag local repository with new version."
@@ -48,16 +46,16 @@ module Milestoner
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version_label}."
     rescue StandardError => exception
-      error exception.message
+      say_status :error, exception.message, :red
     end
 
     desc "-p, [--push]", "Push local tag to remote repository."
     map %w[-p --push] => :push
     def push version = self.class.configuration.to_h[:version]
       pusher.push version
-      info "Tags pushed to remote repository."
+      say_status :info, "Tags pushed to remote repository.", :green
     rescue StandardError => exception
-      error exception.message
+      say_status :error, exception.message, :red
     end
 
     desc "-P, [--publish=VERSION]", "Tag and push milestone to remote repository."
@@ -69,10 +67,10 @@ module Milestoner
                   default: false
     def publish version = self.class.configuration.to_h[:version]
       publisher.publish version, sign: sign_tag?(options[:sign])
-      info "Repository tagged and pushed: #{tagger.version_label}."
-      info "Milestone published!"
+      say_status :info, "Repository tagged and pushed: #{tagger.version_label}.", :green
+      say_status :info, "Milestone published!", :green
     rescue StandardError => exception
-      error exception.message
+      say_status :error, exception.message, :red
     end
 
     desc "-c, [--config]", "Manage gem configuration."
@@ -88,7 +86,7 @@ module Milestoner
     def config
       path = self.class.configuration.path
 
-      if options.edit? then `#{editor} #{path}`
+      if options.edit? then `#{ENV["EDITOR"]} #{path}`
       elsif options.info?
         path ? say(path) : say("Configuration doesn't exist.")
       else help(:config)
