@@ -4,6 +4,7 @@ require "forwardable"
 require "open3"
 require "thor"
 require "versionaire"
+require "tempfile"
 
 module Milestoner
   # Handles the tagging of a project repository.
