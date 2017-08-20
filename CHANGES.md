@@ -1,3 +1,10 @@
+# v6.2.0 (2017-08-20)
+
+- Fixed issue with Tempfile requirements.
+- Added dynamic formatting of RSpec output.
+- Updated to Gemsmith 10.2.0.
+- Updated to Runcom 1.3.0.
+
 # v6.1.0 (2017-07-16)
 
 - Added Git Cop code quality task.

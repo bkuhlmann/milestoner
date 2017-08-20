@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.required_ruby_version = "~> 2.4"
-  spec.add_dependency "thor", "~> 0.19"
+  spec.add_dependency "thor", "~> 0.20"
   spec.add_dependency "runcom", "~> 1.3"
   spec.add_dependency "versionaire", "~> 3.2"
   spec.add_development_dependency "rake", "~> 12.0"
@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.6"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
   spec.add_development_dependency "climate_control", "~> 0.1"
-  spec.add_development_dependency "git-cop", "~> 1.3"
+  spec.add_development_dependency "git-cop", "~> 1.6"
   spec.add_development_dependency "reek", "~> 4.7"
   spec.add_development_dependency "rubocop", "~> 0.49"
   spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0"
