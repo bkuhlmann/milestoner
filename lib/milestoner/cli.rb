@@ -19,12 +19,14 @@ module Milestoner
       }
     end
 
-    # rubocop:disable Metrics/AbcSize
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @tagger = Tagger.new commit_prefixes: self.class.configuration.to_h[:git_commit_prefixes]
+      @configuration = self.class.configuration
+      @tagger = Tagger.new commit_prefixes: @configuration.to_h[:git_commit_prefixes]
       @pusher = Pusher.new
       @publisher = Publisher.new tagger: tagger, pusher: pusher
+    rescue Runcom::Errors::Base => error
+      abort error.message
     end
 
     desc "-C, [--commits]", "Show commits for next milestone."
@@ -42,7 +44,7 @@ module Milestoner
                   desc: "Sign tag with GPG key.",
                   type: :boolean,
                   default: false
-    def tag version = self.class.configuration.to_h[:version]
+    def tag version = configuration.to_h[:version]
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version_label}."
     rescue StandardError => exception
@@ -51,7 +53,7 @@ module Milestoner
 
     desc "-p, [--push]", "Push local tag to remote repository."
     map %w[-p --push] => :push
-    def push version = self.class.configuration.to_h[:version]
+    def push version = configuration.to_h[:version]
       pusher.push version
       say_status :info, "Tags pushed to remote repository.", :green
     rescue StandardError => exception
@@ -65,7 +67,7 @@ module Milestoner
                   desc: "Sign tag with GPG key.",
                   type: :boolean,
                   default: false
-    def publish version = self.class.configuration.to_h[:version]
+    def publish version = configuration.to_h[:version]
       publisher.publish version, sign: sign_tag?(options[:sign])
       say_status :info, "Repository tagged and pushed: #{tagger.version_label}.", :green
       say_status :info, "Milestone published!", :green
@@ -84,7 +86,7 @@ module Milestoner
                   desc: "Print gem configuration.",
                   type: :boolean, default: false
     def config
-      path = self.class.configuration.path
+      path = configuration.path
 
       if options.edit? then `#{ENV["EDITOR"]} #{path}`
       elsif options.info?
@@ -110,7 +112,7 @@ module Milestoner
     attr_reader :configuration, :tagger, :pusher, :publisher
 
     def sign_tag? sign
-      sign | self.class.configuration.to_h[:git_tag_sign]
+      sign | configuration.to_h[:git_tag_sign]
     end
   end
 end
