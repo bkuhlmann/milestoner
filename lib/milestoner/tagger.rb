@@ -87,7 +87,7 @@ module Milestoner
 
     # :reek:UtilityFunction
     def sort_by_commit_prefix groups = {}
-      groups.each { |_, values| values.sort! }
+      groups.each_value(&:sort!)
     end
 
     def git_message
