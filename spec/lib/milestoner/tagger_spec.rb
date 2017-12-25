@@ -6,11 +6,9 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   let(:version) { Versionaire::Version "0.1.0" }
   let(:prefixes) { %w[Fixed Added Updated Removed Refactored] }
 
-  # rubocop:disable Style/FormatStringToken
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first }
   end
-  # rubocop:enable Style/FormatStringToken
 
   subject { described_class.new commit_prefixes: prefixes }
 

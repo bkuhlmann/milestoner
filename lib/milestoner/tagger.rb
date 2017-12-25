@@ -50,11 +50,9 @@ module Milestoner
 
     attr_reader :git, :shell
 
-    # rubocop:disable Style/FormatStringToken
     def git_log_command
       "git log --oneline --no-merges --format='%s'"
     end
-    # rubocop:enable Style/FormatStringToken
 
     def git_tag_command
       "$(git describe --abbrev=0 --tags --always)..HEAD"
