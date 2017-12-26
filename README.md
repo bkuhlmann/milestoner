@@ -65,16 +65,7 @@ A command line interface for releasing Git repository milestones.
 
 ## Setup
 
-For a secure install, type the following (recommended):
-
-    gem cert --add <(curl --location --silent https://www.alchemists.io/gem-public.pem)
-    gem install milestoner --trust-policy MediumSecurity
-
-NOTE: A HighSecurity trust policy would be best but MediumSecurity enables signed gem verification
-while allowing the installation of unsigned dependencies since they are beyond the scope of this
-gem.
-
-For an insecure install, type the following (not recommended):
+Type the following to install:
 
     gem install milestoner
 
