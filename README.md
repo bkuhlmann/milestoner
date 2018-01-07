@@ -54,7 +54,7 @@ A command line interface for releasing Git repository milestones.
 
 ## Screencasts
 
-[![asciicast](https://asciinema.org/a/91752.png)](https://asciinema.org/a/91752)
+[![asciicast](https://asciinema.org/a/155986.png)](https://asciinema.org/a/155986)
 
 ## Requirements
 
