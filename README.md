@@ -3,7 +3,6 @@
 [![Gem Version](https://badge.fury.io/rb/milestoner.svg)](http://badge.fury.io/rb/milestoner)
 [![Code Climate Maintainability](https://api.codeclimate.com/v1/badges/4cf2547433410a9c7150/maintainability)](https://codeclimate.com/github/bkuhlmann/milestoner/maintainability)
 [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/4cf2547433410a9c7150/test_coverage)](https://codeclimate.com/github/bkuhlmann/milestoner/test_coverage)
-[![Gemnasium Status](https://gemnasium.com/bkuhlmann/milestoner.svg)](https://gemnasium.com/bkuhlmann/milestoner)
 [![Circle CI Status](https://circleci.com/gh/bkuhlmann/milestoner.svg?style=svg)](https://circleci.com/gh/bkuhlmann/milestoner)
 
 A command line interface for releasing Git repository milestones.
