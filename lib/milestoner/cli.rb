@@ -46,7 +46,7 @@ module Milestoner
                   default: false
     def tag version = configuration.to_h[:version]
       tagger.create version, sign: sign_tag?(options[:sign])
-      say "Repository tagged: #{tagger.version_label}."
+      say "Repository tagged: #{tagger.version}."
     rescue StandardError => exception
       say_status :error, exception.message, :red
     end
@@ -69,7 +69,7 @@ module Milestoner
                   default: false
     def publish version = configuration.to_h[:version]
       publisher.publish version, sign: sign_tag?(options[:sign])
-      say_status :info, "Repository tagged and pushed: #{tagger.version_label}.", :green
+      say_status :info, "Repository tagged and pushed: #{tagger.version}.", :green
       say_status :info, "Milestone published!", :green
     rescue StandardError => exception
       say_status :error, exception.message, :red

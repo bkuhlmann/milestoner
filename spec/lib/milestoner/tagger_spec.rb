@@ -7,7 +7,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   let(:prefixes) { %w[Fixed Added Updated Removed Refactored] }
 
   let :tag_details do
-    ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" v#{version})).first }
+    ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
   end
 
   subject { described_class.new commit_prefixes: prefixes }
@@ -174,14 +174,14 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "creates default tag" do
       Dir.chdir(git_repo_dir) do
         subject.create version
-        expect(tag_details.call("0.1.0")).to match(/tag\sv0\.1\.0/)
+        expect(tag_details.call("0.1.0")).to match(/tag\s0\.1\.0/)
       end
     end
 
     it "creates custom tag" do
       Dir.chdir(git_repo_dir) do
         subject.create "0.2.0"
-        expect(tag_details.call("0.2.0")).to match(/tag\sv0\.2\.0/)
+        expect(tag_details.call("0.2.0")).to match(/tag\s0\.2\.0/)
       end
     end
 
@@ -268,14 +268,14 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         subject.create version
         result = -> { subject.create version }
 
-        expect(&result).to output(/warn.+Local\stag.+v0\.1\.0.+/).to_stdout
+        expect(&result).to output(/warn.+Local\stag.+0\.1\.0.+/).to_stdout
       end
     end
 
     it "doesn't print warning without existing tag" do
       Dir.chdir(git_repo_dir) do
         result = -> { subject.create version }
-        expect(&result).to_not output(/warn.+Local\stag.+v0\.1\.0.+/).to_stdout
+        expect(&result).to_not output(/warn.+Local\stag.+0\.1\.0.+/).to_stdout
       end
     end
 
@@ -285,10 +285,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           `git config --local gpg.program /dev/null`
           result = -> { subject.create version, sign: true }
 
-          expect(&result).to raise_error(
-            Milestoner::Errors::Git,
-            "Unable to create tag: v0.1.0."
-          )
+          expect(&result).to raise_error(Milestoner::Errors::Git, "Unable to create tag: 0.1.0.")
         end
       end
     end

@@ -65,7 +65,7 @@ RSpec.describe Milestoner::CLI do
         ClimateControl.modify HOME: temp_dir do
           Dir.chdir(git_repo_dir) do
             result = -> { cli }
-            expect(&result).to output(/Repository\stagged\:\sv0\.1\.0/).to_stdout
+            expect(&result).to output(/Repository\stagged\:\s0\.1\.0/).to_stdout
           end
         end
       end
@@ -107,7 +107,7 @@ RSpec.describe Milestoner::CLI do
         ClimateControl.modify HOME: temp_dir do
           Dir.chdir(git_repo_dir) do
             text = /
-              \s+info\s+Repository\stagged\sand\spushed\:\sv0\.1\.0\.\n
+              \s+info\s+Repository\stagged\sand\spushed\:\s0\.1\.0\.\n
               \s+info\s+Milestone\spublished\!\n
             /x
 

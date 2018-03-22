@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Milestoner::Pusher do
   let(:git) { instance_spy Milestoner::Git::Kit, tag_remote?: false, push_tags: "" }
-  let(:version) { "v0.0.0" }
+  let(:version) { "0.0.0" }
   subject { described_class.new git: git }
 
   describe "#push" do
@@ -21,7 +21,7 @@ RSpec.describe Milestoner::Pusher do
     end
 
     it "fails when remote tag exists" do
-      allow(git).to receive(:tag_remote?).with(version).and_return(true)
+      allow(git).to receive(:tag_remote?).with(Versionaire::Version(version)).and_return(true)
       result = -> { subject.push version }
 
       expect(&result).to raise_error(Milestoner::Errors::Git, "Remote tag exists: #{version}.")

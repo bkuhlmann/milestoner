@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "forwardable"
 require "open3"
 require "thor"
 require "versionaire"
@@ -9,12 +8,9 @@ require "tempfile"
 module Milestoner
   # Handles the tagging of a project repository.
   # :reek:TooManyMethods
+  # :reek:InstanceVariableAssumption
   class Tagger
-    extend Forwardable
-
     attr_reader :version, :commit_prefixes
-
-    def_delegator :version, :label, :version_label
 
     def initialize commit_prefixes: [], git: Git::Kit.new
       @commit_prefixes = commit_prefixes
@@ -91,21 +87,21 @@ module Milestoner
     end
 
     def git_message
-      %(Version #{version}.\n\n#{commit_list.join "\n"}\n\n)
+      %(Version #{@version}.\n\n#{commit_list.join "\n"}\n\n)
     end
 
     # :reek:BooleanParameter
     # :reek:ControlParameter
     def git_options message_file, sign: false
-      options = %(--sign --annotate "#{version_label}" ) +
+      options = %(--sign --annotate "#{@version}" ) +
                 %(--cleanup verbatim --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
       options
     end
 
     def existing_tag?
-      return false unless git.tag_local?(version_label)
-      shell.say_status :warn, "Local tag exists: #{version_label}. Skipped.", :yellow
+      return false unless git.tag_local?(@version)
+      shell.say_status :warn, "Local tag exists: #{@version}. Skipped.", :yellow
       true
     end
 
@@ -115,7 +111,7 @@ module Milestoner
       message_file = Tempfile.new Identity.name
       File.open(message_file, "w") { |file| file.write git_message }
       status = system "git tag #{git_options message_file, sign: sign}"
-      fail(Errors::Git, "Unable to create tag: #{version_label}.") unless status
+      fail(Errors::Git, "Unable to create tag: #{@version}.") unless status
     ensure
       message_file.close
       message_file.unlink
