@@ -54,7 +54,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
     context "with exiting tags" do
       it "answers true" do
         Dir.chdir git_repo_dir do
-          `git tag v0.1.0`
+          `git tag 0.1.0`
           expect(subject.tagged?).to eq(true)
         end
       end
@@ -70,7 +70,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
 
     context "with uninitialized repository" do
       it "answers false" do
-        ClimateControl.modify GIT_DIR: temp_dir do
+        ClimateControl.modify GIT_DIR: temp_dir.to_s do
           expect(subject.tagged?).to eq(false)
         end
       end
@@ -78,7 +78,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
   end
 
   describe "#tag_local?", :git_repo do
-    let(:tag) { "v0.1.0" }
+    let(:tag) { "0.1.0" }
 
     context "with matching tag" do
       it "answers true" do
@@ -102,7 +102,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
     context "with matching tag" do
       it "answers true" do
         Dir.chdir(git_repo_dir) do
-          expect(subject.tag_remote?("v1.0.0")).to eq(true)
+          expect(subject.tag_remote?("0.1.0")).to eq(true)
         end
       end
     end
@@ -121,7 +121,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
 
     context "when remote repository is defined" do
       before do
-        Dir.chdir(temp_dir) { `git config remote.origin.url git@github.com:example/example.git` }
+        Dir.chdir(temp_dir) { `git config remote.origin.url git@github.com:test/example.git` }
       end
 
       it "answers true" do

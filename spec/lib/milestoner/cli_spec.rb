@@ -34,7 +34,7 @@ RSpec.describe Milestoner::CLI do
       before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
 
       it "creates an unsigned tag" do
-        ClimateControl.modify HOME: temp_dir do
+        ClimateControl.modify HOME: temp_dir.to_s do
           cli
           expect(tagger).to have_received(:create).with(version, sign: false)
         end
@@ -47,7 +47,7 @@ RSpec.describe Milestoner::CLI do
       before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
 
       it "signs tag" do
-        ClimateControl.modify HOME: temp_dir do
+        ClimateControl.modify HOME: temp_dir.to_s do
           cli
           expect(tagger).to have_received(:create).with(version, sign: true)
         end
@@ -62,7 +62,7 @@ RSpec.describe Milestoner::CLI do
       it_behaves_like "a version error"
 
       it "prints repository has been tagged" do
-        ClimateControl.modify HOME: temp_dir do
+        ClimateControl.modify HOME: temp_dir.to_s do
           Dir.chdir(git_repo_dir) do
             result = -> { cli }
             expect(&result).to output(/Repository\stagged\:\s0\.1\.0/).to_stdout
@@ -104,7 +104,7 @@ RSpec.describe Milestoner::CLI do
       it "prints repository has been tagged and published" do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
-        ClimateControl.modify HOME: temp_dir do
+        ClimateControl.modify HOME: temp_dir.to_s do
           Dir.chdir(git_repo_dir) do
             text = /
               \s+info\s+Repository\stagged\sand\spushed\:\s0\.1\.0\.\n
