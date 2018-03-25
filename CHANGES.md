@@ -1,3 +1,21 @@
+# v8.0.0 (2018-03-25)
+
+- Fixed Reek UtilityFunction issues with Tagger object.
+- Fixed gemspec issues with missing gem signing key/certificate.
+- Added gemspec metadata for source, changes, and issue tracker URLs.
+- Updated README license information.
+- Updated README screencast tutorial.
+- Updated gem dependencies.
+- Updated to Circle CI 2.0.0 configuration.
+- Updated to Rubocop 0.53.0.
+- Updated to Versionaire 5.1.0.
+- Removed Gemnasium support.
+- Removed Patreon badge from README.
+- Removed default version from CLI tag, push, and publish commands.
+- Removed version prefix (i.e. `v`) when publishing versions.
+- Refactored Git test repo user name and email.
+- Refactored temp and Git repo dir construction.
+
 # v7.0.1 (2018-01-01)
 
 - Updated to Gemsmith 11.0.0.

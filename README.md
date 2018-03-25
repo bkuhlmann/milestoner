@@ -33,20 +33,18 @@ A command line interface for releasing Git repository milestones.
 
 - Uses [Versionaire](https://github.com/bkuhlmann/versionaire) for
   [Semantic Versioning](http://semver.org).
-    - Format: `v<major>.<minor>.<maintenance>`.
-    - Example: `v0.1.0`.
-- Ensures Git commits since last tag (or initialization of repository) are included within each Git
-  tag message.
-- Ensures Git commit messages are grouped by prefix, in order defined, for each Git tag message.
-  Defaults (can be customized):
+    - Format: `<major>.<minor>.<maintenance>`.
+    - Example: `0.1.0`.
+- Ensures Git commits since last tag (or initialization of repository) are included.
+- Ensures Git commit messages are grouped by prefix, in order defined. Defaults (can be customized):
     - Fixed
     - Added
     - Updated
     - Removed
     - Refactored
-- Ensures Git commit merge messages are excluded within each Git tag message.
-- Ensures Git commit messages are alphabetically sorted within each Git tag message.
-- Ensures duplicate Git commit messages are removed (if any) within each Git tag message.
+- Ensures Git commit merge messages are excluded.
+- Ensures Git commit messages are alphabetically sorted.
+- Ensures duplicate Git commit messages are removed (if any).
 - Ensures Git commit messages are sanitized by removing extra spaces and `[ci skip]` text within
   each Git tag message.
 - Provides optional security for signing Git tags with [GnuPG](https://www.gnupg.org) signing key.
@@ -77,7 +75,7 @@ From the command line, type: `milestoner help`
     milestoner -P, [--publish=VERSION]  # Tag and push milestone to remote repository.
     milestoner -c, [--config]           # Manage gem configuration.
     milestoner -h, [--help=COMMAND]     # Show this message or get help for a command.
-    milestoner -p, [--push]             # Push local tag to remote repository.
+    milestoner -p, [--push=VERSION]     # Push local tag to remote repository.
     milestoner -t, [--tag=VERSION]      # Tag local repository with new version.
     milestoner -v, [--version]          # Show gem version.
 
