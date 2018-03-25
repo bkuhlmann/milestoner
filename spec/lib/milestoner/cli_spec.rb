@@ -72,6 +72,7 @@ RSpec.describe Milestoner::CLI do
     end
 
     shared_examples_for "a push command", :git_repo do
+      let(:options) { [version] }
       let(:pusher) { instance_spy Milestoner::Pusher }
 
       it "pushes tags" do

@@ -109,7 +109,6 @@ as provided by the [Runcom](https://github.com/bkuhlmann/runcom) gem.
 
 The default configuration is as follows:
 
-    :version: "0.1.0"
     :git_commit_prefixes:
       - Fixed
       - Added
@@ -123,10 +122,6 @@ Feel free to take this default configuration, modify, and save as your own custo
 
 The `configuration.yml` file can be configured as follows:
 
-- `version`: Useful if desired to have the current version checked into source code per project. The
-  version, if set, will be used to tag the repository. If the version is a duplicate, an error will
-  be thrown. When supplying a version, it *must* be semantic: `<major>.<minor>.<maintenance>`.
-  Example: `0.1.0`.
 - `git_commit_prefixes`: Should the default prefixes not be desired, you can define Git commit
   prefixes that match your style. *NOTE: Prefix order is important with the first prefix defined
   taking precedence over the second and so forth.* Special characters are allowed for prefixes but

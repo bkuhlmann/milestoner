@@ -13,7 +13,6 @@ module Milestoner
 
     def self.configuration
       Runcom::Configuration.new project_name: Identity.name, defaults: {
-        version: "0.1.0",
         git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
         git_tag_sign: false
       }
@@ -44,16 +43,16 @@ module Milestoner
                   desc: "Sign tag with GPG key.",
                   type: :boolean,
                   default: false
-    def tag version = configuration.to_h[:version]
+    def tag version
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version}."
     rescue StandardError => exception
       say_status :error, exception.message, :red
     end
 
-    desc "-p, [--push]", "Push local tag to remote repository."
+    desc "-p, [--push=VERSION]", "Push local tag to remote repository."
     map %w[-p --push] => :push
-    def push version = configuration.to_h[:version]
+    def push version
       pusher.push version
       say_status :info, "Tags pushed to remote repository.", :green
     rescue StandardError => exception
@@ -67,7 +66,7 @@ module Milestoner
                   desc: "Sign tag with GPG key.",
                   type: :boolean,
                   default: false
-    def publish version = configuration.to_h[:version]
+    def publish version
       publisher.publish version, sign: sign_tag?(options[:sign])
       say_status :info, "Repository tagged and pushed: #{tagger.version}.", :green
       say_status :info, "Milestone published!", :green
