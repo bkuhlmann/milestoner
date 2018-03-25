@@ -10,7 +10,7 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
       it "answers key value" do
         Dir.chdir(git_repo_dir) do
           stdout, = subject.get key
-          expect(stdout).to eq("Test Tester\n")
+          expect(stdout).to eq("Test Example\n")
         end
       end
 
@@ -154,7 +154,7 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
     context "when key exists" do
       it "answers key without whitespace" do
         Dir.chdir(git_repo_dir) do
-          expect(subject.value("user.name")).to eq("Test Tester")
+          expect(subject.value("user.name")).to eq("Test Example")
         end
       end
     end

@@ -3,8 +3,8 @@
 RSpec.shared_context "Git Repository", :git_repo do
   let(:temp_dir) { File.join Bundler.root, "tmp", "rspec" }
   let(:git_repo_dir) { File.join temp_dir, "repo" }
-  let(:git_user_name) { "Test Tester" }
-  let(:git_user_email) { "test@alchemists.io" }
+  let(:git_user_name) { "Test Example" }
+  let(:git_user_email) { "test@example.com" }
 
   around do |example|
     FileUtils.mkdir_p git_repo_dir
