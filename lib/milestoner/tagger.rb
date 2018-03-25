@@ -26,7 +26,7 @@ module Milestoner
     def commits
       groups = build_commit_prefix_groups
       group_by_commit_prefix groups
-      sort_by_commit_prefix groups
+      groups.each_value(&:sort!)
       groups.values.flatten.uniq
     end
 
@@ -68,22 +68,12 @@ module Milestoner
       groups.merge! "Other" => []
     end
 
-    # :reek:UtilityFunction
-    def sanitize_commit commit
-      commit.gsub(/\[ci\sskip\]/, "").squeeze(" ").strip
-    end
-
     def group_by_commit_prefix groups = {}
       raw_commits.each do |commit|
         prefix = commit[commit_prefix_regex]
         key = groups.key?(prefix) ? prefix : "Other"
-        groups[key] << sanitize_commit(commit)
+        groups[key] << commit.gsub(/\[ci\sskip\]/, "").squeeze(" ").strip
       end
-    end
-
-    # :reek:UtilityFunction
-    def sort_by_commit_prefix groups = {}
-      groups.each_value(&:sort!)
     end
 
     def git_message
