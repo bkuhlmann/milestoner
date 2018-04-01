@@ -2,7 +2,7 @@
 
 begin
   require "bundler/audit/task"
-  # require "gemsmith/rake/setup"
+  require "gemsmith/rake/setup"
   require "git/cop/rake/setup"
   require "rspec/core/rake_task"
   require "reek/rake/task"
