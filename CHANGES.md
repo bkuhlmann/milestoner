@@ -1,10 +1,10 @@
-# v8.1.0 (2018-04-01)
+# 8.1.0 (2018-04-01)
 
 - Updated to Ruby 2.5.1.
 - Updated to Runcom 3.0.0.
 - Removed Circle CI Bundler cache.
 
-# v8.0.0 (2018-03-25)
+# 8.0.0 (2018-03-25)
 
 - Fixed Reek UtilityFunction issues with Tagger object.
 - Fixed gemspec issues with missing gem signing key/certificate.
@@ -22,11 +22,11 @@
 - Refactored Git test repo user name and email.
 - Refactored temp and Git repo dir construction.
 
-# v7.0.1 (2018-01-01)
+# 7.0.1 (2018-01-01)
 
 - Updated to Gemsmith 11.0.0.
 
-# v7.0.0 (2018-01-01)
+# 7.0.0 (2018-01-01)
 
 - Updated Code Climate badges.
 - Updated Code Climate configuration to Version 2.0.0.
@@ -37,12 +37,12 @@
 - Updated to Apache 2.0 license.
 - Refactored code to use Ruby 2.5.0 `Array#append` syntax.
 
-# v6.3.1 (2017-11-19)
+# 6.3.1 (2017-11-19)
 
 - Updated to Git Cop 1.7.0.
 - Updated to Rake 12.3.0.
 
-# v6.3.0 (2017-10-29)
+# 6.3.0 (2017-10-29)
 
 - Added Bundler Audit gem.
 - Updated to Rubocop 0.50.0.
@@ -50,14 +50,14 @@
 - Updated to Ruby 2.4.2.
 - Removed Pry State gem.
 
-# v6.2.0 (2017-08-20)
+# 6.2.0 (2017-08-20)
 
 - Fixed issue with Tempfile requirements.
 - Added dynamic formatting of RSpec output.
 - Updated to Gemsmith 10.2.0.
 - Updated to Runcom 1.3.0.
 
-# v6.1.0 (2017-07-16)
+# 6.1.0 (2017-07-16)
 
 - Added Git Cop code quality task.
 - Updated CONTRIBUTING documentation.
@@ -70,7 +70,7 @@
 - Removed Thor+ gem.
 - Refactored CLI version/help specs.
 
-# v6.0.0 (2017-06-17)
+# 6.0.0 (2017-06-17)
 
 - Added Circle CI support.
 - Updated README usage configuration documenation.
@@ -78,7 +78,7 @@
 - Updated to Runcom 1.1.0.
 - Removed Travis CI support.
 
-# v5.1.0 (2017-05-07)
+# 5.1.0 (2017-05-07)
 
 - Fixed Reek DuplicateMethodCall issue.
 - Fixed Travis CI configuration to not update gems.
@@ -111,7 +111,7 @@
 - Refactored context descriptions.
 - Refactored tagger spec context and descriptions.
 
-# v5.0.0 (2017-01-22)
+# 5.0.0 (2017-01-22)
 
 - Updated Rubocop Metrics/LineLength to 100 characters.
 - Updated Rubocop Metrics/ParameterLists max to three.
@@ -121,7 +121,7 @@
 - Updated to Ruby 2.4.0.
 - Removed Rubocop Style/Documentation check.
 
-# v4.2.0 (2016-12-18)
+# 4.2.0 (2016-12-18)
 
 - Fixed Rakefile support for RSpec, Reek, Rubocop, and SCSS Lint.
 - Added `Gemfile.lock` to `.gitignore`.
@@ -133,11 +133,11 @@
 - Updated to Ruby 2.3.2.
 - Updated to Ruby 2.3.3.
 
-# v4.1.1 (2016-11-13)
+# 4.1.1 (2016-11-13)
 
 - Fixed gem requirements order.
 
-# v4.1.0 (2016-11-13)
+# 4.1.0 (2016-11-13)
 
 - Fixed Ruby pragma.
 - Added Code Climate engine support.
@@ -151,7 +151,7 @@
 - Refactored `Git` as `Git::Kit`.
 - Refactored source requirements.
 
-# v4.0.0 (2016-11-05)
+# 4.0.0 (2016-11-05)
 
 - Fixed CLI spec RSpec metadata.
 - Fixed Rakefile to safely load Gemsmith tasks.
@@ -189,7 +189,7 @@
 - Refactored order of local and global methods.
 - Refactored tagger implementation.
 
-# v3.0.0 (2016-04-03)
+# 3.0.0 (2016-04-03)
 
 - Fixed CLI specs so pusher is spied upon.
 - Added --config, -c command.
@@ -208,7 +208,7 @@
 - Refactored Tagger git tag construction.
 - Refactored Tagger to use Versionaire version.
 
-# v2.2.0 (2016-03-13)
+# 2.2.0 (2016-03-13)
 
 - Fixed contributing guideline links.
 - Added Git aid commit check.
@@ -221,14 +221,14 @@
 - Updated README secure gem install documentation.
 - Updated to Code of Conduct, Version 1.4.0.
 
-# v2.1.0 (2016-01-20)
+# 2.1.0 (2016-01-20)
 
 - Fixed secure gem install issues.
 - Added Gemsmith development support.
 - Added frozen string literal support to Ruby source.
 - Removed frozen string literal from non-Ruby source.
 
-# v2.0.0 (2016-01-17)
+# 2.0.0 (2016-01-17)
 
 - Fixed README URLs to use HTTPS schemes where possible.
 - Added GPG security documentation to README.
@@ -240,7 +240,7 @@
 - Removed Ruby 2.1.x and 2.2.x support.
 - Removed verbosity from CLI help command specs.
 
-# v1.2.0 (2015-11-27)
+# 1.2.0 (2015-11-27)
 
 - Fixed failing specs when global config is used.
 - Fixed gemspec homepage URL.
@@ -255,27 +255,27 @@
 - Removed `Milestoner::Configuration.file_name`.
 - Removed unnecessary exclusions from .gitignore.
 
-# v1.1.0 (2015-10-01)
+# 1.1.0 (2015-10-01)
 
 - Fixed RSpec example status persistence file path.
 - Fixed issue with version format limited to single digits.
 - Added carriage return after tag message bodies.
 - Updated to Gemsmith 5.6.0.
 
-# v1.0.0 (2015-09-19)
+# 1.0.0 (2015-09-19)
 
 - Fixed Git tag being deleted when publishing.
 - Updated Publisher class to accept an optional tagger and pusher.
 - Refactored code to use relative namespaces.
 
-# v0.5.0 (2015-09-16)
+# 0.5.0 (2015-09-16)
 
 - Fixed bug when pushing to a non-existent remote repository.
 - Fixed git error when attempting to delete a non-existent tag.
 - Added Git aid for detecting if remote repository is configured.
 - Added a publisher which knows how to tag and push a tag.
 
-# v0.4.0 (2015-09-13)
+# 0.4.0 (2015-09-13)
 
 - Added --edit option for editing gem configuration.
 - Added .milestonerrc git_tag_sign setting.
@@ -285,7 +285,7 @@
 - Added global and local gem configuration and CLI support.
 - Updated CLI command descriptions.
 
-# v0.3.0 (2015-09-08)
+# 0.3.0 (2015-09-08)
 
 - Fixed bug where commit messages with backticks were executed.
 - Added -c option for showing commits for current milestone.
@@ -293,7 +293,7 @@
 - Updated commit message groups to be alpha-sorted.
 - Updated tag messages to have duplicate commits removed.
 
-# v0.2.0 (2015-09-07)
+# 0.2.0 (2015-09-07)
 
 - Fixed RSpec Git setup.
 - Fixed Travis CI GPG setup.
@@ -304,6 +304,6 @@
 - Added repository publish support.
 - Removed commit order spec.
 
-# v0.1.0 (2015-09-06)
+# 0.1.0 (2015-09-06)
 
 - Initial version.
