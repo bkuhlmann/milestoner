@@ -1,3 +1,9 @@
+# v8.1.0 (2018-04-01)
+
+- Updated to Ruby 2.5.1.
+- Updated to Runcom 3.0.0.
+- Removed Circle CI Bundler cache.
+
 # v8.0.0 (2018-03-25)
 
 - Fixed Reek UtilityFunction issues with Tagger object.
