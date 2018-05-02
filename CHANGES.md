@@ -1,3 +1,10 @@
+# 8.2.0 (2018-05-01)
+
+- Added Runcom examples for project specific usage.
+- Updated project changes to use semantic versions.
+- Updated to Gemsmith 12.0.0.
+- Updated to Runcom 3.1.0.
+
 # 8.1.0 (2018-04-01)
 
 - Updated to Ruby 2.5.1.
