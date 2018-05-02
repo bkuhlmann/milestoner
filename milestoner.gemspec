@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.cert_chain = [Gem.default_cert_path]
 
   spec.required_ruby_version = "~> 2.5"
-  spec.add_dependency "runcom", "~> 3.0"
+  spec.add_dependency "runcom", "~> 3.1"
   spec.add_dependency "thor", "~> 0.20"
   spec.add_dependency "versionaire", "~> 5.2"
   spec.add_development_dependency "awesome_print", "~> 1.8"
