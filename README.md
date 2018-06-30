@@ -32,7 +32,7 @@ A command line interface for releasing Git repository milestones.
 ## Features
 
 - Uses [Versionaire](https://github.com/bkuhlmann/versionaire) for
-  [Semantic Versioning](http://semver.org).
+  [Semantic Versioning](https://semver.org).
     - Format: `<major>.<minor>.<maintenance>`.
     - Example: `0.1.0`.
 - Ensures Git commits since last tag (or initialization of repository) are included.
@@ -168,7 +168,7 @@ To test, run:
 
 ## Versioning
 
-Read [Semantic Versioning](http://semver.org) for details. Briefly, it means:
+Read [Semantic Versioning](https://semver.org) for details. Briefly, it means:
 
 - Major (X.y.z) - Incremented for any backwards incompatible public API changes.
 - Minor (x.Y.z) - Incremented for new, backwards compatible, public API enhancements/fixes.
