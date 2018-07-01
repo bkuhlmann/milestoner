@@ -1,3 +1,10 @@
+# 8.3.0 (2018-07-01)
+
+- Updated Semantic Versioning links to be HTTPS.
+- Updated to Reek 5.0.
+- Updated to Rubocop 0.57.0.
+- Updated to Versionaire 6.0.0.
+
 # 8.2.0 (2018-05-01)
 
 - Added Runcom examples for project specific usage.
