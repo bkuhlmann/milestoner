@@ -20,6 +20,7 @@ module Milestoner
 
     def commit_prefix_regex
       return Regexp.new("") if commit_prefixes.empty?
+
       Regexp.union commit_prefixes
     end
 
@@ -39,6 +40,7 @@ module Milestoner
       @version = Versionaire::Version version
       fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
       return if existing_tag?
+
       git_tag sign: sign
     end
 
@@ -56,6 +58,7 @@ module Milestoner
 
     def git_commits_command
       return "#{git_log_command} #{git_tag_command}" if git.tagged?
+
       git_log_command
     end
 
@@ -86,11 +89,13 @@ module Milestoner
       options = %(--sign --annotate "#{@version}" ) +
                 %(--cleanup verbatim --file "#{message_file.path}")
       return options.gsub("--sign ", "") unless sign
+
       options
     end
 
     def existing_tag?
       return false unless git.tag_local?(@version)
+
       shell.say_status :warn, "Local tag exists: #{@version}. Skipped.", :yellow
       true
     end
