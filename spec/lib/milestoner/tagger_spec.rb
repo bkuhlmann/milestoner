@@ -2,6 +2,7 @@
 
 require "spec_helper"
 
+# rubocop:disable RSpec/SubjectStub
 RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
   subject(:tagger) { described_class.new commit_prefixes: prefixes }
 
@@ -311,3 +312,4 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
   end
 end
+# rubocop:enable RSpec/SubjectStub

@@ -40,15 +40,19 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
   end
 
   describe "push_tags", :git_repo do
+    # rubocop:disable RSpec/SubjectStub
     it "successfully pushes tags" do
       allow(kit).to receive(:`).and_return("")
       expect(kit.push_tags).to eq("")
     end
+    # rubocop:enable RSpec/SubjectStub
 
+    # rubocop:disable RSpec/SubjectStub
     it "fails to push tags" do
       allow(kit).to receive(:`).and_return("error")
       expect(kit.push_tags).to eq("error")
     end
+    # rubocop:enable RSpec/SubjectStub
   end
 
   describe "#tagged?", :git_repo do
