@@ -98,6 +98,12 @@ RSpec.describe Milestoner::CLI do
     shared_examples_for "a publish command", :git_repo do
       let(:options) { [version] }
       let(:pusher) { instance_spy Milestoner::Pusher }
+      let :output_pattern do
+        /
+          \s+info\s+Repository\stagged\sand\spushed\:\s0\.1\.0\.\n
+          \s+info\s+Milestone\spublished\!\n
+        /x
+      end
 
       it_behaves_like "an unsigned tag"
       it_behaves_like "a signed tag"
@@ -108,14 +114,8 @@ RSpec.describe Milestoner::CLI do
 
         ClimateControl.modify HOME: temp_dir.to_s do
           Dir.chdir(git_repo_dir) do
-            text = /
-              \s+info\s+Repository\stagged\sand\spushed\:\s0\.1\.0\.\n
-              \s+info\s+Milestone\spublished\!\n
-            /x
-
             result = -> { cli }
-
-            expect(&result).to output(text).to_stdout
+            expect(&result).to output(output_pattern).to_stdout
           end
         end
       end

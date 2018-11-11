@@ -58,45 +58,31 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       let :raw_commits do
         [
           "This is not a good commit message.",
-          "Refactored strings to use double quotes instead of single quotes.",
           "Updated gem dependencies.",
           "Fixed README typos.",
           "Updated version release notes.",
           "Removed unused stylesheets.",
-          "Bogus commit message.",
-          "Another bogus commit message.",
-          "Added upgrade notes to README.",
-          "Refactored common functionality to module.",
-          "Removed unnecessary spacing.",
           "Added spec helper methods.",
+          "Refactored authorization to base controller."
+        ]
+      end
+
+      let :expectation do
+        [
+          "Fixed README typos.",
+          "Added spec helper methods.",
+          "Updated gem dependencies.",
+          "Updated version release notes.",
+          "Removed unused stylesheets.",
           "Refactored authorization to base controller.",
-          "Updated and restored original deploy functionality.",
-          "Fixed issues with current directory not being cleaned after build."
+          "This is not a good commit message."
         ]
       end
 
       before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits grouped by prefix and alpha-sorted per group" do
-        expect(tagger.commits).to eq(
-          [
-            "Fixed README typos.",
-            "Fixed issues with current directory not being cleaned after build.",
-            "Added spec helper methods.",
-            "Added upgrade notes to README.",
-            "Updated and restored original deploy functionality.",
-            "Updated gem dependencies.",
-            "Updated version release notes.",
-            "Removed unnecessary spacing.",
-            "Removed unused stylesheets.",
-            "Refactored authorization to base controller.",
-            "Refactored common functionality to module.",
-            "Refactored strings to use double quotes instead of single quotes.",
-            "Another bogus commit message.",
-            "Bogus commit message.",
-            "This is not a good commit message."
-          ]
-        )
+        expect(tagger.commits).to eq(expectation)
       end
     end
 
@@ -199,6 +185,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       end
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it "creates tag message with commits since last tag" do
       Dir.chdir(git_repo_dir) do
         `git rm one.txt`
@@ -221,6 +208,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         /x)
       end
     end
+    # rubocop:enable RSpec/ExampleLength
 
     it "does not execute backticks in commit subject when adding tag message" do
       Dir.chdir(git_repo_dir) do
@@ -253,6 +241,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         `gpg --list-secret-keys #{git_user_email} | grep "[A-F0-9]$" | tr -d ' '`.chomp
       end
 
+      # rubocop:disable RSpec/ExampleLength
       it "signs tag" do
         skip "Needs non-interactive support for local and remote builds" do
           ClimateControl.modify GNUPGHOME: gpg_dir do
@@ -268,6 +257,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           end
         end
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     it "prints warning with existing tag" do
