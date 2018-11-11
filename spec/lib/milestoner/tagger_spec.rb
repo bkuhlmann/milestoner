@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
+  subject(:tagger) { described_class.new commit_prefixes: prefixes }
+
   let(:version) { Versionaire::Version "0.1.0" }
   let(:prefixes) { %w[Fixed Added Updated Removed Refactored] }
 
@@ -10,28 +12,26 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
   end
 
-  subject { described_class.new commit_prefixes: prefixes }
-
   describe "#initialize" do
     it "answers nil version" do
-      expect(subject.version).to eq(nil)
+      expect(tagger.version).to eq(nil)
     end
 
     it "answers commit prefixes" do
-      expect(subject.commit_prefixes).to eq(prefixes)
+      expect(tagger.commit_prefixes).to eq(prefixes)
     end
   end
 
   describe "#commit_prefix_regex" do
     it "answers regex for for commit prefixes" do
-      expect(subject.commit_prefix_regex).to eq(/Fixed|Added|Updated|Removed|Refactored/)
+      expect(tagger.commit_prefix_regex).to eq(/Fixed|Added|Updated|Removed|Refactored/)
     end
 
     context "without prefixes" do
       let(:prefixes) { [] }
 
       it "answers empty regex" do
-        expect(subject.commit_prefix_regex).to eq(//)
+        expect(tagger.commit_prefix_regex).to eq(//)
       end
     end
   end
@@ -43,13 +43,13 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         `git rm one.txt`
         `git commit --all --message "Removed one.txt."`
 
-        expect(subject.commits).to contain_exactly("Removed one.txt.")
+        expect(tagger.commits).to contain_exactly("Removed one.txt.")
       end
     end
 
     it "answers all commits when not tagged" do
       Dir.chdir(git_repo_dir) do
-        expect(subject.commits).to contain_exactly("Added dummy files.")
+        expect(tagger.commits).to contain_exactly("Added dummy files.")
       end
     end
 
@@ -73,10 +73,11 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           "Fixed issues with current directory not being cleaned after build."
         ]
       end
-      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits grouped by prefix and alpha-sorted per group" do
-        expect(subject.commits).to eq(
+        expect(tagger.commits).to eq(
           [
             "Fixed README typos.",
             "Fixed issues with current directory not being cleaned after build.",
@@ -101,20 +102,22 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     context "with prefixed commits using special characters" do
       let(:prefixes) { ["[one]", "$\#{@", "with spaces"] }
       let(:raw_commits) { ["Apple", "with spaces yes", "$\#{@ junk", "[one] more"] }
-      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits grouped by prefix and alpha-sorted per group" do
-        expect(subject.commits).to eq(["[one] more", "$\#{@ junk", "with spaces yes", "Apple"])
+        expect(tagger.commits).to eq(["[one] more", "$\#{@ junk", "with spaces yes", "Apple"])
       end
     end
 
     context "without prefixed commits" do
       let(:prefixes) { [] }
       let(:raw_commits) { %w[One Two Three] }
-      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers alphabetically sorted commits" do
-        expect(subject.commits).to eq(%w[One Three Two])
+        expect(tagger.commits).to eq(%w[One Three Two])
       end
     end
 
@@ -127,10 +130,11 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           "Updated gem dependencies."
         ]
       end
-      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits with duplicates removed" do
-        expect(subject.commits).to eq(
+        expect(tagger.commits).to eq(
           [
             "Added spec helper methods.",
             "Updated gem dependencies."
@@ -147,10 +151,11 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
           "[ci skip] Updated gem dependencies."
         ]
       end
-      before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+      before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
 
       it "answers commits messages with [ci skip] strings removed" do
-        expect(subject.commits).to eq(
+        expect(tagger.commits).to eq(
           [
             "Fixed failing CI builds.",
             "Added spec helper methods.",
@@ -163,31 +168,32 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
   describe "#commit_list" do
     let(:raw_commits) { %w[One Two Three] }
-    before { allow(subject).to receive(:raw_commits).and_return(raw_commits) }
+
+    before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
 
     it "answers a formatted list of commit messages" do
-      expect(subject.commit_list).to contain_exactly("- One", "- Two", "- Three")
+      expect(tagger.commit_list).to contain_exactly("- One", "- Two", "- Three")
     end
   end
 
   describe "#create" do
     it "creates default tag" do
       Dir.chdir(git_repo_dir) do
-        subject.create version
+        tagger.create version
         expect(tag_details.call("0.1.0")).to match(/tag\s0\.1\.0/)
       end
     end
 
     it "creates custom tag" do
       Dir.chdir(git_repo_dir) do
-        subject.create "0.2.0"
+        tagger.create "0.2.0"
         expect(tag_details.call("0.2.0")).to match(/tag\s0\.2\.0/)
       end
     end
 
     it "creates tag message" do
       Dir.chdir(git_repo_dir) do
-        subject.create version
+        tagger.create version
         expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0\./)
       end
     end
@@ -203,7 +209,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         `printf "Three." > three.txt`
         `git commit --all --message "Fixed three."`
 
-        subject.create version
+        tagger.create version
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\.\n\n
@@ -220,7 +226,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         `printf "Test" > two.txt`
         %x(git commit --all --message 'Updated two.txt with \`bogus command\` in message.')
 
-        subject.create version
+        tagger.create version
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\.\n\n
@@ -233,8 +239,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     context "when not signed" do
       it "does not sign tag" do
         Dir.chdir(git_repo_dir) do
-          subject.create version
-          expect(tag_details.call("0.1.0")).to_not match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
+          tagger.create version
+          expect(tag_details.call("0.1.0")).not_to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
         end
       end
     end
@@ -254,7 +260,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
               FileUtils.chmod 0o700, gpg_dir
               `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
               `git config --local user.signingkey #{gpg_key}`
-              subject.create version, sign: true
+              tagger.create version, sign: true
 
               expect(tag_details.call("0.1.0")).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
             end
@@ -265,8 +271,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     it "prints warning with existing tag" do
       Dir.chdir(git_repo_dir) do
-        subject.create version
-        result = -> { subject.create version }
+        tagger.create version
+        result = -> { tagger.create version }
 
         expect(&result).to output(/warn.+Local\stag.+0\.1\.0.+/).to_stdout
       end
@@ -274,8 +280,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     it "doesn't print warning without existing tag" do
       Dir.chdir(git_repo_dir) do
-        result = -> { subject.create version }
-        expect(&result).to_not output(/warn.+Local\stag.+0\.1\.0.+/).to_stdout
+        result = -> { tagger.create version }
+        expect(&result).not_to output(/warn.+Local\stag.+0\.1\.0.+/).to_stdout
       end
     end
 
@@ -283,7 +289,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       it "signs tag" do
         Dir.chdir(git_repo_dir) do
           `git config --local gpg.program /dev/null`
-          result = -> { subject.create version, sign: true }
+          result = -> { tagger.create version, sign: true }
 
           expect(&result).to raise_error(Milestoner::Errors::Git, "Unable to create tag: 0.1.0.")
         end
@@ -293,14 +299,14 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "fails with no Git commits" do
       Dir.chdir temp_dir do
         `git init`
-        result = -> { subject.create version }
+        result = -> { tagger.create version }
 
         expect(&result).to raise_error(Milestoner::Errors::Git, "Unable to tag without commits.")
       end
     end
 
     it "fails with invalid version" do
-      result = -> { subject.create "bogus" }
+      result = -> { tagger.create "bogus" }
       expect(&result).to raise_error(Versionaire::Errors::Conversion)
     end
   end

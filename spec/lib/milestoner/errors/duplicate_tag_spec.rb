@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Errors::DuplicateTag do
-  subject { described_class.new }
-
-  it_behaves_like "a base error"
+  it_behaves_like "a base error" do
+    let(:error) { described_class.new }
+  end
 end

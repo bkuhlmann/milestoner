@@ -3,13 +3,15 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Errors::Git do
-  subject { described_class.new }
+  subject(:error) { described_class.new }
 
-  it_behaves_like "a base error"
+  it_behaves_like "a base error" do
+    let(:error) { described_class.new }
+  end
 
   describe "#message" do
     it "answers default message" do
-      expect(subject.message).to eq("Invalid Git repository.")
+      expect(error.message).to eq("Invalid Git repository.")
     end
   end
 end

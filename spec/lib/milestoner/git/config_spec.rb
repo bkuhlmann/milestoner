@@ -3,27 +3,29 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Git::Config, :git_repo do
+  subject(:config) { described_class.new }
+
   describe "#get" do
     let(:key) { "user.name" }
 
     context "when key exists" do
       it "answers key value" do
         Dir.chdir(git_repo_dir) do
-          stdout, = subject.get key
+          stdout, = config.get key
           expect(stdout).to eq("Test Example\n")
         end
       end
 
       it "answers empty error" do
         Dir.chdir(git_repo_dir) do
-          _, stderr, = subject.get key
+          _, stderr, = config.get key
           expect(stderr).to eq("")
         end
       end
 
       it "answers success status" do
         Dir.chdir(git_repo_dir) do
-          _, _, status = subject.get key
+          _, _, status = config.get key
           expect(status.success?).to eq(true)
         end
       end
@@ -32,21 +34,21 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
     context "when key doesn't exist" do
       it "answers empty key value" do
         ClimateControl.modify HOME: git_repo_dir do
-          stdout, = subject.get "user.test"
+          stdout, = config.get "user.test"
           expect(stdout).to eq("")
         end
       end
 
       it "answers empty error" do
         ClimateControl.modify HOME: git_repo_dir do
-          _, stderr, = subject.get "user.test"
+          _, stderr, = config.get "user.test"
           expect(stderr).to eq("")
         end
       end
 
       it "answers failure status" do
         ClimateControl.modify HOME: git_repo_dir do
-          _, _, status = subject.get "user.test"
+          _, _, status = config.get "user.test"
           expect(status.success?).to eq(false)
         end
       end
@@ -57,21 +59,21 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
 
       it "answers empty key value" do
         ClimateControl.modify HOME: git_repo_dir do
-          stdout, = subject.get key
+          stdout, = config.get key
           expect(stdout).to eq("")
         end
       end
 
       it "answers error message" do
         ClimateControl.modify HOME: git_repo_dir do
-          _, stderr, = subject.get key
+          _, stderr, = config.get key
           expect(stderr).to match(/error.+#{key}/)
         end
       end
 
       it "answers failure status" do
         ClimateControl.modify HOME: git_repo_dir do
-          _, _, status = subject.get key
+          _, _, status = config.get key
           expect(status.success?).to eq(false)
         end
       end
@@ -85,8 +87,8 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
 
       it "create key value" do
         Dir.chdir(git_repo_dir) do
-          subject.set key, value
-          stdout, = subject.get key
+          config.set key, value
+          stdout, = config.get key
 
           expect(stdout).to eq("#{value}\n")
         end
@@ -94,21 +96,21 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
 
       it "answers empty output" do
         Dir.chdir(git_repo_dir) do
-          stdout, = subject.set key, value
+          stdout, = config.set key, value
           expect(stdout).to eq("")
         end
       end
 
       it "answers empty error" do
         Dir.chdir(git_repo_dir) do
-          _, stderr, = subject.set key, value
+          _, stderr, = config.set key, value
           expect(stderr).to eq("")
         end
       end
 
       it "answers success status" do
         Dir.chdir(git_repo_dir) do
-          _, _, status = subject.set key, value
+          _, _, status = config.set key, value
           expect(status.success?).to eq(true)
         end
       end
@@ -120,8 +122,8 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
 
       it "create key value" do
         Dir.chdir(git_repo_dir) do
-          subject.set key, value
-          stdout, = subject.get key
+          config.set key, value
+          stdout, = config.get key
 
           expect(stdout).to eq("#{value}\n")
         end
@@ -129,21 +131,21 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
 
       it "answers empty output" do
         Dir.chdir(git_repo_dir) do
-          stdout, = subject.set key, value
+          stdout, = config.set key, value
           expect(stdout).to eq("")
         end
       end
 
       it "answers empty error" do
         Dir.chdir(git_repo_dir) do
-          _, stderr, = subject.set key, value
+          _, stderr, = config.set key, value
           expect(stderr).to eq("")
         end
       end
 
       it "answers success status" do
         Dir.chdir(git_repo_dir) do
-          _, _, status = subject.set key, value
+          _, _, status = config.set key, value
           expect(status.success?).to eq(true)
         end
       end
@@ -154,7 +156,7 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
     context "when key exists" do
       it "answers key without whitespace" do
         Dir.chdir(git_repo_dir) do
-          expect(subject.value("user.name")).to eq("Test Example")
+          expect(config.value("user.name")).to eq("Test Example")
         end
       end
     end
@@ -162,7 +164,7 @@ RSpec.describe Milestoner::Git::Config, :git_repo do
     context "when key doesn't exist" do
       it "answers empty string" do
         Dir.chdir(git_repo_dir) do
-          expect(subject.value("user.unknown")).to eq("")
+          expect(config.value("user.unknown")).to eq("")
         end
       end
     end

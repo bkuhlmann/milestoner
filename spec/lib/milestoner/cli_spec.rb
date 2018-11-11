@@ -4,10 +4,11 @@ require "spec_helper"
 
 RSpec.describe Milestoner::CLI do
   describe ".start" do
+    subject(:cli) { described_class.start command_line }
+
     let(:version) { "0.1.0" }
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
-    let(:cli) { described_class.start command_line }
 
     shared_examples_for "a version error", :git_repo do
       let(:version) { "bogus" }
@@ -147,76 +148,91 @@ RSpec.describe Milestoner::CLI do
 
     describe "--commits" do
       let(:command) { "--commits" }
+
       it_behaves_like "a commits command"
     end
 
     describe "-C" do
       let(:command) { "-C" }
+
       it_behaves_like "a commits command"
     end
 
     describe "--tag" do
       let(:command) { "--tag" }
+
       it_behaves_like "a tag command"
     end
 
     describe "-t" do
       let(:command) { "-t" }
+
       it_behaves_like "a tag command"
     end
 
     describe "--push" do
       let(:command) { "--push" }
+
       it_behaves_like "a push command"
     end
 
     describe "-p" do
       let(:command) { "-p" }
+
       it_behaves_like "a push command"
     end
 
     describe "--publish" do
       let(:command) { "--publish" }
+
       it_behaves_like "a publish command"
     end
 
     describe "-P" do
       let(:command) { "-P" }
+
       it_behaves_like "a publish command"
     end
 
     describe "--config" do
       let(:command) { "--config" }
+
       it_behaves_like "a config command"
     end
 
     describe "-c" do
       let(:command) { "-c" }
+
       it_behaves_like "a config command"
     end
 
     describe "--version" do
       let(:command) { "--version" }
+
       it_behaves_like "a version command"
     end
 
     describe "-v" do
       let(:command) { "-v" }
+
       it_behaves_like "a version command"
     end
 
     describe "--help" do
       let(:command) { "--help" }
+
       it_behaves_like "a help command"
     end
 
     describe "-h" do
       let(:command) { "-h" }
+
       it_behaves_like "a help command"
     end
 
     context "with no command" do
       let(:command) { nil }
+
       it_behaves_like "a help command"
     end
   end
