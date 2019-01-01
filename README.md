@@ -56,7 +56,7 @@ A command line interface for releasing Git repository milestones.
 ## Requirements
 
 1. A UNIX-based system.
-1. [Ruby 2.5.x](https://www.ruby-lang.org).
+1. [Ruby 2.6.x](https://www.ruby-lang.org).
 1. [GnuPG](https://www.gnupg.org).
 
 ## Setup
