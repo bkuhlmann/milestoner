@@ -19,7 +19,7 @@ module Milestoner
     end
 
     def commit_prefix_regex
-      return Regexp.new("") if commit_prefixes.empty?
+      return Regexp.new "" if commit_prefixes.empty?
 
       Regexp.union commit_prefixes
     end
@@ -38,7 +38,7 @@ module Milestoner
     # :reek:BooleanParameter
     def create version, sign: false
       @version = Versionaire::Version version
-      fail(Errors::Git, "Unable to tag without commits.") unless git.commits?
+      fail Errors::Git, "Unable to tag without commits." unless git.commits?
       return if existing_tag?
 
       git_tag sign: sign
@@ -63,7 +63,7 @@ module Milestoner
     end
 
     def raw_commits
-      `#{git_commits_command}`.split("\n")
+      `#{git_commits_command}`.split "\n"
     end
 
     def build_commit_prefix_groups
@@ -88,13 +88,13 @@ module Milestoner
     def git_options message_file, sign: false
       options = %(--sign --annotate "#{@version}" ) +
                 %(--cleanup verbatim --file "#{message_file.path}")
-      return options.gsub("--sign ", "") unless sign
+      return options.gsub "--sign ", "" unless sign
 
       options
     end
 
     def existing_tag?
-      return false unless git.tag_local?(@version)
+      return false unless git.tag_local? @version
 
       shell.say_status :warn, "Local tag exists: #{@version}. Skipped.", :yellow
       true
@@ -106,7 +106,7 @@ module Milestoner
       message_file = Tempfile.new Identity.name
       File.open(message_file, "w") { |file| file.write git_message }
       status = system "git tag #{git_options message_file, sign: sign}"
-      fail(Errors::Git, "Unable to create tag: #{@version}.") unless status
+      fail Errors::Git, "Unable to create tag: #{@version}." unless status
     ensure
       message_file.close
       message_file.unlink

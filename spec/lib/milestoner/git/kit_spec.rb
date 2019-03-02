@@ -87,7 +87,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
 
     context "with matching tag" do
       it "answers true" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           `git tag #{tag}`
           expect(kit.tag_local?(tag)).to eq(true)
         end
@@ -96,7 +96,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
 
     context "without matching tag" do
       it "answers false" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           expect(kit.tag_local?(tag)).to eq(false)
         end
       end
@@ -106,7 +106,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
   describe "#tag_remote?", :git_repo do
     context "with matching tag" do
       it "answers true" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           expect(kit.tag_remote?("0.1.0")).to eq(true)
         end
       end
@@ -114,7 +114,7 @@ RSpec.describe Milestoner::Git::Kit, :temp_dir do
 
     context "without matching tag" do
       it "answers false" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           expect(kit.tag_remote?("v0.1.0")).to eq(false)
         end
       end

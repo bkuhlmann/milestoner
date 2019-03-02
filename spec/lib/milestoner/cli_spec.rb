@@ -14,7 +14,7 @@ RSpec.describe Milestoner::CLI do
       let(:version) { "bogus" }
 
       it "prints invalid version error" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           result = -> { cli }
           expect(&result).to output(/Invalid version conversion\: bogus/).to_stdout
         end
@@ -23,7 +23,7 @@ RSpec.describe Milestoner::CLI do
 
     shared_examples_for "a commits command", :git_repo do
       it "prints commits for new tag" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           result = -> { cli }
           expect(&result).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
         end
@@ -64,7 +64,7 @@ RSpec.describe Milestoner::CLI do
 
       it "prints repository has been tagged" do
         ClimateControl.modify HOME: temp_dir.to_s do
-          Dir.chdir(git_repo_dir) do
+          Dir.chdir git_repo_dir do
             result = -> { cli }
             expect(&result).to output(/Repository\stagged\:\s0\.1\.0/).to_stdout
           end
@@ -79,7 +79,7 @@ RSpec.describe Milestoner::CLI do
       it "pushes tags" do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           cli
           expect(pusher).to have_received(:push)
         end
@@ -88,7 +88,7 @@ RSpec.describe Milestoner::CLI do
       it "prints repository has been tagged" do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           result = -> { cli }
           expect(&result).to output(/info\s+Tags\spushed\sto\sremote\srepository\./).to_stdout
         end
@@ -113,7 +113,7 @@ RSpec.describe Milestoner::CLI do
         allow(Milestoner::Pusher).to receive(:new).and_return(pusher)
 
         ClimateControl.modify HOME: temp_dir.to_s do
-          Dir.chdir(git_repo_dir) do
+          Dir.chdir git_repo_dir do
             result = -> { cli }
             expect(&result).to output(output_pattern).to_stdout
           end

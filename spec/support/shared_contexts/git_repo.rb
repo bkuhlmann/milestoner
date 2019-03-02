@@ -9,7 +9,7 @@ RSpec.shared_context "Git Repository", :git_repo do
   around do |example|
     FileUtils.mkdir_p git_repo_dir
 
-    Dir.chdir(git_repo_dir) do
+    Dir.chdir git_repo_dir do
       FileUtils.touch "one.txt"
       FileUtils.touch "two.txt"
       FileUtils.touch "three.txt"

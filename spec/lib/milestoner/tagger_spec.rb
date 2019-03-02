@@ -39,7 +39,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
   describe "#commits" do
     it "answers commits since last tag when tagged" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         `git tag v0.0.0`
         `git rm one.txt`
         `git commit --all --message "Removed one.txt."`
@@ -49,7 +49,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     it "answers all commits when not tagged" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         expect(tagger.commits).to contain_exactly("Added dummy files.")
       end
     end
@@ -165,21 +165,21 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
   describe "#create" do
     it "creates default tag" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         tagger.create version
         expect(tag_details.call("0.1.0")).to match(/tag\s0\.1\.0/)
       end
     end
 
     it "creates custom tag" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         tagger.create "0.2.0"
         expect(tag_details.call("0.2.0")).to match(/tag\s0\.2\.0/)
       end
     end
 
     it "creates tag message" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         tagger.create version
         expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0\./)
       end
@@ -187,7 +187,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     # rubocop:disable RSpec/ExampleLength
     it "creates tag message with commits since last tag" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         `git rm one.txt`
         `git commit --all --message "Removed one."`
 
@@ -211,7 +211,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     # rubocop:enable RSpec/ExampleLength
 
     it "does not execute backticks in commit subject when adding tag message" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         `printf "Test" > two.txt`
         %x(git commit --all --message 'Updated two.txt with \`bogus command\` in message.')
 
@@ -227,7 +227,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     context "when not signed" do
       it "does not sign tag" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           tagger.create version
           expect(tag_details.call("0.1.0")).not_to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
         end
@@ -245,7 +245,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       it "signs tag" do
         skip "Needs non-interactive support for local and remote builds" do
           ClimateControl.modify GNUPGHOME: gpg_dir do
-            Dir.chdir(git_repo_dir) do
+            Dir.chdir git_repo_dir do
               FileUtils.mkdir gpg_dir
               FileUtils.chmod 0o700, gpg_dir
               `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
@@ -261,7 +261,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     it "prints warning with existing tag" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         tagger.create version
         result = -> { tagger.create version }
 
@@ -270,7 +270,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     it "doesn't print warning without existing tag" do
-      Dir.chdir(git_repo_dir) do
+      Dir.chdir git_repo_dir do
         result = -> { tagger.create version }
         expect(&result).not_to output(/warn.+Local\stag.+0\.1\.0.+/).to_stdout
       end
@@ -278,7 +278,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
     context "when GPG program is missing" do
       it "signs tag" do
-        Dir.chdir(git_repo_dir) do
+        Dir.chdir git_repo_dir do
           `git config --local gpg.program /dev/null`
           result = -> { tagger.create version, sign: true }
 
