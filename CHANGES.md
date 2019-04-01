@@ -1,3 +1,11 @@
+# 9.2.0 (2019-04-01)
+
+- Fixed Rubocop Style/MethodCallWithArgsParentheses issues.
+- Updated gem summary.
+- Updated to Ruby 2.6.2.
+- Updated to Versionaire 7.2.0.
+- Removed RSpec standard output/error suppression.
+
 # 9.1.0 (2019-02-01)
 
 - Updated README to reference updated Runcom documentation.
