@@ -12,10 +12,11 @@ module Milestoner
     package_name Identity.version_label
 
     def self.configuration
-      Runcom::Config.new Identity.name, defaults: {
-        git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
-        git_tag_sign: false
-      }
+      Runcom::Config.new Identity.name,
+                         defaults: {
+                           git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
+                           git_tag_sign: false
+                         }
     end
 
     def initialize args = [], options = {}, config = {}
@@ -79,11 +80,13 @@ module Milestoner
     method_option :edit,
                   aliases: "-e",
                   desc: "Edit gem configuration.",
-                  type: :boolean, default: false
+                  type: :boolean,
+                  default: false
     method_option :info,
                   aliases: "-i",
                   desc: "Print gem configuration.",
-                  type: :boolean, default: false
+                  type: :boolean,
+                  default: false
     def config
       path = configuration.path
 
