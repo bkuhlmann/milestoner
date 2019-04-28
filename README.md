@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="milestoner.png" alt="Milestoner Icon"/>
+</p>
+
 # Milestoner
 
 [![Gem Version](https://badge.fury.io/rb/milestoner.svg)](http://badge.fury.io/rb/milestoner)
