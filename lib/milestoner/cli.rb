@@ -33,8 +33,8 @@ module Milestoner
     map %w[-C --commits] => :commits
     def commits
       tagger.commit_list.each { |commit| say commit }
-    rescue StandardError => exception
-      say_status :error, exception.message, :red
+    rescue StandardError => error
+      say_status :error, error.message, :red
     end
 
     desc "-t, [--tag=VERSION]", "Tag local repository with new version."
@@ -47,8 +47,8 @@ module Milestoner
     def tag version
       tagger.create version, sign: sign_tag?(options[:sign])
       say "Repository tagged: #{tagger.version}."
-    rescue StandardError => exception
-      say_status :error, exception.message, :red
+    rescue StandardError => error
+      say_status :error, error.message, :red
     end
 
     desc "-p, [--push=VERSION]", "Push local tag to remote repository."
@@ -56,8 +56,8 @@ module Milestoner
     def push version
       pusher.push version
       say_status :info, "Tags pushed to remote repository.", :green
-    rescue StandardError => exception
-      say_status :error, exception.message, :red
+    rescue StandardError => error
+      say_status :error, error.message, :red
     end
 
     desc "-P, [--publish=VERSION]", "Tag and push milestone to remote repository."
@@ -71,8 +71,8 @@ module Milestoner
       publisher.publish version, sign: sign_tag?(options[:sign])
       say_status :info, "Repository tagged and pushed: #{tagger.version}.", :green
       say_status :info, "Milestone published!", :green
-    rescue StandardError => exception
-      say_status :error, exception.message, :red
+    rescue StandardError => error
+      say_status :error, error.message, :red
     end
 
     desc "-c, [--config]", "Manage gem configuration."
