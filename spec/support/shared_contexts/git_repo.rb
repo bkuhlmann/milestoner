@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_context "Git Repository", :git_repo do
+RSpec.shared_context "with Git repository", :git_repo do
   let(:temp_dir) { Bundler.root.join "tmp", "rspec" }
   let(:git_repo_dir) { File.join temp_dir, "repo" }
   let(:git_user_name) { "Test Example" }
