@@ -12,7 +12,7 @@ module Milestoner
     end
 
     def self.version
-      "9.2.1"
+      "9.3.0"
     end
 
     def self.version_label
