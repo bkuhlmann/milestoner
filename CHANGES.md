@@ -1,3 +1,11 @@
+# 9.3.1 (2019-07-01)
+
+- Updated XDG documentation to reference XDG gem.
+- Updated to Gemsmith 13.5.0.
+- Updated to Git Cop 3.5.0.
+- Updated to Rubocop Performance 1.4.0.
+- Refactored RSpec helper support requirements.
+
 # 9.3.0 (2019-06-01)
 
 - Fixed RSpec/ContextWording issues.
