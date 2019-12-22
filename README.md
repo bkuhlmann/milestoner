@@ -40,7 +40,9 @@ A command line interface for crafting Git repository milestones (also known as *
     - Format: `<major>.<minor>.<maintenance>`.
     - Example: `0.1.0`.
 - Ensures Git commits since last tag (or initialization of repository) are included.
-- Ensures Git commit messages are grouped by prefix, in order defined. Defaults (can be customized):
+- Ensures Git commit messages are grouped by prefix, in order defined. For more details, see [Git
+  Cop Subject Prefix](https://github.com/bkuhlmann/git-cop#commit-subject-prefix) for details.
+  Defaults (can be customized):
     - Fixed
     - Added
     - Updated
@@ -127,8 +129,8 @@ The `configuration.yml` file can be configured as follows:
 - `git_commit_prefixes`: Should the default prefixes not be desired, you can define Git commit
   prefixes that match your style. *NOTE: Prefix order is important with the first prefix defined
   taking precedence over the second and so forth.* Special characters are allowed for prefixes but
-  should be enclosed in quotes if used. To disable prefix usage completely, use an empty array.
-  Example: `:git_commit_prefixes: []`.
+  should be enclosed in quotes. To disable prefix usage completely, use an empty array. Example:
+  `:git_commit_prefixes: []`.
 - `git_tag_sign`: Defaults to `false` but can be enabled by setting to `true`. When enabled, a Git
   tag will require GPG signing for enhanced security and include a signed signature as part of the
   Git tag. This is useful for public milestones where the author of a milestone can be verified to
