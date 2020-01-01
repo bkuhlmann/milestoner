@@ -88,7 +88,7 @@ module Milestoner
                   type: :boolean,
                   default: false
     def config
-      path = configuration.path
+      path = configuration.current
 
       if options.edit? then `#{ENV["EDITOR"]} #{path}`
       elsif options.info?
