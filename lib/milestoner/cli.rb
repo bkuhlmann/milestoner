@@ -12,7 +12,7 @@ module Milestoner
     package_name Identity.version_label
 
     def self.configuration
-      Runcom::Config.new Identity.name,
+      Runcom::Config.new "#{Identity.name}/configuration.yml",
                          defaults: {
                            git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
                            git_tag_sign: false
