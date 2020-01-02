@@ -1,3 +1,10 @@
+# 10.0.1 (2020-01-02)
+
+- Fixed loading of configuration file
+- Updated README project requirements
+- Updated to Gemsmith 14.0.0
+- Updated to Git Cop 4.0.0
+
 # 10.0.0 (2020-01-01)
 
 - Added gem console.
