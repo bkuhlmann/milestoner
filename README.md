@@ -57,7 +57,7 @@ A command line interface for crafting Git repository milestones (also known as *
 
 ## Screencasts
 
-[![asciicast](https://asciinema.org/a/278645.svg)](https://asciinema.org/a/278645)
+[![asciicast](https://asciinema.org/a/293098.svg)](https://asciinema.org/a/293098)
 
 ## Requirements
 
