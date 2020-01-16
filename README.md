@@ -37,7 +37,7 @@ A command line interface for crafting Git repository milestones (also known as *
 
 - Uses [Versionaire](https://github.com/bkuhlmann/versionaire) for
   [Semantic Versioning](https://semver.org).
-    - Format: `<major>.<minor>.<maintenance>`.
+    - Format: `<major>.<minor>.<patch>`.
     - Example: `0.1.0`.
 - Ensures Git commits since last tag (or initialization of repository) are included.
 - Ensures Git commit messages are grouped by prefix, in order defined. For more details, see [Git
