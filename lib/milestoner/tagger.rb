@@ -80,7 +80,7 @@ module Milestoner
     end
 
     def git_message
-      %(Version #{@version}.\n\n#{commit_list.join "\n"}\n\n)
+      %(Version #{@version}\n\n#{commit_list.join "\n"}\n\n)
     end
 
     # :reek:BooleanParameter

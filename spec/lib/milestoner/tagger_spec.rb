@@ -181,7 +181,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "creates tag message" do
       Dir.chdir git_repo_dir do
         tagger.create version
-        expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0\./)
+        expect(tag_details.call("0.1.0")).to match(/Version\s0\.1\.0/)
       end
     end
 
@@ -200,7 +200,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         tagger.create version
 
         expect(tag_details.call("0.1.0")).to match(/
-          Version\s0\.1\.0\.\n\n
+          Version\s0\.1\.0\n\n
           \-\sFixed\sthree\.\n
           \-\sAdded\sdummy\sfiles\.\n
           \-\sUpdated\stwo\.\n
@@ -218,7 +218,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
         tagger.create version
 
         expect(tag_details.call("0.1.0")).to match(/
-          Version\s0\.1\.0\.\n\n
+          Version\s0\.1\.0\n\n
           \-\sAdded\sdummy\sfiles\.\n
           \-\sUpdated\stwo\.txt\swith\s\`bogus\scommand\`\sin\smessage\.\n\n\n\n
         /x)
