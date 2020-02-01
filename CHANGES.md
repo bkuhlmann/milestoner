@@ -1,3 +1,12 @@
+# 10.0.2 (2020-02-01)
+
+- Fixed README verionsiare feature documentation
+- Updated README screencast
+- Updated to Reek 5.6.0
+- Updated to Rubocop 0.79.0
+- Updated to SimpleCov 0.18.0
+- Removed period from version label for tags
+
 # 10.0.1 (2020-01-02)
 
 - Fixed loading of configuration file
