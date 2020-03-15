@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.append File.expand_path("lib", __dir__)
-require "milestoner/identity"
+require_relative "lib/milestoner/identity"
 
 Gem::Specification.new do |spec|
   spec.name = Milestoner::Identity.name
