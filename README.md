@@ -17,6 +17,8 @@ A command line interface for crafting Git repository milestones (also known as *
   - [Screencasts](#screencasts)
   - [Requirements](#requirements)
   - [Setup](#setup)
+    - [Production](#production)
+    - [Development](#development)
   - [Usage](#usage)
     - [Command Line Interface (CLI)](#command-line-interface-cli)
     - [Customization](#customization)
@@ -65,9 +67,23 @@ A command line interface for crafting Git repository milestones (also known as *
 
 ## Setup
 
-Type the following to install:
+### Production
+
+To install, run:
 
     gem install milestoner
+
+### Development
+
+To contribute, run:
+
+    git clone https://github.com/bkuhlmann/milestoner.git
+    cd milestoner
+    bin/setup
+
+You can also use the IRB console for direct access to all objects:
+
+    bin/console
 
 ## Usage
 
