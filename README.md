@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="milestoner.png" alt="Milestoner Icon"/>
+  <img src="https://www.alchemists.io/images/projects/milestoner/icon.png" alt="Milestoner Icon"/>
 </p>
 
 # Milestoner
