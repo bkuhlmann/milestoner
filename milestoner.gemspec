@@ -3,8 +3,8 @@
 require_relative "lib/milestoner/identity"
 
 Gem::Specification.new do |spec|
-  spec.name = Milestoner::Identity.name
-  spec.version = Milestoner::Identity.version
+  spec.name = Milestoner::Identity::NAME
+  spec.version = Milestoner::Identity::VERSION
   spec.platform = Gem::Platform::RUBY
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]

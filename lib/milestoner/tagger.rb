@@ -103,7 +103,7 @@ module Milestoner
     # :reek:BooleanParameter
     # :reek:TooManyStatements
     def git_tag sign: false
-      message_file = Tempfile.new Identity.name
+      message_file = Tempfile.new Identity::NAME
       File.open(message_file, "w") { |file| file.write git_message }
       status = system "git tag #{git_options message_file, sign: sign}"
       fail Errors::Git, "Unable to create tag: #{@version}." unless status

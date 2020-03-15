@@ -5,5 +5,5 @@ require "milestoner"
 require "milestoner/cli"
 require "milestoner/identity"
 
-Process.setproctitle Milestoner::Identity.version_label
+Process.setproctitle Milestoner::Identity::VERSION_LABEL
 Milestoner::CLI.start
