@@ -1,0 +1,227 @@
+:toc: macro
+:toclevels: 5
+:figure-caption!:
+
+= Milestoner
+
+[link=http://badge.fury.io/rb/milestoner]
+image::https://badge.fury.io/rb/milestoner.svg[Gem Version]
+[link=https://circleci.com/gh/bkuhlmann/milestoner]
+image::https://circleci.com/gh/bkuhlmann/milestoner.svg?style=svg[Circle CI Status]
+
+A command line interface for crafting Git repository milestones (also known as _tags_).
+
+toc::[]
+
+== Features
+
+* Uses link:https://www.alchemists.io/projects/versionaire[Versionaire] for
+  link:https://semver.org[Semantic Versioning].
+** Format: `+<major>.<minor>.<patch>+`.
+** Example: `+0.1.0+`.
+* Ensures Git commits since last tag (or initialization of repository) are included.
+* Ensures Git commit messages are grouped by prefix, in order defined. For more details, see
+  link:https://www.alchemists.io/projects/git-cop/#_commit_subject_prefix[Git Cop Subject Prefix]
+  for details. Defaults (can be customized):
+** Fixed
+** Added
+** Updated
+** Removed
+** Refactored
+* Ensures Git commit merge messages are excluded.
+* Ensures Git commit messages are alphabetically sorted.
+* Ensures duplicate Git commit messages are removed (if any).
+* Ensures Git commit messages are sanitized by removing extra spaces and `+[ci skip]+` text within
+  each Git tag message.
+* Provides optional security for signing Git tags with https://www.gnupg.org[GnuPG] signing key.
+
+== Screencasts
+
+[link=https://www.alchemists.io/screencasts/milestoner.html]
+image::https://www.alchemists.io/images/screencasts/milestoner.png[Screencast]
+
+== Requirements
+
+. A UNIX-based system.
+. https://www.ruby-lang.org[Ruby 2.7.x].
+. https://www.gnupg.org[GnuPG].
+
+== Setup
+
+=== Production
+
+To install, run:
+
+[source,bash]
+----
+gem install milestoner
+----
+
+=== Development
+
+To contribute, run:
+
+[source,bash]
+----
+git clone https://github.com/bkuhlmann/milestoner.git
+cd milestoner
+bin/setup
+----
+
+You can also use the IRB console for direct access to all objects:
+
+[source,bash]
+----
+bin/console
+----
+
+== Usage
+
+=== Command Line Interface (CLI)
+
+From the command line, type: `+milestoner help+`
+
+....
+milestoner -C, [--commits]          # Show commits for next milestone.
+milestoner -P, [--publish=VERSION]  # Tag and push milestone to remote repository.
+milestoner -c, [--config]           # Manage gem configuration.
+milestoner -h, [--help=COMMAND]     # Show this message or get help for a command.
+milestoner -p, [--push=VERSION]     # Push local tag to remote repository.
+milestoner -t, [--tag=VERSION]      # Tag local repository with new version.
+milestoner -v, [--version]          # Show gem version.
+....
+
+For config options, type: `+milestoner help --config+`
+
+....
+-e, [--edit], [--no-edit]  # Edit gem configuration.
+-i, [--info], [--no-info]  # Print gem configuration info.
+....
+
+For tag options, type: `+milestoner help --tag+`
+
+....
+-s, [--sign], [--no-sign]  # Sign tag with GPG key.
+....
+
+For publish options, type: `+milestoner help --publish+`
+
+....
+-s, [--sign], [--no-sign]  # Sign tag with GPG key.
+....
+
+When using Milestoner, the `+--publish+` command is intended to be the only command necessary for
+publishing a new release as it handles all of the steps necessary for tagging and pushing a new
+milestone. Should individual steps be needed, then the `+--tag+` and `+--push+` options are
+available.
+
+=== Customization
+
+This gem can be configured via a global configuration:
+
+....
+~/.config/milestoner/configuration.yml
+....
+
+It can also be configured via https://www.alchemists.io/projects/xdg[XDG] environment variables.
+
+The default configuration is as follows:
+
+[source,yaml]
+----
+:git_commit_prefixes:
+  - Fixed
+  - Added
+  - Updated
+  - Removed
+  - Refactored
+:git_tag_sign: false
+----
+
+Feel free to take this default configuration, modify, and save as your own custom
+`+configuration.yml+`.
+
+The `+configuration.yml+` file can be configured as follows:
+
+* `+git_commit_prefixes+`: Should the default prefixes not be desired, you can define Git commit
+prefixes that match your style. _NOTE: Prefix order is important with the first prefix defined
+taking precedence over the second and so forth._ Special characters are allowed for prefixes but
+should be enclosed in quotes. To disable prefix usage completely, use an empty array. Example:
+`+:git_commit_prefixes: []+`.
+* `+git_tag_sign+`: Defaults to `+false+` but can be enabled by setting to `+true+`. When enabled, a
+Git tag will require GPG signing for enhanced security and include a signed signature as part of the
+Git tag. This is useful for public milestones where the author of a milestone can be verified to
+ensure milestone integrity/security.
+
+== Security
+
+To securely sign your Git tags, install and configure https://www.gnupg.org[GPG]:
+
+[source,bash]
+----
+brew install gpg
+gpg --gen-key
+----
+
+When creating your GPG key, choose these settings:
+
+* Key kind: RSA and RSA (default)
+* Key size: 4096
+* Key validity: 0
+* Real Name: `+<your name>+`
+* Email: `+<your email>+`
+* Passphrase: `+<your passphrase>+`
+
+To obtain your key, run the following and take the part after the forward slash:
+
+....
+gpg --list-keys | grep pub
+....
+
+Add your key to your global Git configuration in the `+[user]+` section. Example:
+
+....
+[user]
+  signingkey = <your GPG key>
+....
+
+Now, when publishing a new milestone (i.e. `+milestoner --publish <version> --sign+`), signing of
+your Git tag will happen automatically. You will be prompted for the GPG Passphrase each time but
+that is to be expected.
+
+== Tests
+
+To test, run:
+
+....
+bundle exec spec
+....
+
+== Versioning
+
+Read link:https://semver.org[Semantic Versioning] for details. Briefly, it means:
+
+* Major (X.y.z) - Incremented for any backwards incompatible public API changes.
+* Minor (x.Y.z) - Incremented for new, backwards compatible, public API enhancements/fixes.
+* Patch (x.y.Z) - Incremented for small, backwards compatible, bug fixes.
+
+== Code of Conduct
+
+Please note that this project is released with a link:CODE_OF_CONDUCT.adoc[CODE OF CONDUCT]. By
+participating in this project you agree to abide by its terms.
+
+== Contributions
+
+Read link:CONTRIBUTING.adoc[CONTRIBUTING] for details.
+
+== License
+
+Read link:LICENSE.adoc[LICENSE] for details.
+
+== History
+
+Read link:CHANGES.adoc[CHANGES] for details.
+
+== Credits
+
+Engineered by link:https://www.alchemists.io/team/brooke_kuhlmann.html[Brooke Kuhlmann].
