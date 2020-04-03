@@ -37,7 +37,7 @@ toc::[]
 
 == Screencasts
 
-[link=https://www.alchemists.io/screencasts/milestoner.html]
+[link=https://www.alchemists.io/screencasts/milestoner]
 image::https://www.alchemists.io/images/screencasts/milestoner/cover-original.png[Screencast,role=focal_point]
 
 == Requirements
