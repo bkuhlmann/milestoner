@@ -29,7 +29,7 @@ module Milestoner
       end
 
       def tag_remote? tag
-        shell("git ls-remote --tags origin #{tag}").match?(%r(.+tags\/#{tag}\Z))
+        shell("git ls-remote --tags origin #{tag}").match?(%r(.+tags/#{tag}\Z))
       end
 
       def remote?

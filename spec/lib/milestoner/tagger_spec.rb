@@ -201,10 +201,10 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\n\n
-          \-\sFixed\sthree\.\n
-          \-\sAdded\sdummy\sfiles\.\n
-          \-\sUpdated\stwo\.\n
-          \-\sRemoved\sone\.\n\n\n\n
+          -\sFixed\sthree\.\n
+          -\sAdded\sdummy\sfiles\.\n
+          -\sUpdated\stwo\.\n
+          -\sRemoved\sone\.\n\n\n\n
         /x)
       end
     end
@@ -219,8 +219,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\n\n
-          \-\sAdded\sdummy\sfiles\.\n
-          \-\sUpdated\stwo\.txt\swith\s\`bogus\scommand\`\sin\smessage\.\n\n\n\n
+          -\sAdded\sdummy\sfiles\.\n
+          -\sUpdated\stwo\.txt\swith\s`bogus\scommand`\sin\smessage\.\n\n\n\n
         /x)
       end
     end
@@ -229,7 +229,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       it "does not sign tag" do
         Dir.chdir git_repo_dir do
           tagger.create version
-          expect(tag_details.call("0.1.0")).not_to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
+          expect(tag_details.call("0.1.0")).not_to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
         end
       end
     end
@@ -252,7 +252,7 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
               `git config --local user.signingkey #{gpg_key}`
               tagger.create version, sign: true
 
-              expect(tag_details.call("0.1.0")).to match(/\-{5}BEGIN\sPGP\sSIGNATURE\-{5}/)
+              expect(tag_details.call("0.1.0")).to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
             end
           end
         end

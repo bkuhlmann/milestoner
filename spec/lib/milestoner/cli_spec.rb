@@ -16,7 +16,7 @@ RSpec.describe Milestoner::CLI do
       it "prints invalid version error" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to output(/Invalid version conversion\: bogus/).to_stdout
+          expect(&result).to output(/Invalid version conversion: bogus/).to_stdout
         end
       end
     end
@@ -25,7 +25,7 @@ RSpec.describe Milestoner::CLI do
       it "prints commits for new tag" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to output(/\-\sAdded\sdummy\sfiles\.\n/).to_stdout
+          expect(&result).to output(/-\sAdded\sdummy\sfiles\.\n/).to_stdout
         end
       end
     end
@@ -66,7 +66,7 @@ RSpec.describe Milestoner::CLI do
         ClimateControl.modify HOME: temp_dir.to_s do
           Dir.chdir git_repo_dir do
             result = -> { cli }
-            expect(&result).to output(/Repository\stagged\:\s0\.1\.0/).to_stdout
+            expect(&result).to output(/Repository\stagged:\s0\.1\.0/).to_stdout
           end
         end
       end
@@ -100,8 +100,8 @@ RSpec.describe Milestoner::CLI do
       let(:pusher) { instance_spy Milestoner::Pusher }
       let :output_pattern do
         /
-          \s+info\s+Repository\stagged\sand\spushed\:\s0\.1\.0\.\n
-          \s+info\s+Milestone\spublished\!\n
+          \s+info\s+Repository\stagged\sand\spushed:\s0\.1\.0\.\n
+          \s+info\s+Milestone\spublished!\n
         /x
       end
 
