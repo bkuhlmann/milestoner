@@ -43,7 +43,7 @@ image::https://www.alchemists.io/images/screencasts/milestoner/cover-original.pn
 == Requirements
 
 . A UNIX-based system.
-. https://www.ruby-lang.org[Ruby 2.7.x].
+. https://www.ruby-lang.org[Ruby].
 . https://www.gnupg.org[GnuPG].
 
 == Setup
