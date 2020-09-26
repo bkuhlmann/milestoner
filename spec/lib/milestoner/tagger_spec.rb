@@ -4,32 +4,35 @@ require "spec_helper"
 
 # rubocop:disable RSpec/SubjectStub
 RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
-  subject(:tagger) { described_class.new commit_prefixes: prefixes }
+  subject(:tagger) { described_class.new commit_prefixes: %w[Fixed Added Updated Removed] }
 
   let(:version) { Versionaire::Version "0.1.0" }
-  let(:prefixes) { %w[Fixed Added Updated Removed Refactored] }
 
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
   end
 
   describe "#initialize" do
+    subject(:tagger) { described_class.new }
+
     it "answers nil version" do
       expect(tagger.version).to eq(nil)
     end
 
     it "answers commit prefixes" do
-      expect(tagger.commit_prefixes).to eq(prefixes)
+      expect(tagger.commit_prefixes).to eq([])
     end
   end
 
   describe "#commit_prefix_regex" do
-    it "answers regex for for commit prefixes" do
-      expect(tagger.commit_prefix_regex).to eq(/Fixed|Added|Updated|Removed|Refactored/)
+    context "with prefixes" do
+      it "answers regex for for commit prefixes" do
+        expect(tagger.commit_prefix_regex).to eq(/Fixed|Added|Updated|Removed/)
+      end
     end
 
     context "without prefixes" do
-      let(:prefixes) { [] }
+      subject(:tagger) { described_class.new commit_prefixes: [] }
 
       it "answers empty regex" do
         expect(tagger.commit_prefix_regex).to eq(//)
@@ -87,7 +90,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     context "with prefixed commits using special characters" do
-      let(:prefixes) { ["[one]", "$\#{@", "with spaces"] }
+      subject(:tagger) { described_class.new commit_prefixes: ["[one]", "$\#{@", "with spaces"] }
+
       let(:raw_commits) { ["Apple", "with spaces yes", "$\#{@ junk", "[one] more"] }
 
       before { allow(tagger).to receive(:raw_commits).and_return(raw_commits) }
@@ -131,6 +135,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     end
 
     context "with commit messages that include [ci skip] strings" do
+      subject(:tagger) { described_class.new commit_prefixes: %w[Fixed Added] }
+
       let :raw_commits do
         [
           "Fixed failing [ci skip] CI builds.",
