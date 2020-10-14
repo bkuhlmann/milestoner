@@ -48,31 +48,11 @@ image::https://www.alchemists.io/images/screencasts/milestoner/cover.svg[Screenc
 
 == Setup
 
-=== Production
-
 To install, run:
 
 [source,bash]
 ----
 gem install milestoner
-----
-
-=== Development
-
-To contribute, run:
-
-[source,bash]
-----
-git clone https://github.com/bkuhlmann/milestoner.git
-cd milestoner
-bin/setup
-----
-
-You can also use the IRB console for direct access to all objects:
-
-[source,bash]
-----
-bin/console
 ----
 
 == Usage
@@ -189,13 +169,32 @@ Now, when publishing a new milestone (i.e. `+milestoner --publish <version> --s
 your Git tag will happen automatically. You will be prompted for the GPG Passphrase each time but
 that is to be expected.
 
+== Development
+
+To contribute, run:
+
+[source,bash]
+----
+git clone https://github.com/bkuhlmann/milestoner.git
+cd milestoner
+bin/setup
+----
+
+You can also use the IRB console for direct access to all objects:
+
+[source,bash]
+----
+bin/console
+----
+
 == Tests
 
 To test, run:
 
-....
+[source,bash]
+----
 bundle exec spec
-....
+----
 
 == Versioning
 
