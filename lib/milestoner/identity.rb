@@ -5,7 +5,7 @@ module Milestoner
   module Identity
     NAME = "milestoner"
     LABEL = "Milestoner"
-    VERSION = "10.2.0"
+    VERSION = "10.3.0"
     VERSION_LABEL = "#{LABEL} #{VERSION}"
   end
 end
