@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.cert_chain = [Gem.default_cert_path]
 
   spec.required_ruby_version = "~> 2.7"
+  spec.add_dependency "git_plus", "~> 0.1"
   spec.add_dependency "refinements", "~> 7.18"
   spec.add_dependency "runcom", "~> 6.4"
   spec.add_dependency "thor", "~> 0.20"

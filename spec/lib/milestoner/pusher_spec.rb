@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Milestoner::Pusher do
   subject(:pusher) { described_class.new git: git }
 
-  let(:git) { instance_spy Milestoner::Git::Kit, tag_remote?: false, push_tags: "" }
+  let(:git) { instance_spy Git::Kit::Core, tag_remote?: false, push_tags: "" }
   let(:version) { "0.0.0" }
 
   describe "#push" do

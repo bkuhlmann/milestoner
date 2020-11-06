@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require "git/kit"
+
 module Milestoner
   # Handles publishing of Git tags to remote repository.
   class Pusher
-    def initialize git: Git::Kit.new
+    def initialize git: Git::Kit::Core.new
       @git = git
     end
 

@@ -4,6 +4,7 @@ require "open3"
 require "thor"
 require "versionaire"
 require "tempfile"
+require "git/kit"
 
 module Milestoner
   # Handles the tagging of a project repository.
@@ -12,7 +13,7 @@ module Milestoner
   class Tagger
     attr_reader :version, :commit_prefixes
 
-    def initialize commit_prefixes: [], git: Git::Kit.new
+    def initialize commit_prefixes: [], git: Git::Kit::Core.new
       @commit_prefixes = commit_prefixes
       @git = git
       @shell = Thor::Shell::Color.new
