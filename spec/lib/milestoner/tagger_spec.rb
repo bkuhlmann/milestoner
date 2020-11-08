@@ -45,40 +45,40 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       Dir.chdir git_repo_dir do
         `git tag v0.0.0`
         `git rm one.txt`
-        `git commit --all --message "Removed one.txt."`
+        `git commit --all --message "Removed one.txt"`
 
-        expect(tagger.commits).to contain_exactly("Removed one.txt.")
+        expect(tagger.commits).to contain_exactly("Removed one.txt")
       end
     end
 
     it "answers all commits when not tagged" do
       Dir.chdir git_repo_dir do
-        expect(tagger.commits).to contain_exactly("Added dummy files.")
+        expect(tagger.commits).to contain_exactly("Added dummy files")
       end
     end
 
     context "with prefixed commits" do
       let :raw_commits do
         [
-          "This is not a good commit message.",
-          "Updated gem dependencies.",
-          "Fixed README typos.",
-          "Updated version release notes.",
-          "Removed unused stylesheets.",
-          "Added spec helper methods.",
-          "Refactored authorization to base controller."
+          "This is not a good commit message",
+          "Updated gem dependencies",
+          "Fixed README typos",
+          "Updated version release notes",
+          "Removed unused stylesheets",
+          "Added spec helper methods",
+          "Refactored authorization to base controller"
         ]
       end
 
       let :expectation do
         [
-          "Fixed README typos.",
-          "Added spec helper methods.",
-          "Updated gem dependencies.",
-          "Updated version release notes.",
-          "Removed unused stylesheets.",
-          "Refactored authorization to base controller.",
-          "This is not a good commit message."
+          "Fixed README typos",
+          "Added spec helper methods",
+          "Updated gem dependencies",
+          "Updated version release notes",
+          "Removed unused stylesheets",
+          "Refactored authorization to base controller",
+          "This is not a good commit message"
         ]
       end
 
@@ -115,10 +115,10 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     context "with duplicate commit messages" do
       let :raw_commits do
         [
-          "Added spec helper methods.",
-          "Updated gem dependencies.",
-          "Updated gem dependencies.",
-          "Updated gem dependencies."
+          "Added spec helper methods",
+          "Updated gem dependencies",
+          "Updated gem dependencies",
+          "Updated gem dependencies"
         ]
       end
 
@@ -127,8 +127,8 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       it "answers commits with duplicates removed" do
         expect(tagger.commits).to eq(
           [
-            "Added spec helper methods.",
-            "Updated gem dependencies."
+            "Added spec helper methods",
+            "Updated gem dependencies"
           ]
         )
       end
@@ -139,9 +139,9 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
 
       let :raw_commits do
         [
-          "Fixed failing [ci skip] CI builds.",
-          "Added spec helper methods. [ci skip]",
-          "[ci skip] Updated gem dependencies."
+          "Fixed failing [ci skip] CI builds",
+          "Added spec helper methods [ci skip]",
+          "[ci skip] Updated gem dependencies"
         ]
       end
 
@@ -150,9 +150,9 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
       it "answers commits messages with [ci skip] strings removed" do
         expect(tagger.commits).to eq(
           [
-            "Fixed failing CI builds.",
-            "Added spec helper methods.",
-            "Updated gem dependencies."
+            "Fixed failing CI builds",
+            "Added spec helper methods",
+            "Updated gem dependencies"
           ]
         )
       end
@@ -195,22 +195,22 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "creates tag message with commits since last tag" do
       Dir.chdir git_repo_dir do
         `git rm one.txt`
-        `git commit --all --message "Removed one."`
+        `git commit --all --message "Removed one"`
 
         `printf "Test" > two.txt`
-        `git commit --all --message "Updated two."`
+        `git commit --all --message "Updated two"`
 
         `printf "Three." > three.txt`
-        `git commit --all --message "Fixed three."`
+        `git commit --all --message "Fixed three"`
 
         tagger.create version
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\n\n
-          -\sFixed\sthree\.\n
-          -\sAdded\sdummy\sfiles\.\n
-          -\sUpdated\stwo\.\n
-          -\sRemoved\sone\.\n\n\n\n
+          -\sFixed\sthree\n
+          -\sAdded\sdummy\sfiles\n
+          -\sUpdated\stwo\n
+          -\sRemoved\sone\n\n\n\n
         /x)
       end
     end
@@ -219,14 +219,14 @@ RSpec.describe Milestoner::Tagger, :temp_dir, :git_repo do
     it "does not execute backticks in commit subject when adding tag message" do
       Dir.chdir git_repo_dir do
         `printf "Test" > two.txt`
-        %x(git commit --all --message 'Updated two.txt with \`bogus command\` in message.')
+        %x(git commit --all --message 'Updated two.txt with \`bogus command\` in message')
 
         tagger.create version
 
         expect(tag_details.call("0.1.0")).to match(/
           Version\s0\.1\.0\n\n
-          -\sAdded\sdummy\sfiles\.\n
-          -\sUpdated\stwo\.txt\swith\s`bogus\scommand`\sin\smessage\.\n\n\n\n
+          -\sAdded\sdummy\sfiles\n
+          -\sUpdated\stwo\.txt\swith\s`bogus\scommand`\sin\smessage\n\n\n\n
         /x)
       end
     end

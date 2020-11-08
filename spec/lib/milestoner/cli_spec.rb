@@ -25,7 +25,7 @@ RSpec.describe Milestoner::CLI do
       it "prints commits for new tag" do
         Dir.chdir git_repo_dir do
           result = -> { cli }
-          expect(&result).to output(/-\sAdded\sdummy\sfiles\.\n/).to_stdout
+          expect(&result).to output(/-\sAdded\sdummy\sfiles\n/).to_stdout
         end
       end
     end
