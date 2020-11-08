@@ -30,11 +30,8 @@ toc::[]
 ** Updated
 ** Removed
 ** Refactored
-* Ensures Git commit merge messages are excluded.
 * Ensures Git commit messages are alphabetically sorted.
 * Ensures duplicate Git commit messages are removed (if any).
-* Ensures Git commit messages are sanitized by removing extra spaces and `+[ci skip]+` text within
-  each Git tag message.
 * Provides optional security for signing Git tags with https://www.gnupg.org[GnuPG] signing key.
 
 == Screencasts
