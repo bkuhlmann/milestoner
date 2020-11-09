@@ -3,16 +3,18 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI do
+  include_context "with Git repository"
+
   using Refinements::Pathnames
 
   describe ".start" do
     subject(:cli) { described_class.start command_line }
 
-    let(:version) { "0.1.0" }
+    let(:version) { "0.0.0" }
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
 
-    shared_examples_for "a version error", :git_repo do
+    shared_examples_for "a version error" do
       let(:version) { "bogus" }
 
       it "prints invalid version error" do
@@ -23,16 +25,16 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a commits command", :git_repo do
+    shared_examples_for "a commits command" do
       it "prints commits for new tag" do
         git_repo_dir.change_dir do
           result = proc { cli }
-          expect(&result).to output(/-\sAdded\sdummy\sfiles\n/).to_stdout
+          expect(&result).to output(/-\sAdded documentation\s-\sTest\sUser\n/).to_stdout
         end
       end
     end
 
-    shared_examples_for "an unsigned tag", :temp_dir do
+    shared_examples_for "an unsigned tag" do
       let(:tagger) { instance_spy Milestoner::Tagger }
       before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
 
@@ -44,7 +46,7 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a signed tag", :temp_dir do
+    shared_examples_for "a signed tag" do
       let(:options) { [version, "-s"] }
       let(:tagger) { instance_spy Milestoner::Tagger }
       before { allow(Milestoner::Tagger).to receive(:new).and_return(tagger) }
@@ -57,7 +59,7 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a tag command", :git_repo do
+    shared_examples_for "a tag command" do
       let(:options) { [version] }
 
       it_behaves_like "an unsigned tag"
@@ -68,13 +70,13 @@ RSpec.describe Milestoner::CLI do
         ClimateControl.modify HOME: temp_dir.to_s do
           git_repo_dir.change_dir do
             result = proc { cli }
-            expect(&result).to output(/Repository\stagged:\s0\.1\.0/).to_stdout
+            expect(&result).to output(/Repository\stagged:\s0\.0\.0/).to_stdout
           end
         end
       end
     end
 
-    shared_examples_for "a push command", :git_repo do
+    shared_examples_for "a push command" do
       let(:options) { [version] }
       let(:pusher) { instance_spy Milestoner::Pusher }
 
@@ -97,12 +99,12 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a publish command", :git_repo do
+    shared_examples_for "a publish command" do
       let(:options) { [version] }
       let(:pusher) { instance_spy Milestoner::Pusher }
       let :output_pattern do
         /
-          \s+info\s+Repository\stagged\sand\spushed:\s0\.1\.0\.\n
+          \s+info\s+Repository\stagged\sand\spushed:\s0\.0\.0\.\n
           \s+info\s+Milestone\spublished!\n
         /x
       end
@@ -123,7 +125,7 @@ RSpec.describe Milestoner::CLI do
       end
     end
 
-    shared_examples_for "a config command", :temp_dir do
+    shared_examples_for "a config command" do
       context "with no options" do
         it "prints help text" do
           result = proc { cli }
@@ -135,13 +137,13 @@ RSpec.describe Milestoner::CLI do
     shared_examples_for "a version command" do
       it "prints version" do
         result = proc { cli }
-        expect(&result).to output(/#{Milestoner::Identity::VERSION_LABEL}\n/).to_stdout
+        expect(&result).to output(/#{Milestoner::Identity::VERSION_LABEL}\n/o).to_stdout
       end
     end
 
     shared_examples_for "a help command" do
       it "prints usage" do
-        regex = /#{Milestoner::Identity::VERSION_LABEL}\scommands:\n/
+        regex = /#{Milestoner::Identity::VERSION_LABEL}\scommands:\n/o
         result = proc { cli }
 
         expect(&result).to output(regex).to_stdout
