@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
+Bundler.require :tools
 
 require "simplecov"
 SimpleCov.start { enable_coverage :branch }
 
-require "pry"
-require "pry-byebug"
-require "climate_control"
-require "refinements"
 require "git_plus/spec/shared_contexts/temp_dir"
 require "git_plus/spec/shared_contexts/git_repo"
 require "git_plus/spec/shared_contexts/git_commit"
 require "milestoner"
+require "refinements"
+require "climate_control"
 
 using Refinements::Pathnames
 
