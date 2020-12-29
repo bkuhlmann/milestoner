@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = "~> 3.0"
   spec.add_dependency "git_plus", "~> 0.1"
   spec.add_dependency "refinements", "~> 8.0"
-  spec.add_dependency "runcom", "~> 6.4"
+  spec.add_dependency "runcom", "~> 7.0"
   spec.add_dependency "thor", "~> 0.20"
   spec.add_dependency "versionaire", "~> 9.0"
 
