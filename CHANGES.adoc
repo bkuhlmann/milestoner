@@ -1,5 +1,27 @@
 = Changes
 
+== 11.0.0 (2020-12-29)
+
+* Updated to Gemsmith 14.8.0
+* Updated to Git Lint 1.3.0
+* Added Refinements gem
+* Added Git+ dependency
+* Removed Git commit subject punctuation from specs
+* Updated specs to use Pathnames refinement
+* Added Git commit presenter
+* Updated tagger to use Git+
+* Updated pusher to use Git+
+* Updated CLI to pick up tagger and pusher changes
+* Updated project documentation feature list
+* Added Amazing Print
+* Added Gemfile groups
+* Removed RubyGems requirement from binstubs
+* Added RubyCritic
+* Updated to Ruby 3.0.0
+* Updated to Refinements 8.0.0
+* Updated to Versionaire 9.0.0
+* Updated to Runcom 7.0.0
+
 == 10.4.0 (2020-11-14)
 
 * Added Alchemists style guide badge
