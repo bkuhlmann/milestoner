@@ -1,5 +1,11 @@
 = Changes
 
+== 11.1.0 (2021-01-03)
+
+* Updated to Gemsmith 15.0.0 - Brooke Kuhlmann
+* Updated to Git Lint 2.0.0 - Brooke Kuhlmann
+* Updated to Git+ 0.2.0 - Brooke Kuhlmann
+
 == 11.0.0 (2020-12-29)
 
 * Updated to Gemsmith 14.8.0
