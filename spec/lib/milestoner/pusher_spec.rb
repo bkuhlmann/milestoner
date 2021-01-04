@@ -19,7 +19,7 @@ RSpec.describe Milestoner::Pusher do
     end
 
     it "fails when remote repository is not configured" do
-      allow(repository).to receive(:config_remote?).and_return(false)
+      allow(repository).to receive(:config_origin?).and_return(false)
       result = -> { pusher.push version }
 
       expect(&result).to raise_error(Milestoner::Errors::Git, "Remote repository not configured.")

@@ -10,7 +10,7 @@ module Milestoner
     def push version
       version = Versionaire::Version version
 
-      fail Errors::Git, "Remote repository not configured." unless repository.config_remote?
+      fail Errors::Git, "Remote repository not configured." unless repository.config_origin?
       fail Errors::Git, "Remote tag exists: #{version}." if tag_exists? version
       return if push_tags
 
