@@ -37,8 +37,9 @@ module Milestoner
     # :reek:TooManyStatements
     def create version, sign: false
       version = Versionaire::Version version
-      fail Errors::Git, "Unable to tag without commits." if repository.commits.empty?
-      return if exists? version
+
+      return if local? version
+      fail Errors::Git, "Unable to tag without commits." if computed_commits.empty?
 
       content = message version
       sign ? repository.tag_sign(version, content) : repository.tag_unsign(version, content)
@@ -78,7 +79,7 @@ module Milestoner
       %(Version #{version}\n\n#{commit_list.join "\n"}\n\n)
     end
 
-    def exists? version
+    def local? version
       return false unless repository.tag_local? version
 
       shell.say_status :warn, "Local tag exists: #{version}. Skipped.", :yellow
