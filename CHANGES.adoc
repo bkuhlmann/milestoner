@@ -1,5 +1,9 @@
 = Changes
 
+== 11.1.1 (2021-01-05)
+
+* Fixed calculation of empty commits when creating a tag - Brooke Kuhlmann
+
 == 11.1.0 (2021-01-03)
 
 * Updated to Gemsmith 15.0.0 - Brooke Kuhlmann
