@@ -94,6 +94,16 @@ RSpec.describe Milestoner::Tagger do
     context "with prefixed commits using special characters" do
       subject(:tagger) { described_class.new commit_prefixes: ["[one]", "=+-#", "with spaces"] }
 
+      let :expectation do
+        [
+          "[one] more",
+          "=+-#",
+          "with spaces",
+          "Added documentation",
+          "Apple"
+        ]
+      end
+
       before do
         git_repo_dir.change_dir do
           `touch a.txt && git add --all && git commit --message "Apple"`
@@ -106,14 +116,7 @@ RSpec.describe Milestoner::Tagger do
       it "answers commits grouped by prefix and alpha-sorted per group" do
         git_repo_dir.change_dir do
           commits = tagger.commits.map(&:subject)
-
-          expect(commits).to eq([
-            "[one] more",
-            "=+-#",
-            "with spaces",
-            "Added documentation",
-            "Apple"
-          ])
+          expect(commits).to eq(expectation)
         end
       end
     end
@@ -194,13 +197,15 @@ RSpec.describe Milestoner::Tagger do
 
         tagger.create version
 
-        expect(tag_details.call("0.0.0")).to match(/
-          Version\s0\.0\.0\n\n
-          -\sFixed\sREADME\s-\sTest\sUser\n
-          -\sAdded\sdocumentation\s-\sTest\sUser\n
-          -\sUpdated\sREADME\s-\sTest\sUser\n
-          -\sRemoved\sREADME\s-\sTest\sUser\n\n\n\n
-        /x)
+        expect(tag_details.call("0.0.0")).to match(
+          /
+            Version\s0\.0\.0\n\n
+            -\sFixed\sREADME\s-\sTest\sUser\n
+            -\sAdded\sdocumentation\s-\sTest\sUser\n
+            -\sUpdated\sREADME\s-\sTest\sUser\n
+            -\sRemoved\sREADME\s-\sTest\sUser\n\n\n\n
+          /x
+        )
       end
     end
     # rubocop:enable RSpec/ExampleLength
@@ -212,11 +217,13 @@ RSpec.describe Milestoner::Tagger do
 
         tagger.create version
 
-        expect(tag_details.call("0.0.0")).to match(/
-          Version\s0\.0\.0\n\n
-          -\sAdded\sdocumentation\s-\sTest\sUser\n
-          -\sUpdated\sREADME\swith\s`bogus\scommand`\sin\smessage\s-\sTest\sUser\n\n\n\n
-        /x)
+        expect(tag_details.call("0.0.0")).to match(
+          /
+            Version\s0\.0\.0\n\n
+            -\sAdded\sdocumentation\s-\sTest\sUser\n
+            -\sUpdated\sREADME\swith\s`bogus\scommand`\sin\smessage\s-\sTest\sUser\n\n\n\n
+          /x
+        )
       end
     end
 
