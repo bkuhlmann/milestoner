@@ -183,47 +183,55 @@ RSpec.describe Milestoner::Tagger do
       end
     end
 
-    # rubocop:disable RSpec/ExampleLength
-    it "creates tag message with commits since last tag" do
-      git_repo_dir.change_dir do
-        `rm -f README.md`
-        `git commit --all --message "Removed README"`
+    context "with commits since last tag" do
+      let :pattern do
+        /
+          Version\s0\.0\.0\n\n
+          -\sFixed\sREADME\s-\sTest\sUser\n
+          -\sAdded\sdocumentation\s-\sTest\sUser\n
+          -\sUpdated\sREADME\s-\sTest\sUser\n
+          -\sRemoved\sREADME\s-\sTest\sUser\n\n\n\n
+        /x
+      end
 
-        `printf "Update." > README.md`
-        `git add . && git commit --all --message "Updated README"`
+      before do
+        git_repo_dir.change_dir do
+          `rm -f README.md`
+          `git commit --all --message "Removed README"`
 
-        `printf "Fix." > README.md`
-        `git commit --all --message "Fixed README"`
+          `printf "Update." > README.md`
+          `git add . && git commit --all --message "Updated README"`
 
-        tagger.create version
+          `printf "Fix." > README.md`
+          `git commit --all --message "Fixed README"`
+        end
+      end
 
-        expect(tag_details.call("0.0.0")).to match(
-          /
-            Version\s0\.0\.0\n\n
-            -\sFixed\sREADME\s-\sTest\sUser\n
-            -\sAdded\sdocumentation\s-\sTest\sUser\n
-            -\sUpdated\sREADME\s-\sTest\sUser\n
-            -\sRemoved\sREADME\s-\sTest\sUser\n\n\n\n
-          /x
-        )
+      it "creates tag message with commits since last tag" do
+        git_repo_dir.change_dir do
+          tagger.create version
+          expect(tag_details.call("0.0.0")).to match(pattern)
+        end
       end
     end
-    # rubocop:enable RSpec/ExampleLength
 
-    it "does not execute backticks in commit subject when adding tag message" do
-      git_repo_dir.change_dir do
-        `printf "Test" > README.md`
-        %x(git commit --all --message 'Updated README with \`bogus command\` in message')
+    context "with backticks in commits" do
+      let :pattern do
+        /
+          Version\s0\.0\.0\n\n
+          -\sAdded\sdocumentation\s-\sTest\sUser\n
+          -\sUpdated\sREADME\swith\s`bogus\scommand`\sin\smessage\s-\sTest\sUser\n\n\n\n
+        /x
+      end
 
-        tagger.create version
+      it "does not execute backticks" do
+        git_repo_dir.change_dir do
+          `printf "Test" > README.md`
+          %x(git commit --all --message 'Updated README with \`bogus command\` in message')
+          tagger.create version
 
-        expect(tag_details.call("0.0.0")).to match(
-          /
-            Version\s0\.0\.0\n\n
-            -\sAdded\sdocumentation\s-\sTest\sUser\n
-            -\sUpdated\sREADME\swith\s`bogus\scommand`\sin\smessage\s-\sTest\sUser\n\n\n\n
-          /x
-        )
+          expect(tag_details.call("0.0.0")).to match(pattern)
+        end
       end
     end
 
@@ -237,28 +245,32 @@ RSpec.describe Milestoner::Tagger do
     end
 
     context "when signed" do
-      let(:gpg_dir) { File.join temp_dir, ".gnupg" }
-      let(:gpg_script) { File.join temp_dir, "..", "..", "spec", "support", "gpg_script" }
+      let(:gpg_dir) { temp_dir.join ".gnupg" }
+      let(:gpg_script) { temp_dir.join "..", "..", "spec", "support", "gpg_script" }
       let :gpg_key do
-        `gpg --list-secret-keys #{git_user_email} | grep "[A-F0-9]$" | tr -d ' '`.chomp
+        `gpg --list-secret-keys test@example.com | grep "[A-F0-9]$" | tr -d ' '`.chomp
       end
 
-      # rubocop:disable RSpec/ExampleLength
+      before do
+        ClimateControl.modify GNUPGHOME: gpg_dir.to_s do
+          git_repo_dir.change_dir do
+            gpg_dir.make_dir.chmod 0o700
+            `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
+            `git config --local user.signingkey #{gpg_key}`
+          end
+        end
+      end
+
       it "signs tag" do
         skip "Needs non-interactive support for local and remote builds" do
           ClimateControl.modify GNUPGHOME: gpg_dir do
             git_repo_dir.change_dir do
-              gpg_dir.make_dir.chmod 0o700
-              `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
-              `git config --local user.signingkey #{gpg_key}`
               tagger.create version, sign: true
-
               expect(tag_details.call("0.1.0")).to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
             end
           end
         end
       end
-      # rubocop:enable RSpec/ExampleLength
     end
 
     it "prints warning with existing tag" do
