@@ -1,5 +1,17 @@
 = Changes
 
+== 11.2.0 (2021-04-04)
+
+* Fixed Rubocop Layout/FirstMethodArgumentLineBreak issues - Brooke Kuhlmann
+* Fixed Rubocop RSpec/ExampleLength issues with tagger spec - Brooke Kuhlmann
+* Added Ruby garbage collection compaction - Brooke Kuhlmann
+* Updated Code Quality URLs - Brooke Kuhlmann
+* Updated to Circle CI 2.1.0 - Brooke Kuhlmann
+* Updated to Docker Alpine Ruby image - Brooke Kuhlmann
+* Updated to Git+ 0.4.0 - Brooke Kuhlmann
+* Updated to Rubocop 1.10.0 - Brooke Kuhlmann
+* Updated to Rubocop 1.8.0 - Brooke Kuhlmann
+
 == 11.1.1 (2021-01-05)
 
 * Fixed calculation of empty commits when creating a tag - Brooke Kuhlmann
