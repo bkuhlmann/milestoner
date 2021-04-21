@@ -18,6 +18,7 @@ GC.verify_compaction_references double_heap: true, toward: :empty
 
 using Refinements::Pathnames
 
+Pathname.require_tree __dir__, "support/shared_contexts/**/*.rb"
 Pathname.require_tree __dir__, "support/shared_examples/**/*.rb"
 
 RSpec.configure do |config|
