@@ -1,0 +1,10 @@
+:git:
+  :commit:
+    :prefixes:
+      - Fixed
+      - Added
+      - Updated
+      - Removed
+      - Refactored
+  :tag:
+    :sign: false
