@@ -9,7 +9,9 @@ module Milestoner
   class Tagger
     attr_reader :commit_prefixes
 
-    def initialize commit_prefixes: [], repository: GitPlus::Repository.new, presenter: Commit
+    def initialize commit_prefixes: [],
+                   repository: GitPlus::Repository.new,
+                   presenter: Presenters::Commit
       @commit_prefixes = commit_prefixes
       @repository = repository
       @presenter = presenter
