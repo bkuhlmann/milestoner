@@ -1,34 +1,38 @@
 # frozen_string_literal: true
 
+require "versionaire"
+
 module Milestoner
   # Handles publishing of Git tags to remote repository.
   class Pusher
-    def initialize repository: GitPlus::Repository.new
-      @repository = repository
+    using Versionaire::Cast
+
+    def initialize container: Container
+      @container = container
     end
 
-    def push version
-      version = Versionaire::Version version
+    def call configuration = CLI::Configuration::Loader.call
+      version = Version configuration.git_tag_version
 
-      fail Errors::Git, "Remote repository not configured." unless repository.config_origin?
-      fail Errors::Git, "Remote tag exists: #{version}." if tag_exists? version
-      return if push_tags
+      fail Error, "Remote repository not configured." unless repository.config_origin?
+      fail Error, "Remote tag exists: #{version}." if repository.tag_remote? version
+      fail Error, "Tags could not be pushed to remote repository." unless push
 
-      fail Errors::Git, "Tags could not be pushed to remote repository."
+      logger.debug "Local tag pushed: #{version}."
     end
 
     private
 
-    attr_reader :repository, :version
+    attr_reader :container
 
-    def tag_exists? version
-      repository.tag_remote? version
-    end
-
-    def push_tags
+    def push
       repository.tag_push.then do |_stdout, stderr, status|
         status.success? && stderr.match?(/[new tag]/)
       end
     end
+
+    def repository = container[__method__]
+
+    def logger = container[__method__]
   end
 end

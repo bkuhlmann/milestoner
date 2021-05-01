@@ -1,46 +1,59 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "versionaire"
 
 RSpec.describe Milestoner::Pusher do
-  subject(:pusher) { described_class.new repository: repository }
+  using Versionaire::Cast
+
+  subject(:pusher) { described_class.new }
+
+  include_context "with application container"
 
   let :repository do
     instance_spy GitPlus::Repository, tag_remote?: false, tag_push: ["", "[new tag]", status]
   end
 
   let(:status) { instance_spy Process::Status, success?: true }
-  let(:version) { "0.0.0" }
+  let(:configuration) { Milestoner::CLI::Configuration::Content[git_tag_version: Version("0.0.0")] }
 
-  describe "#push" do
-    it "successfully pushes tags to remote repository" do
-      result = -> { pusher.push version }
-      expect(&result).to output("").to_stdout
+  before { container.stub :repository, repository }
+
+  after { container.unstub :repository }
+
+  describe "#call" do
+    it "logs successfull push" do
+      result = proc { pusher.call configuration }
+      expect(&result).to output("Local tag pushed: 0.0.0.\n").to_stdout
+    end
+
+    it "answers true with successful push" do
+      expect(pusher.call(configuration)).to eq(true)
     end
 
     it "fails when remote repository is not configured" do
       allow(repository).to receive(:config_origin?).and_return(false)
-      result = -> { pusher.push version }
+      result = -> { pusher.call configuration }
 
-      expect(&result).to raise_error(Milestoner::Errors::Git, "Remote repository not configured.")
+      expect(&result).to raise_error(Milestoner::Error, "Remote repository not configured.")
     end
 
     it "fails when remote tag exists" do
-      allow(repository).to receive(:tag_remote?).with(Versionaire::Version(version))
-                                                .and_return(true)
-      result = -> { pusher.push version }
+      version = configuration.git_tag_version
+      allow(repository).to receive(:tag_remote?).with(version).and_return(true)
+      result = -> { pusher.call configuration }
 
-      expect(&result).to raise_error(Milestoner::Errors::Git, "Remote tag exists: #{version}.")
+      expect(&result).to raise_error(Milestoner::Error, "Remote tag exists: #{version}.")
     end
 
     context "when push fails to succeed" do
       let(:status) { instance_spy Process::Status, success?: false }
 
-      it "fails when push fails" do
-        result = -> { pusher.push version }
+      it "fails with error" do
+        result = -> { pusher.call configuration }
 
         expect(&result).to raise_error(
-          Milestoner::Errors::Git,
+          Milestoner::Error,
           "Tags could not be pushed to remote repository."
         )
       end
@@ -52,10 +65,10 @@ RSpec.describe Milestoner::Pusher do
       end
 
       it "fails when push fails" do
-        result = -> { pusher.push version }
+        result = -> { pusher.call configuration }
 
         expect(&result).to raise_error(
-          Milestoner::Errors::Git,
+          Milestoner::Error,
           "Tags could not be pushed to remote repository."
         )
       end
