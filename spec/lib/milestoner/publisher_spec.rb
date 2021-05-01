@@ -1,28 +1,37 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "versionaire"
 
 RSpec.describe Milestoner::Publisher do
+  using Versionaire::Cast
+
   subject(:publisher) { described_class.new tagger: tagger, pusher: pusher }
 
-  let(:version) { "0.1.0" }
+  include_context "with default configuration"
+
   let(:tagger) { instance_spy Milestoner::Tagger }
   let(:pusher) { instance_spy Milestoner::Pusher }
+  let(:configuration) { Milestoner::CLI::Configuration::Content[git_tag_version: Version("0.0.0")] }
 
-  describe "#publish" do
+  describe "#call" do
     it "creates tag" do
-      publisher.publish version
-      expect(tagger).to have_received(:create).with(version, sign: false)
+      publisher.call configuration
+      expect(tagger).to have_received(:call).with(configuration)
     end
 
-    it "creates signed tag" do
-      publisher.publish version, sign: true
-      expect(tagger).to have_received(:create).with(version, sign: true)
+    it "pushes tags" do
+      publisher.call configuration
+      expect(pusher).to have_received(:call).with(configuration)
     end
 
-    it "pushes tag to remote repository" do
-      publisher.publish version
-      expect(pusher).to have_received(:push)
+    it "logs successful publish" do
+      result = proc { publisher.call configuration }
+      expect(&result).to output("Published: 0.0.0!\n").to_stdout
+    end
+
+    it "answers true with successful publish" do
+      expect(publisher.call(configuration)).to eq(true)
     end
   end
 end
