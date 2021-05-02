@@ -1,0 +1,59 @@
+# frozen_string_literal: true
+
+module Milestoner
+  module CLI
+    # The main Command Line Interface (CLI) object.
+    class Shell
+      ACTIONS = {
+        config: Actions::Config.new,
+        publish: Actions::Publish.new,
+        push: Actions::Push.new,
+        status: Actions::Status.new,
+        tag: Actions::Tag.new
+      }.freeze
+
+      def initialize parser: Parsers::Assembler.new, actions: ACTIONS, container: Container
+        @parser = parser
+        @actions = actions
+        @container = container
+      end
+
+      def call arguments = []
+        perform parser.call(arguments)
+      rescue OptionParser::ParseError, Error => error
+        logger.error error.message
+      end
+
+      private
+
+      attr_reader :parser, :actions, :container
+
+      def perform configuration
+        case configuration
+          in action_config: Symbol => action then config action
+          in action_publish: true then publish configuration
+          in action_push: true then push configuration
+          in action_status: true then status
+          in action_tag: true then tag configuration
+          in action_version: String => version then logger.info version
+          in action_help: then usage
+          else usage
+        end
+      end
+
+      def config(action) = actions.fetch(__method__).call(action)
+
+      def publish(configuration) = actions.fetch(__method__).call(configuration)
+
+      def push(configuration) = actions.fetch(__method__).call(configuration)
+
+      def status = actions.fetch(__method__).call
+
+      def tag(configuration) = actions.fetch(__method__).call(configuration)
+
+      def usage = logger.unknown { parser.to_s }
+
+      def logger = container[__method__]
+    end
+  end
+end
