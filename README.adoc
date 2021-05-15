@@ -23,8 +23,8 @@ toc::[]
 ** Example: `+0.1.0+`.
 * Ensures Git commits since last tag (or initialization of repository) are included.
 * Ensures Git commit messages are grouped by prefix, in order defined. For more details, see
-  link:https://www.alchemists.io/projects/git-cop/#_commit_subject_prefix[Git Cop Subject Prefix]
-  for details. Defaults (can be customized):
+  link:https://www.alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject
+  Prefix] for details. Defaults (can be customized):
 ** Fixed
 ** Added
 ** Updated
