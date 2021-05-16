@@ -40,4 +40,6 @@ RSpec.configure do |config|
     mocks.verify_doubled_constant_names = true
     mocks.verify_partial_doubles = true
   end
+
+  config.before(:suite) { ENV["LOG_LEVEL"] = "DEBUG" }
 end
