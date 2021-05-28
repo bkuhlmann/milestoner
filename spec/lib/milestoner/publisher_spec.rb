@@ -8,8 +8,6 @@ RSpec.describe Milestoner::Publisher do
 
   subject(:publisher) { described_class.new tagger: tagger, pusher: pusher }
 
-  include_context "with default configuration"
-
   let(:tagger) { instance_spy Milestoner::Tagger }
   let(:pusher) { instance_spy Milestoner::Pusher }
   let(:configuration) { Milestoner::CLI::Configuration::Content[git_tag_version: Version("0.0.0")] }
