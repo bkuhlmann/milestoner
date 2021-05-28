@@ -10,9 +10,9 @@ RSpec.describe Milestoner::Tagger do
   subject(:tagger) { described_class.new }
 
   include_context "with Git repository"
-  include_context "with default configuration"
+  include_context "with application container"
 
-  let(:configuration) { default_configuration.merge git_tag_version: Version("0.0.0") }
+  let(:configuration) { application_configuration.merge git_tag_version: Version("0.0.0") }
 
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }

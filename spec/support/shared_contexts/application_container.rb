@@ -3,13 +3,18 @@
 require "dry/container/stub"
 
 RSpec.shared_context "with application container" do
-  let(:container) { Milestoner::Container }
+  let(:application_container) { Milestoner::Container }
+  let(:application_configuration) { Milestoner::CLI::Configuration::Loader.with_defaults.call }
   let(:kernel) { class_spy Kernel }
 
   before do
-    container.enable_stubs!
-    container.stub :kernel, kernel
+    application_container.enable_stubs!
+    application_container.stub :configuration, application_configuration
+    application_container.stub :kernel, kernel
   end
 
-  after { container.unstub :kernel }
+  after do
+    application_container.unstub :configuration
+    application_container.unstub :kernel
+  end
 end

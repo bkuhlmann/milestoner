@@ -7,13 +7,13 @@ RSpec.describe Milestoner::CLI::Parsers::Security do
 
   subject(:parser) { described_class.new configuration }
 
-  include_context "with default configuration"
+  include_context "with application container"
 
   it_behaves_like "a parser"
 
   describe "#call" do
     context "when sign is disabled by default" do
-      let(:configuration) { default_configuration.merge git_tag_sign: false }
+      let(:configuration) { application_configuration.merge git_tag_sign: false }
 
       it "enables tag signing" do
         parser.call %w[--sign]
@@ -27,7 +27,7 @@ RSpec.describe Milestoner::CLI::Parsers::Security do
     end
 
     context "when sign is enabled by default" do
-      let(:configuration) { default_configuration.merge git_tag_sign: true }
+      let(:configuration) { application_configuration.merge git_tag_sign: true }
 
       it "enables tag signing" do
         parser.call %w[--sign]
@@ -41,7 +41,7 @@ RSpec.describe Milestoner::CLI::Parsers::Security do
     end
 
     context "when sign is not a boolean" do
-      let(:configuration) { default_configuration.merge git_tag_sign: nil }
+      let(:configuration) { application_configuration.merge git_tag_sign: nil }
 
       it "fails with error" do
         parse = proc { parser.call %w[--sign] }

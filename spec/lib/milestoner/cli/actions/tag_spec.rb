@@ -5,14 +5,14 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Actions::Tag do
   subject(:action) { described_class.new tagger: tagger }
 
-  include_context "with default configuration"
+  include_context "with application container"
 
   let(:tagger) { instance_spy Milestoner::Tagger }
 
   describe "#call" do
     it "calls tagger" do
-      action.call default_configuration
-      expect(tagger).to have_received(:call).with(default_configuration)
+      action.call application_configuration
+      expect(tagger).to have_received(:call).with(application_configuration)
     end
   end
 end

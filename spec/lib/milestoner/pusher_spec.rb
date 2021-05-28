@@ -17,9 +17,9 @@ RSpec.describe Milestoner::Pusher do
   let(:status) { instance_spy Process::Status, success?: true }
   let(:configuration) { Milestoner::CLI::Configuration::Content[git_tag_version: Version("0.0.0")] }
 
-  before { container.stub :repository, repository }
+  before { application_container.stub :repository, repository }
 
-  after { container.unstub :repository }
+  after { application_container.unstub :repository }
 
   describe "#call" do
     it "logs successfull push" do

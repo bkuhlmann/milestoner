@@ -10,6 +10,7 @@ module Milestoner
   module Container
     extend Dry::Container::Mixin
 
+    register(:configuration) { CLI::Configuration::Loader.call }
     register(:colorizer) { Pastel.new enabled: $stdout.tty? }
     register(:kernel) { Kernel }
 
