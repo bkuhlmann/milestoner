@@ -11,15 +11,24 @@ module Milestoner
 
       delegate [*GitPlus::Commit.members, :fixup?, :squash?] => :record
 
-      def initialize record
+      def initialize record, container: Container
         @record = record
+        @container = container
       end
 
-      def subject_author(delimiter: " - ") = "#{subject}#{delimiter}#{author_name}"
+      def line_item(delimiter: " - ") = "#{bullet}#{subject}#{delimiter}#{author_name}"
 
       private
 
-      attr_reader :record
+      attr_reader :record, :container
+
+      def bullet
+        case container[:configuration].documentation_format
+          when "md" then "- "
+          when "adoc" then "* "
+          else ""
+        end
+      end
     end
   end
 end
