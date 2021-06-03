@@ -7,6 +7,7 @@ RSpec.describe Milestoner::CLI::Configuration::Loader do
 
   let :content do
     Milestoner::CLI::Configuration::Content[
+      documentation_format: "md",
       git_commit_prefixes: %w[Fixed Added Updated Removed Refactored],
       git_tag_sign: false
     ]

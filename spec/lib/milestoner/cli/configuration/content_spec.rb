@@ -15,6 +15,7 @@ RSpec.describe Milestoner::CLI::Configuration::Content do
         action_tag: nil,
         action_version: nil,
         action_help: nil,
+        documentation_format: nil,
         git_commit_prefixes: nil,
         git_tag_sign: nil,
         git_tag_version: nil

@@ -11,6 +11,7 @@ module Milestoner
                            :action_tag,
                            :action_version,
                            :action_help,
+                           :documentation_format,
                            :git_commit_prefixes,
                            :git_tag_sign,
                            :git_tag_version,
