@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Milestoner::Tagger do
+RSpec.describe Milestoner::Tags::Creator do
   using Refinements::Pathnames
   using Refinements::Structs
   using Versionaire::Cast

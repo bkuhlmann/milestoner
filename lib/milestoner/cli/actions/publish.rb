@@ -5,7 +5,7 @@ module Milestoner
     module Actions
       # Handles tag creation and pushing of tag to local repository.
       class Publish
-        def initialize publisher: Publisher.new
+        def initialize publisher: Tags::Publisher.new
           @publisher = publisher
         end
 

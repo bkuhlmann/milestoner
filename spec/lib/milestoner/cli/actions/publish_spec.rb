@@ -7,7 +7,7 @@ RSpec.describe Milestoner::CLI::Actions::Publish do
 
   include_context "with application container"
 
-  let(:publisher) { instance_spy Milestoner::Publisher }
+  let(:publisher) { instance_spy Milestoner::Tags::Publisher }
 
   describe "#call" do
     it "call publisher" do

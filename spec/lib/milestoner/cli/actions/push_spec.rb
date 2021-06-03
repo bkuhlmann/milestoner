@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Actions::Push do
   subject(:action) { described_class.new pusher: pusher }
 
-  let(:pusher) { instance_spy Milestoner::Pusher }
+  let(:pusher) { instance_spy Milestoner::Tags::Pusher }
   let(:configuration) { Milestoner::CLI::Configuration::Content.new }
 
   describe "#call" do

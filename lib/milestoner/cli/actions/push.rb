@@ -5,7 +5,7 @@ module Milestoner
     module Actions
       # Handles pushing of local tag to remote repository.
       class Push
-        def initialize pusher: Pusher.new, container: Container
+        def initialize pusher: Tags::Pusher.new, container: Container
           @pusher = pusher
           @container = container
         end

@@ -3,13 +3,13 @@
 require "spec_helper"
 require "versionaire"
 
-RSpec.describe Milestoner::Publisher do
+RSpec.describe Milestoner::Tags::Publisher do
   using Versionaire::Cast
 
   subject(:publisher) { described_class.new tagger: tagger, pusher: pusher }
 
-  let(:tagger) { instance_spy Milestoner::Tagger }
-  let(:pusher) { instance_spy Milestoner::Pusher }
+  let(:tagger) { instance_spy Milestoner::Tags::Creator }
+  let(:pusher) { instance_spy Milestoner::Tags::Pusher }
   let(:configuration) { Milestoner::CLI::Configuration::Content[git_tag_version: Version("0.0.0")] }
 
   describe "#call" do

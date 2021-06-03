@@ -5,7 +5,7 @@ module Milestoner
     module Actions
       # Handles tag creation.
       class Tag
-        def initialize tagger: Tagger.new
+        def initialize tagger: Tags::Creator.new
           @tagger = tagger
         end
 

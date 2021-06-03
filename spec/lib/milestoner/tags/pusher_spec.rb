@@ -3,7 +3,7 @@
 require "spec_helper"
 require "versionaire"
 
-RSpec.describe Milestoner::Pusher do
+RSpec.describe Milestoner::Tags::Pusher do
   using Versionaire::Cast
 
   subject(:pusher) { described_class.new }

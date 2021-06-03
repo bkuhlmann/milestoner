@@ -7,7 +7,7 @@ RSpec.describe Milestoner::CLI::Actions::Tag do
 
   include_context "with application container"
 
-  let(:tagger) { instance_spy Milestoner::Tagger }
+  let(:tagger) { instance_spy Milestoner::Tags::Creator }
 
   describe "#call" do
     it "calls tagger" do
