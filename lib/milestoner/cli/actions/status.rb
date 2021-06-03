@@ -16,8 +16,8 @@ module Milestoner
         def call
           categorizer.call
                      .tap { |records| info "All is quiet." if records.empty? }
-                     .map { |record| "- #{presenter.new(record).subject_author}" }
-                     .each { |line| info line }
+                     .map { |record| presenter.new(record).line_item }
+                     .each { |line_item| info line_item }
         end
 
         private

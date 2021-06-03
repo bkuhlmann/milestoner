@@ -56,10 +56,9 @@ module Milestoner
 
       def message configuration
         categorizer.call(configuration)
-                   .map { |record| presenter.new record }
-                   .map { |commit| "- #{commit.subject_author}" }
-                   .then do |commits|
-                     %(Version #{configuration.git_tag_version}\n\n#{commits.join "\n"}\n\n)
+                   .map { |record| presenter.new(record).line_item }
+                   .then do |line_items|
+                     %(Version #{configuration.git_tag_version}\n\n#{line_items.join "\n"}\n\n)
                    end
       end
 
