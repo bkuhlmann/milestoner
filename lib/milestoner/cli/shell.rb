@@ -7,7 +7,6 @@ module Milestoner
       ACTIONS = {
         config: Actions::Config.new,
         publish: Actions::Publish.new,
-        push: Actions::Push.new,
         status: Actions::Status.new,
         tag: Actions::Tag.new
       }.freeze
@@ -32,7 +31,6 @@ module Milestoner
         case configuration
           in action_config: Symbol => action then config action
           in action_publish: true then publish configuration
-          in action_push: true then push configuration
           in action_status: true then status
           in action_tag: true then tag configuration
           in action_version: String => version then logger.info version
@@ -44,8 +42,6 @@ module Milestoner
       def config(action) = actions.fetch(__method__).call(action)
 
       def publish(configuration) = actions.fetch(__method__).call(configuration)
-
-      def push(configuration) = actions.fetch(__method__).call(configuration)
 
       def status = actions.fetch(__method__).call
 

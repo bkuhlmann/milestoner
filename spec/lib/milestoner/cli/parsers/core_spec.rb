@@ -65,21 +65,6 @@ RSpec.describe Milestoner::CLI::Parsers::Core do
       expect(&expectation).to raise_error(OptionParser::InvalidArgument, /bogus/)
     end
 
-    it "answers push version (short)" do
-      parser.call %w[-p 0.0.0]
-      expect(configuration).to have_attributes(action_push: true, git_tag_version: Version("0.0.0"))
-    end
-
-    it "answers push version (long)" do
-      parser.call %w[--push 0.0.0]
-      expect(configuration).to have_attributes(action_push: true, git_tag_version: Version("0.0.0"))
-    end
-
-    it "fails push with invalid version" do
-      expectation = proc { parser.call %w[--push bogus] }
-      expect(&expectation).to raise_error(OptionParser::InvalidArgument, /bogus/)
-    end
-
     it "enables status (short)" do
       parser.call %w[-s]
       expect(configuration.action_status).to eq(true)

@@ -40,13 +40,6 @@ RSpec.describe Milestoner::CLI::Shell do
       end
     end
 
-    it "fails to push when remote repository doesn't exist" do
-      git_repo_dir.change_dir do
-        result = proc { shell.call %w[--push 0.0.0] }
-        expect(&result).to output(/could not be pushed/).to_stdout
-      end
-    end
-
     it "prints project status when commits exist" do
       git_repo_dir.change_dir do
         result = proc { shell.call %w[--status] }

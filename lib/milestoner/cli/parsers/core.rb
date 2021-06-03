@@ -55,17 +55,6 @@ module Milestoner
           end
         end
 
-        def add_push
-          client.on(
-            "-p",
-            "--push VERSION",
-            Versionaire::Version,
-            "Push local tag to remote repository."
-          ) do |version|
-            configuration.merge! action_push: true, git_tag_version: version
-          end
-        end
-
         def add_status
           client.on "-s", "--status", "Show project status." do
             configuration.action_status = true
