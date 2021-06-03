@@ -75,21 +75,6 @@ RSpec.describe Milestoner::CLI::Parsers::Core do
       expect(configuration.action_status).to eq(true)
     end
 
-    it "answers tag version (short)" do
-      parser.call %w[-t 0.0.0]
-      expect(configuration).to have_attributes(action_tag: true, git_tag_version: Version("0.0.0"))
-    end
-
-    it "answers tag version (long)" do
-      parser.call %w[--tag 0.0.0]
-      expect(configuration).to have_attributes(action_tag: true, git_tag_version: Version("0.0.0"))
-    end
-
-    it "fails tag with invalid version" do
-      expectation = proc { parser.call %w[--tag bogus] }
-      expect(&expectation).to raise_error(OptionParser::InvalidArgument, /bogus/)
-    end
-
     it "answers version (short)" do
       parser.call %w[-v]
       expect(configuration.action_version).to match(/Milestoner\s\d+\.\d+\.\d+/)

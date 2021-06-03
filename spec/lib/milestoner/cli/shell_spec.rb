@@ -56,13 +56,6 @@ RSpec.describe Milestoner::CLI::Shell do
       end
     end
 
-    it "creates tag" do
-      git_repo_dir.change_dir do
-        shell.call %w[--tag 0.0.0]
-        expect(tag_details.call("0.0.0")).to match(/Version\s0\.0\.0/)
-      end
-    end
-
     it "prints version" do
       result = proc { shell.call %w[--version] }
       expect(&result).to output(/Milestoner\s\d+\.\d+\.\d+/).to_stdout

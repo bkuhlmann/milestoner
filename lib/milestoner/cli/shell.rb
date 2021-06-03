@@ -7,8 +7,7 @@ module Milestoner
       ACTIONS = {
         config: Actions::Config.new,
         publish: Actions::Publish.new,
-        status: Actions::Status.new,
-        tag: Actions::Tag.new
+        status: Actions::Status.new
       }.freeze
 
       def initialize parser: Parsers::Assembler.new, actions: ACTIONS, container: Container
@@ -32,7 +31,6 @@ module Milestoner
           in action_config: Symbol => action then config action
           in action_publish: true then publish configuration
           in action_status: true then status
-          in action_tag: true then tag configuration
           in action_version: String => version then logger.info version
           in action_help: then usage
           else usage
@@ -44,8 +42,6 @@ module Milestoner
       def publish(configuration) = actions.fetch(__method__).call(configuration)
 
       def status = actions.fetch(__method__).call
-
-      def tag(configuration) = actions.fetch(__method__).call(configuration)
 
       def usage = logger.unknown { parser.to_s }
 

@@ -61,17 +61,6 @@ module Milestoner
           end
         end
 
-        def add_tag
-          client.on(
-            "-t",
-            "--tag VERSION",
-            Versionaire::Version,
-            "Tag local repository with new version."
-          ) do |version|
-            configuration.merge! action_tag: true, git_tag_version: version
-          end
-        end
-
         def add_version
           client.on "-v", "--version", "Show gem version." do
             configuration.action_version = Identity::VERSION_LABEL
