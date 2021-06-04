@@ -34,11 +34,6 @@ toc::[]
 * Ensures duplicate Git commit messages are removed (if any).
 * Provides optional security for signing Git tags with https://www.gnupg.org[GnuPG] signing key.
 
-== Screencasts
-
-[link=https://www.alchemists.io/screencasts/milestoner]
-image::https://www.alchemists.io/images/screencasts/milestoner/cover.svg[Screencast,600,240,role=focal_point]
-
 == Requirements
 
 . A UNIX-based system.
@@ -58,41 +53,36 @@ gem install milestoner
 
 === Command Line Interface (CLI)
 
-From the command line, type: `+milestoner help+`
+From the command line, type: `milestoner --help`
 
 ....
-milestoner -C, [--commits]          # Show commits for next milestone.
-milestoner -P, [--publish=VERSION]  # Tag and push milestone to remote repository.
-milestoner -c, [--config]           # Manage gem configuration.
-milestoner -h, [--help=COMMAND]     # Show this message or get help for a command.
-milestoner -p, [--push=VERSION]     # Push local tag to remote repository.
-milestoner -t, [--tag=VERSION]      # Tag local repository with new version.
-milestoner -v, [--version]          # Show gem version.
+USAGE:
+  -c, --config ACTION                      Manage gem configuration. Actions: edit || view.
+  -h, --help                               Show this message.
+  -P, --publish VERSION                    Tag and push milestone to remote repository.
+  -s, --status                             Show project status.
+  -v, --version                            Show gem version.
+
+SECURITY OPTIONS:
+      --[no-]sign                          Sign with GPG key. Default: true.
 ....
 
-For config options, type: `+milestoner help --config+`
+Examples:
 
-....
--e, [--edit], [--no-edit]  # Edit gem configuration.
--i, [--info], [--no-info]  # Print gem configuration info.
-....
+[source,bash]
+----
+milestoner --config edit
+milestoner --config view
 
-For tag options, type: `+milestoner help --tag+`
+milestoner --help
 
-....
--s, [--sign], [--no-sign]  # Sign tag with GPG key.
-....
+milestoner --publish 0.1.0
+milestoner --publish 0.1.0 --sign
+milestoner --publish 0.1.0 --no-sign
 
-For publish options, type: `+milestoner help --publish+`
-
-....
--s, [--sign], [--no-sign]  # Sign tag with GPG key.
-....
-
-When using Milestoner, the `+--publish+` command is intended to be the only command necessary for
-publishing a new release as it handles all of the steps necessary for tagging and pushing a new
-milestone. Should individual steps be needed, then the `+--tag+` and `+--push+` options are
-available.
+milestoner --status
+milestoner --version
+----
 
 === Customization
 
@@ -108,13 +98,18 @@ The default configuration is as follows:
 
 [source,yaml]
 ----
-:git_commit_prefixes:
-  - Fixed
-  - Added
-  - Updated
-  - Removed
-  - Refactored
-:git_tag_sign: false
+:documentation:
+  :format: "md"
+:git:
+  :commit:
+    :prefixes:
+      - Fixed
+      - Added
+      - Updated
+      - Removed
+      - Refactored
+  :tag:
+    :sign: false
 ----
 
 Feel free to take this default configuration, modify, and save as your own custom
@@ -122,15 +117,18 @@ Feel free to take this default configuration, modify, and save as your own custo
 
 The `+configuration.yml+` file can be configured as follows:
 
-* `+git_commit_prefixes+`: Should the default prefixes not be desired, you can define Git commit
-prefixes that match your style. _NOTE: Prefix order is important with the first prefix defined
-taking precedence over the second and so forth._ Special characters are allowed for prefixes but
-should be enclosed in quotes. To disable prefix usage completely, use an empty array. Example:
-`+:git_commit_prefixes: []+`.
-* `+git_tag_sign+`: Defaults to `+false+` but can be enabled by setting to `+true+`. When enabled, a
-Git tag will require GPG signing for enhanced security and include a signed signature as part of the
-Git tag. This is useful for public milestones where the author of a milestone can be verified to
-ensure milestone integrity/security.
+* *Documenation Format*: Determines what format the status information should be rendered. Defaults
+  to link:https://daringfireball.net/projects/markdown[Markdown] (i.e. `md`) but
+  link:https://asciidoctor.org/docs/what-is-asciidoc[ASCII Doc] (i.e. `adoc`) is supported too.
+* *Git Commit Prefixes*: Should the default prefixes not be desired, you can define Git commit
+  prefixes that match your style. _NOTE: Prefix order is important with the first prefix defined
+  taking precedence over the second and so forth._ Special characters are allowed for prefixes but
+  should be enclosed in quotes. To disable prefix usage completely, use an empty array. Example:
+  `:prefixes: []`.
+* *Git Tag Sign*: Defaults to `false` but can be enabled by setting to `true`. When enabled, a
+  Git tag will require GPG signing for enhanced security and include a signed signature as part of
+  the Git tag. This is useful for public milestones where the author of a milestone can be verified
+  to ensure milestone integrity/security.
 
 == Security
 

@@ -1,5 +1,54 @@
 = Changes
 
+== 12.0.0 (2021-06-04)
+
+* Fixed README Git Lint commit subject prefix link - Brooke Kuhlmann
+* Added CLI assembler parser - Brooke Kuhlmann
+* Added CLI config action - Brooke Kuhlmann
+* Added CLI configuration content - Brooke Kuhlmann
+* Added CLI configuration defaults - Brooke Kuhlmann
+* Added CLI configuration loader - Brooke Kuhlmann
+* Added CLI core parser - Brooke Kuhlmann
+* Added CLI parsers module - Brooke Kuhlmann
+* Added CLI publish action - Brooke Kuhlmann
+* Added CLI push action - Brooke Kuhlmann
+* Added CLI security parser - Brooke Kuhlmann
+* Added CLI shell - Brooke Kuhlmann
+* Added CLI status action - Brooke Kuhlmann
+* Added CLI tag action - Brooke Kuhlmann
+* Added Dry Container - Brooke Kuhlmann
+* Added Pastel gem - Brooke Kuhlmann
+* Added RSpec CLI parser shared example - Brooke Kuhlmann
+* Added RSpec default configuration shared example - Brooke Kuhlmann
+* Added RSpec helper log level - Brooke Kuhlmann
+* Added Zeitwerk gem - Brooke Kuhlmann
+* Added Zeitwerk loader - Brooke Kuhlmann
+* Added application container - Brooke Kuhlmann
+* Added commits categorizer - Brooke Kuhlmann
+* Added default configuration for documenation format - Brooke Kuhlmann
+* Added error class - Brooke Kuhlmann
+* Updated Gem and Rake files to disable Gemsmith - Brooke Kuhlmann
+* Updated commit presenter to use documentation format - Brooke Kuhlmann
+* Updated tag creator and status action to leverage new commit presenter - Brooke Kuhlmann
+* Updated to Climate Control 1.0.0 - Brooke Kuhlmann
+* Updated to Rubocop 1.14.0 - Brooke Kuhlmann
+* Updated to Ruby 3.0.1 - Brooke Kuhlmann
+* Updated to Versionaire 9.2.0 - Brooke Kuhlmann
+* Removed CLI push option - Brooke Kuhlmann
+* Removed CLI tag option - Brooke Kuhlmann
+* Removed RSpec default configuration for publisher spec - Brooke Kuhlmann
+* Removed Reek configuration - Brooke Kuhlmann
+* Removed Thor - Brooke Kuhlmann
+* Removed errors namespace - Brooke Kuhlmann
+* Refactored GPG script to RSpec files support folder - Brooke Kuhlmann
+* Refactored application container and configuration - Brooke Kuhlmann
+* Refactored commit to presenters namespace - Brooke Kuhlmann
+* Refactored creator, pusher, and publisher to tags namespace - Brooke Kuhlmann
+* Refactored gemspec to use identity summary - Brooke Kuhlmann
+* Refactored publisher to use updated tagger and pusher API - Brooke Kuhlmann
+* Refactored pusher to use command pattern - Brooke Kuhlmann
+* Refactored tagger to use commits categorizer - Brooke Kuhlmann
+
 == 11.2.0 (2021-04-04)
 
 * Fixed Rubocop Layout/FirstMethodArgumentLineBreak issues - Brooke Kuhlmann
