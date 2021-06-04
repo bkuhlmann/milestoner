@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require "bundler/gem_tasks"
 require "bundler/setup"
 require "bundler/audit/task"
 require "bundler/plumber/task"
-require "gemsmith/rake/setup"
+# require "gemsmith/rake/setup"
 require "git/lint/rake/setup"
 require "reek/rake/task"
 require "rspec/core/rake_task"
