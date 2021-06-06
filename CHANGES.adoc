@@ -1,5 +1,9 @@
 = Changes
 
+== 12.0.1 (2021-06-06)
+
+* Updated to Dry Container 0.8.0 - Brooke Kuhlmann
+
 == 12.0.0 (2021-06-04)
 
 * Fixed README Git Lint commit subject prefix link - Brooke Kuhlmann
