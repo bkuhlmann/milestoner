@@ -32,7 +32,6 @@ module Milestoner
           in action_publish: true then publish configuration
           in action_status: true then status
           in action_version: String => version then logger.info version
-          in action_help: then usage
           else usage
         end
       end
