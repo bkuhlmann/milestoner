@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "git_plus"
 require "versionaire"
 
 module Milestoner
@@ -22,7 +23,7 @@ module Milestoner
         fail Error, "Unable to tag without commits." if categorizer.call.empty?
 
         sign configuration
-      rescue Versionaire::Errors::Cast, GitPlus::Errors::Base => error
+      rescue Versionaire::Errors::Cast, GitPlus::Error => error
         raise Error, error.message
       end
 
