@@ -1,5 +1,12 @@
 = Changes
 
+== 12.0.3 (2021-08-08)
+
+* Fixed Rubocop Lint/DuplicateBranch issue - Brooke Kuhlmann
+* Updated to Git+ 0.6.0 - Brooke Kuhlmann
+* Updated to Ruby 3.0.2 - Brooke Kuhlmann
+* Removed Bundler Audit - Brooke Kuhlmann
+
 == 12.0.2 (2021-07-05)
 
 * Updated to Git+ 0.5.0 - Brooke Kuhlmann
