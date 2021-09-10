@@ -2,9 +2,9 @@
 
 require "zeitwerk"
 
-loader = Zeitwerk::Loader.for_gem
-loader.inflector.inflect "cli" => "CLI"
-loader.setup
+Zeitwerk::Loader.for_gem
+                .tap { |loader| loader.inflector.inflect "cli" => "CLI" }
+                .setup
 
 # Main namespace.
 module Milestoner
