@@ -13,9 +13,6 @@ require "milestoner"
 require "refinements"
 require "climate_control"
 
-GC.auto_compact = true
-GC.verify_compaction_references double_heap: true, toward: :empty
-
 using Refinements::Pathnames
 
 Pathname.require_tree __dir__, "support/shared_contexts/**/*.rb"
