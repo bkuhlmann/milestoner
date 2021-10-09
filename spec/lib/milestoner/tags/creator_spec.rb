@@ -89,7 +89,7 @@ RSpec.describe Milestoner::Tags::Creator do
 
     context "when signed" do
       let(:gpg_dir) { temp_dir.join ".gnupg" }
-      let(:gpg_script) { temp_dir.join "../../spec/support/files/gpg_script" }
+      let(:gpg_script) { Bundler.root.join "spec/support/fixtures/gpg_script" }
       let(:gpg_key) { `gpg --list-secret-keys --keyid-format SHORT | grep sec`[14..21] }
 
       it "signs tag" do
