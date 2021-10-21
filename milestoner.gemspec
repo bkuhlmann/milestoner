@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "refinements", "~> 8.5"
   spec.add_dependency "runcom", "~> 7.0"
   spec.add_dependency "versionaire", "~> 9.2"
-  spec.add_dependency "zeitwerk", "~> 2.4"
+  spec.add_dependency "zeitwerk", "~> 2.5"
 
   spec.files = Dir["lib/**/*"]
   spec.extra_rdoc_files = Dir["README*", "LICENSE*"]
