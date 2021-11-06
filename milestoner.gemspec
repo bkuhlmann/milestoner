@@ -31,8 +31,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "versionaire", "~> 9.2"
   spec.add_dependency "zeitwerk", "~> 2.5"
 
-  spec.files = Dir["lib/**/*"]
-  spec.extra_rdoc_files = Dir["README*", "LICENSE*"]
+  spec.bindir = "exe"
   spec.executables << "milestoner"
+  spec.extra_rdoc_files = Dir["README*", "LICENSE*"]
+  spec.files = Dir["lib/**/*"]
   spec.require_paths = ["lib"]
 end
