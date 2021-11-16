@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
     "bug_tracker_uri" => "https://github.com/bkuhlmann/milestoner/issues",
     "changelog_uri" => "https://www.alchemists.io/projects/milestoner/changes.html",
     "documentation_uri" => "https://www.alchemists.io/projects/milestoner",
+    "rubygems_mfa_required" => "true",
     "source_code_uri" => "https://github.com/bkuhlmann/milestoner"
   }
 
