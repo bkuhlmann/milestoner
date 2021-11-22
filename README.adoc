@@ -11,10 +11,10 @@ image::https://img.shields.io/badge/code_style-alchemists-brightgreen.svg[Alchem
 [link=https://circleci.com/gh/bkuhlmann/milestoner]
 image::https://circleci.com/gh/bkuhlmann/milestoner.svg?style=svg[Circle CI Status]
 
-Milestoner is a command line interface for crafting Git repository milestones (also known as _tags_
-or _versions_). Each milestone is a summary of all commits made since the last milestone. You can
-use Milestoner to inspect what is currently unreleased or create a new release via a single command.
-By having a tool, like Milestoner, you can quickly manage/automate releases in a consistent and
+Milestoner is a command line interface for crafting Git repository tags (milestones) using semantic
+versions. Each milestone is a summary of all commits made since the last milestone. You can use
+Milestoner to inspect what is currently unreleased or create a new release via a single command. By
+having a tool, like Milestoner, you can quickly manage/automate releases in a consistent and
 reliable fashion. Milestoner also pairs well with
 link:https://www.alchemists.io/projects/git-lint[Git Lint] for further ensuring you have commit
 messages of high quality for your release notes.

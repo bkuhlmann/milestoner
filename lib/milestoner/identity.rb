@@ -7,6 +7,6 @@ module Milestoner
     LABEL = "Milestoner"
     VERSION = "12.2.0"
     VERSION_LABEL = "#{LABEL} #{VERSION}".freeze
-    SUMMARY = "A command line interface for crafting Git repository tags."
+    SUMMARY = "A command line interface for crafting Git repository tags using semantic versions."
   end
 end
