@@ -9,25 +9,23 @@ module Milestoner
 
       # Assembles and parses all Command Line Interface (CLI) options.
       class Assembler
-        def initialize configuration = Configuration::Loader.call,
-                       sections: SECTIONS,
-                       client: CLIENT
-          @configuration = configuration
+        def initialize sections: SECTIONS, client: CLIENT, container: Container
           @sections = sections
           @client = client
+          @configuration = container[:configuration].dup
         end
 
         def call arguments = []
           sections.each { |parser| parser.call configuration, client: client }
           client.parse! arguments
-          configuration
+          configuration.freeze
         end
 
         def to_s = client.to_s
 
         private
 
-        attr_reader :configuration, :client, :sections
+        attr_reader :sections, :client, :configuration
       end
     end
   end

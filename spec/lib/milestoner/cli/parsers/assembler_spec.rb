@@ -3,7 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Parsers::Assembler do
-  subject(:parser) { described_class.new Milestoner::Configuration::Loader.call }
+  subject(:parser) { described_class.new }
+
+  include_context "with application container"
 
   describe "#call" do
     it "answers hash with valid option" do
@@ -13,6 +15,10 @@ RSpec.describe Milestoner::CLI::Parsers::Assembler do
 
     it "answers configuration content by default" do
       expect(parser.call).to be_a(Milestoner::Configuration::Content)
+    end
+
+    it "answers frozen configuration content by default" do
+      expect(parser.call).to be_frozen
     end
 
     it "fails with invalid option" do

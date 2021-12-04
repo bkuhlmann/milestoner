@@ -11,7 +11,7 @@ module Milestoner
 
       # Handles parsing of Command Line Interface (CLI) core options.
       class Core
-        def self.call configuration = Configuration::Loader.call, client: CLIENT
+        def self.call configuration = Container[:configuration], client: CLIENT
           new(configuration, client: client).call
         end
 
@@ -24,7 +24,8 @@ module Milestoner
           client.banner = "#{Identity::LABEL} - #{Identity::SUMMARY}"
           client.separator "\nUSAGE:\n"
           collate
-          arguments.empty? ? arguments : client.parse!(arguments)
+          client.parse arguments
+          configuration
         end
 
         private

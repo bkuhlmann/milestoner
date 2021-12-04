@@ -9,7 +9,7 @@ module Milestoner
           new(configuration, client: client).call
         end
 
-        def initialize configuration = Configuration::Loader.call, client: CLIENT
+        def initialize configuration = Container[:configuration], client: CLIENT
           @configuration = configuration
           @client = client
         end
@@ -17,7 +17,8 @@ module Milestoner
         def call arguments = []
           client.separator "\nSECURITY OPTIONS:\n"
           add_sign
-          arguments.empty? ? arguments : client.parse!(arguments)
+          client.parse arguments
+          configuration
         end
 
         private

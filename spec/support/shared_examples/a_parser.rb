@@ -2,10 +2,8 @@
 
 RSpec.shared_examples_for "a parser" do
   describe ".call" do
-    it "answers empty array" do
-      parser = described_class.call Milestoner::Configuration::Content.new,
-                                    client: OptionParser.new
-      expect(parser).to eq([])
+    it "answers configuration" do
+      expect(described_class.call).to be_a(Milestoner::Configuration::Content)
     end
   end
 end
