@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Publish do
-  subject(:action) { described_class.new publisher: publisher }
+  subject(:action) { described_class.new publisher: }
 
   include_context "with application container"
 
@@ -11,8 +11,8 @@ RSpec.describe Milestoner::CLI::Actions::Publish do
 
   describe "#call" do
     it "call publisher" do
-      action.call application_configuration
-      expect(publisher).to have_received(:call).with(application_configuration)
+      action.call configuration
+      expect(publisher).to have_received(:call).with(configuration)
     end
   end
 end

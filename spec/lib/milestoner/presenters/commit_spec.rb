@@ -10,7 +10,7 @@ RSpec.describe Milestoner::Presenters::Commit do
   let(:record) { GitPlus::Commit[subject: "Added documentation", author_name: "Jane Doe"] }
 
   context "with Markdown format" do
-    before { application_configuration.documentation_format = "md" }
+    before { configuration.documentation_format = "md" }
 
     it "answers subject and author with Markdown bullet" do
       expect(presenter.line_item).to eq("- Added documentation - Jane Doe")
@@ -18,7 +18,7 @@ RSpec.describe Milestoner::Presenters::Commit do
   end
 
   context "with ASCII Doc format" do
-    before { application_configuration.documentation_format = "adoc" }
+    before { configuration.documentation_format = "adoc" }
 
     it "answers subject and author with ASCII Doc bullet" do
       expect(presenter.line_item).to eq("* Added documentation - Jane Doe")
@@ -26,7 +26,7 @@ RSpec.describe Milestoner::Presenters::Commit do
   end
 
   context "with unknown documenation format" do
-    before { application_configuration.documentation_format = "bogus" }
+    before { configuration.documentation_format = "bogus" }
 
     it "answers subject and author with no bullet" do
       expect(presenter.line_item).to eq("Added documentation - Jane Doe")

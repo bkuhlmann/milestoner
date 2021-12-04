@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Parsers::Security do
   using Refinements::Structs
 
-  subject(:parser) { described_class.new configuration }
+  subject(:parser) { described_class.new test_configuration }
 
   include_context "with application container"
 
@@ -13,35 +13,35 @@ RSpec.describe Milestoner::CLI::Parsers::Security do
 
   describe "#call" do
     context "when sign is disabled by default" do
-      let(:configuration) { application_configuration.merge sign: false }
+      let(:test_configuration) { configuration.merge sign: false }
 
       it "enables tag signing" do
         parser.call %w[--sign]
-        expect(configuration.sign).to eq(true)
+        expect(test_configuration.sign).to eq(true)
       end
 
       it "disables tag signing" do
         parser.call %w[--no-sign]
-        expect(configuration.sign).to eq(false)
+        expect(test_configuration.sign).to eq(false)
       end
     end
 
     context "when sign is enabled by default" do
-      let(:configuration) { application_configuration.merge sign: true }
+      let(:test_configuration) { configuration.merge sign: true }
 
       it "enables tag signing" do
         parser.call %w[--sign]
-        expect(configuration.sign).to eq(true)
+        expect(test_configuration.sign).to eq(true)
       end
 
       it "disables tag signing" do
         parser.call %w[--no-sign]
-        expect(configuration.sign).to eq(false)
+        expect(test_configuration.sign).to eq(false)
       end
     end
 
     context "when sign is not a boolean" do
-      let(:configuration) { application_configuration.merge sign: nil }
+      let(:test_configuration) { configuration.merge sign: nil }
 
       it "fails with error" do
         parse = proc { parser.call %w[--sign] }
