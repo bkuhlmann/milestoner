@@ -25,5 +25,9 @@ RSpec.describe Milestoner::Configuration::Content do
     it "answers default attributes" do
       expect(content).to have_attributes(proof)
     end
+
+    it "answers as frozen" do
+      expect(content).to be_frozen
+    end
   end
 end
