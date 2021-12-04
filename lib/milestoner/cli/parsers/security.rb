@@ -5,11 +5,9 @@ module Milestoner
     module Parsers
       # Handles parsing of Command Line Interface (CLI) security options.
       class Security
-        def self.call configuration = Configuration::Loader.call, client: CLIENT
-          new(configuration, client: client).call
-        end
+        def self.call(...) = new(...).call
 
-        def initialize configuration = Container[:configuration], client: CLIENT
+        def initialize configuration = Container[:configuration], client: Parser::CLIENT
           @configuration = configuration
           @client = client
         end

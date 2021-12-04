@@ -11,11 +11,9 @@ module Milestoner
 
       # Handles parsing of Command Line Interface (CLI) core options.
       class Core
-        def self.call configuration = Container[:configuration], client: CLIENT
-          new(configuration, client: client).call
-        end
+        def self.call(...) = new(...).call
 
-        def initialize configuration = Configuration::Loader.call, client: CLIENT
+        def initialize configuration = Configuration::Loader.call, client: Parser::CLIENT
           @configuration = configuration
           @client = client
         end
@@ -52,7 +50,7 @@ module Milestoner
             Versionaire::Version,
             "Tag and push milestone to remote repository."
           ) do |version|
-            configuration.merge! action_publish: true, version: version
+            configuration.merge! action_publish: true, version:
           end
         end
 
