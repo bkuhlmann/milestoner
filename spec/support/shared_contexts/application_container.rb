@@ -4,7 +4,7 @@ require "dry/container/stub"
 
 RSpec.shared_context "with application container" do
   let(:application_container) { Milestoner::Container }
-  let(:application_configuration) { Milestoner::CLI::Configuration::Loader.with_defaults.call }
+  let(:application_configuration) { Milestoner::Configuration::Loader.with_defaults.call }
   let(:kernel) { class_spy Kernel }
 
   before do

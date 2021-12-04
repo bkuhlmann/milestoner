@@ -7,7 +7,7 @@ RSpec.describe Milestoner::CLI::Parsers::Core do
 
   subject(:parser) { described_class.new configuration }
 
-  let(:configuration) { Milestoner::CLI::Configuration::Loader.call }
+  let(:configuration) { Milestoner::Configuration::Loader.call }
 
   it_behaves_like "a parser"
 

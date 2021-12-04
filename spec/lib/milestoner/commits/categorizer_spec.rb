@@ -77,7 +77,7 @@ RSpec.describe Milestoner::Commits::Categorizer do
 
       it "answers commits grouped by prefix and alpha-sorted per group" do
         git_repo_dir.change_dir do
-          configuration = Milestoner::CLI::Configuration::Content[
+          configuration = Milestoner::Configuration::Content[
             prefixes: ["[one]", "=+-#", "with spaces"]
           ]
           subjects = categorizer.call(configuration).map(&:subject)
@@ -97,7 +97,7 @@ RSpec.describe Milestoner::Commits::Categorizer do
 
       it "answers alphabetically sorted commits" do
         git_repo_dir.change_dir do
-          configuration = Milestoner::CLI::Configuration::Content[prefixes: []]
+          configuration = Milestoner::Configuration::Content[prefixes: []]
           subjects = categorizer.call(configuration).map(&:subject)
 
           expect(subjects).to eq(["Added documentation", "One", "Two"])

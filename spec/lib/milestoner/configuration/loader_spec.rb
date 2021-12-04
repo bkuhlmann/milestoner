@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Milestoner::CLI::Configuration::Loader do
+RSpec.describe Milestoner::Configuration::Loader do
   subject(:loader) { described_class.with_defaults }
 
   let :content do
-    Milestoner::CLI::Configuration::Content[
+    Milestoner::Configuration::Content[
       documentation_format: "md",
       prefixes: %w[Fixed Added Updated Removed Refactored],
       sign: false
@@ -15,7 +15,7 @@ RSpec.describe Milestoner::CLI::Configuration::Loader do
 
   describe ".call" do
     it "answers default configuration" do
-      expect(described_class.call).to be_a(Milestoner::CLI::Configuration::Content)
+      expect(described_class.call).to be_a(Milestoner::Configuration::Content)
     end
   end
 

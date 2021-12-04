@@ -15,7 +15,7 @@ RSpec.describe Milestoner::Tags::Pusher do
   end
 
   let(:status) { instance_spy Process::Status, success?: true }
-  let(:configuration) { Milestoner::CLI::Configuration::Content[version: Version("0.0.0")] }
+  let(:configuration) { Milestoner::Configuration::Content[version: Version("0.0.0")] }
 
   before { application_container.stub :repository, repository }
 

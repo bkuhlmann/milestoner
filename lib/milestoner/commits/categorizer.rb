@@ -11,7 +11,7 @@ module Milestoner
         @container = container
       end
 
-      def call configuration = CLI::Configuration::Loader.call
+      def call configuration = Configuration::Loader.call
         prefixes = configuration.prefixes
 
         prefixes.reduce({}) { |group, prefix| group.merge prefix => [] }
