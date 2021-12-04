@@ -1,12 +1,9 @@
 :documentation:
   :format: "md"
-:git:
-  :commit:
-    :prefixes:
-      - Fixed
-      - Added
-      - Updated
-      - Removed
-      - Refactored
-  :tag:
-    :sign: false
+:prefixes:
+  - Fixed
+  - Added
+  - Updated
+  - Removed
+  - Refactored
+:sign: false

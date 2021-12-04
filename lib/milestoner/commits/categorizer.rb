@@ -12,7 +12,7 @@ module Milestoner
       end
 
       def call configuration = CLI::Configuration::Loader.call
-        prefixes = configuration.git_commit_prefixes
+        prefixes = configuration.prefixes
 
         prefixes.reduce({}) { |group, prefix| group.merge prefix => [] }
                 .merge("Unknown" => [])

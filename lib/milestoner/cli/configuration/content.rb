@@ -12,9 +12,9 @@ module Milestoner
                            :action_version,
                            :action_help,
                            :documentation_format,
-                           :git_commit_prefixes,
-                           :git_tag_sign,
-                           :git_tag_version,
+                           :prefixes,
+                           :sign,
+                           :version,
                            keyword_init: true
     end
   end

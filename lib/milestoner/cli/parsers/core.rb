@@ -51,7 +51,7 @@ module Milestoner
             Versionaire::Version,
             "Tag and push milestone to remote repository."
           ) do |version|
-            configuration.merge! action_publish: true, git_tag_version: version
+            configuration.merge! action_publish: true, version: version
           end
         end
 

@@ -10,7 +10,7 @@ RSpec.describe Milestoner::Tags::Publisher do
 
   let(:tagger) { instance_spy Milestoner::Tags::Creator }
   let(:pusher) { instance_spy Milestoner::Tags::Pusher }
-  let(:configuration) { Milestoner::CLI::Configuration::Content[git_tag_version: Version("0.0.0")] }
+  let(:configuration) { Milestoner::CLI::Configuration::Content[version: Version("0.0.0")] }
 
   describe "#call" do
     it "creates tag" do

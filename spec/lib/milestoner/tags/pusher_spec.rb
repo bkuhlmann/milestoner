@@ -15,7 +15,7 @@ RSpec.describe Milestoner::Tags::Pusher do
   end
 
   let(:status) { instance_spy Process::Status, success?: true }
-  let(:configuration) { Milestoner::CLI::Configuration::Content[git_tag_version: Version("0.0.0")] }
+  let(:configuration) { Milestoner::CLI::Configuration::Content[version: Version("0.0.0")] }
 
   before { application_container.stub :repository, repository }
 
@@ -39,7 +39,7 @@ RSpec.describe Milestoner::Tags::Pusher do
     end
 
     it "fails when remote tag exists" do
-      version = configuration.git_tag_version
+      version = configuration.version
       allow(repository).to receive(:tag_remote?).with(version).and_return(true)
       result = -> { pusher.call configuration }
 

@@ -12,7 +12,7 @@ RSpec.describe Milestoner::Tags::Creator do
   include_context "with Git repository"
   include_context "with application container"
 
-  let(:configuration) { application_configuration.merge git_tag_version: Version("0.0.0") }
+  let(:configuration) { application_configuration.merge version: Version("0.0.0") }
 
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
@@ -100,7 +100,7 @@ RSpec.describe Milestoner::Tags::Creator do
             gpg_dir.make_dir.chmod 0o700
             `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
             `git config --local user.signingkey #{gpg_key}`
-            tagger.call configuration.merge(git_tag_sign: true)
+            tagger.call configuration.merge(sign: true)
 
             expect(tag_details.call("0.0.0")).to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
           end
@@ -110,7 +110,7 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "logs tag exists when previously created" do
       git_repo_dir.change_dir do
-        `git tag #{configuration.git_tag_version}`
+        `git tag #{configuration.version}`
         result = proc { tagger.call configuration }
 
         expect(&result).to output("Local tag exists: 0.0.0. Skipped.\n").to_stdout
@@ -119,7 +119,7 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "answers false when tag is previously created" do
       git_repo_dir.change_dir do
-        `git tag #{configuration.git_tag_version}`
+        `git tag #{configuration.version}`
         expect(tagger.call(configuration)).to eq(false)
       end
     end
@@ -139,7 +139,7 @@ RSpec.describe Milestoner::Tags::Creator do
       it "signs tag" do
         git_repo_dir.change_dir do
           `git config --local gpg.program /dev/null`
-          result = -> { tagger.call configuration.merge(git_tag_sign: true) }
+          result = -> { tagger.call configuration.merge(sign: true) }
 
           expect(&result).to raise_error(Milestoner::Error, "Unable to create tag: 0.0.0.")
         end
@@ -156,7 +156,7 @@ RSpec.describe Milestoner::Tags::Creator do
     end
 
     it "fails with invalid version" do
-      result = -> { tagger.call configuration.merge(git_tag_version: "bogus") }
+      result = -> { tagger.call configuration.merge(version: "bogus") }
       expect(&result).to raise_error(Milestoner::Error)
     end
   end

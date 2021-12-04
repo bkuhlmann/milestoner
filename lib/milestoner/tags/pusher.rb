@@ -13,7 +13,7 @@ module Milestoner
       end
 
       def call configuration = CLI::Configuration::Loader.call
-        version = Version configuration.git_tag_version
+        version = Version configuration.version
 
         fail Error, "Remote repository not configured." unless repository.config_origin?
         fail Error, "Remote tag exists: #{version}." if repository.tag_remote? version

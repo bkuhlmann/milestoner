@@ -44,20 +44,13 @@ RSpec.describe Milestoner::CLI::Parsers::Core do
 
     it "answers publish version (short)" do
       parser.call %w[-P 0.0.0]
-
-      expect(configuration).to have_attributes(
-        action_publish: true,
-        git_tag_version: Version("0.0.0")
-      )
+      expect(configuration).to have_attributes(action_publish: true, version: Version("0.0.0"))
     end
 
     it "answers publish version (long)" do
       parser.call %w[--publish 0.0.0]
 
-      expect(configuration).to have_attributes(
-        action_publish: true,
-        git_tag_version: Version("0.0.0")
-      )
+      expect(configuration).to have_attributes(action_publish: true, version: Version("0.0.0"))
     end
 
     it "fails publish with invalid version" do

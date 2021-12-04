@@ -13,7 +13,7 @@ module Milestoner
       def call configuration = CLI::Configuration::Loader.call
         tagger.call configuration
         pusher.call configuration
-        logger.info { "Published: #{configuration.git_tag_version}!" }
+        logger.info { "Published: #{configuration.version}!" }
       end
 
       private

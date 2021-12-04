@@ -27,18 +27,18 @@ module Milestoner
         def add_sign
           client.on(
             "--[no-]sign",
-            %(Sign with GPG key. Default: #{configuration.git_tag_sign}.)
+            %(Sign with GPG key. Default: #{configuration.sign}.)
           ) do |value|
-            compute_git_tag_sign value
+            compute_sign value
           end
         end
 
-        def compute_git_tag_sign value
+        def compute_sign value
           truth_table = [true, false].repeated_permutation(2).to_a
 
-          case truth_table.index [value, configuration.git_tag_sign]
-            when 0..1 then configuration.git_tag_sign = true
-            when 2..3 then configuration.git_tag_sign = false
+          case truth_table.index [value, configuration.sign]
+            when 0..1 then configuration.sign = true
+            when 2..3 then configuration.sign = false
             else fail Error, "--sign must be a boolean. Check gem configuration."
           end
         end
