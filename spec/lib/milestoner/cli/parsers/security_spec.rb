@@ -45,10 +45,7 @@ RSpec.describe Milestoner::CLI::Parsers::Security do
 
       it "fails with error" do
         parse = proc { parser.call %w[--sign] }
-
-        expect(&parse).to raise_error(
-          Milestoner::Error, "--sign must be a boolean. Check gem configuration."
-        )
+        expect(&parse).to output("--sign must be a boolean. Check gem configuration.\n").to_stdout
       end
     end
   end

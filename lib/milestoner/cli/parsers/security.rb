@@ -7,9 +7,12 @@ module Milestoner
       class Security
         def self.call(...) = new(...).call
 
-        def initialize configuration = Container[:configuration], client: Parser::CLIENT
+        def initialize configuration = Container[:configuration],
+                       client: Parser::CLIENT,
+                       container: Container
           @configuration = configuration
           @client = client
+          @container = container
         end
 
         def call arguments = []
@@ -21,7 +24,7 @@ module Milestoner
 
         private
 
-        attr_reader :configuration, :client
+        attr_reader :configuration, :client, :container
 
         def add_sign
           client.on(
@@ -38,9 +41,11 @@ module Milestoner
           case truth_table.index [value, configuration.sign]
             when 0..1 then configuration.sign = true
             when 2..3 then configuration.sign = false
-            else fail Error, "--sign must be a boolean. Check gem configuration."
+            else logger.error { "--sign must be a boolean. Check gem configuration." }
           end
         end
+
+        def logger = container[__method__]
       end
     end
   end
