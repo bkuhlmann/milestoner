@@ -30,7 +30,7 @@ RSpec.describe Milestoner::CLI::Actions::Status do
     it "fails when status can't be obtained" do
       categorizer = instance_double Milestoner::Commits::Categorizer
       allow(categorizer).to receive(:call).and_raise(Milestoner::Error, "Danger!")
-      expectation = proc { described_class.new(categorizer: categorizer).call }
+      expectation = proc { described_class.new(categorizer:).call }
 
       expect(&expectation).to raise_error(Milestoner::Error, "Danger!")
     end
