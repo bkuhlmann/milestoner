@@ -23,7 +23,7 @@ module Milestoner
         fail Error, "Unable to tag without commits." if categorizer.call.empty?
 
         sign configuration
-      rescue Versionaire::Errors::Cast, GitPlus::Error => error
+      rescue Versionaire::Error, GitPlus::Error => error
         raise Error, error.message
       end
 
