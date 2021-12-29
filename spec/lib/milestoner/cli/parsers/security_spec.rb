@@ -5,48 +5,27 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Parsers::Security do
   using Refinements::Structs
 
-  subject(:parser) { described_class.new test_configuration }
+  subject(:parser) { described_class.new configuration.dup }
 
   include_context "with application container"
 
   it_behaves_like "a parser"
 
   describe "#call" do
-    context "when sign is disabled by default" do
-      let(:test_configuration) { configuration.merge sign: false }
-
-      it "enables tag signing" do
-        parser.call %w[--sign]
-        expect(test_configuration.sign).to eq(true)
-      end
-
-      it "disables tag signing" do
-        parser.call %w[--no-sign]
-        expect(test_configuration.sign).to eq(false)
-      end
+    it "enables tag signing" do
+      expect(parser.call(%w[--sign])).to have_attributes(sign: true)
     end
 
-    context "when sign is enabled by default" do
-      let(:test_configuration) { configuration.merge sign: true }
-
-      it "enables tag signing" do
-        parser.call %w[--sign]
-        expect(test_configuration.sign).to eq(true)
-      end
-
-      it "disables tag signing" do
-        parser.call %w[--no-sign]
-        expect(test_configuration.sign).to eq(false)
-      end
+    it "disables tag signing" do
+      expect(parser.call(%w[--no-sign])).to have_attributes(sign: false)
     end
 
-    context "when sign is not a boolean" do
-      let(:test_configuration) { configuration.merge sign: nil }
+    it "fails when sign is not a boolean" do
+      parser = described_class.new
+      allow(configuration).to receive(:sign).and_return "bogus"
+      expectation = proc { parser.call %w[--sign] }
 
-      it "fails with error" do
-        parse = proc { parser.call %w[--sign] }
-        expect(&parse).to output("--sign must be a boolean. Check gem configuration.\n").to_stdout
-      end
+      expect(&expectation).to output(/--sign must be a boolean/).to_stdout
     end
   end
 end

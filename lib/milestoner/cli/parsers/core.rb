@@ -39,7 +39,7 @@ module Milestoner
             %i[edit view],
             "Manage gem configuration. Actions: edit || view."
           ) do |action|
-            configuration.action_config = action
+            configuration.merge! action_config: action
           end
         end
 
@@ -56,19 +56,19 @@ module Milestoner
 
         def add_status
           client.on "-s", "--status", "Show project status." do
-            configuration.action_status = true
+            configuration.merge! action_status: true
           end
         end
 
         def add_version
           client.on "-v", "--version", "Show gem version." do
-            configuration.action_version = Identity::VERSION_LABEL
+            configuration.merge! action_version: true
           end
         end
 
         def add_help
           client.on "-h", "--help", "Show this message." do
-            configuration.action_help = true
+            configuration.merge! action_help: true
           end
         end
       end

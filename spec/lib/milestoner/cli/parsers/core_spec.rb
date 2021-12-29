@@ -5,31 +5,27 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Parsers::Core do
   using Versionaire::Cast
 
-  subject(:parser) { described_class.new configuration }
+  subject(:parser) { described_class.new }
 
-  let(:configuration) { Milestoner::Configuration::Loader.call }
+  include_context "with application container"
 
   it_behaves_like "a parser"
 
   describe "#call" do
     it "answers config edit (short)" do
-      parser.call %w[-c edit]
-      expect(configuration.action_config).to eq(:edit)
+      expect(parser.call(%w[-c edit])).to have_attributes(action_config: :edit)
     end
 
     it "answers config edit (long)" do
-      parser.call %w[--config edit]
-      expect(configuration.action_config).to eq(:edit)
+      expect(parser.call(%w[--config edit])).to have_attributes(action_config: :edit)
     end
 
     it "answers config view (short)" do
-      parser.call %w[-c view]
-      expect(configuration.action_config).to eq(:view)
+      expect(parser.call(%w[-c view])).to have_attributes(action_config: :view)
     end
 
     it "answers config view (long)" do
-      parser.call %w[--config view]
-      expect(configuration.action_config).to eq(:view)
+      expect(parser.call(%w[--config view])).to have_attributes(action_config: :view)
     end
 
     it "fails with missing config action" do
@@ -43,14 +39,17 @@ RSpec.describe Milestoner::CLI::Parsers::Core do
     end
 
     it "answers publish version (short)" do
-      parser.call %w[-P 0.0.0]
-      expect(configuration).to have_attributes(action_publish: true, version: Version("0.0.0"))
+      expect(parser.call(%w[-P 0.0.0])).to have_attributes(
+        action_publish: true,
+        version: Version("0.0.0")
+      )
     end
 
     it "answers publish version (long)" do
-      parser.call %w[--publish 0.0.0]
-
-      expect(configuration).to have_attributes(action_publish: true, version: Version("0.0.0"))
+      expect(parser.call(%w[--publish 0.0.0])).to have_attributes(
+        action_publish: true,
+        version: Version("0.0.0")
+      )
     end
 
     it "fails publish with invalid version" do
@@ -59,33 +58,27 @@ RSpec.describe Milestoner::CLI::Parsers::Core do
     end
 
     it "enables status (short)" do
-      parser.call %w[-s]
-      expect(configuration.action_status).to eq(true)
+      expect(parser.call(%w[-s])).to have_attributes(action_status: true)
     end
 
     it "enables status (long)" do
-      parser.call %w[--status]
-      expect(configuration.action_status).to eq(true)
+      expect(parser.call(%w[--status])).to have_attributes(action_status: true)
     end
 
     it "answers version (short)" do
-      parser.call %w[-v]
-      expect(configuration.action_version).to match(/Milestoner\s\d+\.\d+\.\d+/)
+      expect(parser.call(%w[-v])).to have_attributes(action_version: true)
     end
 
     it "answers version (long)" do
-      parser.call %w[--version]
-      expect(configuration.action_version).to match(/Milestoner\s\d+\.\d+\.\d+/)
+      expect(parser.call(%w[--version])).to have_attributes(action_version: true)
     end
 
     it "enables help (short)" do
-      parser.call %w[-h]
-      expect(configuration.action_help).to eq(true)
+      expect(parser.call(%w[-h])).to have_attributes(action_help: true)
     end
 
     it "enables help (long)" do
-      parser.call %w[--help]
-      expect(configuration.action_help).to eq(true)
+      expect(parser.call(%w[--help])).to have_attributes(action_help: true)
     end
   end
 end

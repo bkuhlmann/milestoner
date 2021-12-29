@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
+require "refinements/structs"
+
 module Milestoner
   module CLI
     module Parsers
       # Handles parsing of Command Line Interface (CLI) security options.
       class Security
+        using Refinements::Structs
+
         def self.call(...) = new(...).call
 
         def initialize configuration = Container[:configuration],
@@ -39,8 +43,8 @@ module Milestoner
           truth_table = [true, false].repeated_permutation(2).to_a
 
           case truth_table.index [value, configuration.sign]
-            when 0..1 then configuration.sign = true
-            when 2..3 then configuration.sign = false
+            when 0..1 then configuration.merge! sign: true
+            when 2..3 then configuration.merge! sign: false
             else logger.error { "--sign must be a boolean. Check gem configuration." }
           end
         end
