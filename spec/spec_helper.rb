@@ -11,7 +11,6 @@ require "git_plus/spec/shared_contexts/git_repo"
 require "git_plus/spec/shared_contexts/git_commit"
 require "milestoner"
 require "refinements"
-require "climate_control"
 
 using Refinements::Pathnames
 
