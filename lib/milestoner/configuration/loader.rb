@@ -14,22 +14,22 @@ module Milestoner
       using Refinements::Structs
 
       DEFAULTS = YAML.load_file(Pathname(__dir__).join("defaults.yml")).freeze
-      HANDLER = Runcom::Config.new "#{Identity::NAME}/configuration.yml", defaults: DEFAULTS
+      CLIENT = Runcom::Config.new "#{Identity::NAME}/configuration.yml", defaults: DEFAULTS
 
       def self.call = new.call
 
-      def self.with_defaults = new(handler: DEFAULTS)
+      def self.with_defaults = new(client: DEFAULTS)
 
-      def initialize content: Content.new, handler: HANDLER
+      def initialize content: Content.new, client: CLIENT
         @content = content
-        @handler = handler
+        @client = client
       end
 
-      def call = content.merge(**handler.to_h.flatten_keys)
+      def call = content.merge(**client.to_h.flatten_keys)
 
       private
 
-      attr_reader :content, :handler
+      attr_reader :content, :client
     end
   end
 end
