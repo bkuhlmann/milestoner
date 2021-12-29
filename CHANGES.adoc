@@ -1,5 +1,42 @@
 = Changes
 
+== 13.0.0 (2021-12-29)
+
+* Fixed CLI parsers to ensure configuration options are respected - Brooke Kuhlmann
+* Fixed Hippocratic license structure - Brooke Kuhlmann
+* Fixed README changes and credits sections - Brooke Kuhlmann
+* Fixed RSpec/Dialect issues - Brooke Kuhlmann
+* Fixed contributing documentation - Brooke Kuhlmann
+* Added Rakefile Bundler gem tasks - Brooke Kuhlmann
+* Added project citation information - Brooke Kuhlmann
+* Updated CLI shell to display version - Brooke Kuhlmann
+* Updated GitHub issue template - Brooke Kuhlmann
+* Updated README and identity to match citation description - Brooke Kuhlmann
+* Updated Rubocop sub-project gem dependencies - Brooke Kuhlmann
+* Updated all CLI parsers to consume container configuration - Brooke Kuhlmann
+* Updated configuration content to be frozen by default - Brooke Kuhlmann
+* Updated security parser to log instead of raise error - Brooke Kuhlmann
+* Updated to Amazing Print 1.4.0 - Brooke Kuhlmann
+* Updated to Debug 1.4.0 - Brooke Kuhlmann
+* Updated to Git Lint 3.0.0 - Brooke Kuhlmann
+* Updated to Git+ 1.0.0 - Brooke Kuhlmann
+* Updated to Hippocratic License 3.0.0 - Brooke Kuhlmann
+* Updated to Refinements 9.0.0 - Brooke Kuhlmann
+* Updated to Rubocop 1.24.0 - Brooke Kuhlmann
+* Updated to Ruby 3.0.3 - Brooke Kuhlmann
+* Updated to Ruby 3.1.0 - Brooke Kuhlmann
+* Updated to Runcom 8.0.0 - Brooke Kuhlmann
+* Updated to SimpleCov 0.21.2 - Brooke Kuhlmann
+* Updated to Versionare 10.0.0 - Brooke Kuhlmann
+* Removed CLI parser assembler - Brooke Kuhlmann
+* Removed Climate Control gem - Brooke Kuhlmann
+* Removed Gemsmith depenendecy - Brooke Kuhlmann
+* Removed Git namespace from default configuration - Brooke Kuhlmann
+* Removed application prefix from application container - Brooke Kuhlmann
+* Removed configuration from CLI namespace - Brooke Kuhlmann
+* Refactored CLI status action spec to use punning - Brooke Kuhlmann
+* Refactored configuration loader to use client - Brooke Kuhlmann
+
 == 12.2.0 (2021-11-15)
 
 * Added README community link - Brooke Kuhlmann

@@ -70,7 +70,7 @@ USAGE:
   -v, --version                            Show gem version.
 
 SECURITY OPTIONS:
-      --[no-]sign                          Sign with GPG key. Default: true.
+      --[no-]sign                          Sign with GPG key. Default: false.
 ....
 
 Examples:
@@ -106,16 +106,13 @@ The default configuration is as follows:
 ----
 :documentation:
   :format: "md"
-:git:
-  :commit:
-    :prefixes:
-      - Fixed
-      - Added
-      - Updated
-      - Removed
-      - Refactored
-  :tag:
-    :sign: false
+:prefixes:
+  - Fixed
+  - Added
+  - Updated
+  - Removed
+  - Refactored
+:sign: false
 ----
 
 Feel free to take this default configuration, modify, and save as your own custom
