@@ -19,7 +19,7 @@ module Milestoner
       def call arguments = []
         perform parser.call(arguments)
       rescue OptionParser::ParseError, Error => error
-        logger.error error.message
+        logger.error { error.message }
       end
 
       private
@@ -31,7 +31,7 @@ module Milestoner
           in action_config: Symbol => action then config action
           in action_publish: true then publish configuration
           in action_status: true then status
-          in action_version: String => version then logger.info version
+          in action_version: true then logger.info Identity::VERSION_LABEL
           else usage
         end
       end
