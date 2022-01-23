@@ -27,17 +27,23 @@ RSpec.describe Milestoner::CLI::Shell do
 
     it "creates tag when publishing" do
       git_repo_dir.change_dir do
+        `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
         shell.call %w[--publish 0.0.0]
       rescue Milestoner::Error
         expect(tag_details.call("0.0.0")).to match(/Version\s0\.0\.0/)
+      ensure
+        `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
       end
     end
 
     it "fails to publish when remote repository doesn't exist" do
       git_repo_dir.change_dir do
+        `git tag 0.0.0`
         result = proc { shell.call %w[--publish 0.0.0] }
-        expect(&result).to output(/could not be pushed/).to_stdout
+        expect(&result).to output(/tag exists/i).to_stdout
       end
+    ensure
+      `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
     end
 
     it "prints project status when commits exist" do

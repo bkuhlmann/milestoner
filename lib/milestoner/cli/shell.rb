@@ -31,7 +31,7 @@ module Milestoner
           in action_config: Symbol => action then config action
           in action_publish: true then publish configuration
           in action_status: true then status
-          in action_version: true then logger.info Identity::VERSION_LABEL
+          in action_version: true then logger.info { "Milestoner #{specification.version}" }
           else usage
         end
       end
@@ -43,6 +43,8 @@ module Milestoner
       def status = actions.fetch(__method__).call
 
       def usage = logger.unknown { parser.to_s }
+
+      def specification = container[__method__]
 
       def logger = container[__method__]
     end

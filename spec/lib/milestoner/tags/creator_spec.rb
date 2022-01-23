@@ -19,6 +19,10 @@ RSpec.describe Milestoner::Tags::Creator do
   end
 
   describe "#call" do
+    before do
+      git_repo_dir.change_dir { `git tag --delete 0.0.0 && git push --delete origin 0.0.0` }
+    end
+
     it "creates tag message" do
       git_repo_dir.change_dir do
         tagger.call test_configuration

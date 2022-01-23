@@ -3,5 +3,4 @@
 
 require "milestoner"
 
-Process.setproctitle Milestoner::Identity::VERSION_LABEL
 Milestoner::CLI::Shell.new.call ARGV

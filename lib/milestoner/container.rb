@@ -10,7 +10,10 @@ module Milestoner
   module Container
     extend Dry::Container::Mixin
 
+    SPEC_PATH = "#{__dir__}/../../milestoner.gemspec".freeze
+
     register(:configuration) { Configuration::Loader.call }
+    register(:specification) { Gem::Specification.load SPEC_PATH }
     register(:colorizer) { Pastel.new enabled: $stdout.tty? }
     register(:kernel) { Kernel }
 
