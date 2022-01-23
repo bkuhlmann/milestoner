@@ -12,7 +12,7 @@ RSpec.describe Milestoner::Tags::Creator do
   include_context "with Git repository"
   include_context "with application container"
 
-  let(:test_configuration) { configuration.merge version: Version("0.0.0") }
+  let(:test_configuration) { configuration.merge version: Version("1.2.3") }
 
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
@@ -20,20 +20,20 @@ RSpec.describe Milestoner::Tags::Creator do
 
   describe "#call" do
     before do
-      git_repo_dir.change_dir { `git tag --delete 0.0.0 && git push --delete origin 0.0.0` }
+      git_repo_dir.change_dir { `git tag --delete 1.2.3 && git push --delete origin 1.2.3` }
     end
 
     it "creates tag message" do
       git_repo_dir.change_dir do
         tagger.call test_configuration
-        expect(tag_details.call("0.0.0")).to match(/Version\s0\.0\.0/)
+        expect(tag_details.call("1.2.3")).to match(/Version\s1\.2\.3/)
       end
     end
 
     context "with commits since last tag" do
       let :pattern do
         /
-          Version\s0\.0\.0\n\n
+          Version\s1\.2\.3\n\n
           -\sFixed\sREADME\s-\sTest\sUser\n
           -\sAdded\sdocumentation\s-\sTest\sUser\n
           -\sUpdated\sREADME\s-\sTest\sUser\n
@@ -57,7 +57,7 @@ RSpec.describe Milestoner::Tags::Creator do
       it "creates tag message with commits since last tag" do
         git_repo_dir.change_dir do
           tagger.call test_configuration
-          expect(tag_details.call("0.0.0")).to match(pattern)
+          expect(tag_details.call("1.2.3")).to match(pattern)
         end
       end
     end
@@ -65,7 +65,7 @@ RSpec.describe Milestoner::Tags::Creator do
     context "with backticks in commits" do
       let :pattern do
         /
-          Version\s0\.0\.0\n\n
+          Version\s1\.2\.3\n\n
           -\sAdded\sdocumentation\s-\sTest\sUser\n
           -\sUpdated\sREADME\swith\s`bogus\scommand`\sin\smessage\s-\sTest\sUser\n\n\n\n
         /x
@@ -77,7 +77,7 @@ RSpec.describe Milestoner::Tags::Creator do
           %x(git commit --all --message 'Updated README with \`bogus command\` in message')
           tagger.call test_configuration
 
-          expect(tag_details.call("0.0.0")).to match(pattern)
+          expect(tag_details.call("1.2.3")).to match(pattern)
         end
       end
     end
@@ -86,7 +86,7 @@ RSpec.describe Milestoner::Tags::Creator do
       it "does not sign tag" do
         git_repo_dir.change_dir do
           tagger.call test_configuration
-          expect(tag_details.call("0.0.0")).not_to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
+          expect(tag_details.call("1.2.3")).not_to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
         end
       end
     end
@@ -106,7 +106,7 @@ RSpec.describe Milestoner::Tags::Creator do
             `git config --local user.signingkey #{gpg_key}`
             tagger.call test_configuration.merge(sign: true)
 
-            expect(tag_details.call("0.0.0")).to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
+            expect(tag_details.call("1.2.3")).to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
           end
         end
       end
@@ -117,7 +117,7 @@ RSpec.describe Milestoner::Tags::Creator do
         `git tag #{test_configuration.version}`
         result = proc { tagger.call test_configuration }
 
-        expect(&result).to output("Local tag exists: 0.0.0. Skipped.\n").to_stdout
+        expect(&result).to output("Local tag exists: 1.2.3. Skipped.\n").to_stdout
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe Milestoner::Tags::Creator do
     it "logs tag created when tag doesn't exist and is successfully created" do
       git_repo_dir.change_dir do
         result = proc { tagger.call test_configuration }
-        expect(&result).to output("Local tag created: 0.0.0.\n").to_stdout
+        expect(&result).to output("Local tag created: 1.2.3.\n").to_stdout
       end
     end
 
@@ -145,7 +145,7 @@ RSpec.describe Milestoner::Tags::Creator do
           `git config --local gpg.program /dev/null`
           result = -> { tagger.call test_configuration.merge(sign: true) }
 
-          expect(&result).to raise_error(Milestoner::Error, "Unable to create tag: 0.0.0.")
+          expect(&result).to raise_error(Milestoner::Error, "Unable to create tag: 1.2.3.")
         end
       end
     end
