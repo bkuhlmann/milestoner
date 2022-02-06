@@ -31,7 +31,7 @@ module Milestoner
           in action_config: Symbol => action then config action
           in action_publish: true then publish configuration
           in action_status: true then status
-          in action_version: true then logger.info { "Milestoner #{specification.version}" }
+          in action_version: true then logger.info { specification.labeled_version }
           else usage
         end
       end

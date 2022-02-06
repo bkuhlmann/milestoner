@@ -22,7 +22,7 @@ module Milestoner
         end
 
         def call arguments = []
-          client.banner = "Milestoner - #{specification.summary}"
+          client.banner = specification.labeled_summary
           client.separator "\nUSAGE:\n"
           collate
           client.parse arguments
