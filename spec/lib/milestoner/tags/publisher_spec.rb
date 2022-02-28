@@ -29,7 +29,7 @@ RSpec.describe Milestoner::Tags::Publisher do
     end
 
     it "answers true with successful publish" do
-      expect(publisher.call(configuration)).to eq(true)
+      expect(publisher.call(configuration)).to be(true)
     end
   end
 end

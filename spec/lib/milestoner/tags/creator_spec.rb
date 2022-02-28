@@ -124,7 +124,7 @@ RSpec.describe Milestoner::Tags::Creator do
     it "answers false when tag is previously created" do
       git_repo_dir.change_dir do
         `git tag #{test_configuration.version}`
-        expect(tagger.call(test_configuration)).to eq(false)
+        expect(tagger.call(test_configuration)).to be(false)
       end
     end
 
@@ -136,7 +136,7 @@ RSpec.describe Milestoner::Tags::Creator do
     end
 
     it "answers true when tag doesn't exist and is successfully created" do
-      git_repo_dir.change_dir { expect(tagger.call(test_configuration)).to eq(true) }
+      git_repo_dir.change_dir { expect(tagger.call(test_configuration)).to be(true) }
     end
 
     context "when GPG program is missing" do

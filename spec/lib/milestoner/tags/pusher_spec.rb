@@ -28,7 +28,7 @@ RSpec.describe Milestoner::Tags::Pusher do
     end
 
     it "answers true with successful push" do
-      expect(pusher.call(configuration)).to eq(true)
+      expect(pusher.call(configuration)).to be(true)
     end
 
     it "fails when remote repository is not configured" do
