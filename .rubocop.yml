@@ -1,5 +1,2 @@
 inherit_gem:
   caliber: config/all.yml
-
-Lint/Void:
-  CheckForMethodsWithNoSideEffects: false
