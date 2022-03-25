@@ -115,9 +115,9 @@ RSpec.describe Milestoner::Tags::Creator do
     it "logs tag exists when previously created" do
       git_repo_dir.change_dir do
         `git tag #{test_configuration.version}`
-        result = proc { tagger.call test_configuration }
+        tagger.call test_configuration
 
-        expect(&result).to output("Local tag exists: 1.2.3. Skipped.\n").to_stdout
+        expect(logger.reread).to eq("Local tag exists: 1.2.3. Skipped.\n")
       end
     end
 
@@ -130,8 +130,8 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "logs tag created when tag doesn't exist and is successfully created" do
       git_repo_dir.change_dir do
-        result = proc { tagger.call test_configuration }
-        expect(&result).to output("Local tag created: 1.2.3.\n").to_stdout
+        tagger.call test_configuration
+        expect(logger.reread).to eq("Local tag created: 1.2.3.\n")
       end
     end
 

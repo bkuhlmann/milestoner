@@ -39,8 +39,9 @@ RSpec.describe Milestoner::CLI::Shell do
     it "fails to publish when remote repository doesn't exist" do
       git_repo_dir.change_dir do
         `git tag 0.0.0`
-        result = proc { shell.call %w[--publish 0.0.0] }
-        expect(&result).to output(/tag exists/i).to_stdout
+        shell.call %w[--publish 0.0.0]
+
+        expect(logger.reread).to match(/tag exists/i)
       end
     ensure
       `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
@@ -48,38 +49,38 @@ RSpec.describe Milestoner::CLI::Shell do
 
     it "prints project status when commits exist" do
       git_repo_dir.change_dir do
-        result = proc { shell.call %w[--status] }
-        expect(&result).to output("- Added documentation - Test User\n").to_stdout
+        shell.call %w[--status]
+        expect(logger.reread).to eq("- Added documentation - Test User\n")
       end
     end
 
     it "prints no status when commits don't exist" do
       git_repo_dir.change_dir do
         `git tag 0.0.0`
-        result = proc { shell.call %w[--status] }
+        shell.call %w[--status]
 
-        expect(&result).to output("All is quiet.\n").to_stdout
+        expect(logger.reread).to eq("All is quiet.\n")
       end
     end
 
     it "prints version" do
-      result = proc { shell.call %w[--version] }
-      expect(&result).to output(/Milestoner\s\d+\.\d+\.\d+/).to_stdout
+      shell.call %w[--version]
+      expect(logger.reread).to match(/Milestoner\s\d+\.\d+\.\d+/)
     end
 
     it "prints help" do
-      result = proc { shell.call %w[--help] }
-      expect(&result).to output(/Milestoner.+USAGE.+SECURITY OPTIONS/m).to_stdout
+      shell.call %w[--help]
+      expect(logger.reread).to match(/Milestoner.+USAGE.+SECURITY OPTIONS/m)
     end
 
     it "prints usage when no options are given" do
-      result = proc { shell.call }
-      expect(&result).to output(/Milestoner.+USAGE.+SECURITY OPTIONS.+/m).to_stdout
+      shell.call
+      expect(logger.reread).to match(/Milestoner.+USAGE.+SECURITY OPTIONS/m)
     end
 
     it "prints error with invalid option" do
-      result = proc { shell.call %w[--bogus] }
-      expect(&result).to output(/invalid option.+bogus/).to_stdout
+      shell.call %w[--bogus]
+      expect(logger.reread).to match(/invalid option.+bogus/)
     end
   end
 end

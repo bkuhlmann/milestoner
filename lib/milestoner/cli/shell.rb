@@ -32,7 +32,7 @@ module Milestoner
           in action_publish: true then publish configuration
           in action_status: true then status
           in action_version: true then logger.info { specification.labeled_version }
-          else usage
+          else logger.any { parser.to_s }
         end
       end
 

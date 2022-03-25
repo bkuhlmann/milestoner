@@ -23,9 +23,9 @@ RSpec.describe Milestoner::CLI::Parsers::Security do
     it "fails when sign is not a boolean" do
       parser = described_class.new
       allow(configuration).to receive(:sign).and_return "bogus"
-      expectation = proc { parser.call %w[--sign] }
+      parser.call %w[--sign]
 
-      expect(&expectation).to output(/--sign must be a boolean/).to_stdout
+      expect(logger.reread).to match(/--sign must be a boolean/)
     end
   end
 end

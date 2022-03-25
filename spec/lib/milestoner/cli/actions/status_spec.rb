@@ -13,17 +13,17 @@ RSpec.describe Milestoner::CLI::Actions::Status do
   describe "#call" do
     it "logs new commits when they exist" do
       git_repo_dir.change_dir do
-        result = proc { action.call }
-        expect(&result).to output("- Added documentation - Test User\n").to_stdout
+        action.call
+        expect(logger.reread).to eq("- Added documentation - Test User\n")
       end
     end
 
     it "logs nothing when commits don't exist" do
       git_repo_dir.change_dir do
         `git tag 0.0.0`
-        result = proc { action.call }
+        action.call
 
-        expect(&result).to output("All is quiet.\n").to_stdout
+        expect(logger.reread).to eq("All is quiet.\n")
       end
     end
 

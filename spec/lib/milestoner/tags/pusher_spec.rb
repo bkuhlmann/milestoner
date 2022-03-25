@@ -23,8 +23,8 @@ RSpec.describe Milestoner::Tags::Pusher do
 
   describe "#call" do
     it "logs successfull push" do
-      result = proc { pusher.call configuration }
-      expect(&result).to output("Local tag pushed: 0.0.0.\n").to_stdout
+      pusher.call configuration
+      expect(logger.reread).to eq("Local tag pushed: 0.0.0.\n")
     end
 
     it "answers true with successful push" do
