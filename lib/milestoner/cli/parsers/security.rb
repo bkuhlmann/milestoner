@@ -7,16 +7,18 @@ module Milestoner
     module Parsers
       # Handles parsing of Command Line Interface (CLI) security options.
       class Security
+        include Import[:logger]
+
         using Refinements::Structs
 
         def self.call(...) = new(...).call
 
         def initialize configuration = Container[:configuration],
                        client: Parser::CLIENT,
-                       container: Container
+                       **dependencies
+          super(**dependencies)
           @configuration = configuration
           @client = client
-          @container = container
         end
 
         def call arguments = []
@@ -28,7 +30,7 @@ module Milestoner
 
         private
 
-        attr_reader :configuration, :client, :container
+        attr_reader :configuration, :client
 
         def add_sign
           client.on(
@@ -48,8 +50,6 @@ module Milestoner
             else logger.error { "--sign must be a boolean. Check gem configuration." }
           end
         end
-
-        def logger = container[__method__]
       end
     end
   end

@@ -4,16 +4,11 @@ module Milestoner
   module CLI
     # The main Command Line Interface (CLI) object.
     class Shell
-      ACTIONS = {
-        config: Actions::Config.new,
-        publish: Actions::Publish.new,
-        status: Actions::Status.new
-      }.freeze
+      include Actions::Import[:config, :publish, :status, :specification, :logger]
 
-      def initialize parser: Parser.new, actions: ACTIONS, container: Container
+      def initialize parser: Parser.new, **dependencies
+        super(**dependencies)
         @parser = parser
-        @actions = actions
-        @container = container
       end
 
       def call arguments = []
@@ -24,29 +19,17 @@ module Milestoner
 
       private
 
-      attr_reader :parser, :actions, :container
+      attr_reader :parser
 
       def perform configuration
         case configuration
-          in action_config: Symbol => action then config action
-          in action_publish: true then publish configuration
-          in action_status: true then status
+          in action_config: Symbol => action then config.call action
+          in action_publish: true then publish.call configuration
+          in action_status: true then status.call
           in action_version: true then logger.info { specification.labeled_version }
           else logger.any { parser.to_s }
         end
       end
-
-      def config(action) = actions.fetch(__method__).call(action)
-
-      def publish(configuration) = actions.fetch(__method__).call(configuration)
-
-      def status = actions.fetch(__method__).call
-
-      def usage = logger.unknown { parser.to_s }
-
-      def specification = container[__method__]
-
-      def logger = container[__method__]
     end
   end
 end

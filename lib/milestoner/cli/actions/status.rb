@@ -5,12 +5,14 @@ module Milestoner
     module Actions
       # Handles listing project status of untagged commit history.
       class Status
+        include Milestoner::Import[:logger]
+
         def initialize presenter: Presenters::Commit,
                        categorizer: Commits::Categorizer.new,
-                       container: Container
+                       **dependencies
+          super(**dependencies)
           @presenter = presenter
           @categorizer = categorizer
-          @container = container
         end
 
         def call
@@ -22,11 +24,9 @@ module Milestoner
 
         private
 
-        attr_reader :presenter, :categorizer, :container
+        attr_reader :presenter, :categorizer
 
         def info(message) = logger.info { message }
-
-        def logger = container[__method__]
       end
     end
   end

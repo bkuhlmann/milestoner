@@ -6,13 +6,11 @@ module Milestoner
   module Tags
     # Handles publishing of tags to a remote repository.
     class Pusher
+      include Import[:repository, :logger]
+
       using Versionaire::Cast
 
-      def initialize container: Container
-        @container = container
-      end
-
-      def call configuration = CLI::Configuration::Loader.call
+      def call configuration = Container[:configuration]
         version = Version configuration.version
 
         fail Error, "Remote repository not configured." unless repository.config_origin?
@@ -24,17 +22,11 @@ module Milestoner
 
       private
 
-      attr_reader :container
-
       def push
         repository.tag_push.then do |_stdout, stderr, status|
           status.success? && stderr.match?(/[new tag]/)
         end
       end
-
-      def repository = container[__method__]
-
-      def logger = container[__method__]
     end
   end
 end

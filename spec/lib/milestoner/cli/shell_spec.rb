@@ -4,6 +4,7 @@ require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Shell do
   using Refinements::Pathnames
+  using AutoInjector::Stub
 
   subject(:shell) { described_class.new }
 
@@ -13,6 +14,10 @@ RSpec.describe Milestoner::CLI::Shell do
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
   end
+
+  before { Milestoner::CLI::Actions::Import.stub configuration:, kernel:, logger: }
+
+  after { Milestoner::CLI::Actions::Import.unstub :configuration, :kernel, :logger }
 
   describe "#call" do
     it "edits configuration" do

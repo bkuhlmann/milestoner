@@ -7,18 +7,19 @@ module Milestoner
   module Tags
     # Handles the creation of project repository tags.
     class Creator
+      include Import[:repository, :logger]
+
       using Versionaire::Cast
 
       def initialize categorizer: Commits::Categorizer.new,
                      presenter: Presenters::Commit,
-                     container: Container
-
+                     **dependencies
+        super(**dependencies)
         @categorizer = categorizer
         @presenter = presenter
-        @container = container
       end
 
-      def call configuration = CLI::Configuration::Loader.call
+      def call configuration = Container[:configuration]
         return false if local? configuration
         fail Error, "Unable to tag without commits." if categorizer.call.empty?
 
@@ -29,7 +30,7 @@ module Milestoner
 
       private
 
-      attr_reader :categorizer, :presenter, :container
+      attr_reader :categorizer, :presenter
 
       def local? configuration
         version = Version configuration.version
@@ -62,10 +63,6 @@ module Milestoner
                      %(Version #{configuration.version}\n\n#{line_items.join "\n"}\n\n)
                    end
       end
-
-      def repository = container[__method__]
-
-      def logger = container[__method__]
     end
   end
 end

@@ -7,23 +7,25 @@ module Milestoner
   module Presenters
     # Wraps the Git Kit Commit for presentation purposes.
     class Commit
+      include Import[:configuration]
+
       extend Forwardable
 
       delegate [*GitPlus::Commit.members, :fixup?, :squash?] => :record
 
-      def initialize record, container: Container
+      def initialize record, **dependencies
+        super(**dependencies)
         @record = record
-        @container = container
       end
 
       def line_item(delimiter: " - ") = "#{bullet}#{subject}#{delimiter}#{author_name}"
 
       private
 
-      attr_reader :record, :container
+      attr_reader :record
 
       def bullet
-        case container[:configuration].documentation_format
+        case configuration.documentation_format
           when "md" then "- "
           when "adoc" then "* "
           else ""

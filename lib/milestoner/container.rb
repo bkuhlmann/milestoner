@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "cogger"
-require "dry/container"
+require "dry-container"
 require "git_plus"
 require "spek"
 
