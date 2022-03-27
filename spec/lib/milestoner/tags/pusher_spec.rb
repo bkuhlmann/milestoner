@@ -9,7 +9,7 @@ RSpec.describe Milestoner::Tags::Pusher do
 
   subject(:pusher) { described_class.new }
 
-  include_context "with application container"
+  include_context "with application dependencies"
 
   let :repository do
     instance_spy GitPlus::Repository, tag_remote?: false, tag_push: ["", "[new tag]", status]

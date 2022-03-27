@@ -7,7 +7,7 @@ RSpec.describe Milestoner::CLI::Parsers::Security do
 
   subject(:parser) { described_class.new configuration.dup }
 
-  include_context "with application container"
+  include_context "with application dependencies"
 
   it_behaves_like "a parser"
 

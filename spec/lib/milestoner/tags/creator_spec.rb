@@ -10,7 +10,7 @@ RSpec.describe Milestoner::Tags::Creator do
   subject(:tagger) { described_class.new }
 
   include_context "with Git repository"
-  include_context "with application container"
+  include_context "with application dependencies"
 
   let(:test_configuration) { configuration.merge version: Version("1.2.3") }
 

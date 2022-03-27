@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Actions::Publish do
   subject(:action) { described_class.new publisher: }
 
-  include_context "with application container"
+  include_context "with application dependencies"
 
   let(:publisher) { instance_spy Milestoner::Tags::Publisher }
 

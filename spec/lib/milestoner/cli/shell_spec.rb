@@ -9,7 +9,7 @@ RSpec.describe Milestoner::CLI::Shell do
   subject(:shell) { described_class.new }
 
   include_context "with Git repository"
-  include_context "with application container"
+  include_context "with application dependencies"
 
   let :tag_details do
     ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }

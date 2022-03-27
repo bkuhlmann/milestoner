@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Milestoner::Presenters::Commit do
   subject(:presenter) { described_class.new record }
 
-  include_context "with application container"
+  include_context "with application dependencies"
 
   let(:record) { GitPlus::Commit[subject: "Added documentation", author_name: "Jane Doe"] }
 

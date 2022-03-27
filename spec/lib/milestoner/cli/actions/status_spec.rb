@@ -8,7 +8,7 @@ RSpec.describe Milestoner::CLI::Actions::Status do
   subject(:action) { described_class.new }
 
   include_context "with Git repository"
-  include_context "with application container"
+  include_context "with application dependencies"
 
   describe "#call" do
     it "logs new commits when they exist" do
