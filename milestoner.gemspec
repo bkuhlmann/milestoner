@@ -26,7 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "cogger", "~> 0.0"
   spec.add_dependency "dry-container", "~> 0.8"
   spec.add_dependency "git_plus", "~> 1.1"
-  spec.add_dependency "pastel", "~> 0.8"
   spec.add_dependency "refinements", "~> 9.2"
   spec.add_dependency "runcom", "~> 8.2"
   spec.add_dependency "spek", "~> 0.2"
