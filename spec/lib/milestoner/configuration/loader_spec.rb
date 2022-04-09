@@ -8,8 +8,7 @@ RSpec.describe Milestoner::Configuration::Loader do
   let :content do
     Milestoner::Configuration::Content[
       documentation_format: "md",
-      prefixes: %w[Fixed Added Updated Removed Refactored],
-      sign: false
+      prefixes: %w[Fixed Added Updated Removed Refactored]
     ]
   end
 

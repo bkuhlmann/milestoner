@@ -17,7 +17,6 @@ RSpec.describe Milestoner::Configuration::Content do
         action_help: nil,
         documentation_format: nil,
         prefixes: nil,
-        sign: nil,
         version: nil
       }
     end

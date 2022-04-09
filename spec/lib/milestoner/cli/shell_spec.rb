@@ -75,12 +75,12 @@ RSpec.describe Milestoner::CLI::Shell do
 
     it "prints help" do
       shell.call %w[--help]
-      expect(logger.reread).to match(/Milestoner.+USAGE.+SECURITY OPTIONS/m)
+      expect(logger.reread).to match(/Milestoner.+USAGE.+/m)
     end
 
     it "prints usage when no options are given" do
       shell.call
-      expect(logger.reread).to match(/Milestoner.+USAGE.+SECURITY OPTIONS/m)
+      expect(logger.reread).to match(/Milestoner.+USAGE.+/m)
     end
 
     it "prints error with invalid option" do

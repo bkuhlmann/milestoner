@@ -13,7 +13,6 @@ module Milestoner
       :action_help,
       :documentation_format,
       :prefixes,
-      :sign,
       :version,
       keyword_init: true
     ) do

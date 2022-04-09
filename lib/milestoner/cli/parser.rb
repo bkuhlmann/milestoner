@@ -9,7 +9,7 @@ module Milestoner
       include Import[:configuration]
 
       CLIENT = OptionParser.new nil, 40, "  "
-      SECTIONS = [Parsers::Core, Parsers::Security].freeze # Order is important.
+      SECTIONS = [Parsers::Core].freeze
 
       def initialize sections: SECTIONS, client: CLIENT, **dependencies
         super(**dependencies)

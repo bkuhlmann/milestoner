@@ -82,36 +82,6 @@ RSpec.describe Milestoner::Tags::Creator do
       end
     end
 
-    context "when not signed" do
-      it "does not sign tag" do
-        git_repo_dir.change_dir do
-          tagger.call test_configuration
-          expect(tag_details.call("1.2.3")).not_to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
-        end
-      end
-    end
-
-    context "when signed" do
-      let(:gpg_dir) { temp_dir.join ".gnupg" }
-      let(:gpg_script) { Bundler.root.join "spec/support/fixtures/gpg_script" }
-      let(:gpg_key) { `gpg --list-secret-keys --keyid-format SHORT | grep sec`[14..21] }
-
-      it "signs tag" do
-        skip "Required manual input from command line."
-
-        ClimateControl.modify GNUPGHOME: gpg_dir.to_s do
-          git_repo_dir.change_dir do
-            gpg_dir.make_dir.chmod 0o700
-            `gpg --batch --generate-key --quiet --gen-key #{gpg_script}`
-            `git config --local user.signingkey #{gpg_key}`
-            tagger.call test_configuration.merge(sign: true)
-
-            expect(tag_details.call("1.2.3")).to match(/-{5}BEGIN\sPGP\sSIGNATURE-{5}/)
-          end
-        end
-      end
-    end
-
     it "logs tag exists when previously created" do
       git_repo_dir.change_dir do
         `git tag #{test_configuration.version}`
@@ -137,17 +107,6 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "answers true when tag doesn't exist and is successfully created" do
       git_repo_dir.change_dir { expect(tagger.call(test_configuration)).to be(true) }
-    end
-
-    context "when GPG program is missing" do
-      it "signs tag" do
-        git_repo_dir.change_dir do
-          `git config --local gpg.program /dev/null`
-          result = -> { tagger.call test_configuration.merge(sign: true) }
-
-          expect(&result).to raise_error(Milestoner::Error, "Unable to create tag: 1.2.3.")
-        end
-      end
     end
 
     it "fails with no Git commits" do

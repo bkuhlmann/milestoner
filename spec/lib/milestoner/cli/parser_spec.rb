@@ -30,7 +30,7 @@ RSpec.describe Milestoner::CLI::Parser do
   describe "#to_s" do
     it "answers usage" do
       parser.call
-      expect(parser.to_s).to match(/.+USAGE.+SECURITY\sOPTIONS.+/m)
+      expect(parser.to_s).to match(/.+USAGE.+/m)
     end
   end
 end

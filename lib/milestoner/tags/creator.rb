@@ -23,7 +23,7 @@ module Milestoner
         return false if local? configuration
         fail Error, "Unable to tag without commits." if categorizer.call.empty?
 
-        sign configuration
+        create configuration
       rescue Versionaire::Error, GitPlus::Error => error
         raise Error, error.message
       end
@@ -36,24 +36,17 @@ module Milestoner
         version = Version configuration.version
 
         if repository.tag_local? version
-          logger.warn "Local tag exists: #{version}. Skipped."
+          logger.warn { "Local tag exists: #{version}. Skipped." }
           true
         else
           false
         end
       end
 
-      def sign configuration
+      def create configuration
         version = configuration.version
-        content = message configuration
-
-        if configuration.sign
-          repository.tag_sign version, content
-        else
-          repository.tag_unsign version, content
-        end
-
-        logger.debug "Local tag created: #{version}."
+        repository.tag_unsign version, message(configuration)
+        logger.debug { "Local tag created: #{version}." }
       end
 
       def message configuration
