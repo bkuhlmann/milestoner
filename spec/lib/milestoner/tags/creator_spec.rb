@@ -34,10 +34,10 @@ RSpec.describe Milestoner::Tags::Creator do
       let :pattern do
         /
           Version\s1\.2\.3\n\n
-          -\sFixed\sREADME\s-\sTest\sUser\n
-          -\sAdded\sdocumentation\s-\sTest\sUser\n
-          -\sUpdated\sREADME\s-\sTest\sUser\n
-          -\sRemoved\sREADME\s-\sTest\sUser\n\n\n\n
+          \*\sFixed\sREADME\s-\sTest\sUser\n
+          \*\sAdded\sdocumentation\s-\sTest\sUser\n
+          \*\sUpdated\sREADME\s-\sTest\sUser\n
+          \*\sRemoved\sREADME\s-\sTest\sUser\n\n\n\n
         /x
       end
 
@@ -66,8 +66,8 @@ RSpec.describe Milestoner::Tags::Creator do
       let :pattern do
         /
           Version\s1\.2\.3\n\n
-          -\sAdded\sdocumentation\s-\sTest\sUser\n
-          -\sUpdated\sREADME\swith\s`bogus\scommand`\sin\smessage\s-\sTest\sUser\n\n\n\n
+          \*\sAdded\sdocumentation\s-\sTest\sUser\n
+          \*\sUpdated\sREADME\swith\s`bogus\scommand`\sin\smessage\s-\sTest\sUser\n\n\n\n
         /x
       end
 

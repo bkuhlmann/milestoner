@@ -55,7 +55,7 @@ RSpec.describe Milestoner::CLI::Shell do
     it "prints project status when commits exist" do
       git_repo_dir.change_dir do
         shell.call %w[--status]
-        expect(logger.reread).to eq("- Added documentation - Test User\n")
+        expect(logger.reread).to eq("* Added documentation - Test User\n")
       end
     end
 

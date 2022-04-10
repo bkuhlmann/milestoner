@@ -14,7 +14,7 @@ RSpec.describe Milestoner::CLI::Actions::Status do
     it "logs new commits when they exist" do
       git_repo_dir.change_dir do
         action.call
-        expect(logger.reread).to eq("- Added documentation - Test User\n")
+        expect(logger.reread).to eq("* Added documentation - Test User\n")
       end
     end
 

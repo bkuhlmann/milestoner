@@ -1,5 +1,5 @@
 :documentation:
-  :format: "md"
+  :format: "adoc"
 :prefixes:
   - Fixed
   - Added
