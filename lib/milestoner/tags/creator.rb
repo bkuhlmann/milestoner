@@ -44,9 +44,9 @@ module Milestoner
       end
 
       def create configuration
-        version = configuration.version
-        repository.tag_unsign version, message(configuration)
-        logger.debug { "Local tag created: #{version}." }
+        label = configuration.version
+        repository.tag_version label, message(configuration)
+        logger.debug { "Local tag created: #{label}." }
       end
 
       def message configuration
