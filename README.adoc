@@ -4,13 +4,18 @@
 
 = Milestoner
 
-Milestoner is a command line interface for crafting Git repository tags (milestones) using semantic
-versions. Each milestone is a summary of all commits made since the last milestone. You can use
-Milestoner to inspect what is currently unreleased or create a new release via a single command. By
-having a tool, like Milestoner, you can quickly manage/automate releases in a consistent and
-reliable fashion. Milestoner also pairs well with
-link:https://www.alchemists.io/projects/git-lint[Git Lint] for further ensuring you have commit
-messages of high quality for your release notes.
+Milestoner is a command line interface for crafting Git repository tags (milestones) using
+link:https://semver.org[semantic versions]. Each milestone is a summary of all commits made since
+the last milestone. You can use Milestoner to inspect what is currently pending or create a new
+release via a single command. By having a tool, like Milestoner, you can automate releases in a
+consistent and reliable fashion. Milestoner pairs well with the following gems:
+
+- link:https://www.alchemists.io/projects/git-lint[Git Lint] - Ensures your commit messages are of
+  high quality which feed into the release notes built by Milestoner.
+- link:https://www.alchemists.io/projects/rubysmith[Rubysmith] - Use Milestoner to automate the
+  publishing of new or existing Ruby project versions.
+- link:https://www.alchemists.io/projects/gemsmith[Gemsmith] - Is built on top of Milestoner and is
+  used to publish new Ruby gem versions.
 
 toc::[]
 
@@ -31,13 +36,12 @@ toc::[]
 ** Refactored
 * Ensures Git commit messages are alphabetically sorted.
 * Ensures duplicate Git commit messages are removed (if any).
-* Provides optional security for signing Git tags with https://www.gnupg.org[GnuPG] signing key.
 
 == Requirements
 
 . A UNIX-based system.
 . https://www.ruby-lang.org[Ruby].
-. https://www.gnupg.org[GnuPG].
+. https://www.gnupg.org[GnuPG] (optional).
 
 == Setup
 
@@ -61,9 +65,6 @@ USAGE:
   -P, --publish VERSION                    Tag and push milestone to remote repository.
   -s, --status                             Show project status.
   -v, --version                            Show gem version.
-
-SECURITY OPTIONS:
-      --[no-]sign                          Sign with GPG key. Default: false.
 ....
 
 Examples:
@@ -72,13 +73,8 @@ Examples:
 ----
 milestoner --config edit
 milestoner --config view
-
 milestoner --help
-
 milestoner --publish 0.1.0
-milestoner --publish 0.1.0 --sign
-milestoner --publish 0.1.0 --no-sign
-
 milestoner --status
 milestoner --version
 ----
@@ -98,14 +94,13 @@ The default configuration is as follows:
 [source,yaml]
 ----
 :documentation:
-  :format: "md"
+  :format: "adoc"
 :prefixes:
   - Fixed
   - Added
   - Updated
   - Removed
   - Refactored
-:sign: false
 ----
 
 Feel free to take this default configuration, modify, and save as your own custom
@@ -113,18 +108,16 @@ Feel free to take this default configuration, modify, and save as your own custo
 
 The `+configuration.yml+` file can be configured as follows:
 
-* *Documenation Format*: Determines what format the status information should be rendered. Defaults
-  to link:https://daringfireball.net/projects/markdown[Markdown] (i.e. `md`) but
-  link:https://asciidoctor.org/docs/what-is-asciidoc[ASCII Doc] (i.e. `adoc`) is supported too.
-* *Git Commit Prefixes*: Should the default prefixes not be desired, you can define Git commit
-  prefixes that match your style. _NOTE: Prefix order is important with the first prefix defined
-  taking precedence over the second and so forth._ Special characters are allowed for prefixes but
-  should be enclosed in quotes. To disable prefix usage completely, use an empty array. Example:
-  `:prefixes: []`.
-* *Git Tag Sign*: Defaults to `false` but can be enabled by setting to `true`. When enabled, a
-  Git tag will require GPG signing for enhanced security and include a signed signature as part of
-  the Git tag. This is useful for public milestones where the author of a milestone can be verified
-  to ensure milestone integrity/security.
+* *Documentation Format* (i.e. `documentation`): Determines what format the release notes should be
+  rendered as. This effects both status information from the command line and the release notes
+  embedded within the body of a Git tag. Defaults to
+  link:https://asciidoctor.org/docs/what-is-asciidoc[ASCII Doc] (i.e. `adoc`) but
+  link:https://daringfireball.net/projects/markdown[Markdown] (i.e. `md`) is supported too.
+* *Git Commit Prefixes* (i.e. `prefixes`): Should the default prefixes not be desired, you can
+  define Git commit prefixes that match your style. _NOTE: Prefix order is important with the first
+  prefix defined taking precedence over the second and so forth._ Special characters are allowed for
+  prefixes but should be enclosed in quotes. To disable prefix usage completely, use an empty array.
+  Example: `:prefixes: []`.
 
 == Security
 
@@ -151,16 +144,21 @@ To obtain your key, run the following and take the part after the forward slash:
 gpg --list-keys | grep pub
 ....
 
-Add your key to your global Git configuration in the `+[user]+` section. Example:
+Add your key to your global (or local) Git configuration and ensure GPG signing for your tag is
+enabled. Example:
 
 ....
+[tag]
+  gpgSign = true
 [user]
   signingkey = <your GPG key>
 ....
 
-Now, when publishing a new milestone (i.e. `+milestoner --publish <version> --sign+`), signing of
-your Git tag will happen automatically. You will be prompted for the GPG Passphrase each time but
-that is to be expected.
+Now, when publishing a new milestone (i.e. `milestoner --publish <version>`), the signing of your
+Git tag will happen automatically. You will be prompted for the GPG Passphrase each time unless you
+are running the
+link:https://gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html#Invoking-GPG_002dAGENT[GPG
+Agent] in the background (highly recommend).
 
 == Development
 
