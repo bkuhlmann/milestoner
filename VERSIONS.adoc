@@ -1,5 +1,13 @@
 = Versions
 
+== 14.0.2 (2022-04-23)
+
+* Added GitHub sponsorship configuration - Brooke Kuhlmann
+* Updated to Caliber 0.6.0 - Brooke Kuhlmann
+* Updated to Caliber 0.7.0 - Brooke Kuhlmann
+* Updated to Dry Container 0.9.0 - Brooke Kuhlmann
+* Updated to Ruby 3.1.2 - Brooke Kuhlmann
+
 == 14.0.1 (2022-04-10)
 
 * Fixed Git tag creation to recognize sign or unsigned versions - Brooke Kuhlmann
