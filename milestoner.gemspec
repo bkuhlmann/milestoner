@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "git_plus", "~> 1.3"
   spec.add_dependency "refinements", "~> 9.4"
   spec.add_dependency "runcom", "~> 8.4"
-  spec.add_dependency "spek", "~> 0.2"
+  spec.add_dependency "spek", "~> 0.3"
   spec.add_dependency "versionaire", "~> 10.3"
   spec.add_dependency "zeitwerk", "~> 2.5"
 
