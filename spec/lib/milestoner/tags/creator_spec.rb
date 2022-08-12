@@ -15,7 +15,7 @@ RSpec.describe Milestoner::Tags::Creator do
   let(:test_configuration) { configuration.merge version: Version("1.2.3") }
 
   let :tag_details do
-    ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
+    -> version { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
   end
 
   describe "#call" do

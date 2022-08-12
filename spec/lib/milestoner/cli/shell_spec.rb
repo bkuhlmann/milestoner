@@ -12,7 +12,7 @@ RSpec.describe Milestoner::CLI::Shell do
   include_context "with application dependencies"
 
   let :tag_details do
-    ->(version) { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
+    -> version { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
   end
 
   before { Milestoner::CLI::Actions::Import.stub configuration:, kernel:, logger: }
