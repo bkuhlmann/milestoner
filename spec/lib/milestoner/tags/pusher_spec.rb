@@ -5,7 +5,7 @@ require "versionaire"
 
 RSpec.describe Milestoner::Tags::Pusher do
   using Versionaire::Cast
-  using AutoInjector::Stub
+  using Infusible::Stub
 
   subject(:pusher) { described_class.new }
 

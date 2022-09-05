@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "auto_injector"
+require "infusible"
 
 module Milestoner
   module CLI
     module Actions
-      Import = AutoInjector[Container]
+      Import = Infusible.with Container
     end
   end
 end
