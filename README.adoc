@@ -166,7 +166,7 @@ To contribute, run:
 
 [source,bash]
 ----
-git clone https://github.com/bkuhlmann/milestoner.git
+git clone https://github.com/bkuhlmann/milestoner
 cd milestoner
 bin/setup
 ----
