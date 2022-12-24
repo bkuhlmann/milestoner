@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require "git_plus"
+require "gitt"
 require "versionaire"
 
 module Milestoner
   module Tags
     # Handles the creation of project repository tags.
     class Creator
-      include Import[:repository, :logger]
+      include Import[:git, :logger]
 
       using Versionaire::Cast
 
@@ -24,7 +24,7 @@ module Milestoner
         fail Error, "Unable to tag without commits." if categorizer.call.empty?
 
         create configuration
-      rescue Versionaire::Error, GitPlus::Error => error
+      rescue Versionaire::Error => error
         raise Error, error.message
       end
 
@@ -35,7 +35,7 @@ module Milestoner
       def local? configuration
         version = Version configuration.version
 
-        if repository.tag_local? version
+        if git.tag_local? version
           logger.warn { "Local tag exists: #{version}. Skipped." }
           true
         else
@@ -44,9 +44,9 @@ module Milestoner
       end
 
       def create configuration
-        label = configuration.version
-        repository.tag_version label, message(configuration)
-        logger.debug { "Local tag created: #{label}." }
+        git.tag_create(configuration.version, message(configuration))
+           .or { |error| fail Error, error }
+           .bind { true }
       end
 
       def message configuration

@@ -6,21 +6,21 @@ module Milestoner
     class Publisher
       include Import[:logger]
 
-      def initialize tagger: Tags::Creator.new, pusher: Tags::Pusher.new, **dependencies
+      def initialize creator: Tags::Creator.new, pusher: Tags::Pusher.new, **dependencies
         super(**dependencies)
-        @tagger = tagger
+        @creator = creator
         @pusher = pusher
       end
 
       def call configuration = Container[:configuration]
-        tagger.call configuration
+        creator.call configuration
         pusher.call configuration
         logger.info { "Published: #{configuration.version}!" }
       end
 
       private
 
-      attr_reader :tagger, :pusher
+      attr_reader :creator, :pusher
     end
   end
 end

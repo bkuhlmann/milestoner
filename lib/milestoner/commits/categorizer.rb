@@ -6,7 +6,7 @@ module Milestoner
   module Commits
     # Retrieves and categorizes Git repository commit tagged or untagged history.
     class Categorizer
-      include Import[:repository]
+      include Import[:git]
 
       def initialize expression: Regexp, **dependencies
         super(**dependencies)
@@ -41,11 +41,16 @@ module Milestoner
         prefixes.empty? ? expression.new(//) : expression.union(prefixes)
       end
 
-      def computed_commits = repository.tagged? ? tagged_commits : saved_commits
+      def computed_commits = git.tagged? ? tagged_commits : saved_commits
 
-      def tagged_commits = repository.commits("#{repository.tag_last}..HEAD")
+      def tagged_commits
+        git.tag_last
+           .value_or(nil)
+           .then { |tag| git.commits("#{tag}..HEAD") }
+           .value_or([])
+      end
 
-      def saved_commits = repository.commits
+      def saved_commits = git.commits.value_or([])
     end
   end
 end

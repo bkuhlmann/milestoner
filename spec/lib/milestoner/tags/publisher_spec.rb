@@ -6,16 +6,16 @@ require "versionaire"
 RSpec.describe Milestoner::Tags::Publisher do
   using Versionaire::Cast
 
-  subject(:publisher) { described_class.new tagger:, pusher: }
+  subject(:publisher) { described_class.new creator:, pusher: }
 
-  let(:tagger) { instance_spy Milestoner::Tags::Creator }
+  let(:creator) { instance_spy Milestoner::Tags::Creator }
   let(:pusher) { instance_spy Milestoner::Tags::Pusher }
   let(:configuration) { Milestoner::Configuration::Content[version: Version("0.0.0")] }
 
   describe "#call" do
     it "creates tag" do
       publisher.call configuration
-      expect(tagger).to have_received(:call).with(configuration)
+      expect(creator).to have_received(:call).with(configuration)
     end
 
     it "pushes tags" do

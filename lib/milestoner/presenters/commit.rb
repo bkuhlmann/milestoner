@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "forwardable"
-require "git_plus"
+require "gitt"
 
 module Milestoner
   module Presenters
@@ -11,7 +11,7 @@ module Milestoner
 
       extend Forwardable
 
-      delegate [*GitPlus::Commit.members, :fixup?, :squash?] => :record
+      delegate [*Gitt::Models::Commit.members, :amend?, :fixup?, :squash?, :prefix?] => :record
 
       def initialize record, **dependencies
         super(**dependencies)

@@ -11,10 +11,6 @@ RSpec.describe Milestoner::CLI::Shell do
   include_context "with Git repository"
   include_context "with application dependencies"
 
-  let :tag_details do
-    -> version { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
-  end
-
   before { Milestoner::CLI::Actions::Import.stub configuration:, kernel:, logger: }
 
   after { Milestoner::CLI::Actions::Import.unstub :configuration, :kernel, :logger }
@@ -35,7 +31,7 @@ RSpec.describe Milestoner::CLI::Shell do
         `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
         shell.call %w[--publish 0.0.0]
       rescue Milestoner::Error
-        expect(tag_details.call("0.0.0")).to match(/Version\s0\.0\.0/)
+        expect(tag).to eq("0.0.0")
       ensure
         `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
       end

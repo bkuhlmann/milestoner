@@ -2,8 +2,11 @@
 
 require "spec_helper"
 require "versionaire"
+require "dry/monads"
 
 RSpec.describe Milestoner::Tags::Pusher do
+  include Dry::Monads[:result]
+
   using Versionaire::Cast
   using Infusible::Stub
 
@@ -11,16 +14,13 @@ RSpec.describe Milestoner::Tags::Pusher do
 
   include_context "with application dependencies"
 
-  let :repository do
-    instance_spy GitPlus::Repository, tag_remote?: false, tag_push: ["", "[new tag]", status]
-  end
-
+  let(:git) { instance_spy Gitt::Repository, tag_remote?: false, tags_push: Success("[new tag]") }
   let(:status) { instance_spy Process::Status, success?: true }
   let(:configuration) { Milestoner::Configuration::Content[version: Version("0.0.0")] }
 
-  before { Milestoner::Import.stub repository: }
+  before { Milestoner::Import.stub git: }
 
-  after { Milestoner::Import.unstub :repository }
+  after { Milestoner::Import.unstub :git }
 
   describe "#call" do
     it "logs successfull push" do
@@ -33,7 +33,7 @@ RSpec.describe Milestoner::Tags::Pusher do
     end
 
     it "fails when remote repository is not configured" do
-      allow(repository).to receive(:config_origin?).and_return(false)
+      allow(git).to receive(:origin?).and_return(false)
       result = -> { pusher.call configuration }
 
       expect(&result).to raise_error(Milestoner::Error, "Remote repository not configured.")
@@ -41,16 +41,16 @@ RSpec.describe Milestoner::Tags::Pusher do
 
     it "fails when remote tag exists" do
       version = configuration.version
-      allow(repository).to receive(:tag_remote?).with(version).and_return(true)
+      allow(git).to receive(:tag_remote?).with(version).and_return(true)
       result = -> { pusher.call configuration }
 
       expect(&result).to raise_error(Milestoner::Error, "Remote tag exists: #{version}.")
     end
 
     context "when push fails to succeed" do
-      let(:status) { instance_spy Process::Status, success?: false }
-
       it "fails with error" do
+        allow(git).to receive(:tags_push).and_return(Failure(""))
+
         result = -> { pusher.call configuration }
 
         expect(&result).to raise_error(
@@ -61,9 +61,7 @@ RSpec.describe Milestoner::Tags::Pusher do
     end
 
     context "when push succeeds but standard error doesn't have new tag" do
-      let :repository do
-        instance_spy GitPlus::Repository, tag_remote?: false, tag_push: ["", "", status]
-      end
+      let(:git) { instance_spy Gitt::Repository, tag_remote?: false, tags_push: Success("") }
 
       it "fails when push fails" do
         result = -> { pusher.call configuration }

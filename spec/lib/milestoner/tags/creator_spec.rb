@@ -7,16 +7,13 @@ RSpec.describe Milestoner::Tags::Creator do
   using Refinements::Structs
   using Versionaire::Cast
 
-  subject(:tagger) { described_class.new }
+  subject(:creator) { described_class.new }
 
   include_context "with Git repository"
   include_context "with application dependencies"
 
   let(:test_configuration) { configuration.merge version: Version("1.2.3") }
-
-  let :tag_details do
-    -> version { Open3.capture2(%(git show --stat --pretty=format:"%b" #{version})).first }
-  end
+  let(:tag) { Milestoner::Container[:git].tag_show("1.2.3").bind(&:version) }
 
   describe "#call" do
     before do
@@ -25,8 +22,8 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "creates tag message" do
       git_repo_dir.change_dir do
-        tagger.call test_configuration
-        expect(tag_details.call("1.2.3")).to match(/Version\s1\.2\.3/)
+        creator.call test_configuration
+        expect(tag).to eq("1.2.3")
       end
     end
 
@@ -56,8 +53,8 @@ RSpec.describe Milestoner::Tags::Creator do
 
       it "creates tag message with commits since last tag" do
         git_repo_dir.change_dir do
-          tagger.call test_configuration
-          expect(tag_details.call("1.2.3")).to match(pattern)
+          creator.call test_configuration
+          expect(tag).to eq("1.2.3")
         end
       end
     end
@@ -75,9 +72,9 @@ RSpec.describe Milestoner::Tags::Creator do
         git_repo_dir.change_dir do
           `printf "Test" > README.md`
           %x(git commit --all --message 'Updated README with \`bogus command\` in message')
-          tagger.call test_configuration
+          creator.call test_configuration
 
-          expect(tag_details.call("1.2.3")).to match(pattern)
+          expect(tag).to eq("1.2.3")
         end
       end
     end
@@ -85,7 +82,7 @@ RSpec.describe Milestoner::Tags::Creator do
     it "logs tag exists when previously created" do
       git_repo_dir.change_dir do
         `git tag #{test_configuration.version}`
-        tagger.call test_configuration
+        creator.call test_configuration
 
         expect(logger.reread).to eq("Local tag exists: 1.2.3. Skipped.\n")
       end
@@ -94,32 +91,25 @@ RSpec.describe Milestoner::Tags::Creator do
     it "answers false when tag is previously created" do
       git_repo_dir.change_dir do
         `git tag #{test_configuration.version}`
-        expect(tagger.call(test_configuration)).to be(false)
-      end
-    end
-
-    it "logs tag created when tag doesn't exist and is successfully created" do
-      git_repo_dir.change_dir do
-        tagger.call test_configuration
-        expect(logger.reread).to eq("Local tag created: 1.2.3.\n")
+        expect(creator.call(test_configuration)).to be(false)
       end
     end
 
     it "answers true when tag doesn't exist and is successfully created" do
-      git_repo_dir.change_dir { expect(tagger.call(test_configuration)).to be(true) }
+      git_repo_dir.change_dir { expect(creator.call(test_configuration)).to be(true) }
     end
 
     it "fails with no Git commits" do
       temp_dir.change_dir do
         `git init`
-        result = proc { tagger.call test_configuration }
+        result = proc { creator.call test_configuration }
 
         expect(&result).to raise_error(Milestoner::Error, "Unable to tag without commits.")
       end
     end
 
     it "fails with invalid version" do
-      result = -> { tagger.call test_configuration.merge(version: "bogus") }
+      result = -> { creator.call test_configuration.merge(version: "bogus") }
       expect(&result).to raise_error(Milestoner::Error)
     end
   end

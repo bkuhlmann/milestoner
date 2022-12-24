@@ -2,7 +2,7 @@
 
 require "cogger"
 require "dry-container"
-require "git_plus"
+require "gitt"
 require "spek"
 
 module Milestoner
@@ -12,7 +12,7 @@ module Milestoner
 
     register(:configuration) { Configuration::Loader.call }
     register(:specification) { Spek::Loader.call "#{__dir__}/../../milestoner.gemspec" }
-    register(:repository) { GitPlus::Repository.new }
+    register(:git) { Gitt::Repository.new }
     register(:kernel) { Kernel }
     register(:logger) { Cogger::Client.new }
   end

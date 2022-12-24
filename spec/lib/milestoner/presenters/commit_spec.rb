@@ -7,7 +7,7 @@ RSpec.describe Milestoner::Presenters::Commit do
 
   include_context "with application dependencies"
 
-  let(:record) { GitPlus::Commit[subject: "Added documentation", author_name: "Jane Doe"] }
+  let(:record) { Gitt::Models::Commit[subject: "Added documentation", author_name: "Jane Doe"] }
 
   context "with Markdown format" do
     before { configuration.documentation_format = "md" }
