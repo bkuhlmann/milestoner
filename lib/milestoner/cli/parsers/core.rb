@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "versionaire/extensions/option_parser"
 require "refinements/structs"
+require "versionaire/extensions/option_parser"
 
 module Milestoner
   module CLI

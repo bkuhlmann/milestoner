@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require "dry/monads"
 require "spec_helper"
 require "versionaire"
-require "dry/monads"
 
 RSpec.describe Milestoner::Tags::Pusher do
   include Dry::Monads[:result]
