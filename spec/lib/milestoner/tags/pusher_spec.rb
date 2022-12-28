@@ -59,18 +59,5 @@ RSpec.describe Milestoner::Tags::Pusher do
         )
       end
     end
-
-    context "when push succeeds but standard error doesn't have new tag" do
-      let(:git) { instance_spy Gitt::Repository, tag_remote?: false, tags_push: Success("") }
-
-      it "fails when push fails" do
-        result = -> { pusher.call configuration }
-
-        expect(&result).to raise_error(
-          Milestoner::Error,
-          "Tags could not be pushed to remote repository."
-        )
-      end
-    end
   end
 end

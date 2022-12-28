@@ -15,14 +15,10 @@ module Milestoner
 
         fail Error, "Remote repository not configured." unless git.origin?
         fail Error, "Remote tag exists: #{version}." if git.tag_remote? version
-        fail Error, "Tags could not be pushed to remote repository." unless push
+        fail Error, "Tags could not be pushed to remote repository." if git.tags_push.failure?
 
         logger.debug "Local tag pushed: #{version}."
       end
-
-      private
-
-      def push = git.tags_push.value_or("").match?(/[new tag]/)
     end
   end
 end
