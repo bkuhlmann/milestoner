@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "core"
+
 module Milestoner
   module CLI
     # The main Command Line Interface (CLI) object.
@@ -11,7 +13,7 @@ module Milestoner
         @parser = parser
       end
 
-      def call arguments = []
+      def call arguments = Core::EMPTY_ARRAY
         perform parser.call(arguments)
       rescue OptionParser::ParseError, Error => error
         logger.error { error.message }

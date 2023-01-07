@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "refinements/structs"
 require "versionaire/extensions/option_parser"
 
@@ -23,7 +24,7 @@ module Milestoner
           @client = client
         end
 
-        def call arguments = []
+        def call arguments = ::Core::EMPTY_ARRAY
           client.banner = specification.labeled_summary
           client.separator "\nUSAGE:\n"
           collate
