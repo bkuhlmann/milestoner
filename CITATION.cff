@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: Please use the following metadata when citing this project in your work.
 title: Milestoner
 abstract: A command line interface for crafting Git repository tags using semantic versions.
-version: 15.1.0
+version: 15.2.0
 license: Hippocratic-2.1
-date-released: 2022-12-28
+date-released: 2023-01-08
 authors:
   - family-names: Kuhlmann
     given-names: Brooke

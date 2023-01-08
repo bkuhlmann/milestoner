@@ -1,5 +1,11 @@
 = Versions
 
+== 15.2.0 (2023-01-08)
+
+* Added Core gem - Brooke Kuhlmann
+* Updated to Gitt 1.1.0 - Brooke Kuhlmann
+* Refactored implementation to use empty core instances - Brooke Kuhlmann
+
 == 15.1.0 (2022-12-28)
 
 * Fixed tag push error with successful push - Brooke Kuhlmann
