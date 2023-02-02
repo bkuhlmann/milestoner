@@ -7,10 +7,8 @@ module Milestoner
       class Status
         include Milestoner::Import[:logger]
 
-        def initialize presenter: Presenters::Commit,
-                       categorizer: Commits::Categorizer.new,
-                       **dependencies
-          super(**dependencies)
+        def initialize(presenter: Presenters::Commit, categorizer: Commits::Categorizer.new, **)
+          super(**)
           @presenter = presenter
           @categorizer = categorizer
         end

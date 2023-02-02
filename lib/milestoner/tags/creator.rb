@@ -11,10 +11,8 @@ module Milestoner
 
       using Versionaire::Cast
 
-      def initialize categorizer: Commits::Categorizer.new,
-                     presenter: Presenters::Commit,
-                     **dependencies
-        super(**dependencies)
+      def initialize(categorizer: Commits::Categorizer.new, presenter: Presenters::Commit, **)
+        super(**)
         @categorizer = categorizer
         @presenter = presenter
       end

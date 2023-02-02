@@ -6,8 +6,8 @@ module Milestoner
     class Publisher
       include Import[:logger]
 
-      def initialize creator: Tags::Creator.new, pusher: Tags::Pusher.new, **dependencies
-        super(**dependencies)
+      def initialize(creator: Tags::Creator.new, pusher: Tags::Pusher.new, **)
+        super(**)
         @creator = creator
         @pusher = pusher
       end

@@ -13,8 +13,8 @@ module Milestoner
 
       delegate [*Gitt::Models::Commit.members, :amend?, :fixup?, :squash?, :prefix?] => :record
 
-      def initialize record, **dependencies
-        super(**dependencies)
+      def initialize(record, **)
+        super(**)
         @record = record
       end
 

@@ -8,8 +8,8 @@ module Milestoner
     class Categorizer
       include Import[:git]
 
-      def initialize expression: Regexp, **dependencies
-        super(**dependencies)
+      def initialize(expression: Regexp, **)
+        super(**)
         @expression = expression
       end
 
