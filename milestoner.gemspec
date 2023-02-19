@@ -5,14 +5,14 @@ Gem::Specification.new do |spec|
   spec.version = "15.2.1"
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
-  spec.homepage = "https://www.alchemists.io/projects/milestoner"
+  spec.homepage = "https://alchemists.io/projects/milestoner"
   spec.summary = "A command line interface for crafting Git semantically versioned repository tags."
   spec.license = "Hippocratic-2.1"
 
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/bkuhlmann/milestoner/issues",
-    "changelog_uri" => "https://www.alchemists.io/projects/milestoner/versions",
-    "documentation_uri" => "https://www.alchemists.io/projects/milestoner",
+    "changelog_uri" => "https://alchemists.io/projects/milestoner/versions",
+    "documentation_uri" => "https://alchemists.io/projects/milestoner",
     "funding_uri" => "https://github.com/sponsors/bkuhlmann",
     "label" => "Milestoner",
     "rubygems_mfa_required" => "true",

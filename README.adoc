@@ -10,24 +10,24 @@ the last milestone. You can use Milestoner to inspect what is currently pending 
 release via a single command. By having a tool, like Milestoner, you can automate releases in a
 consistent and reliable fashion. Milestoner pairs well with the following gems:
 
-- link:https://www.alchemists.io/projects/git-lint[Git Lint] - Ensures your commit messages are of
+- link:https://alchemists.io/projects/git-lint[Git Lint] - Ensures your commit messages are of
   high quality which feed into the release notes built by Milestoner.
-- link:https://www.alchemists.io/projects/rubysmith[Rubysmith] - Use Milestoner to automate the
+- link:https://alchemists.io/projects/rubysmith[Rubysmith] - Use Milestoner to automate the
   publishing of new or existing Ruby project versions.
-- link:https://www.alchemists.io/projects/gemsmith[Gemsmith] - Is built on top of Milestoner and is
+- link:https://alchemists.io/projects/gemsmith[Gemsmith] - Is built on top of Milestoner and is
   used to publish new Ruby gem versions.
 
 toc::[]
 
 == Features
 
-* Uses link:https://www.alchemists.io/projects/versionaire[Versionaire] for
+* Uses link:https://alchemists.io/projects/versionaire[Versionaire] for
   link:https://semver.org[Semantic Versioning].
 ** Format: `+<major>.<minor>.<patch>+`.
 ** Example: `+0.1.0+`.
 * Ensures Git commits since last tag (or initialization of repository) are included.
 * Ensures Git commit messages are grouped by prefix, in order defined. For more details, see
-  link:https://www.alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject
+  link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject
   Prefix] for details. Defaults (can be customized):
 ** Fixed
 ** Added
@@ -87,7 +87,7 @@ This gem can be configured via a global configuration:
 ~/.config/milestoner/configuration.yml
 ....
 
-It can also be configured via https://www.alchemists.io/projects/xdg[XDG] environment variables.
+It can also be configured via https://alchemists.io/projects/xdg[XDG] environment variables.
 
 The default configuration is as follows:
 
@@ -187,19 +187,19 @@ To test, run:
 bundle exec spec
 ----
 
-== link:https://www.alchemists.io/policies/license[License]
+== link:https://alchemists.io/policies/license[License]
 
-== link:https://www.alchemists.io/policies/security[Security]
+== link:https://alchemists.io/policies/security[Security]
 
-== link:https://www.alchemists.io/policies/code_of_conduct[Code of Conduct]
+== link:https://alchemists.io/policies/code_of_conduct[Code of Conduct]
 
-== link:https://www.alchemists.io/policies/contributions[Contributions]
+== link:https://alchemists.io/policies/contributions[Contributions]
 
-== link:https://www.alchemists.io/projects/milestoner/versions[Versions]
+== link:https://alchemists.io/projects/milestoner/versions[Versions]
 
-== link:https://www.alchemists.io/community[Community]
+== link:https://alchemists.io/community[Community]
 
 == Credits
 
-* Built with link:https://www.alchemists.io/projects/gemsmith[Gemsmith].
-* Engineered by link:https://www.alchemists.io/team/brooke_kuhlmann[Brooke Kuhlmann].
+* Built with link:https://alchemists.io/projects/gemsmith[Gemsmith].
+* Engineered by link:https://alchemists.io/team/brooke_kuhlmann[Brooke Kuhlmann].
