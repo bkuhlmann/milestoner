@@ -14,7 +14,8 @@ RSpec.describe Milestoner::Commits::Categorizer do
       git_repo_dir.change_dir do
         `git tag 0.0.0`
         `rm -f README.md`
-        `git commit --all --message "Removed README"`
+        `git add --all .`
+        `git commit --message "Removed README"`
 
         expect(categorizer.call.map(&:subject)).to contain_exactly("Removed README")
       end
