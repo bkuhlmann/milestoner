@@ -51,7 +51,7 @@ RSpec.describe Milestoner::CLI::Shell do
     it "prints project status when commits exist" do
       git_repo_dir.change_dir do
         shell.call %w[--status]
-        expect(logger.reread).to eq("* Added documentation - Test User\n")
+        expect(kernel).to have_received(:puts).with("* Added documentation - Test User")
       end
     end
 
@@ -60,28 +60,28 @@ RSpec.describe Milestoner::CLI::Shell do
         `git tag 0.0.0`
         shell.call %w[--status]
 
-        expect(logger.reread).to eq("All is quiet.\n")
+        expect(logger.reread).to match(/🟢.+All is quiet./)
       end
     end
 
     it "prints version" do
       shell.call %w[--version]
-      expect(logger.reread).to match(/Milestoner\s\d+\.\d+\.\d+/)
+      expect(kernel).to have_received(:puts).with(/Milestoner\s\d+\.\d+\.\d+/)
     end
 
     it "prints help" do
       shell.call %w[--help]
-      expect(logger.reread).to match(/Milestoner.+USAGE.+/m)
+      expect(kernel).to have_received(:puts).with(/Milestoner.+USAGE.+/m)
     end
 
     it "prints usage when no options are given" do
       shell.call
-      expect(logger.reread).to match(/Milestoner.+USAGE.+/m)
+      expect(kernel).to have_received(:puts).with(/Milestoner.+USAGE.+/m)
     end
 
     it "prints error with invalid option" do
       shell.call %w[--bogus]
-      expect(logger.reread).to match(/invalid option.+bogus/)
+      expect(logger.reread).to match(/🛑.+invalid option.+bogus/)
     end
   end
 end

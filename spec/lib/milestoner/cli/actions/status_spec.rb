@@ -14,7 +14,7 @@ RSpec.describe Milestoner::CLI::Actions::Status do
     it "logs new commits when they exist" do
       git_repo_dir.change_dir do
         action.call
-        expect(logger.reread).to eq("* Added documentation - Test User\n")
+        expect(kernel).to have_received(:puts).with("* Added documentation - Test User")
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe Milestoner::CLI::Actions::Status do
         `git tag 0.0.0`
         action.call
 
-        expect(logger.reread).to eq("All is quiet.\n")
+        expect(logger.reread).to match(/🟢.+All is quiet/)
       end
     end
 

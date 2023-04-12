@@ -20,7 +20,7 @@ RSpec.describe Milestoner::CLI::Actions::Config do
 
     it "logs error with invalid action" do
       action.call :bogus
-      expect(logger.reread).to eq("Invalid configuration action: bogus.\n")
+      expect(logger.reread).to match(/🛑.+Invalid configuration action: bogus./)
     end
   end
 end

@@ -14,6 +14,6 @@ module Milestoner
     register(:specification) { Spek::Loader.call "#{__dir__}/../../milestoner.gemspec" }
     register(:git) { Gitt::Repository.new }
     register(:kernel) { Kernel }
-    register(:logger) { Cogger::Client.new }
+    register(:logger) { Cogger.new formatter: :emoji }
   end
 end

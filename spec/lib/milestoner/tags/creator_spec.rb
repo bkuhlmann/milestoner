@@ -84,7 +84,7 @@ RSpec.describe Milestoner::Tags::Creator do
         `git tag #{test_configuration.version}`
         creator.call test_configuration
 
-        expect(logger.reread).to eq("Local tag exists: 1.2.3. Skipped.\n")
+        expect(logger.reread).to match(/⚠️.+Local tag exists: 1.2.3. Skipped./)
       end
     end
 

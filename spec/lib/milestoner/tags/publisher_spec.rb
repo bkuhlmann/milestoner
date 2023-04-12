@@ -8,6 +8,8 @@ RSpec.describe Milestoner::Tags::Publisher do
 
   subject(:publisher) { described_class.new creator:, pusher: }
 
+  include_context "with application dependencies"
+
   let(:creator) { instance_spy Milestoner::Tags::Creator }
   let(:pusher) { instance_spy Milestoner::Tags::Pusher }
   let(:configuration) { Milestoner::Configuration::Content[version: Version("0.0.0")] }
@@ -24,8 +26,8 @@ RSpec.describe Milestoner::Tags::Publisher do
     end
 
     it "logs successful publish" do
-      result = proc { publisher.call configuration }
-      expect(&result).to output("Published: 0.0.0!\n").to_stdout
+      publisher.call configuration
+      expect(logger.reread).to match(/🟢.+Published: 0.0.0!/)
     end
 
     it "answers true with successful publish" do
