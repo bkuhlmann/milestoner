@@ -1,5 +1,13 @@
 = Versions
 
+== 15.3.0 (2023-04-12)
+
+* Fixed categorizer spec to add removed files before committing - Brooke Kuhlmann
+* Updated setup instructions to secure and insecure installs - Brooke Kuhlmann
+* Updated to Caliber 0.30.0 - Brooke Kuhlmann
+* Updated to Cogger 0.8.0 - Brooke Kuhlmann
+* Updated to Ruby 3.2.2 - Brooke Kuhlmann
+
 == 15.2.2 (2023-03-22)
 
 * Updated Reek dependency to not be required - Brooke Kuhlmann
