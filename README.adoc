@@ -68,25 +68,21 @@ gem install milestoner
 From the command line, type: `milestoner --help`
 
 ....
-USAGE:
-  -c, --config ACTION                      Manage gem configuration. Actions: edit || view.
-  -h, --help                               Show this message.
-  -P, --publish VERSION                    Tag and push milestone to remote repository.
-  -s, --status                             Show project status.
-  -v, --version                            Show gem version.
+USAGE
+  milestoner [OPTIONS]
+  milestoner COMMAND [OPTIONS]
+
+OPTIONS
+  -p, --publish VERSION     Publish milestone.
+                            (tags and pushes to remote repository)
+  -s, --status              Show project status.
+  -v, --version             Show version.
+  -h, --help [COMMAND]      Show this message.
+
+COMMANDS
+  config                    Manage configuration.
+                            Path is dynamic per current directory.
 ....
-
-Examples:
-
-[source,bash]
-----
-milestoner --config edit
-milestoner --config view
-milestoner --help
-milestoner --publish 0.1.0
-milestoner --status
-milestoner --version
-----
 
 === Customization
 
@@ -102,9 +98,9 @@ The default configuration is as follows:
 
 [source,yaml]
 ----
-:documentation:
-  :format: "adoc"
-:prefixes:
+documentation:
+  format: "adoc"
+prefixes:
   - Fixed
   - Added
   - Updated
@@ -112,10 +108,7 @@ The default configuration is as follows:
   - Refactored
 ----
 
-Feel free to take this default configuration, modify, and save as your own custom
-`+configuration.yml+`.
-
-The `+configuration.yml+` file can be configured as follows:
+The `configuration.yml` file can be configured as follows:
 
 * *Documentation Format* (i.e. `documentation`): Determines what format the release notes should be
   rendered as. This effects both status information from the command line and the release notes
@@ -126,7 +119,7 @@ The `+configuration.yml+` file can be configured as follows:
   define Git commit prefixes that match your style. _NOTE: Prefix order is important with the first
   prefix defined taking precedence over the second and so forth._ Special characters are allowed for
   prefixes but should be enclosed in quotes. To disable prefix usage completely, use an empty array.
-  Example: `:prefixes: []`.
+  Example: `prefixes: []`.
 
 == Security
 
