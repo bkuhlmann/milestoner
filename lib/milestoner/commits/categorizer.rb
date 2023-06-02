@@ -46,7 +46,7 @@ module Milestoner
       def tagged_commits
         git.tag_last
            .value_or(nil)
-           .then { |tag| git.commits("#{tag}..HEAD") }
+           .then { |tag| git.commits "#{tag}..HEAD" }
            .value_or([])
       end
 
