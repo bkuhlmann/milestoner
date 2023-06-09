@@ -11,41 +11,35 @@ RSpec.describe Milestoner::CLI::Shell do
   include_context "with Git repository"
   include_context "with application dependencies"
 
-  before { Milestoner::CLI::Actions::Import.stub configuration:, kernel:, logger: }
+  before { Sod::Import.stub kernel:, logger: }
 
-  after { Milestoner::CLI::Actions::Import.unstub :configuration, :kernel, :logger }
+  after { Sod::Import.unstub :kernel, :logger }
 
   describe "#call" do
-    it "edits configuration" do
-      shell.call %w[--config edit]
-      expect(kernel).to have_received(:system).with(include("EDITOR"))
+    it "prints configuration usage" do
+      shell.call %w[config]
+      expect(kernel).to have_received(:puts).with(/Manage configuration.+/m)
     end
 
-    it "views configuration" do
-      shell.call %w[--config view]
-      expect(kernel).to have_received(:system).with(include("cat"))
-    end
-
-    it "creates tag when publishing" do
+    it "creates tag when publishing", :aggregate_failures do
       git_repo_dir.change_dir do
-        `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
+        `git fetch --tags && git tag --delete 0.0.0 && git push --delete origin 0.0.0`
         shell.call %w[--publish 0.0.0]
+
+        expect(`git describe --tags --abbrev=0`.chomp).to eq("0.0.0")
       rescue Milestoner::Error
-        expect(tag).to eq("0.0.0")
-      ensure
-        `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
+        # For CI since it can't push.
+        expect(`git describe --tags --abbrev=0`.chomp).to eq("")
       end
     end
 
     it "fails to publish when remote repository doesn't exist" do
       git_repo_dir.change_dir do
-        `git tag 0.0.0`
-        shell.call %w[--publish 0.0.0]
+        `git config --unset remote.origin.url`
+        expectation = proc { shell.call %w[--publish 0.0.0] }
 
-        expect(logger.reread).to match(/tag exists/i)
+        expect(&expectation).to raise_error(Milestoner::Error, /not configured/)
       end
-    ensure
-      `git tag --delete 0.0.0 && git push --delete origin 0.0.0`
     end
 
     it "prints project status when commits exist" do
@@ -72,16 +66,6 @@ RSpec.describe Milestoner::CLI::Shell do
     it "prints help" do
       shell.call %w[--help]
       expect(kernel).to have_received(:puts).with(/Milestoner.+USAGE.+/m)
-    end
-
-    it "prints usage when no options are given" do
-      shell.call
-      expect(kernel).to have_received(:puts).with(/Milestoner.+USAGE.+/m)
-    end
-
-    it "prints error with invalid option" do
-      shell.call %w[--bogus]
-      expect(logger.reread).to match(/🛑.+invalid option.+bogus/)
     end
   end
 end

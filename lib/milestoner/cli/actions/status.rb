@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
+require "sod"
+
 module Milestoner
   module CLI
     module Actions
       # Handles listing project status of untagged commit history.
-      class Status
+      class Status < Sod::Action
         include Milestoner::Import[:kernel, :logger]
+
+        description "Show project status."
+
+        on %w[-s --status]
 
         def initialize(presenter: Presenters::Commit, categorizer: Commits::Categorizer.new, **)
           super(**)
@@ -13,7 +19,7 @@ module Milestoner
           @categorizer = categorizer
         end
 
-        def call
+        def call(*)
           categorizer.call
                      .tap { |records| info "All is quiet." if records.empty? }
                      .map { |record| presenter.new(record).line_item }

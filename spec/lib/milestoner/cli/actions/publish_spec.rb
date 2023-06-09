@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Publish do
+  using Refinements::Structs
+
   subject(:action) { described_class.new publisher: }
 
   include_context "with application dependencies"
@@ -11,8 +13,8 @@ RSpec.describe Milestoner::CLI::Actions::Publish do
 
   describe "#call" do
     it "call publisher" do
-      action.call configuration
-      expect(publisher).to have_received(:call).with(configuration)
+      action.call "0.0.0"
+      expect(publisher).to have_received(:call).with(configuration.merge(version: "0.0.0"))
     end
   end
 end

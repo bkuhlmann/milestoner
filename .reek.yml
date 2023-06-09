@@ -1,0 +1,10 @@
+exclude_paths:
+  - tmp
+  - vendor
+
+detectors:
+  LongParameterList:
+    enabled: false
+  TooManyStatements:
+    exclude:
+      - Milestoner::CLI::Shell#cli

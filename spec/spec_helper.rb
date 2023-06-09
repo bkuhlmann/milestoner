@@ -25,7 +25,6 @@ SPEC_ROOT = Pathname(__dir__).realpath.freeze
 using Refinements::Pathnames
 
 Pathname.require_tree SPEC_ROOT.join("support/shared_contexts")
-Pathname.require_tree SPEC_ROOT.join("support/shared_examples")
 
 RSpec.configure do |config|
   config.color = true
@@ -46,6 +45,4 @@ RSpec.configure do |config|
     mocks.verify_doubled_constant_names = true
     mocks.verify_partial_doubles = true
   end
-
-  config.before(:suite) { ENV["LOG_LEVEL"] = "DEBUG" }
 end
