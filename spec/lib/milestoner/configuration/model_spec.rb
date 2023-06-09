@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Milestoner::Configuration::Content do
+RSpec.describe Milestoner::Configuration::Model do
   subject(:content) { described_class.new }
 
   describe "#initialize" do

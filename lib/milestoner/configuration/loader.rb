@@ -20,7 +20,7 @@ module Milestoner
 
       def self.with_defaults = new(client: DEFAULTS)
 
-      def initialize content: Content.new, client: CLIENT
+      def initialize content: Model.new, client: CLIENT
         @content = content
         @client = client
       end

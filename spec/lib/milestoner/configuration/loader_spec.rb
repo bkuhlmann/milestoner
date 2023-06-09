@@ -6,7 +6,7 @@ RSpec.describe Milestoner::Configuration::Loader do
   subject(:loader) { described_class.with_defaults }
 
   let :content do
-    Milestoner::Configuration::Content[
+    Milestoner::Configuration::Model[
       documentation_format: "adoc",
       prefixes: %w[Fixed Added Updated Removed Refactored]
     ]
@@ -14,7 +14,7 @@ RSpec.describe Milestoner::Configuration::Loader do
 
   describe ".call" do
     it "answers default configuration" do
-      expect(described_class.call).to be_a(Milestoner::Configuration::Content)
+      expect(described_class.call).to be_a(Milestoner::Configuration::Model)
     end
   end
 

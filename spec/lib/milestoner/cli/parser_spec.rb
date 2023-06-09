@@ -14,7 +14,7 @@ RSpec.describe Milestoner::CLI::Parser do
     end
 
     it "answers configuration content by default" do
-      expect(parser.call).to be_a(Milestoner::Configuration::Content)
+      expect(parser.call).to be_a(Milestoner::Configuration::Model)
     end
 
     it "answers frozen configuration content by default" do

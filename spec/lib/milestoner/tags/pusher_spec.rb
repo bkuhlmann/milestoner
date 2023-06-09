@@ -16,7 +16,7 @@ RSpec.describe Milestoner::Tags::Pusher do
 
   let(:git) { instance_spy Gitt::Repository, tag_remote?: false, tags_push: Success("[new tag]") }
   let(:status) { instance_spy Process::Status, success?: true }
-  let(:configuration) { Milestoner::Configuration::Content[version: Version("0.0.0")] }
+  let(:configuration) { Milestoner::Configuration::Model[version: Version("0.0.0")] }
 
   before { Milestoner::Import.stub git: }
 

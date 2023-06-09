@@ -3,7 +3,7 @@
 RSpec.shared_examples "a parser" do
   describe ".call" do
     it "answers configuration" do
-      expect(described_class.call).to be_a(Milestoner::Configuration::Content)
+      expect(described_class.call).to be_a(Milestoner::Configuration::Model)
     end
   end
 end
