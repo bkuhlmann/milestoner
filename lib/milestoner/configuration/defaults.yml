@@ -1,6 +1,6 @@
-:documentation:
-  :format: "adoc"
-:prefixes:
+documentation:
+  format: "adoc"
+prefixes:
   - Fixed
   - Added
   - Updated
