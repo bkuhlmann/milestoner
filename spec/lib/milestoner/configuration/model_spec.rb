@@ -8,13 +8,6 @@ RSpec.describe Milestoner::Configuration::Model do
   describe "#initialize" do
     let :proof do
       {
-        action_config: nil,
-        action_publish: nil,
-        action_push: nil,
-        action_status: nil,
-        action_tag: nil,
-        action_version: nil,
-        action_help: nil,
         documentation_format: nil,
         prefixes: nil,
         version: nil
