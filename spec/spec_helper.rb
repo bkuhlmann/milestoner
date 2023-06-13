@@ -14,9 +14,9 @@ unless ENV["NO_COVERAGE"]
   end
 end
 
-require "gitt/shared_contexts/git_commit"
-require "gitt/shared_contexts/git_repo"
-require "gitt/shared_contexts/temp_dir"
+require "gitt/rspec/shared_contexts/git_commit"
+require "gitt/rspec/shared_contexts/git_repo"
+require "gitt/rspec/shared_contexts/temp_dir"
 require "milestoner"
 require "refinements"
 
