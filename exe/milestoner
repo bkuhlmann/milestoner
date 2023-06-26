@@ -3,4 +3,4 @@
 
 require "milestoner"
 
-Milestoner::CLI::Shell.new.call ARGV
+Milestoner::CLI::Shell.new.call
