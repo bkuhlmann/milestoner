@@ -12,7 +12,6 @@ RSpec.describe Milestoner::Tags::Creator do
   include_context "with Git repository"
   include_context "with application dependencies"
 
-  let(:test_configuration) { configuration.merge version: Version("1.2.3") }
   let(:tag) { Milestoner::Container[:git].tag_show("1.2.3").bind(&:version) }
 
   describe "#call" do
@@ -22,7 +21,7 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "creates tag message" do
       git_repo_dir.change_dir do
-        creator.call test_configuration
+        creator.call
         expect(tag).to eq("1.2.3")
       end
     end
@@ -53,7 +52,7 @@ RSpec.describe Milestoner::Tags::Creator do
 
       it "creates tag message with commits since last tag" do
         git_repo_dir.change_dir do
-          creator.call test_configuration
+          creator.call
           expect(tag).to eq("1.2.3")
         end
       end
@@ -72,7 +71,7 @@ RSpec.describe Milestoner::Tags::Creator do
         git_repo_dir.change_dir do
           `printf "Test" > README.md`
           %x(git commit --all --message 'Updated README with \`bogus command\` in message')
-          creator.call test_configuration
+          creator.call
 
           expect(tag).to eq("1.2.3")
         end
@@ -81,8 +80,8 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "logs tag exists when previously created" do
       git_repo_dir.change_dir do
-        `git tag #{test_configuration.version}`
-        creator.call test_configuration
+        `git tag #{configuration.project_version}`
+        creator.call
 
         expect(logger.reread).to match(/⚠️.+Local tag exists: 1.2.3. Skipped./)
       end
@@ -90,26 +89,26 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "answers false when tag is previously created" do
       git_repo_dir.change_dir do
-        `git tag #{test_configuration.version}`
-        expect(creator.call(test_configuration)).to be(false)
+        `git tag #{configuration.project_version}`
+        expect(creator.call).to be(false)
       end
     end
 
     it "answers true when tag doesn't exist and is successfully created" do
-      git_repo_dir.change_dir { expect(creator.call(test_configuration)).to be(true) }
+      git_repo_dir.change_dir { expect(creator.call).to be(true) }
     end
 
     it "fails with no Git commits" do
       temp_dir.change_dir do
         `git init`
-        result = proc { creator.call test_configuration }
+        result = proc { creator.call }
 
         expect(&result).to raise_error(Milestoner::Error, "Unable to tag without commits.")
       end
     end
 
     it "fails with invalid version" do
-      result = -> { creator.call test_configuration.merge(version: "bogus") }
+      result = -> { creator.call configuration.merge(project_version: "bogus") }
       expect(&result).to raise_error(Milestoner::Error)
     end
   end

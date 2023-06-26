@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "refinements/arrays"
 require "versionaire"
 
 module Milestoner
@@ -8,13 +9,15 @@ module Milestoner
     class Categorizer
       include Import[:git]
 
+      using Refinements::Arrays
+
       def initialize(expression: Regexp, **)
         super(**)
         @expression = expression
       end
 
       def call configuration = Container[:configuration]
-        prefixes = configuration.prefixes
+        prefixes = configuration.commit_categories.pluck :label
 
         prefixes.reduce({}) { |group, prefix| group.merge prefix => [] }
                 .merge("Unknown" => [])

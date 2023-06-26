@@ -1,8 +1,31 @@
-documentation:
-  format: "adoc"
-prefixes:
-  - Fixed
-  - Added
-  - Updated
-  - Removed
-  - Refactored
+avatar:
+  domain: https://avatars.githubusercontent.com
+  uri: "%<domain>s/u/%<id>s"
+build:
+  format: web
+  layout: page
+  root: tmp/milestone
+commit:
+  categories:
+    - emoji: ✅
+      label: Fixed
+    - emoji: 🟢
+      label: Added
+    - emoji: 🔼
+      label: Updated
+    - emoji: ⛔️
+      label: Removed
+    - emoji: 🔁
+      label: Refactored
+  domain: https://github.com
+  format: asciidoc
+  uri: "%<domain>s/%<owner>s/%<name>s/commit/%<id>s"
+profile:
+  domain: https://github.com
+  uri: "%<domain>s/%<id>s"
+review:
+  domain: https://github.com
+  uri: "%<domain>s/%<owner>s/%<name>s/pulls/%<id>s"
+tracker:
+  domain: https://github.com
+  uri: "%<domain>s/%<owner>s/%<name>s/issues/%<id>s"

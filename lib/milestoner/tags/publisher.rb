@@ -15,7 +15,7 @@ module Milestoner
       def call configuration = Container[:configuration]
         creator.call configuration
         pusher.call configuration
-        logger.info { "Published: #{configuration.version}!" }
+        logger.info { "Published: #{configuration.project_version}!" }
       end
 
       private

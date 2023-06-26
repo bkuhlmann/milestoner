@@ -11,7 +11,7 @@ module Milestoner
       using Versionaire::Cast
 
       def call configuration = Container[:configuration]
-        version = Version configuration.version
+        version = Version configuration.project_version
 
         fail Error, "Remote repository not configured." unless git.origin?
         fail Error, "Remote tag exists: #{version}." if git.tag_remote? version

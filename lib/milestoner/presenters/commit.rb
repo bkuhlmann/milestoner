@@ -25,9 +25,9 @@ module Milestoner
       attr_reader :record
 
       def bullet
-        case configuration.documentation_format
-          when "md" then "- "
-          when "adoc" then "* "
+        case configuration.commit_format
+          when "markdown" then "- "
+          when "asciidoc" then "* "
           else ""
         end
       end

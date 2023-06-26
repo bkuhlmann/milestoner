@@ -16,7 +16,6 @@ RSpec.describe Milestoner::Tags::Pusher do
 
   let(:git) { instance_spy Gitt::Repository, tag_remote?: false, tags_push: Success("[new tag]") }
   let(:status) { instance_spy Process::Status, success?: true }
-  let(:configuration) { Milestoner::Configuration::Model[version: Version("0.0.0")] }
 
   before { Milestoner::Import.stub git: }
 
@@ -24,8 +23,8 @@ RSpec.describe Milestoner::Tags::Pusher do
 
   describe "#call" do
     it "logs successfull push" do
-      pusher.call configuration
-      expect(logger.reread).to match(/🔎.+Local tag pushed: 0.0.0./)
+      pusher.call
+      expect(logger.reread).to match(/🔎.+Local tag pushed: 1.2.3./)
     end
 
     it "answers true with successful push" do
@@ -40,7 +39,7 @@ RSpec.describe Milestoner::Tags::Pusher do
     end
 
     it "fails when remote tag exists" do
-      version = configuration.version
+      version = configuration.project_version
       allow(git).to receive(:tag_remote?).with(version).and_return(true)
       result = -> { pusher.call configuration }
 

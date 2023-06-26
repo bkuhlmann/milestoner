@@ -12,7 +12,6 @@ RSpec.describe Milestoner::Tags::Publisher do
 
   let(:creator) { instance_spy Milestoner::Tags::Creator }
   let(:pusher) { instance_spy Milestoner::Tags::Pusher }
-  let(:configuration) { Milestoner::Configuration::Model[version: Version("0.0.0")] }
 
   describe "#call" do
     it "creates tag" do
@@ -27,7 +26,7 @@ RSpec.describe Milestoner::Tags::Publisher do
 
     it "logs successful publish" do
       publisher.call configuration
-      expect(logger.reread).to match(/🟢.+Published: 0.0.0!/)
+      expect(logger.reread).to match(/🟢.+Published: 1.2.3!/)
     end
 
     it "answers true with successful publish" do

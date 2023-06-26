@@ -31,7 +31,7 @@ module Milestoner
       attr_reader :categorizer, :presenter
 
       def local? configuration
-        version = Version configuration.version
+        version = Version configuration.project_version
 
         if git.tag_local? version
           logger.warn { "Local tag exists: #{version}. Skipped." }
@@ -42,7 +42,7 @@ module Milestoner
       end
 
       def create configuration
-        git.tag_create(configuration.version, message(configuration))
+        git.tag_create(configuration.project_version, message(configuration))
            .or { |error| fail Error, error }
            .bind { true }
       end
@@ -51,7 +51,7 @@ module Milestoner
         categorizer.call(configuration)
                    .map { |record| presenter.new(record).line_item }
                    .then do |line_items|
-                     %(Version #{configuration.version}\n\n#{line_items.join "\n"}\n\n)
+                     %(Version #{configuration.project_version}\n\n#{line_items.join "\n"}\n\n)
                    end
       end
     end
