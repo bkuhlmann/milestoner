@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-schema", "~> 1.13"
   spec.add_dependency "etcher", "~> 1.0"
   spec.add_dependency "gitt", "~> 3.0"
+  spec.add_dependency "hanami-view", "~> 2.1.0.rc2"
   spec.add_dependency "infusible", "~> 3.0"
   spec.add_dependency "lode", "~> 1.0"
   spec.add_dependency "redcarpet", "~> 3.6"
