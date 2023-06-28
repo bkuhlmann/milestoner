@@ -1,0 +1,46 @@
+<article class="milestone">
+  <header class="header">
+    <h1 class="title">
+      <a href="<%= uri %>" class="label"><%= project_label %></a>
+      <span class="version"><%= project_version %></span>
+    </h1>
+
+    <time datetime="<%= at %>" class="date"><%= date %></time>
+  </header>
+
+  <% if commits.empty? %>
+    <p class="quiet"></p>
+  <% else %>
+    <section class="body" x-data="{open: false}">
+      <div class="actions">
+        <button class="toggle"
+                x-on:click="open = !open"
+                x-text="open ? 'Collapse' : 'Expand'">
+          Expand
+        </button>
+      </div>
+
+      <div class="columns">
+        <span class="label">Commit</span>
+        <span class="label">Author</span>
+        <span class="label">Files</span>
+        <span class="label">Lines</span>
+        <span class="label">Issue</span>
+        <span class="label">Review</span>
+      </div>
+
+      <% commits.each do |commit| %>
+        <%= commit.render :commit %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <footer class="footer">
+    <p class="totals">
+      <span class="commits"><%= total_commits %>.</span>
+      <span class="files"><%= total_files %>.</span>
+      <span class="deletions"><%= total_deletions %>.</span>
+      <span class="insertions"><%= total_insertions %>.</span>
+    </p>
+  </footer>
+</article>
