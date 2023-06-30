@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title><%= project_title %></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="<%= project_description %>">
+    <meta name="author" content="<%= project_author %>">
+    <meta name="generator" content="<%= project_generator %>">
+
+    <link title="<%= project_label %>: Favorite Icon"
+          rel="icon"
+          href="https://alchemists.io/images/projects/milestoner/icons/brand/favicon.ico"
+          sizes="32x32">
+    <link title="<%= project_label %>: Apple Icon"
+          rel="apple-touch-icon"
+          href="https://alchemists.io/images/projects/milestoner/icons/brand/apple.png"
+          type="image/png">
+    <link title="<%= project_label %>: Stylesheet" rel="stylesheet" href="page.css" type="text/css">
+
+    <script src="https://unpkg.com/alpinejs@3.13" defer></script>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
