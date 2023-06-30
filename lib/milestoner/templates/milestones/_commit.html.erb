@@ -1,0 +1,104 @@
+<details id="<%= commit.sha %>" class="row" x-bind:open="open">
+  <summary class="summary <%= commit.kind %>">
+    <div class="title">
+      <%= render :icon, icon: commit.icon, kind: commit.kind %>
+      <span class="subject"><%= commit.subject %></span>
+    </div>
+
+    <div class="author">
+      <%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %>
+    </div>
+
+    <a href="<%= commit.uri %>" class="files"><%= commit.files_changed %></a>
+
+    <span class="lines">
+      <span class="deletions"><%= commit.total_deletions %></span>
+      <span class="delimiter">/</span>
+      <span class="insertions"><%= commit.total_insertions %></span>
+    </span>
+
+    <% if commit.issue.id %>
+      <a href="<%= commit.issue.uri %>" class="issue"><%= commit.issue.id %></a>
+    <% else %>
+      <span class="issue">-</span>
+    <% end %>
+
+    <% if commit.review.id %>
+      <a href="<%= commit.review.uri %>" class="review"><%= commit.review.id %></a>
+    <% else %>
+      <span class="review">-</span>
+    <% end %>
+  </summary>
+
+  <div class="details">
+    <div class="tag <%= commit.tag %>"><%= commit.tag %></div>
+
+    <div class="message">
+      <h1 class="bar">Message</h1>
+
+      <div class="content">
+        <%= commit.safe_body %>
+      </div>
+    </div>
+
+    <% unless commit.notes.empty? %>
+      <div class="notes">
+        <h2 class="bar">Notes</h2>
+
+        <div class="content">
+          <%= commit.notes.html_safe %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="info">
+      <h2 class="bar">Info</h2>
+
+      <div class="panel">
+        <h3 class="label">Author</h3>
+
+        <p class="item">
+          <%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %>
+          <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>
+        </p>
+
+        <% if commit.collaborators.any? %>
+          <h3 class="label">Collaborators</h3>
+
+          <% commit.collaborators.each do |collaborator| %>
+            <p class="item">
+              <%= render :avatar, name: collaborator.name, url: commit.avatar_url(collaborator) %>
+              <%= render :profile, name: collaborator.name, url: commit.profile_url(collaborator) %>
+            </p>
+          <% end %>
+        <% end %>
+
+        <% if commit.signers.any? %>
+          <h3 class="label">Signers</h3>
+
+          <% commit.signers.each do |signer| %>
+            <p class="item">
+              <%= render :avatar, name: signer.name, url: commit.avatar_url(signer) %>
+              <%= render :profile, name: signer.name, url: commit.profile_url(signer) %>
+            </p>
+          <% end %>
+        <% end %>
+
+        <h3 class="label">Signature</h3>
+
+        <p class="item pill <%= commit.security %>">
+          <span class="signature"><%= commit.signature %></span>
+        </p>
+
+        <h3 class="label">Created</h3>
+
+        <p class="item at">
+          <time datetime="<%= commit.at %>" class="date"><%= commit.date %></time>
+          <time datetime="<%= commit.at %>" class="weekday"><%= commit.weekday %></time>
+          <time datetime="<%= commit.at %>" class="time"><%= commit.time %></time>
+          <time datetime="<%= commit.at %>" class="zone"><%= commit.zone %></time>
+        </p>
+      </div>
+    </div>
+  </div>
+</details>

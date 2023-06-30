@@ -8,6 +8,9 @@ detectors:
   ModuleInitialize:
     exclude:
       - Milestoner::Models
+  TooManyMethods:
+    exclude:
+      - Milestoner::Views::Parts::Commit
   TooManyStatements:
     exclude:
       - Milestoner::CLI::Shell#cli
