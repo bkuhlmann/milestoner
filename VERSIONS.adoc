@@ -1,5 +1,12 @@
 = Versions
 
+== 16.0.2 (2023-07-03)
+
+* Fixed RuboCop Packaging/BundlerSetupInTests issues - Brooke Kuhlmann
+* Updated Rake RSpec task configuration to not be verbose - Brooke Kuhlmann
+* Removed ARGV argument from CLI executable - Brooke Kuhlmann
+* Removed configuration model freezing - Brooke Kuhlmann
+
 == 16.0.1 (2023-06-19)
 
 * Updated to Caliber 0.35.0 - Brooke Kuhlmann
