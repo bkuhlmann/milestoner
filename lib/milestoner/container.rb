@@ -12,21 +12,25 @@ module Milestoner
   module Container
     extend Dry::Container::Mixin
 
-    register :configuration do
-      self[:defaults].add_loader(Etcher::Loaders::YAML.new(self[:xdg_config].active))
-                     .then { |registry| Etcher.call registry }
+    register :configuration, memoize: true do
+      self[:defaults].add_loader Etcher::Loaders::YAML.new(self[:xdg_config].active)
     end
 
-    register :defaults do
+    register :defaults, memoize: true do
       Etcher::Registry.new(contract: Configuration::Contract, model: Configuration::Model)
                       .add_loader(Etcher::Loaders::YAML.new(self[:defaults_path]))
     end
 
-    register(:git) { Gitt::Repository.new }
-    register(:defaults_path) { Pathname(__dir__).join("configuration/defaults.yml") }
-    register(:xdg_config) { Runcom::Config.new "milestoner/configuration.yml" }
-    register(:specification) { Spek::Loader.call "#{__dir__}/../../milestoner.gemspec" }
-    register(:kernel) { Kernel }
-    register(:logger) { Cogger.new id: :milestoner }
+    register :specification, memoize: true do
+      self[:spec_loader].call "#{__dir__}/../../milestoner.gemspec"
+    end
+
+    register(:spec_loader, memoize: true) { Spek::Loader.new }
+    register(:git, memoize: true) { Gitt::Repository.new }
+    register(:xdg_config, memoize: true) { Runcom::Config.new "milestoner/configuration.yml" }
+    register(:input, memoize: true) { self[:configuration].dup }
+    register(:defaults_path, memoize: true) { Pathname(__dir__).join("configuration/defaults.yml") }
+    register(:logger, memoize: true) { Cogger.new id: :milestoner }
+    register :kernel, Kernel
   end
 end
