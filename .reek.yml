@@ -11,3 +11,6 @@ detectors:
   TooManyStatements:
     exclude:
       - Milestoner::CLI::Shell#cli
+  UnusedParameters:
+    exclude:
+      - Milestoner::Renderers::Universal#call
