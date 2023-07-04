@@ -26,6 +26,11 @@ RSpec.describe Milestoner::CLI::Shell do
       expect(kernel).to have_received(:puts).with(/Manage cache.+/m)
     end
 
+    it "prints build usage" do
+      shell.call %w[build]
+      expect(kernel).to have_received(:puts).with(/Build milestone.+/m)
+    end
+
     it "creates tag when publishing", :aggregate_failures do
       git_repo_dir.change_dir do
         `git fetch --tags && git tag --delete 0.0.0 && git push --delete origin 0.0.0`
