@@ -13,12 +13,31 @@ module Milestoner
     extend Dry::Container::Mixin
 
     register :configuration, memoize: true do
-      self[:defaults].add_loader Etcher::Loaders::YAML.new(self[:xdg_config].active)
+      self[:defaults].add_loader(Etcher::Loaders::YAML.new(self[:xdg_config].active))
+                     .then { |registry| Etcher.call registry }
     end
 
     register :defaults, memoize: true do
       Etcher::Registry.new(contract: Configuration::Contract, model: Configuration::Model)
                       .add_loader(Etcher::Loaders::YAML.new(self[:defaults_path]))
+                      .add_transformer(Configuration::Transformers::Build::Root)
+                      .add_transformer(Configuration::Transformers::Build::TemplatePaths.new)
+                      .add_transformer(Configuration::Transformers::Gems::Label.new)
+                      .add_transformer(Configuration::Transformers::Gems::Description.new)
+                      .add_transformer(Configuration::Transformers::Gems::Name.new)
+                      .add_transformer(Configuration::Transformers::Gems::URI.new)
+                      .add_transformer(Configuration::Transformers::Citations::Label.new)
+                      .add_transformer(Configuration::Transformers::Citations::Description.new)
+                      .add_transformer(Configuration::Transformers::Project::Author.new)
+                      .add_transformer(Configuration::Transformers::Project::Generator.new)
+                      .add_transformer(Configuration::Transformers::Project::Label)
+                      .add_transformer(Configuration::Transformers::Project::Name)
+                      .add_transformer(Configuration::Transformers::Project::Version.new)
+                      .add_transformer(Configuration::Transformers::URI::Avatar)
+                      .add_transformer(Configuration::Transformers::URI::Commit)
+                      .add_transformer(Configuration::Transformers::URI::Profile)
+                      .add_transformer(Configuration::Transformers::URI::Review)
+                      .add_transformer(Configuration::Transformers::URI::Tracker)
     end
 
     register :specification, memoize: true do
