@@ -8,6 +8,9 @@ detectors:
   ModuleInitialize:
     exclude:
       - Milestoner::Models
+  NestedIterators:
+    exclude:
+      - Milestoner::Commits::Versioner#trailer_milestones
   TooManyMethods:
     exclude:
       - Milestoner::Views::Parts::Commit
