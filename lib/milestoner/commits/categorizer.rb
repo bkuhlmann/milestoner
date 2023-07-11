@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "refinements/arrays"
+require "refinements/array"
 require "versionaire"
 
 module Milestoner
@@ -9,51 +9,41 @@ module Milestoner
     class Categorizer
       include Import[:git]
 
-      using Refinements::Arrays
+      using Refinements::Array
 
-      def initialize(expression: Regexp, **)
-        super(**)
+      def initialize(collector: Collector.new, expression: Regexp, **)
+        @collector = collector
         @expression = expression
+        super(**)
       end
 
       def call configuration = Container[:configuration]
-        prefixes = configuration.commit_categories.pluck :label
+        categories = configuration.commit_categories.pluck :label
 
-        prefixes.reduce({}) { |group, prefix| group.merge prefix => [] }
-                .merge("Unknown" => [])
-                .then { |groups| group_by_prefix prefixes, groups }
-                .each_value { |commits| commits.sort_by!(&:subject) }
-                .values
-                .flatten
-                .uniq(&:subject)
+        categories.reduce({}) { |group, prefix| group.merge prefix => [] }
+                  .merge("Unknown" => [])
+                  .then { |groups| group_by_category categories, groups }
+                  .each_value { |commits| commits.sort_by!(&:subject) }
+                  .values
+                  .flatten
+                  .uniq(&:subject)
       end
 
       private
 
-      attr_reader :expression
+      attr_reader :collector, :expression
 
-      def group_by_prefix prefixes, groups
-        computed_commits.each.with_object groups do |commit, collection|
-          prefix = commit.subject[subject_pattern(prefixes)]
-          key = collection.key?(prefix) ? prefix : "Unknown"
+      def group_by_category categories, groups
+        collector.call.value_or([]).each.with_object groups do |commit, collection|
+          category = commit.subject[subject_pattern(categories)]
+          key = collection.key?(category) ? category : "Unknown"
           collection[key] << commit
         end
       end
 
-      def subject_pattern prefixes
-        prefixes.empty? ? expression.new(//) : expression.union(prefixes)
+      def subject_pattern categories
+        categories.empty? ? expression.new(//) : expression.union(categories)
       end
-
-      def computed_commits = git.tagged? ? tagged_commits : saved_commits
-
-      def tagged_commits
-        git.tag_last
-           .value_or(nil)
-           .then { |tag| git.commits "#{tag}..HEAD" }
-           .value_or([])
-      end
-
-      def saved_commits = git.commits.value_or([])
     end
   end
 end
