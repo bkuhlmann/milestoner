@@ -3,6 +3,9 @@ exclude_paths:
   - vendor
 
 detectors:
+  ControlParameter:
+    exclude:
+      - Milestoner::CLI::Actions::Publish#call
   LongParameterList:
     enabled: false
   ModuleInitialize:

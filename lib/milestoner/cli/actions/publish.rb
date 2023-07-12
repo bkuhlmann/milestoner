@@ -2,6 +2,7 @@
 
 require "refinements/struct"
 require "sod"
+require "versionaire"
 
 module Milestoner
   module CLI
@@ -11,19 +12,22 @@ module Milestoner
         include Import[:configuration]
 
         using Refinements::Struct
+        using Versionaire::Cast
 
         description "Publish milestone."
 
-        ancillary "(tags and pushes to remote repository)"
+        ancillary "Build, commit, tag, and push to remote repository."
 
-        on %w[-p --publish], argument: "VERSION"
+        on %w[-p --publish], argument: "[VERSION]"
+
+        default { Commits::Versioner.new.call }
 
         def initialize(publisher: Tags::Publisher.new, **)
           super(**)
           @publisher = publisher
         end
 
-        def call(version) = publisher.call configuration.merge(version:)
+        def call(version = nil) = publisher.call Version(version || default)
 
         private
 
