@@ -5,6 +5,9 @@ exclude_paths:
 detectors:
   LongParameterList:
     enabled: false
+  ModuleInitialize:
+    exclude:
+      - Milestoner::Models
   TooManyStatements:
     exclude:
       - Milestoner::CLI::Shell#cli
