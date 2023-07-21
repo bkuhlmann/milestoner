@@ -25,6 +25,7 @@ module Milestoner
 
         dsl.new :milestoner, banner: specification.banner do
           on(Sod::Prefabs::Commands::Config, context:)
+          on Commands::Cache
           on Actions::Publish
           on Actions::Status
           on(Sod::Prefabs::Actions::Version, context:)
