@@ -2,13 +2,22 @@
 
 require "dry/container/stub"
 require "infusible/stub"
+require "lode"
 require "versionaire"
 
+# rubocop:todo RSpec/MultipleMemoizedHelpers
 RSpec.shared_context "with application dependencies" do
   using Infusible::Stub
   using Versionaire::Cast
 
   include_context "with temporary directory"
+
+  let :cache do
+    Lode.new temp_dir.join("database.store") do |config|
+      config.table = Lode::Tables::Value
+      config.register :users, model: Milestoner::Models::User, primary_key: :name
+    end
+  end
 
   let :configuration do
     Etcher.new(Milestoner::Container[:defaults])
@@ -29,7 +38,15 @@ RSpec.shared_context "with application dependencies" do
   let(:kernel) { class_spy Kernel }
   let(:logger) { Cogger.new id: :milestoner, io: StringIO.new, level: :debug }
 
-  before { Milestoner::Import.stub configuration:, input:, xdg_config:, kernel:, logger: }
+  before do
+    Milestoner::Import.stub configuration:,
+                            input:,
+                            "xdg.config" => xdg_config,
+                            cache:,
+                            kernel:,
+                            logger:
+  end
 
-  after { Milestoner::Import.unstub :configuration, :input, :xdg_config, :kernel, :logger }
+  after { Milestoner::Import.unstub :configuration, :input, :xdg_config, :cache, :kernel, :logger }
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

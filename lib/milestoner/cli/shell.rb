@@ -6,7 +6,7 @@ module Milestoner
   module CLI
     # The main Command Line Interface (CLI) object.
     class Shell
-      include Import[:defaults_path, :xdg_config, :specification]
+      include Import[:defaults_path, :specification, xdg_config: "xdg.config"]
 
       def initialize(context: Sod::Context, dsl: Sod, **)
         super(**)

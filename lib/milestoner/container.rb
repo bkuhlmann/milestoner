@@ -4,6 +4,7 @@ require "cogger"
 require "dry-container"
 require "etcher"
 require "gitt"
+require "lode"
 require "runcom"
 require "spek"
 
@@ -12,8 +13,22 @@ module Milestoner
   module Container
     extend Dry::Container::Mixin
 
+    namespace :xdg do
+      register(:cache, memoize: true) { Runcom::Cache.new "milestoner/database.store" }
+      register(:config, memoize: true) { Runcom::Config.new "milestoner/configuration.yml" }
+    end
+
+    register :cache, memoize: true do
+      # :nocov:
+      Lode.new self["xdg.cache"].passive do |config|
+        config.mode = :max
+        config.table = Lode::Tables::Value
+        config.register :users, model: Models::User, primary_key: :name
+      end
+    end
+
     register :configuration, memoize: true do
-      self[:defaults].add_loader(Etcher::Loaders::YAML.new(self[:xdg_config].active))
+      self[:defaults].add_loader(Etcher::Loaders::YAML.new(self["xdg.config"].active))
                      .then { |registry| Etcher.call registry }
     end
 
@@ -46,7 +61,6 @@ module Milestoner
 
     register(:spec_loader, memoize: true) { Spek::Loader.new }
     register(:git, memoize: true) { Gitt::Repository.new }
-    register(:xdg_config, memoize: true) { Runcom::Config.new "milestoner/configuration.yml" }
     register(:input, memoize: true) { self[:configuration].dup }
     register(:defaults_path, memoize: true) { Pathname(__dir__).join("configuration/defaults.yml") }
     register(:logger, memoize: true) { Cogger.new id: :milestoner }
