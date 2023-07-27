@@ -67,22 +67,7 @@ gem install milestoner
 
 From the command line, type: `milestoner --help`
 
-....
-USAGE
-  milestoner [OPTIONS]
-  milestoner COMMAND [OPTIONS]
-
-OPTIONS
-  -p, --publish VERSION     Publish milestone.
-                            (tags and pushes to remote repository)
-  -s, --status              Show project status.
-  -v, --version             Show version.
-  -h, --help [COMMAND]      Show this message.
-
-COMMANDS
-  config                    Manage configuration.
-                            Path is dynamic per current directory.
-....
+image:https://alchemists.io/images/projects/milestoner/screenshots/usage.png[Usage,width=593,height=366,role=focal_point]
 
 === Customization
 
