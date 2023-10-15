@@ -11,7 +11,7 @@ RSpec.shared_context "with application dependencies" do
   let(:configuration) { Etcher.new(Milestoner::Container[:defaults]).call.bind(&:dup) }
   let(:xdg_config) { Runcom::Config.new Milestoner::Container[:defaults_path] }
   let(:kernel) { class_spy Kernel }
-  let(:logger) { Cogger.new io: StringIO.new, level: :debug, formatter: :emoji }
+  let(:logger) { Cogger.new id: :milestoner, io: StringIO.new, level: :debug }
 
   before { Milestoner::Import.stub configuration:, xdg_config:, kernel:, logger: }
 

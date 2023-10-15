@@ -27,6 +27,6 @@ module Milestoner
     register(:xdg_config) { Runcom::Config.new "milestoner/configuration.yml" }
     register(:specification) { Spek::Loader.call "#{__dir__}/../../milestoner.gemspec" }
     register(:kernel) { Kernel }
-    register(:logger) { Cogger.new formatter: :emoji }
+    register(:logger) { Cogger.new id: :milestoner }
   end
 end
