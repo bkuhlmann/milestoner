@@ -2,40 +2,58 @@
 :toclevels: 5
 :figure-caption!:
 
+:asciidoc_link: link:https://asciidoctor.org/docs/what-is-asciidoc[ASCII Doc]
+:cff_link: link:https://github.com/citation-file-format/ruby-cff[CFF]
+:etcher_link: link:https://alchemists.io/projects/etcher[Etcher]
+:gem_specification_link: link:https://guides.rubygems.org/specification-reference/[Gem Specification]
+:git_commit_anatomy_link: link:https://alchemists.io/articles/git_commit_anatomy[Git Commit Anatomy]
+:git_lint_link: link:https://alchemists.io/projects/git-lint[Git Lint]
+:hanami_views_link: link:https://alchemists.io/articles/hanami_views[Hanami Views]
+:lode_link: link:https://alchemists.io/projects/lode[Lode]
+:markdown_link: link:https://daringfireball.net/projects/markdown[Markdown]
+:runcom_link: link:https://alchemists.io/projects/runcom[Runcom]
+:string_formats_link: link:https://ruby-doc.org/3.3.0/format_specifications_rdoc.html[String Formats]
+:versionaire_link: link:https://alchemists.io/projects/versionaire[Versionaire]
+:xdg_link: link:https://alchemists.io/projects/xdg[XDG]
+
 = Milestoner
 
-Milestoner is a command line interface for crafting Git repository tags (milestones) using
-link:https://semver.org[semantic versions]. Each milestone is a summary of all commits made since
-the last milestone. You can use Milestoner to inspect what is currently pending or create a new
-release via a single command. By having a tool, like Milestoner, you can automate releases in a
-consistent and reliable fashion. Milestoner pairs well with the following gems:
+Milestoner is a Command Line Interface (CLI) for automating software deployments complete with feature rich release notes that celebrate the team members who worked on the version release. This includes the automation of Git repository tags (milestones) using link:https://semver.org[semantic versions]. Each milestone is a summary of all commits made since the last milestone. You can use Milestoner to inspect what is currently pending or create a new release via a single command. By having a tool, like Milestoner, you can automate releases in a consistent and reliable fashion. Milestoner pairs well with the following gems:
 
 - link:https://alchemists.io/projects/git-lint[Git Lint] - Ensures your commit messages are of
-  high quality which feed into the release notes built by Milestoner.
-- link:https://alchemists.io/projects/rubysmith[Rubysmith] - Use Milestoner to automate the
-  publishing of new or existing Ruby project versions.
-- link:https://alchemists.io/projects/gemsmith[Gemsmith] - Is built on top of Milestoner and is
-  used to publish new Ruby gem versions.
+  high quality for release note purposes.
+- link:https://alchemists.io/projects/rubysmith[Rubysmith] - Automates the publishing of new or existing Ruby project versions.
+- link:https://alchemists.io/projects/gemsmith[Gemsmith] - Automates the publishing of new or existing Ruby gem versions.
 
 toc::[]
+
+== Screenshots
+
+*Web Format* (i.e. `milestoner build --format web`)
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Usage,width=1011,height=345,role=focal_point]
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Usage,width=1005,height=643,role=focal_point]
+
+*Stream Format* (i.e. `milestoner build --format stream`)
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Usage,width=464,height=245,role=focal_point]
 
 == Features
 
 * Uses link:https://alchemists.io/projects/versionaire[Versionaire] for
   link:https://semver.org[Semantic Versioning].
 ** Format: `+<major>.<minor>.<patch>+`.
-** Example: `+0.1.0+`.
-* Ensures Git commits since last tag (or initialization of repository) are included.
-* Ensures Git commit messages are grouped by prefix, in order defined. For more details, see
-  link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject
-  Prefix] for details. Defaults (can be customized):
-** Fixed
-** Added
-** Updated
-** Removed
-** Refactored
-* Ensures Git commit messages are alphabetically sorted.
-* Ensures duplicate Git commit messages are removed (if any).
+** Example: `0.0.0`.
+* Ensures Git commits since last tag (or initialization of repository) are included in the release notes.
+* Ensures Git commit messages are grouped by prefix, in order defined, for categorization. For more details, see link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject Prefix]. Defaults (can be customized):
+** image:https://alchemists.io/images/projects/milestoner/icons/commits/fixed.png[Fixed] Fixed
+** image:https://alchemists.io/images/projects/milestoner/icons/commits/added.png[Added] Added
+** image:https://alchemists.io/images/projects/milestoner/icons/commits/updated.png[Updated] Updated
+** image:https://alchemists.io/images/projects/milestoner/icons/commits/removed.png[Removed] Removed
+** image:https://alchemists.io/images/projects/milestoner/icons/commits/refactored.png[Refactored] Refactored
+* Ensures Git commit messages are alphabetically sorted for release note categorization and readability.
+* Provides automatic versioning based on last Git tag and current Git commit trailers. See {git_commit_anatomy_link} for details.
 
 == Requirements
 
@@ -67,7 +85,7 @@ gem install milestoner
 
 From the command line, type: `milestoner --help`
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/usage.png[Usage,width=593,height=366,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/usage.png[Usage,width=690,height=398,role=focal_point]
 
 === Customization
 
@@ -77,34 +95,243 @@ This gem can be configured via a global configuration:
 ~/.config/milestoner/configuration.yml
 ....
 
-It can also be configured via https://alchemists.io/projects/xdg[XDG] environment variables.
+It can also be configured via {xdg_link} environment variables.
 
-The default configuration is as follows:
+The default configuration is:
 
 [source,yaml]
 ----
-documentation:
-  format: "adoc"
-prefixes:
-  - Fixed
-  - Added
-  - Updated
-  - Removed
-  - Refactored
+avatar:
+  domain: https://avatars.githubusercontent.com
+  uri: "%<domain>s/u/%<id>s"
+build:
+  format: web
+  layout: page
+  root: tmp/milestone
+commit:
+  categories:
+    - emoji: ✅
+      label: Fixed
+    - emoji: 🟢
+      label: Added
+    - emoji: 🔼
+      label: Updated
+    - emoji: ⛔️
+      label: Removed
+    - emoji: 🔁
+      label: Refactored
+  domain: https://github.com
+  format: asciidoc
+  uri: "%<domain>s/%<owner>s/%<name>s/commit/%<id>s"
+profile:
+  domain: https://github.com
+  uri: "%<domain>s/%<id>s"
+project:
+  author:
+  description:
+  generator:
+  label:
+  name:
+  owner:
+  uri:
+  version:
+review:
+  domain: https://github.com
+  uri: "%<domain>s/%<owner>s/%<name>s/pulls/%<id>s"
+tracker:
+  domain: https://github.com
+  uri: "%<domain>s/%<owner>s/%<name>s/issues/%<id>s"
 ----
 
-The `configuration.yml` file can be configured as follows:
+The above can be customized as follows:
 
-* *Documentation Format* (i.e. `documentation`): Determines what format the release notes should be
-  rendered as. This effects both status information from the command line and the release notes
-  embedded within the body of a Git tag. Defaults to
-  link:https://asciidoctor.org/docs/what-is-asciidoc[ASCII Doc] (i.e. `adoc`) but
-  link:https://daringfireball.net/projects/markdown[Markdown] (i.e. `md`) is supported too.
-* *Git Commit Prefixes* (i.e. `prefixes`): Should the default prefixes not be desired, you can
-  define Git commit prefixes that match your style. _NOTE: Prefix order is important with the first
-  prefix defined taking precedence over the second and so forth._ Special characters are allowed for
-  prefixes but should be enclosed in quotes. To disable prefix usage completely, use an empty array.
-  Example: `prefixes: []`.
+* `avatar`: Manages team member avatar information.
+** `domain`: The domain of your team member avatars.
+** `uri`: The URI format for linking to avatars as formatted using {string_formats_link}. The `id` is dynamically calculated via the `external_id` of the user stored in the {lode_link} cache.
+* `build`: Manages release note builds.
+** `format`: The build output format. Multiple formats are supported.
+** `layout`: The layout used by {hanami_views_link} when building release notes.
+** `root`: The output location. This can be a relative or absolute path.
+* `commit`: Manages commit categories, emojis, and hyperlinks.
+** `categories`: By default, only five categories are supported which pairs well with the {git_lint_link} gem. Category order is important with the first taking precedence over the second and so forth. Special characters are allowed for prefixes but should be enclosed in quotes. To disable categories, use an empty array. Example: `categories: []`.
+*** `emoji`: The emoji associated with the label for output purposes. _Only used by the stream build format_.
+*** `label`: Allows you to customize the category label. All commits are grouped by label which equates to the prefix, or first word, used in each commit message. The defaults pair well with the {git_lint_link} gem.
+** `domain`: The Git repository domain for all commits.
+** `format`: Defines the default format used for rendering commit messages unless specified in the commit trailer metadata which takes higher precedence. Defaults to {asciidoc_link} but {markdown_link} is also supported.
+** `uri`: The URI format for linking to commits as formatted using {string_formats_link}. The `id` is dynamically calculated via the commit SHA of each commit analyzed at runtime.
+* `profile`: Manages team member profile information.
+** `domain`: The domain of your Git repository.
+** `uri`: The URI format for linking to profiles as formatted using {string_formats_link}. The `id` is dynamically calculated via the `handle` of the user stored in the {lode_link} cache.
+* `project`: Manages project information.
+** `author`: Optional. The project author. Dynamically calculated by the {etcher_link} gem in the following order: Git configuration user name or this value.
+** `description`: Optional. The project description. Dynamically calculated by the {etcher_link} gem in the following order: {gem_specification_link} summary, {cff_link} abstract, or this value.
+** `generator`: Optional. The project generator (i.e. this gem).
+** `label`: Optional. The project label. Dynamically calculated by the {etcher_link} gem in the following order: {gem_specification_link} metadata label, {cff_link} title, or this value.
+** `name`: Optional. The project name. Dynamically calculated by the {etcher_link} gem in the following order: {gem_specification_link} name or this value.
+** `owner`: Required. The project owner. This would be your source code organization or user handle. This is used when formatting URL information (mentioned above).
+** `uri`: Optional. The project URI. Dynamically calculated by the {etcher_link} gem in the following order: {gem_specification_link} homepage or this value.
+** `version`: Optional. The project version. Dynamically calculated based on the last Git tag of your project and Git `Milestone` commit trailer metadata. Otherwise, defaults to: `0.0.0`. For more on this see, the _Automatic Versioning_ section below.
+* `review`: Manages code review information.
+** `domain`: The domain of your code review service.
+** `uri`: The URI format for linking to code reviews as formatted using {string_formats_link}. The `id` is currently a _placeholder_ for future feature support when API support is added. For now this links to _all_ code reviews with the goal to link to individual code reviews based on issue tracker metadata from Git commit trailers.
+* `tracker`: Allows you to customize the issue tracker service you are using.
+** `domain`: The domain of your issue tracker service.
+** `uri`: The URI format for linking to issues as formatted using {string_formats_link}. The `id` is dynamically calculated via the commit `Issue` trailer as linted by {git_lint_link}.
+
+💡 If you ever need to know what your currrent configuration looks like you can jump into your applications IRB console and inspect `Milestoner::Container[:configuration]` to see full details.
+
+=== Config
+
+Milestoner can be configured via the command line using: `milestoner config`. Using this command will allow you to create, edit, view, and/or delete your global or local configuration as desired. The configuration is managed by the {runcom_link} gem which is built atop the {xdg_link} gem for managing global or local configurations. Please read the documentation of each gem to learn more.
+
+=== Cache
+
+Milestoner's cache allows you to enrich user information (i.e. authors, collaborators, etc) by storing information in a `PStore` database as managed by the {lode_link} gem. Cache location, as with the Config, is managed by the {runcom_link} gem.
+
+User information should be sourced from whatever service you use for managing your source code. For example, when using GitHub, your workflow might look like this:
+
+[source,bash]
+----
+milestoner cache --list
+# 🟢 Listing users...
+# 🟢 No users found.
+
+milestoner cache --create "111,jsmith,Jane Smith"
+# 🟢 Created: "Jane Smith"
+
+milestoner cache --create "222,jdoe,John Doe"
+# 🟢 Created: "John Doe"
+
+milestoner cache --create "333,jgrey,Jill Grey"
+# 🟢 Created: "Jill Grey"
+
+milestoner cache --list
+# 🟢 Listing users...
+# 111, jsmith, Jane Smith
+# 222, jdoe, John Doe
+# 333, jgrey, Jill Grey
+
+milestoner cache --delete "Jill Grey"
+🟢 Deleted: "Jill Grey".
+
+milestoner cache --list
+# 🟢 Listing users...
+# 111, jsmith, Jane Smith
+# 222, jdoe, John Doe
+
+milestoner cache --info
+# 🟢 Path: /Users/demo/.cache/milestoner/database.store.
+----
+
+💡 Use `+https://api.github.com/users/<handle>+` to acquire the external ID for any GitHub user.
+
+Once team member information is stored in your cache, you'll be able to build release notes which automatically link to GitHub user information without constantly hitting the GitHub API. _Users are identified by name so the full author name used for each commit message needs to match the same user name as stored in your source repository hosting service._
+
+=== Build
+
+The build command allows you to quickly build release notes for checking the current status of your project or for deployment automation. By default, the build command uses either the default or custom configuration as documented in the _Configuration_ section above. This means, when using the defaults, you can immediately build the release notes for your project in a temporary directory:
+
+[source,bash]
+----
+milestoner build --format html
+# 🟢 Building milestone...
+# 🟢 Milestone built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestone
+----
+
+💡 The above command is so useful that I use the following `msb` (i.e. Milestoner Build) Bash alias: `rm -rf tmp/milestone && milestoner build --format html && open tmp/milestone/index.html`. This allows me to quickly rebuild release notes for any project and immediately view them in my default browser.
+
+Check out the help documentation (i.e. `milestoner build --help`) for addition usage that explains what command line options you can use to overwrite the current configuration.
+
+==== Automatic Versioning
+
+As mentioned earlier, the calculation of version information happens automatically for you based on your last Git tag and any Git commit trailer metadata used. If none of this information is present, then the default version of `0.0.0` is used instead. All of this information is available to you via the following command:
+
+[source,bash]
+----
+milestoner build --help
+----
+
+Running the above will dynamically show you latest version information -- along with help documentation -- in case you have doubts. You can use this as a status check as well. If you don't want to use the automatic version, you can override by using the `--version` option when building. Example:
+
+[source,bash]
+----
+# Uses automatic version.
+milestoner build --format stream
+
+# Uses manual version.
+milestoner build --format stream --version 1.2.3
+----
+
+By default, automatic versioning is based on your last known Git tag and the version is bumped based on Git commit trailer information from untagged commits (i.e. those commits created since the last tag). All of this is managed via the {versionaire_link} gem. To ensure automatic versioning works properly, you only need to add the `Milestone` Git commit trailer with a value of: `patch`, `minor`, or `major`. Here's an example assuming you have published Version 1.0.0:
+
+....
+# First commit.
+Milestone: patch
+
+# Second commit.
+Milestone: minor
+
+# Third commit
+Milestone: patch
+....
+
+Given the above, the resulting version would be: 1.1.0. This is because the highest milestone was a _minor_ milestone. The highest milestone wins and doesn't matter how many commits you made with the same milestone trailer information or the order in which the commits were made. Here's another example:
+
+....
+# First commit.
+Milestone: patch
+
+# Second commit.
+Milestone: patch
+
+# Third commit
+Milestone: patch
+....
+
+Given the above, the resulting version would be: 1.0.1. This is because the highest milestone was a _patch_. Here's a final example:
+
+....
+# First commit.
+Milestone: major
+
+# Second commit.
+Milestone: minor
+
+# Third commit
+Milestone: patch
+....
+
+Given the above, the resulting version would be: 2.0.0. This is because the highest milestone was a _major_ milestone.
+
+==== Templates
+
+Build template functionality is powered by {hanami_views_link} which means you can customize the HTML structure, CSS style, and more. The quickest way to get started is to copy the `templates` folder structure -- included with this gem -- to your preferred {runcom_link} configuration. For example, this gem's template structure is:
+
+....
+lib/milestoner/templates
+├── layouts
+│  ├── page.html.erb
+│  └── page.stream.erb
+├── milestones
+│  ├── _avatar.html.erb
+│  ├── _commit.html.erb
+│  ├── _commit.stream.erb
+│  ├── _icon.html.erb
+│  ├── _profile.html.erb
+│  ├── show.html.erb
+│  └── show.stream.erb
+└── public
+   └── page.css.erb
+....
+
+This means you could, for example, copy all of this gem's templates to your own {runcom_link} configuration to customize how you like. Example:
+
+[source,bash]
+----
+cp -r <milestoner_gem_root>/lib/milestoner/templates $HOME/.config/milestoner/templates
+----
+
+Milestoner searches your {runcom_link} configuration first and, if templates are detected, will be used instead. Otherwise, Milestoner will fall back to it's own templates. Once {runcom_link} has calculated all possible template locations, {hanami_views_link} handles the final loading and evaluation of your templates.
 
 == Security
 
