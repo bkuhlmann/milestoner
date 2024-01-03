@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "refinements/structs"
+require "refinements/struct"
 require "sod"
 
 module Milestoner
@@ -10,7 +10,7 @@ module Milestoner
       class Publish < Sod::Action
         include Import[:configuration]
 
-        using Refinements::Structs
+        using Refinements::Struct
 
         description "Publish milestone."
 

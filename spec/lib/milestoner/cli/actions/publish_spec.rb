@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Publish do
-  using Refinements::Structs
+  using Refinements::Struct
 
   subject(:action) { described_class.new publisher: }
 

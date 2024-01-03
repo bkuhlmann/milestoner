@@ -3,8 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Tags::Creator do
-  using Refinements::Pathnames
-  using Refinements::Structs
+  using Refinements::Pathname
+  using Refinements::Struct
   using Versionaire::Cast
 
   subject(:creator) { described_class.new }

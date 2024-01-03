@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Commits::Categorizer do
-  using Refinements::Pathnames
+  using Refinements::Pathname
 
   subject(:categorizer) { described_class.new }
 

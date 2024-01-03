@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Status do
-  using Refinements::Pathnames
+  using Refinements::Pathname
 
   subject(:action) { described_class.new }
 
