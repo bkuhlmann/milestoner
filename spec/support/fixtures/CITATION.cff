@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: Please use the following metadata when citing this project in your work.
+title: Demo
+abstract: A demo citation.
+version: 0.0.0
+license: Hippocratic-2.1
+date-released: 2023-01-01
+authors:
+  - family-names: Author
+    given-names: Test
+    affiliation: ACME
+    orcid: https://orcid.org/0000-0000-0000-0000
+keywords:
+ - demo
+repository-code: https://test.com/projects/demo
+repository-artifact: https://rubygems.org/gems/demo
