@@ -28,7 +28,6 @@ module Milestoner
           on Commands::Cache
           on Commands::Build
           on Actions::Publish
-          on Actions::Status
           on(Sod::Prefabs::Actions::Version, context:)
           on Sod::Prefabs::Actions::Help, self
         end

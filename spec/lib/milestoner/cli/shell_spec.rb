@@ -52,22 +52,6 @@ RSpec.describe Milestoner::CLI::Shell do
       end
     end
 
-    it "prints project status when commits exist" do
-      git_repo_dir.change_dir do
-        shell.call %w[--status]
-        expect(kernel).to have_received(:puts).with("* Added documentation - Test User")
-      end
-    end
-
-    it "prints no status when commits don't exist" do
-      git_repo_dir.change_dir do
-        `git tag 0.0.0`
-        shell.call %w[--status]
-
-        expect(logger.reread).to match(/🟢.+All is quiet./)
-      end
-    end
-
     it "prints version" do
       shell.call %w[--version]
       expect(kernel).to have_received(:puts).with(/Milestoner\s\d+\.\d+\.\d+/)
