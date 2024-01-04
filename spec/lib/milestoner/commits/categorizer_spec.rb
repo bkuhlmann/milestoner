@@ -105,25 +105,5 @@ RSpec.describe Milestoner::Commits::Categorizer do
         end
       end
     end
-
-    context "with duplicate commit messages" do
-      before do
-        git_repo_dir.change_dir do
-          `touch a.txt && git add --all && git commit --message "Updated gem dependencies"`
-          `touch b.txt && git add --all && git commit --message "Updated gem dependencies"`
-        end
-      end
-
-      it "answers commits with duplicates removed" do
-        git_repo_dir.change_dir do
-          expect(categorizer.call.map(&:subject)).to eq(
-            [
-              "Added documentation",
-              "Updated gem dependencies"
-            ]
-          )
-        end
-      end
-    end
   end
 end

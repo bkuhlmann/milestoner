@@ -26,7 +26,6 @@ module Milestoner
                   .each_value { |commits| commits.sort_by!(&:subject) }
                   .values
                   .flatten
-                  .uniq(&:subject)
       end
 
       private
