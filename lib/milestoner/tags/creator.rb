@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "gitt"
+require "refinements/string_io"
 require "versionaire"
 
 module Milestoner
@@ -9,17 +10,22 @@ module Milestoner
     class Creator
       include Import[:git, :logger]
 
+      using Refinements::StringIO
       using Versionaire::Cast
 
-      def initialize(categorizer: Commits::Categorizer.new, presenter: Presenters::Commit, **)
+      def initialize(
+        collector: Commits::Collector.new,
+        builder: Builders::Stream.new(kernel: StringIO.new),
+        **
+      )
+        @collector = collector
+        @builder = builder
         super(**)
-        @categorizer = categorizer
-        @presenter = presenter
       end
 
       def call configuration = Container[:configuration]
         return false if local? configuration
-        fail Error, "Unable to tag without commits." if categorizer.call.empty?
+        fail Error, "Unable to tag without commits." if collector.call.value_or([]).empty?
 
         create configuration
       rescue Versionaire::Error => error
@@ -28,7 +34,7 @@ module Milestoner
 
       private
 
-      attr_reader :categorizer, :presenter
+      attr_reader :collector, :builder
 
       def local? configuration
         version = Version configuration.project_version
@@ -42,17 +48,15 @@ module Milestoner
       end
 
       def create configuration
-        git.tag_create(configuration.project_version, message(configuration))
-           .or { |error| fail Error, error }
-           .bind { true }
+        build(configuration).fmap { |body| git.tag_create configuration.project_version, body }
+                            .or { |error| fail Error, error }
+                            .bind { true }
       end
 
-      def message configuration
-        categorizer.call(configuration)
-                   .map { |record| presenter.new(record).line_item }
-                   .then do |line_items|
-                     %(Version #{configuration.project_version}\n\n#{line_items.join "\n"}\n\n)
-                   end
+      def build configuration
+        builder.call.fmap do |body|
+          "Version #{configuration.project_version}\n\n#{body.reread}\n\n"
+        end
       end
     end
   end
