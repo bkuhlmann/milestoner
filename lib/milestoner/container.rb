@@ -6,6 +6,7 @@ require "etcher"
 require "gitt"
 require "lode"
 require "runcom"
+require "sanitize"
 require "spek"
 
 module Milestoner
@@ -57,6 +58,10 @@ module Milestoner
 
     register :specification, memoize: true do
       self[:spec_loader].call "#{__dir__}/../../milestoner.gemspec"
+    end
+
+    register :sanitizer, memoize: true do
+      -> content { Sanitize.fragment content, Sanitize::Config::BASIC }
     end
 
     register(:spec_loader, memoize: true) { Spek::Loader.new }
