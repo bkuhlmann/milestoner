@@ -6,6 +6,8 @@ detectors:
   ControlParameter:
     exclude:
       - Milestoner::CLI::Actions::Publish#call
+      - Milestoner::Tags::Creator#compute_version
+      - Milestoner::Tags::Pusher#compute_version
   LongParameterList:
     enabled: false
   ModuleInitialize:

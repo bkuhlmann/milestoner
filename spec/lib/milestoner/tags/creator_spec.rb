@@ -108,8 +108,8 @@ RSpec.describe Milestoner::Tags::Creator do
     end
 
     it "fails with invalid version" do
-      result = -> { creator.call configuration.merge(project_version: "bogus") }
-      expect(&result).to raise_error(Milestoner::Error)
+      result = -> { creator.call "bogus" }
+      expect(&result).to raise_error(Milestoner::Error, /Invalid version/)
     end
   end
 end
