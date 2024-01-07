@@ -2,92 +2,92 @@
 
 == 17.0.0 (2024-01-05)
 
-🟢 Added ASCII Doc renderer - Brooke Kuhlmann
-🟢 Added ASCII Doctor gem - Brooke Kuhlmann
-🟢 Added CFF gem - Brooke Kuhlmann
-🟢 Added CLI build command - Brooke Kuhlmann
-🟢 Added CLI build format action - Brooke Kuhlmann
-🟢 Added CLI build label action - Brooke Kuhlmann
-🟢 Added CLI build layout action - Brooke Kuhlmann
-🟢 Added CLI build root action - Brooke Kuhlmann
-🟢 Added CLI build version action - Brooke Kuhlmann
-🟢 Added CLI cache command - Brooke Kuhlmann
-🟢 Added CLI cache create action - Brooke Kuhlmann
-🟢 Added CLI cache delete action - Brooke Kuhlmann
-🟢 Added CLI cache find action - Brooke Kuhlmann
-🟢 Added CLI cache info action - Brooke Kuhlmann
-🟢 Added CLI cache list action - Brooke Kuhlmann
-🟢 Added Hanami View gem - Brooke Kuhlmann
-🟢 Added Lode gem - Brooke Kuhlmann
-🟢 Added Markdown renderer - Brooke Kuhlmann
-🟢 Added RSpec enriched commit shared context - Brooke Kuhlmann
-🟢 Added RSpec transformer fixtures - Brooke Kuhlmann
-🟢 Added Redcarpet gem - Brooke Kuhlmann
-🟢 Added Sanitize gem - Brooke Kuhlmann
-🟢 Added avatar URI configuration transformer - Brooke Kuhlmann
-🟢 Added build root configuration transformer - Brooke Kuhlmann
-🟢 Added build template paths configuration transformer - Brooke Kuhlmann
-🟢 Added builders container - Brooke Kuhlmann
-🟢 Added builders import - Brooke Kuhlmann
-🟢 Added citation description configuration transformer - Brooke Kuhlmann
-🟢 Added citation label configuration transformer - Brooke Kuhlmann
-🟢 Added commit URI configuration transformer - Brooke Kuhlmann
-🟢 Added commit URI enricher - Brooke Kuhlmann
-🟢 Added commit author enricher - Brooke Kuhlmann
-🟢 Added commit body enricher - Brooke Kuhlmann
-🟢 Added commit colleague enricher - Brooke Kuhlmann
-🟢 Added commit enricher - Brooke Kuhlmann
-🟢 Added commit enrichers container - Brooke Kuhlmann
-🟢 Added commit enrichers import - Brooke Kuhlmann
-🟢 Added commit format enricher - Brooke Kuhlmann
-🟢 Added commit issue enricher - Brooke Kuhlmann
-🟢 Added commit milestone enricher - Brooke Kuhlmann
-🟢 Added commit model - Brooke Kuhlmann
-🟢 Added commit note enricher - Brooke Kuhlmann
-🟢 Added commit part - Brooke Kuhlmann
-🟢 Added commit review enricher - Brooke Kuhlmann
-🟢 Added commits collector - Brooke Kuhlmann
-🟢 Added commits versioner - Brooke Kuhlmann
-🟢 Added container cache - Brooke Kuhlmann
-🟢 Added container input, spec loader, and memoization - Brooke Kuhlmann
-🟢 Added container sanitizer - Brooke Kuhlmann
-🟢 Added gem URI configuration transformer - Brooke Kuhlmann
-🟢 Added gem description configuration transformer - Brooke Kuhlmann
-🟢 Added gem label configuration transformer - Brooke Kuhlmann
-🟢 Added gem name configuration transformer - Brooke Kuhlmann
-🟢 Added link model - Brooke Kuhlmann
-🟢 Added profile URI configuration transformer - Brooke Kuhlmann
-🟢 Added project author configuration transformer - Brooke Kuhlmann
-🟢 Added project generator configuration transformer - Brooke Kuhlmann
-🟢 Added project label configuration transformer - Brooke Kuhlmann
-🟢 Added project name configuration transformer - Brooke Kuhlmann
-🟢 Added project version configuration transformer - Brooke Kuhlmann
-🟢 Added review URI configuration transformer - Brooke Kuhlmann
-🟢 Added show view - Brooke Kuhlmann
-🟢 Added stream builder - Brooke Kuhlmann
-🟢 Added template layout - Brooke Kuhlmann
-🟢 Added template stylesheet - Brooke Kuhlmann
-🟢 Added tracker URI configuration transformer - Brooke Kuhlmann
-🟢 Added universal renderer - Brooke Kuhlmann
-🟢 Added user model - Brooke Kuhlmann
-🟢 Added version release notes - Brooke Kuhlmann
-🟢 Added view context - Brooke Kuhlmann
-🟢 Added web builder - Brooke Kuhlmann
-🔼 Updated Circle CI step names - Brooke Kuhlmann
-🔼 Updated container configuration to use transformers - Brooke Kuhlmann
-🔼 Updated default configuration - Brooke Kuhlmann
-🔼 Updated gem dependencies - Brooke Kuhlmann
-🔼 Updated publish action to use default version - Brooke Kuhlmann
-🔼 Updated tag objects to inject input and be called with optional version - Brooke Kuhlmann
-🔼 Updated to Ruby 3.3.0 - Brooke Kuhlmann
-⛔️ Removed CLI status action - Brooke Kuhlmann
-⛔️ Removed Gemfile code prefix from quality group - Brooke Kuhlmann
-⛔️ Removed RSpec helper code coverage for eval - Brooke Kuhlmann
-⛔️ Removed Rakefile code prefix from quality task - Brooke Kuhlmann
-⛔️ Removed commit categorizer uniqueness filter - Brooke Kuhlmann
-⛔️ Removed commit presenter - Brooke Kuhlmann
-🔁 Refactored commits categorizer to use collector - Brooke Kuhlmann
-🔁 Refactored tag creator to use commit collector and stream builder - Brooke Kuhlmann
+* 🟢 Added ASCII Doc renderer - Brooke Kuhlmann
+* 🟢 Added ASCII Doctor gem - Brooke Kuhlmann
+* 🟢 Added CFF gem - Brooke Kuhlmann
+* 🟢 Added CLI build command - Brooke Kuhlmann
+* 🟢 Added CLI build format action - Brooke Kuhlmann
+* 🟢 Added CLI build label action - Brooke Kuhlmann
+* 🟢 Added CLI build layout action - Brooke Kuhlmann
+* 🟢 Added CLI build root action - Brooke Kuhlmann
+* 🟢 Added CLI build version action - Brooke Kuhlmann
+* 🟢 Added CLI cache command - Brooke Kuhlmann
+* 🟢 Added CLI cache create action - Brooke Kuhlmann
+* 🟢 Added CLI cache delete action - Brooke Kuhlmann
+* 🟢 Added CLI cache find action - Brooke Kuhlmann
+* 🟢 Added CLI cache info action - Brooke Kuhlmann
+* 🟢 Added CLI cache list action - Brooke Kuhlmann
+* 🟢 Added Hanami View gem - Brooke Kuhlmann
+* 🟢 Added Lode gem - Brooke Kuhlmann
+* 🟢 Added Markdown renderer - Brooke Kuhlmann
+* 🟢 Added RSpec enriched commit shared context - Brooke Kuhlmann
+* 🟢 Added RSpec transformer fixtures - Brooke Kuhlmann
+* 🟢 Added Redcarpet gem - Brooke Kuhlmann
+* 🟢 Added Sanitize gem - Brooke Kuhlmann
+* 🟢 Added avatar URI configuration transformer - Brooke Kuhlmann
+* 🟢 Added build root configuration transformer - Brooke Kuhlmann
+* 🟢 Added build template paths configuration transformer - Brooke Kuhlmann
+* 🟢 Added builders container - Brooke Kuhlmann
+* 🟢 Added builders import - Brooke Kuhlmann
+* 🟢 Added citation description configuration transformer - Brooke Kuhlmann
+* 🟢 Added citation label configuration transformer - Brooke Kuhlmann
+* 🟢 Added commit URI configuration transformer - Brooke Kuhlmann
+* 🟢 Added commit URI enricher - Brooke Kuhlmann
+* 🟢 Added commit author enricher - Brooke Kuhlmann
+* 🟢 Added commit body enricher - Brooke Kuhlmann
+* 🟢 Added commit colleague enricher - Brooke Kuhlmann
+* 🟢 Added commit enricher - Brooke Kuhlmann
+* 🟢 Added commit enrichers container - Brooke Kuhlmann
+* 🟢 Added commit enrichers import - Brooke Kuhlmann
+* 🟢 Added commit format enricher - Brooke Kuhlmann
+* 🟢 Added commit issue enricher - Brooke Kuhlmann
+* 🟢 Added commit milestone enricher - Brooke Kuhlmann
+* 🟢 Added commit model - Brooke Kuhlmann
+* 🟢 Added commit note enricher - Brooke Kuhlmann
+* 🟢 Added commit part - Brooke Kuhlmann
+* 🟢 Added commit review enricher - Brooke Kuhlmann
+* 🟢 Added commits collector - Brooke Kuhlmann
+* 🟢 Added commits versioner - Brooke Kuhlmann
+* 🟢 Added container cache - Brooke Kuhlmann
+* 🟢 Added container input, spec loader, and memoization - Brooke Kuhlmann
+* 🟢 Added container sanitizer - Brooke Kuhlmann
+* 🟢 Added gem URI configuration transformer - Brooke Kuhlmann
+* 🟢 Added gem description configuration transformer - Brooke Kuhlmann
+* 🟢 Added gem label configuration transformer - Brooke Kuhlmann
+* 🟢 Added gem name configuration transformer - Brooke Kuhlmann
+* 🟢 Added link model - Brooke Kuhlmann
+* 🟢 Added profile URI configuration transformer - Brooke Kuhlmann
+* 🟢 Added project author configuration transformer - Brooke Kuhlmann
+* 🟢 Added project generator configuration transformer - Brooke Kuhlmann
+* 🟢 Added project label configuration transformer - Brooke Kuhlmann
+* 🟢 Added project name configuration transformer - Brooke Kuhlmann
+* 🟢 Added project version configuration transformer - Brooke Kuhlmann
+* 🟢 Added review URI configuration transformer - Brooke Kuhlmann
+* 🟢 Added show view - Brooke Kuhlmann
+* 🟢 Added stream builder - Brooke Kuhlmann
+* 🟢 Added template layout - Brooke Kuhlmann
+* 🟢 Added template stylesheet - Brooke Kuhlmann
+* 🟢 Added tracker URI configuration transformer - Brooke Kuhlmann
+* 🟢 Added universal renderer - Brooke Kuhlmann
+* 🟢 Added user model - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🟢 Added view context - Brooke Kuhlmann
+* 🟢 Added web builder - Brooke Kuhlmann
+* 🔼 Updated Circle CI step names - Brooke Kuhlmann
+* 🔼 Updated container configuration to use transformers - Brooke Kuhlmann
+* 🔼 Updated default configuration - Brooke Kuhlmann
+* 🔼 Updated gem dependencies - Brooke Kuhlmann
+* 🔼 Updated publish action to use default version - Brooke Kuhlmann
+* 🔼 Updated tag objects to inject input and be called with optional version - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.0 - Brooke Kuhlmann
+* ⛔️ Removed CLI status action - Brooke Kuhlmann
+* ⛔️ Removed Gemfile code prefix from quality group - Brooke Kuhlmann
+* ⛔️ Removed RSpec helper code coverage for eval - Brooke Kuhlmann
+* ⛔️ Removed Rakefile code prefix from quality task - Brooke Kuhlmann
+* ⛔️ Removed commit categorizer uniqueness filter - Brooke Kuhlmann
+* ⛔️ Removed commit presenter - Brooke Kuhlmann
+* 🔁 Refactored commits categorizer to use collector - Brooke Kuhlmann
+* 🔁 Refactored tag creator to use commit collector and stream builder - Brooke Kuhlmann
 
 == 16.2.1 (2023-11-15)
 
