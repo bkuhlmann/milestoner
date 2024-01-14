@@ -1,3 +1,7 @@
+:root {
+  --font-family: Verdana;
+}
+
 .milestone {
   --border-width: 0.15rem;
   --color-black: hsl(0, 0%, 0%);
@@ -19,7 +23,6 @@
   --color-slate: hsl(211, 23%, 41%);
   --color-smoke: hsl(229, 31%, 93%);
   --color-white: hsl(0, 0%, 100%);
-  --font-family: Verdana;
 
   display: flex;
   flex-direction: column;
@@ -352,5 +355,19 @@
     .insertions {
       color: var(--color-red);
     }
+  }
+}
+
+.footer {
+  .generator {
+    display: flex;
+    font-family: var(--font-family);
+    font-style: italic;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .link {
+    padding-left: 0.3rem;
   }
 }
