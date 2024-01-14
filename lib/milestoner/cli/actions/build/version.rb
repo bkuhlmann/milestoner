@@ -21,7 +21,7 @@ module Milestoner
 
           on %w[-v --version], argument: "[VERSION]"
 
-          default { Commits::Versioner.new.call }
+          default { Container[:configuration].project_version }
 
           def call(version = nil) = input.project_version = Version(version || default)
         end

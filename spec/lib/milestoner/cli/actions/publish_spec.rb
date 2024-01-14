@@ -14,15 +14,13 @@ RSpec.describe Milestoner::CLI::Actions::Publish do
 
   describe "#call" do
     it "call publisher with default version" do
-      default = Milestoner::Commits::Versioner.new.call
       action.call
-
-      expect(publisher).to have_received(:call).with(default)
+      expect(publisher).to have_received(:call).with(Version("1.2.3"))
     end
 
     it "call publisher with custom version" do
-      action.call "1.2.3"
-      expect(publisher).to have_received(:call).with(Version("1.2.3"))
+      action.call "1.1.1"
+      expect(publisher).to have_received(:call).with(Version("1.1.1"))
     end
   end
 end

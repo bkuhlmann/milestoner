@@ -20,7 +20,7 @@ module Milestoner
 
         on %w[-p --publish], argument: "[VERSION]"
 
-        default { Commits::Versioner.new.call }
+        default { Container[:configuration].project_version }
 
         def initialize(publisher: Tags::Publisher.new, **)
           super(**)
