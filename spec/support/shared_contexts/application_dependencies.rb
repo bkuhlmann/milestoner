@@ -23,6 +23,8 @@ RSpec.shared_context "with application dependencies" do
     Etcher.new(Milestoner::Container[:defaults])
           .call(
             build_root: temp_dir,
+            generator_label: "Test Generator",
+            generator_uri: "https://test.com",
             project_author: "Test Author",
             project_description: "Test description.",
             project_generator: "Test Generator",

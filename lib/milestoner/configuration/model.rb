@@ -13,6 +13,8 @@ module Milestoner
                        :commit_domain,
                        :commit_format,
                        :commit_uri,
+                       :generator_label,
+                       :generator_uri,
                        :profile_domain,
                        :profile_uri,
                        :project_author,

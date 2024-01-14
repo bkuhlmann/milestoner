@@ -23,6 +23,8 @@ module Milestoner
       required(:commit_domain).filled :string
       required(:commit_format).filled :string
       required(:commit_uri).filled :string
+      required(:generator_label).filled :string
+      required(:generator_uri).filled :string
       required(:profile_domain).filled :string
       required(:profile_uri).filled :string
       required(:project_author).filled :string
