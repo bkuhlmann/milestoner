@@ -27,7 +27,6 @@ module Milestoner
         @categorizer = categorizer
         @model = model
         super(**)
-        @commands = %i[author body collaborators format issue milestone notes review signers uri]
       end
 
       def call
@@ -38,12 +37,12 @@ module Milestoner
 
       private
 
-      attr_reader :categorizer, :model, :commands
+      attr_reader :categorizer, :model
 
       def record_for(commit) = model.for(commit, **build_attributes(commit))
 
       def build_attributes commit
-        commands.each.with_object({}) do |command, attributes|
+        infused_keys.each.with_object({}) do |command, attributes|
           attributes[command] = __send__(command).call commit
         end
       end
