@@ -9,7 +9,7 @@ module Milestoner
       # Handles the building of milestone output.
       class Build < Sod::Command
         include Import[:input, :logger, :kernel]
-        include Builders::Import[:stream, :web]
+        include Builders::Import[:ascii_doc, :markdown, :stream, :web]
 
         using Refinements::Pathname
 
@@ -23,21 +23,28 @@ module Milestoner
         on Actions::Build::Format
         on Actions::Build::Root
 
+        # :reek:TooManyStatements
         def call
           log_info "Building milestone..."
 
           format = input.build_format
 
           case format
+            when "ascii_doc" then build_ascii_doc
+            when "markdown" then build_markdown
             when "stream" then build_stream
             when "web" then build_web
-            else log_error "Invalid build format: #{format}."
+            else logger.abort "Invalid build format: #{format}."
           end
         end
 
         private
 
         attr_reader :view, :enricher
+
+        def build_ascii_doc = log_info("Milestone built: #{ascii_doc.call}.")
+
+        def build_markdown = log_info("Milestone built: #{markdown.call}.")
 
         def build_stream
           kernel.puts
@@ -47,8 +54,6 @@ module Milestoner
         def build_web = log_info "Milestone built: #{web.call}."
 
         def log_info(message) = logger.info { message }
-
-        def log_error(message) = logger.error { message }
       end
     end
   end

@@ -16,6 +16,44 @@ RSpec.describe Milestoner::CLI::Commands::Build do
   let(:web) { instance_spy Milestoner::Builders::Web, call: temp_dir }
 
   describe "#call" do
+    context "with ASCII Doc format" do
+      before do
+        input.build_format = "ascii_doc"
+        command.call
+      end
+
+      it "logs start of build" do
+        expect(logger.reread).to match(/🟢.+Building milestone.../)
+      end
+
+      it "builds ASCII Doc file" do
+        expect(temp_dir.join("index.adoc").exist?).to be(true)
+      end
+
+      it "logs end of build" do
+        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir.join "index.adoc"}/)
+      end
+    end
+
+    context "with Markdown format" do
+      before do
+        input.build_format = "markdown"
+        command.call
+      end
+
+      it "logs start of build" do
+        expect(logger.reread).to match(/🟢.+Building milestone.../)
+      end
+
+      it "builds Markdown file" do
+        expect(temp_dir.join("index.md").exist?).to be(true)
+      end
+
+      it "logs end of build" do
+        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir.join "index.md"}/)
+      end
+    end
+
     context "with web format (default)" do
       before { command.call }
 
@@ -47,11 +85,12 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
     end
 
-    it "logs error with invalid format" do
+    it "aborts with invalid format" do
+      logger = instance_spy Cogger::Hub
       input.build_format = "bogus"
-      command.call
+      described_class.new(stream:, logger:).call
 
-      expect(logger.reread).to match(/🛑.+Invalid\sbuild\sformat:\sbogus\./)
+      expect(logger).to have_received(:abort).with("Invalid build format: bogus.")
     end
   end
 end
