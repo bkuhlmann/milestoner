@@ -11,6 +11,18 @@ RSpec.describe Milestoner::Views::Context do
 
   include_context "with application dependencies"
 
+  describe "#generator_label" do
+    it "answers configuration generator label" do
+      expect(a_context.generator_label).to eq("Test Generator")
+    end
+  end
+
+  describe "#generator_uri" do
+    it "answers configuration generator URI" do
+      expect(a_context.generator_uri).to eq("https://test.com")
+    end
+  end
+
   describe "#project_author" do
     it "answers configuration author" do
       expect(a_context.project_author).to eq("Test Author")

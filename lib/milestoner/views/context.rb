@@ -12,6 +12,8 @@ module Milestoner
       include Import[:input]
 
       delegate %i[
+        generator_label
+        generator_uri
         project_author
         project_description
         project_generator
