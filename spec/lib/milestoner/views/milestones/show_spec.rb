@@ -99,7 +99,13 @@ RSpec.describe Milestoner::Views::Milestones::Show do
       )
     end
 
-    it "renders stream" do
+    it "renders stream without commits" do
+      expect(view.call(commits: [], format: :stream).to_s).to include(
+        "0 commits. 0 files. 0 deletions. 0 insertions."
+      )
+    end
+
+    it "renders stream with commits" do
       expect(view.call(commits: [commit], format: :stream).to_s).to match(
         /🟢 Added documentation - Zoe Washburne/
       )
