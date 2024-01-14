@@ -16,10 +16,11 @@ module Milestoner
         config.paths = Container[:configuration].build_template_paths
         config.template = "milestones/show"
 
-        expose :at, default: Time.now.utc.strftime("%Y-%m-%dT%H:%M:%S%z")
-        expose :date, default: Time.now.utc.strftime("%Y-%m-%d")
         expose :commits
         expose :uri, default: Container[:configuration].project_uri
+        expose :at, default: Time.now.utc
+        expose(:date) { |at| at.strftime "%Y-%m-%d" }
+        expose(:datetime) { |at| at.strftime "%Y-%m-%dT%H:%M:%S%z" }
 
         expose :total_commits do |commits|
           total = commits.size

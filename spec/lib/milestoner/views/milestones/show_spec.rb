@@ -30,7 +30,13 @@ RSpec.describe Milestoner::Views::Milestones::Show do
     end
 
     it "includes date" do
-      expect(view.call(commits: [], at: "2020-01-10").to_s).to include("2020-01-10")
+      expect(view.call(commits: [], at: Time.parse("2020-01-10")).to_s).to include("2020-01-10")
+    end
+
+    it "includes datetime" do
+      at = Time.parse("2020-01-10 10:10:10").utc
+      expect(view.call(commits: [], at:).to_s).to include("2020-01-10T10:10:10+0000")
+                                              .or include("2020-01-10T17:10:10+0000")
     end
 
     it "includes commit" do
