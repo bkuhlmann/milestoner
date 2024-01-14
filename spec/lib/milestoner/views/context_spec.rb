@@ -37,7 +37,7 @@ RSpec.describe Milestoner::Views::Context do
 
   describe "#project_generator" do
     it "answers configuration generator" do
-      expect(a_context.project_generator).to eq("Test Generator")
+      expect(a_context.project_generator).to be(nil)
     end
   end
 

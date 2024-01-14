@@ -45,7 +45,6 @@ module Milestoner
                       .add_transformer(Configuration::Transformers::Citations::Label.new)
                       .add_transformer(Configuration::Transformers::Citations::Description.new)
                       .add_transformer(Configuration::Transformers::Project::Author.new)
-                      .add_transformer(Configuration::Transformers::Project::Generator.new)
                       .add_transformer(Configuration::Transformers::Project::Label)
                       .add_transformer(Configuration::Transformers::Project::Name)
                       .add_transformer(Configuration::Transformers::Project::Version.new)

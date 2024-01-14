@@ -29,7 +29,6 @@ module Milestoner
       required(:profile_uri).filled :string
       required(:project_author).filled :string
       optional(:project_description).maybe :string
-      required(:project_generator).filled :string
       optional(:project_label).filled :string
       required(:project_name).filled :string
       optional(:project_owner).filled :string
