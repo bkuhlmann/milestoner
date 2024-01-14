@@ -23,6 +23,8 @@ RSpec.describe Milestoner::Builders::Stream do
         🟢\sAdded\sdocumentation\s-\sZoe\sWashburne\n
         \n
         \d+\scommit\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.
+        \n\n
+        Generated\sby\s(Test\sGenerator|Milestoner.+)\.
       /mx
     end
 
