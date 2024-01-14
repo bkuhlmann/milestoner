@@ -28,12 +28,12 @@ module Milestoner
       required(:profile_domain).filled :string
       required(:profile_uri).filled :string
       required(:project_author).filled :string
-      optional(:project_description).filled :string
+      optional(:project_description).maybe :string
       required(:project_generator).filled :string
       optional(:project_label).filled :string
       required(:project_name).filled :string
       optional(:project_owner).filled :string
-      optional(:project_uri).filled :string
+      optional(:project_uri).maybe :string
       required(:project_version).filled Etcher::Types::Version
       required(:review_domain).filled :string
       required(:review_uri).filled :string
