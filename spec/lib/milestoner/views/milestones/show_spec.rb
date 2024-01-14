@@ -87,6 +87,18 @@ RSpec.describe Milestoner::Views::Milestones::Show do
       )
     end
 
+    it "renders Markdown without commits" do
+      expect(view.call(commits: [], format: :md).to_s).to include(
+        "**0 commits. 0 files. 0 deletions. 0 insertions.**"
+      )
+    end
+
+    it "renders Markdown with commits" do
+      expect(view.call(commits: [commit], format: :md).to_s).to match(
+        /🟢 Added documentation - \*Zoe Washburne\*/
+      )
+    end
+
     it "renders stream" do
       expect(view.call(commits: [commit], format: :stream).to_s).to match(
         /🟢 Added documentation - Zoe Washburne/
