@@ -49,6 +49,8 @@ module Milestoner
                       .add_transformer(Configuration::Transformers::Project::Label)
                       .add_transformer(Configuration::Transformers::Project::Name)
                       .add_transformer(Configuration::Transformers::Project::Version.new)
+                      .add_transformer(Configuration::Transformers::Generator::Label.new)
+                      .add_transformer(Configuration::Transformers::Generator::URI.new)
                       .add_transformer(Configuration::Transformers::URI::Avatar)
                       .add_transformer(Configuration::Transformers::URI::Commit)
                       .add_transformer(Configuration::Transformers::URI::Profile)
