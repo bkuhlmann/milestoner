@@ -1,5 +1,35 @@
 = Versions
 
+== 17.1.0 (2024-01-14)
+
+* ✅ Fixed CLI build label action default - Brooke Kuhlmann
+* ✅ Fixed CLI build version and publish action defaults - Brooke Kuhlmann
+* ✅ Fixed show view stream template to account for no commit activity - Brooke Kuhlmann
+* ✅ Fixed version bullets - Brooke Kuhlmann
+* 🟢 Added ASCII Doc and Markdown builders to container - Brooke Kuhlmann
+* 🟢 Added ASCII Doc builder - Brooke Kuhlmann
+* 🟢 Added ASCII Doc templates - Brooke Kuhlmann
+* 🟢 Added CLI ASCII Doc and Markdown build formats - Brooke Kuhlmann
+* 🟢 Added CSS for footer - Brooke Kuhlmann
+* 🟢 Added Markdown builder - Brooke Kuhlmann
+* 🟢 Added generator URI transformer - Brooke Kuhlmann
+* 🟢 Added generator label transformer - Brooke Kuhlmann
+* 🟢 Added generator link to stream and web layouts - Brooke Kuhlmann
+* 🟢 Added generator to configuration - Brooke Kuhlmann
+* 🟢 Added generator transformers to container - Brooke Kuhlmann
+* 🟢 Added markdown templates - Brooke Kuhlmann
+* 🟢 Added project generator transformer depreciation warning - Brooke Kuhlmann
+* 🟢 Added view context generator label and URI - Brooke Kuhlmann
+* 🔼 Updated HTML layout to use generator label - Brooke Kuhlmann
+* 🔼 Updated configuration transformers to simplify default value - Brooke Kuhlmann
+* 🔼 Updated contract to relax project description and URL presence - Brooke Kuhlmann
+* 🔼 Updated show view to expose dates and times based on current time - Brooke Kuhlmann
+* 🔼 Updated to Cogger 0.16.0 - Brooke Kuhlmann
+* 🔼 Updated to Infusible 3.1.0 - Brooke Kuhlmann
+* ⛔️ Removed project generator from configuration - Brooke Kuhlmann
+* 🔁 Refactored HTML templates to use dormant instead of quiet class name - Brooke Kuhlmann
+* 🔁 Refactored cache actions to use logger abort - Brooke Kuhlmann
+
 == 17.0.0 (2024-01-05)
 
 * 🟢 Added ASCII Doc renderer - Brooke Kuhlmann
