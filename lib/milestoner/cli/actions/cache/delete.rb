@@ -23,10 +23,7 @@ module Milestoner
 
           def success(user) = logger.info { "Deleted: #{user.name.inspect}." }
 
-          def failure message
-            logger.error { message }
-            kernel.abort
-          end
+          def failure(message) = logger.abort message
         end
       end
     end

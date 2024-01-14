@@ -20,15 +20,11 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Find do
       expect(kernel).to have_received(:puts).with("1, test, Test")
     end
 
-    it "logs error when user isn't found" do
-      action.call "Test"
-
-      expect(logger.reread).to match(/🛑.+Unable to find name: "Test"\./)
-    end
-
     it "aborts on failure" do
-      action.call "Test"
-      expect(kernel).to have_received(:abort)
+      logger = instance_spy Cogger::Hub
+      described_class.new(logger:).call "Test"
+
+      expect(logger).to have_received(:abort).with(%(Unable to find name: "Test".))
     end
   end
 end

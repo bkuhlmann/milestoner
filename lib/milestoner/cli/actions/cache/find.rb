@@ -23,10 +23,7 @@ module Milestoner
 
           def success(user) = kernel.puts user.to_h.values.join(", ")
 
-          def failure message
-            logger.error { message }
-            kernel.abort
-          end
+          def failure(message) = logger.abort message
         end
       end
     end
