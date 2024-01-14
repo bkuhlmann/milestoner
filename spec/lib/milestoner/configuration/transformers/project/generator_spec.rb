@@ -19,5 +19,13 @@ RSpec.describe Milestoner::Configuration::Transformers::Project::Generator do
     it "answers default generator key is missing" do
       expect(transformer.call({}).success[:project_generator]).to match(/Milestoner \d+\.\d+\.\d+/)
     end
+
+    it "prints deprectation warning" do
+      expectation = proc { transformer.call project_generator: "Test 0.0.0" }
+
+      expect(&expectation).to output(<<~CONTENT).to_stderr
+        `Milestoner::Configuration::Transformers::Project::Generator#call` is deprecated, use `Milestoner::Configuration::Transformers::Generator::Label` or `Milestoner::Configuration::Transformers::Generator::URI` instead.
+      CONTENT
+    end
   end
 end

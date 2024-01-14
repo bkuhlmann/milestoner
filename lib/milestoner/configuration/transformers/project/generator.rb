@@ -16,7 +16,14 @@ module Milestoner
             super(**)
           end
 
-          def call(content) = Success({key => specification.labeled_version}.merge!(content))
+          def call content
+            warn "`#{self.class}##{__method__}` is deprecated, use " \
+                 "`Milestoner::Configuration::Transformers::Generator::Label` or " \
+                 "`Milestoner::Configuration::Transformers::Generator::URI` instead.",
+                 category: :deprecated
+
+            Success({key => specification.labeled_version}.merge!(content))
+          end
 
           private
 
