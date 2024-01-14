@@ -16,7 +16,7 @@ module Milestoner
 
           on %w[-l --label], argument: "[TEXT]"
 
-          default { Spek::Loader.call("#{Pathname.pwd.basename}.gemspec").label }
+          default { Container[:configuration].project_label }
 
           def call(label = nil) = input.project_label = label || default
         end

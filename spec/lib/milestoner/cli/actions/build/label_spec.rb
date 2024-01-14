@@ -10,7 +10,7 @@ RSpec.describe Milestoner::CLI::Actions::Build::Label do
   describe "#call" do
     it "answers default label" do
       action.call
-      expect(input.project_label).to match(/Milestoner|Undefined/)
+      expect(input.project_label).to match(/Test Label|Milestoner/)
     end
 
     it "answers custom label" do
