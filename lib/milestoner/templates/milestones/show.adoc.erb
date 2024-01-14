@@ -1,0 +1,9 @@
+= <%= project_label %> <%= project_version %> (<%= date %>)
+
+<% if commits.empty? %>
+*<%= total_commits %>. <%= total_files %>. <%= total_deletions %>. <%= total_insertions %>.*
+<% else %>
+<% commits.each do |commit| %><%= commit.render :commit %><% end %>
+
+*<%= total_commits %>. <%= total_files %>. <%= total_deletions %>. <%= total_insertions %>.*
+<% end %>

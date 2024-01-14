@@ -75,6 +75,18 @@ RSpec.describe Milestoner::Views::Milestones::Show do
       expect(view.call(commits: [commit]).to_s).to include("5 insertions.")
     end
 
+    it "renders ASCIIDoc without commits" do
+      expect(view.call(commits: [], format: :adoc).to_s).to include(
+        "*0 commits. 0 files. 0 deletions. 0 insertions.*"
+      )
+    end
+
+    it "renders ASCIIDoc with commits" do
+      expect(view.call(commits: [commit], format: :adoc).to_s).to match(
+        /🟢 Added documentation - _Zoe Washburne_/
+      )
+    end
+
     it "renders stream" do
       expect(view.call(commits: [commit], format: :stream).to_s).to match(
         /🟢 Added documentation - Zoe Washburne/
