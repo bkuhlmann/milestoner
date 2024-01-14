@@ -14,7 +14,7 @@ RSpec.describe Milestoner::Views::Milestones::Show do
 
   describe "#call" do
     it "answers no activity when there are no commits" do
-      expect(view.call(commits: []).to_s).to include(%(<p class="quiet"></p>))
+      expect(view.call(commits: []).to_s).to include(%(<p class="dormant"></p>))
     end
 
     it "includes label" do
