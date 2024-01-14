@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/monads"
+require "refinements/hash"
 
 module Milestoner
   module Configuration
@@ -10,15 +11,16 @@ module Milestoner
         class Version
           include Dry::Monads[:result]
 
+          using Refinements::Hash
+
           def initialize key = :project_version, versioner: Commits::Versioner.new
             @key = key
             @versioner = versioner
           end
 
           def call content
-            content.fetch(key) { versioner.call }
-                   .then { |value| content.merge! key => value }
-                   .then { |update| Success update }
+            content.fetch_value(key) { versioner.call }
+                   .then { |value| Success content.merge!(key => value) }
           end
 
           private

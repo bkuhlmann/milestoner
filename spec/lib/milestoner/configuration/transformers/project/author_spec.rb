@@ -23,14 +23,14 @@ RSpec.describe Milestoner::Configuration::Transformers::Project::Author do
       expect(transformer.call({})).to eq(Success(project_author: "Git Example"))
     end
 
-    it "answers original content when custom and Git users are missing" do
+    it "answers nil value when custom and Git users are missing" do
       allow(git).to receive(:get).with("user.name", nil).and_return(Success(nil))
-      expect(transformer.call({})).to eq(Success({}))
+      expect(transformer.call({})).to eq(Success({project_author: nil}))
     end
 
-    it "answers original content when custom user is missing and Git user is a failure" do
+    it "answers nil value when custom user is missing and Git user is a failure" do
       allow(git).to receive(:get).with("user.name", nil).and_return(Failure("Danger!"))
-      expect(transformer.call({})).to eq(Success({}))
+      expect(transformer.call({})).to eq(Success({project_author: nil}))
     end
   end
 end

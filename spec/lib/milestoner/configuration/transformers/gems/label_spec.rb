@@ -17,9 +17,9 @@ RSpec.describe Milestoner::Configuration::Transformers::Gems::Label do
       expect(transformer.call({})).to eq(Success(project_label: "Demo"))
     end
 
-    it "answers original content when key and specification are missing" do
+    it "answers undefined label when key and specification are missing" do
       transformer = described_class.new path: Pathname("bogus.gemspec")
-      expect(transformer.call({})).to eq(Success({}))
+      expect(transformer.call({})).to eq(Success({project_label: nil}))
     end
   end
 end

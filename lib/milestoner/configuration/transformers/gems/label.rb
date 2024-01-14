@@ -19,16 +19,15 @@ module Milestoner
             super(**)
           end
 
-          def call(content) = Success process(content)
+          def call content
+            content.fetch(key) { spec_loader.call(path).label }
+                   .then { |value| value unless value == "Undefined" }
+                   .then { |value| Success content.merge!(key => value) }
+          end
 
           private
 
           attr_reader :key, :path
-
-          def process content
-            content.fetch(key) { spec_loader.call(path).label }
-                   .then { |value| value == "Undefined" ? content : content.merge!(key => value) }
-          end
         end
       end
     end

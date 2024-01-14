@@ -19,16 +19,14 @@ module Milestoner
             super(**)
           end
 
-          def call(content) = Success process(content)
+          def call content
+            content.fetch(key) { spec_loader.call(path).summary }
+                   .then { |value| Success content.merge!(key => value) }
+          end
 
           private
 
           attr_reader :key, :path
-
-          def process content
-            content.fetch(key) { spec_loader.call(path).summary }
-                   .then { |value| String(value).empty? ? content : content.merge!(key => value) }
-          end
         end
       end
     end

@@ -21,9 +21,9 @@ RSpec.describe Milestoner::Configuration::Transformers::Citations::Description d
       expect(transformer.call({}).success[:project_description]).to eq("A demo citation.")
     end
 
-    it "answers original content when key and citation are missing" do
+    it "answers nil value when key and citation are missing" do
       transformer = described_class.new path: Pathname("bogus.cff")
-      expect(transformer.call({})).to eq(Success({}))
+      expect(transformer.call({})).to eq(Success({project_description: nil}))
     end
   end
 end
