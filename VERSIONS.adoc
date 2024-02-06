@@ -1,5 +1,12 @@
 = Versions
 
+== 17.2.0 (2024-02-05)
+
+* ✅ Fixed project label configuration transformer titleization - Brooke Kuhlmann
+* 🟢 Added repl_type_completor gem - Brooke Kuhlmann
+* 🔼 Updated to Caliber 0.50.0 - Brooke Kuhlmann
+* 🔼 Updated to Reek 6.3.0 - Brooke Kuhlmann
+
 == 17.1.0 (2024-01-14)
 
 * ✅ Fixed CLI build label action default - Brooke Kuhlmann
