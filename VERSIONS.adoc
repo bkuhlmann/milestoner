@@ -1,5 +1,14 @@
 = Versions
 
+== 17.3.0 (2024-03-03)
+
+* 🔼 Updated RuboCop to use XDG local configuration - Brooke Kuhlmann
+* 🔼 Updated to Caliber 0.51.0 - Brooke Kuhlmann
+* 🔼 Updated to Git Lint 7.1.0 - Brooke Kuhlmann
+* 🔼 Updated to Gitt 3.2.0 - Brooke Kuhlmann
+* 🔼 Updated to RSpec 3.13.0 - Brooke Kuhlmann
+* 🔼 Updated to Refinements 12.1.0 - Brooke Kuhlmann
+
 == 17.2.0 (2024-02-05)
 
 * ✅ Fixed project label configuration transformer titleization - Brooke Kuhlmann
