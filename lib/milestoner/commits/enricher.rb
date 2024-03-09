@@ -42,7 +42,7 @@ module Milestoner
       def record_for(commit) = model.for(commit, **build_attributes(commit))
 
       def build_attributes commit
-        infused_keys.each.with_object({}) do |command, attributes|
+        infused_names.each.with_object({}) do |command, attributes|
           attributes[command] = __send__(command).call commit
         end
       end
