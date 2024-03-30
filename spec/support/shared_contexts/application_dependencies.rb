@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
-require "dry/container/stub"
-require "infusible/stub"
 require "lode"
 require "versionaire"
 
 # rubocop:todo RSpec/MultipleMemoizedHelpers
 RSpec.shared_context "with application dependencies" do
-  using Infusible::Stub
   using Versionaire::Cast
 
   include_context "with temporary directory"
@@ -41,14 +38,14 @@ RSpec.shared_context "with application dependencies" do
   let(:logger) { Cogger.new id: :milestoner, io: StringIO.new, level: :debug }
 
   before do
-    Milestoner::Import.stub configuration:,
-                            input:,
-                            "xdg.config" => xdg_config,
-                            cache:,
-                            kernel:,
-                            logger:
+    Milestoner::Container.stub! configuration:,
+                                input:,
+                                "xdg.config" => xdg_config,
+                                cache:,
+                                kernel:,
+                                logger:
   end
 
-  after { Milestoner::Import.unstub :configuration, :input, :xdg_config, :cache, :kernel, :logger }
+  after { Milestoner::Container.restore }
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers

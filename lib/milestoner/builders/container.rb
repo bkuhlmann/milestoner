@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require "dry-container"
+require "containable"
 
 module Milestoner
   module Builders
     # Registers all builders for injection.
     module Container
-      extend Dry::Container::Mixin
+      extend Containable
 
-      register(:ascii_doc, memoize: true) { ASCIIDoc.new }
-      register(:markdown, memoize: true) { Markdown.new }
-      register(:stream, memoize: true) { Stream.new }
-      register(:web, memoize: true) { Web.new }
+      register(:ascii_doc) { ASCIIDoc.new }
+      register(:markdown) { Markdown.new }
+      register(:stream) { Stream.new }
+      register(:web) { Web.new }
     end
   end
 end

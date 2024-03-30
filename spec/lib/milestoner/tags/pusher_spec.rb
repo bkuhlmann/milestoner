@@ -8,7 +8,6 @@ RSpec.describe Milestoner::Tags::Pusher do
   include Dry::Monads[:result]
 
   using Versionaire::Cast
-  using Infusible::Stub
 
   subject(:pusher) { described_class.new }
 
@@ -17,9 +16,7 @@ RSpec.describe Milestoner::Tags::Pusher do
   let(:git) { instance_spy Gitt::Repository, tag_remote?: false, tags_push: Success("[new tag]") }
   let(:status) { instance_spy Process::Status, success?: true }
 
-  before { Milestoner::Import.stub git: }
-
-  after { Milestoner::Import.unstub :git }
+  before { Milestoner::Container.stub git: }
 
   describe "#call" do
     it "logs success" do
