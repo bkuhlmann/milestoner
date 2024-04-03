@@ -5,7 +5,7 @@ require "infusible"
 module Milestoner
   module Commits
     module Enrichers
-      Import = Infusible.with Container
+      Import = Infusible[Container]
     end
   end
 end
