@@ -2,7 +2,10 @@
   <header class="header">
     <h1 class="title">
       <a href="<%= uri %>" class="label"><%= project_label %></a>
-      <span class="version"><%= project_version %></span>
+
+      <% if commits.any? %>
+        <span class="version"><%= project_version %></span>
+      <% end %>
     </h1>
 
     <time datetime="<%= datetime %>" class="date"><%= date %></time>
