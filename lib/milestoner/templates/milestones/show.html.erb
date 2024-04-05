@@ -16,11 +16,8 @@
   <% else %>
     <section class="body" x-data="{open: false}">
       <div class="actions">
-        <button class="toggle"
-                x-on:click="open = !open"
-                x-text="open ? 'Collapse' : 'Expand'">
-          Expand
-        </button>
+        <button class="toggle" x-on:click="open = true">Expand</button>
+        <button class="toggle" x-on:click="open = false">Collapse</button>
       </div>
 
       <div class="columns">

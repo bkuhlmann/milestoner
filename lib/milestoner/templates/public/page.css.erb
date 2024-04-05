@@ -48,18 +48,24 @@
   .actions {
     display: flex;
     justify-content: flex-end;
+    gap: 0.5rem;
     margin-bottom: 0.5rem;
   }
 
   .toggle {
     background-color: var(--color-white);
-    border: 0.1rem solid var(--color-sea);
+    border: 0.13rem solid var(--color-carbon);
     border-radius: 0.5rem;
-    color: var(--color-sea);
+    color: var(--color-black);
     cursor: pointer;
     padding: 0.2rem;
     font-size: 0.9rem;
     width: 5rem;
+    transition: border-color .2s ease-in;
+
+    &:hover {
+      border-color: var(--color-black);
+    }
   }
 
   .normal {
