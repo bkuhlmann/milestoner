@@ -14,17 +14,15 @@ module Milestoner
         super(**)
       end
 
-      def call at: Time.now.utc
-        input.build_root.join("index.md").make_ancestors.tap { |path| write path, at }
-      end
+      def call = input.build_root.join("index.md").make_ancestors.tap { |path| write path }
 
       private
 
       attr_reader :view, :enricher
 
-      def write path, at
+      def write path
         enricher.call.fmap do |commits|
-          path.write view.call commits:, at:, layout: input.build_layout, format: :md
+          path.write view.call commits:, layout: input.build_layout, format: :md
         end
       end
     end
