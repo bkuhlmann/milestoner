@@ -1,5 +1,19 @@
 = Versions
 
+== 17.6.0 (2024-04-16)
+
+* ✅ Fixed Hanami View requirement to allow minor and patch versions - Brooke Kuhlmann
+* ✅ Fixed displaying version when there are no commits since last tag - Brooke Kuhlmann
+* ✅ Fixed generator label configuration transformer to only provide label - Brooke Kuhlmann
+* 🟢 Added configuration generator version - Brooke Kuhlmann
+* 🟢 Added generator version configuration transformer - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🟢 Added view context generator version - Brooke Kuhlmann
+* 🟢 Added view context project name, slug, and URI - Brooke Kuhlmann
+* 🔼 Updated builder specs to include generator version - Brooke Kuhlmann
+* 🔼 Updated collapse and expand buttons - Brooke Kuhlmann
+* ⛔️ Removed date/time parameter from ASCII Doc and Markdown builders - Brooke Kuhlmann
+
 == 17.5.0 (2024-04-03)
 
 * 🟢 Added Containable gem - Brooke Kuhlmann

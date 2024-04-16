@@ -146,6 +146,7 @@ commit:
 generator:
   label:
   uri:
+  version:
 profile:
   domain: https://github.com
   uri: "%<domain>s/%<id>s"
@@ -185,6 +186,7 @@ The above can be customized as follows:
 * `generator`: Manages generator information.
 ** `label`: Required. The label of the generator used for all software milestones. Default: Milestoner.
 ** `uri`: Required. The URI of the generator used for all software milestones. Defaults to Milestoner's homepage URL as provided by the {gem_specification_link} of this project.
+** `version`: Required. The version of the generator used for all software milestones. Defaults to Milestoner's current version as provided by the {gem_specification_link} of this project.
 * `profile`: Manages team member profile information.
 ** `domain`: Required. The domain of your {git_link} repository. Default: GitHub.
 ** `uri`: Required. The URI format for linking to profiles as formatted using {string_formats_link}. The `id` is dynamically calculated via the `handle` of the user stored in the {lode_link} cache. Default: GitHub.
