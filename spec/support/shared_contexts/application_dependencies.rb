@@ -29,6 +29,7 @@ RSpec.shared_context "with application dependencies" do
             project_label: "Test Label",
             project_name: "test",
             project_owner: "acme",
+            project_uri: "https://project.test",
             project_version: Version("1.2.3")
           ).bind(&:dup)
   end

@@ -19,8 +19,12 @@ module Milestoner
         project_description
         project_generator
         project_label
+        project_name
+        project_uri
         project_version
       ] => :input
+
+      def project_slug = [project_name, project_version].compact.join("_").tr ".", ""
 
       def project_title = [project_label, project_version].compact.join " "
     end
