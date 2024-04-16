@@ -14,6 +14,7 @@ module Milestoner
       delegate %i[
         generator_label
         generator_uri
+        generator_version
         project_author
         project_description
         project_generator

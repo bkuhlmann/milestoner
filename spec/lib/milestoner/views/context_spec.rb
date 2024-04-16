@@ -23,6 +23,12 @@ RSpec.describe Milestoner::Views::Context do
     end
   end
 
+  describe "#generator_version" do
+    it "answers configuration generator version" do
+      expect(a_context.generator_version).to match(/\d+\.\d+\.\d+/)
+    end
+  end
+
   describe "#project_author" do
     it "answers configuration author" do
       expect(a_context.project_author).to eq("Test Author")
