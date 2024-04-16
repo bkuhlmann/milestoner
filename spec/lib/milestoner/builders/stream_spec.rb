@@ -24,7 +24,7 @@ RSpec.describe Milestoner::Builders::Stream do
         \n
         \d+\scommit\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.
         \n\n
-        Generated\sby\s(Test\sGenerator|Milestoner.+)\.
+        Generated\sby\s(Test\sGenerator\s3\.2\.1|Milestoner.+)\.
       /mx
     end
 
