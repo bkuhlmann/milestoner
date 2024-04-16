@@ -22,6 +22,7 @@ RSpec.shared_context "with application dependencies" do
             build_root: temp_dir,
             generator_label: "Test Generator",
             generator_uri: "https://test.com",
+            generator_version: "3.2.1",
             project_author: "Test Author",
             project_description: "Test description.",
             project_generator: "Test Generator",
