@@ -12,7 +12,7 @@ module Milestoner
 
           description "Set output format."
 
-          on %w[-f --format], argument: "[KIND]", allow: %w[ascii_doc markdown stream web]
+          on %w[-f --format], argument: "[KIND]", allow: %w[ascii_doc feed markdown stream web]
 
           default { Container[:settings].build_format }
 

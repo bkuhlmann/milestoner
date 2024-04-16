@@ -9,6 +9,7 @@ module Milestoner
       extend Containable
 
       register(:ascii_doc) { ASCIIDoc.new }
+      register(:feed) { Feed.new }
       register(:markdown) { Markdown.new }
       register(:stream) { Stream.new }
       register(:web) { Web.new }
