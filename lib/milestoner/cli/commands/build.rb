@@ -8,7 +8,7 @@ module Milestoner
       # Handles the building of milestone output.
       class Build < Sod::Command
         include Import[:settings, :logger, :kernel]
-        include Builders::Import[:ascii_doc, :markdown, :stream, :web]
+        include Builders::Import[:ascii_doc, :feed, :markdown, :stream, :web]
 
         handle "build"
 
@@ -32,6 +32,7 @@ module Milestoner
 
           case format
             when "ascii_doc" then build_ascii_doc
+            when "feed" then feed.call
             when "markdown" then build_markdown
             when "stream" then build_stream
             when "web" then build_web

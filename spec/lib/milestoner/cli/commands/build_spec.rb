@@ -35,6 +35,33 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
     end
 
+    context "with feed format" do
+      include_context "with Git repository"
+
+      before do
+        settings.build_format = "feed"
+
+        cache.write :users do |table|
+          table.create Milestoner::Models::User[external_id: 1, handle: "test", name: "Test User"]
+        end
+
+        git_repo_dir.change_dir do
+          `git tag 0.0.0`
+          `touch a.txt && git add --all && git commit --message "Added A"`
+
+          command.call
+        end
+      end
+
+      it "logs start of build" do
+        expect(logger.reread).to match(/🟢.+Building Test milestone \(feed\)\.\.\./)
+      end
+
+      it "builds XML file" do
+        expect(temp_dir.join("index.xml").exist?).to be(true)
+      end
+    end
+
     context "with Markdown format" do
       before do
         settings.build_format = "markdown"
