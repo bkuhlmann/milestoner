@@ -17,7 +17,7 @@ module Milestoner
           end
 
           def call content
-            content.fetch(key) { specification.labeled_version }
+            content.fetch(key) { specification.label }
                    .then { |value| Success content.merge!(key => value) }
           end
 

@@ -11,13 +11,11 @@ RSpec.describe Milestoner::Configuration::Transformers::Generator::Label do
 
   describe "#call" do
     it "answers generator label when key exists" do
-      expect(transformer.call({generator_label: "Test 0.0.0"})).to eq(
-        Success(generator_label: "Test 0.0.0")
-      )
+      expect(transformer.call({generator_label: "Test"})).to eq(Success(generator_label: "Test"))
     end
 
     it "answers original content when key is missing" do
-      expect(transformer.call({}).success[:generator_label]).to match(/Milestoner \d+\.\d+\.\d+/)
+      expect(transformer.call({}).success[:generator_label]).to eq("Milestoner")
     end
   end
 end
