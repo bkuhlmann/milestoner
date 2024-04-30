@@ -1,5 +1,17 @@
 = Versions
 
+== 17.7.0 (2024-05-16)
+
+* 🟢 Added Core gem - Brooke Kuhlmann
+* 🔼 Updated RSpec configuration to ignore backtraces in pending specs - Brooke Kuhlmann
+* 🔼 Updated to Git Lint 7.3.0 - Brooke Kuhlmann
+* 🔼 Updated to Lode 1.4.0 - Brooke Kuhlmann
+* 🔼 Updated to Rake 13.2.0 - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.1 - Brooke Kuhlmann
+* 🔁 Refactored implementation requirements - Brooke Kuhlmann
+* 🔁 Refactored implementation to use Core empty objects - Brooke Kuhlmann
+* 🔁 Refactored transformer content as attributes - Brooke Kuhlmann
+
 == 17.6.0 (2024-04-16)
 
 * ✅ Fixed Hanami View requirement to allow minor and patch versions - Brooke Kuhlmann

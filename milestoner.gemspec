@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |spec|
   spec.name = "milestoner"
-  spec.version = "17.6.0"
+  spec.version = "17.7.0"
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://alchemists.io/projects/milestoner"
-  spec.summary = "A command line interface for managing Git repository milestones."
+  spec.summary = "A command line interface for automated Git repository milestones."
   spec.license = "Hippocratic-2.1"
 
   spec.metadata = {
