@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "refinements/struct"
 require "sod"
 require "versionaire"
 
@@ -11,7 +10,6 @@ module Milestoner
       class Publish < Sod::Action
         include Import[:configuration]
 
-        using Refinements::Struct
         using Versionaire::Cast
 
         description "Publish milestone."

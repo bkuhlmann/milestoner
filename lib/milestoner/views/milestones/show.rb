@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "hanami/view"
-require "pathname"
 require "refinements/string"
 
 module Milestoner

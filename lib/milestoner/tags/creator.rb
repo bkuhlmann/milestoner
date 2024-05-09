@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "core"
-require "gitt"
 require "refinements/string_io"
 require "versionaire"
 

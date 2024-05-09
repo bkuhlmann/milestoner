@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "pathname"
 require "sod"
-require "spek"
 
 module Milestoner
   module CLI

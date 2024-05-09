@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "refinements/pathname"
 require "sod"
 
 module Milestoner
@@ -9,8 +8,6 @@ module Milestoner
       # Handles the building of milestone output.
       class Cache < Sod::Command
         include Import[:input, :logger]
-
-        using Refinements::Pathname
 
         handle "cache"
 

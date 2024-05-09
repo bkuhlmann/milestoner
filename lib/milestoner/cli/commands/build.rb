@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "refinements/pathname"
 require "sod"
 
 module Milestoner
@@ -10,8 +9,6 @@ module Milestoner
       class Build < Sod::Command
         include Import[:input, :logger, :kernel]
         include Builders::Import[:ascii_doc, :markdown, :stream, :web]
-
-        using Refinements::Pathname
 
         handle "build"
 

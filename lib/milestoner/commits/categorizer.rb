@@ -2,7 +2,6 @@
 
 require "core"
 require "refinements/array"
-require "versionaire"
 
 module Milestoner
   module Commits

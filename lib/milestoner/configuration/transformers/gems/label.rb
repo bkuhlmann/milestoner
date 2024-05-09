@@ -2,7 +2,6 @@
 
 require "dry/monads"
 require "pathname"
-require "spek"
 
 module Milestoner
   module Configuration

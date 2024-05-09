@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "refinements/pathname"
+
 module Milestoner
   module Builders
     # Builds Markdown page output.
