@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "refinements/array"
 require "versionaire"
 
@@ -33,7 +34,7 @@ module Milestoner
       attr_reader :collector, :expression
 
       def group_by_category categories, groups
-        collector.call.value_or([]).each.with_object groups do |commit, collection|
+        collector.call.value_or(Core::EMPTY_ARRAY).each.with_object groups do |commit, collection|
           category = commit.subject[subject_pattern(categories)]
           key = collection.key?(category) ? category : "Unknown"
           collection[key] << commit

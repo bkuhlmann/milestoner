@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "gitt"
 require "refinements/string_io"
 require "versionaire"
@@ -27,7 +28,10 @@ module Milestoner
         version = compute_version override
 
         return false if local? version
-        fail Error, "Unable to tag without commits." if collector.call.value_or([]).empty?
+
+        collection = collector.call.value_or Core::EMPTY_ARRAY
+
+        fail Error, "Unable to tag without commits." if collection.empty?
 
         create version
       end

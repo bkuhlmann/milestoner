@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "forwardable"
 require "hanami/view"
 
@@ -24,7 +25,9 @@ module Milestoner
         project_version
       ] => :input
 
-      def project_slug = [project_name, project_version].compact.join("_").tr ".", ""
+      def project_slug
+        [project_name, project_version].compact.join("_").tr ".", Core::EMPTY_STRING
+      end
 
       def project_title = [project_label, project_version].compact.join " "
     end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "dry/monads"
 require "versionaire"
 
@@ -30,7 +31,7 @@ module Milestoner
       attr_reader :defaults, :collector
 
       def trailer_milestones
-        collector.call.value_or([]).each.with_object [] do |commit, values|
+        collector.call.value_or(Core::EMPTY_ARRAY).each.with_object [] do |commit, values|
           commit.trailer_value_for(trailer_key).bind { |milestone| values.append milestone.to_sym }
         end
       end
