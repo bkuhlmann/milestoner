@@ -34,6 +34,12 @@ module Milestoner
                        :project_uri_version,
                        :project_version,
                        :review_uri,
+                       :syndication_categories,
+                       :syndication_entry_label,
+                       :syndication_entry_uri,
+                       :syndication_id,
+                       :syndication_label,
+                       :syndication_links,
                        :tracker_uri
   end
 end
