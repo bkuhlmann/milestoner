@@ -43,6 +43,24 @@ module Milestoner
       optional(:project_uri_version).filled :string
       required(:project_version).filled Etcher::Types::Version
       required(:review_uri).filled :string
+
+      required(:syndication_categories).array(:hash) do
+        required(:label).filled :string
+        required(:name).filled :string
+      end
+
+      required(:syndication_entry_label).filled :string
+      required(:syndication_entry_uri).filled :string
+      required(:syndication_id).filled :string
+      required(:syndication_label).filled :string
+
+      required(:syndication_links).array(:hash) do
+        required(:label).filled :string
+        required(:mime).filled :string
+        required(:relation).filled :string
+        required(:uri).filled :string
+      end
+
       required(:tracker_uri).filled :string
     end
   end

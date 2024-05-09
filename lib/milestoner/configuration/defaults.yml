@@ -36,5 +36,23 @@ project:
     version: "%<project_uri_home>s/versions/%<id>s"
 review:
   uri: https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s
+syndication:
+  categories:
+    - label: Milestones
+      name: milestones
+  entry:
+    label: "%<id>s"
+    uri: "%<project_uri_version>s"
+  id: "%<project_uri_version>s"
+  label: "%<organization_label>s: %<project_label>s"
+  links:
+    - label: "%<organization_label>s: %<project_label>s (web)"
+      mime: text/html
+      relation: alternate
+      uri: "%<project_uri_home>s/versions"
+    - label: "%<organization_label>s: %<project_label>s (feed)"
+      mime: application/atom+xml
+      relation: self
+      uri: "%<project_uri_home>s/versions.xml"
 tracker:
   uri: https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s
