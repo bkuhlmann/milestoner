@@ -1,0 +1,187 @@
+# frozen_string_literal: true
+
+require "spec_helper"
+
+RSpec.describe Milestoner::Syndication::Builder do
+  include Dry::Monads[:result]
+
+  using Refinements::Struct
+
+  subject(:builder) { described_class.new }
+
+  include_context "with application dependencies"
+  include_context "with enriched commit"
+
+  describe "#call" do
+    let :milestones do
+      [Milestoner::Models::Tag[commits: [commit], committed_at: at, version: "3.2.1"]]
+    end
+
+    let(:authors) { [Milestoner::Models::User[external_id: 1, handle: "test", name: "Test User"]] }
+    let(:at) { Time.utc 2020, 1, 2, 3, 4, 5 }
+    let(:feed) { builder.call(milestones).bind { |body| RSS::Parser.parse body } }
+
+    it "answers feed author name" do
+      expect(feed.author.name.content).to eq("Zoe Washburne")
+    end
+
+    it "answers feed author uri" do
+      expect(feed.author.uri.content).to eq("https://github.com/zoe")
+    end
+
+    it "answers feed category term" do
+      expect(feed.category.term).to eq("test")
+    end
+
+    it "answers feed category label" do
+      expect(feed.category.label).to eq("Test")
+    end
+
+    it "answers feed generator URI" do
+      expect(feed.generator.uri).to eq("https://alchemists.io/projects/milestoner")
+    end
+
+    it "answers feed generator label" do
+      expect(feed.generator.version).to eq("3.2.1")
+    end
+
+    it "answers feed icon" do
+      expect(feed.icon.content).to eq(
+        "https://undefined.io/assets/media/projects/milestoner/logo.png"
+      )
+    end
+
+    it "answers feed ID" do
+      expect(feed.id.content).to eq("https://undefined.io/projects/milestoner")
+    end
+
+    it "answers feed links" do
+      links = feed.links.reduce [] do |all, link|
+        all << {href: link.href, rel: link.rel, type: link.type, title: link.title}
+      end
+
+      expect(links).to eq(
+        [
+          {
+            href: "https://undefined.io/projects/milestoner/versions",
+            rel: "alternate",
+            type: "text/html",
+            title: "Undefined: Milestoner (web)"
+          },
+          {
+            href: "https://undefined.io/projects/milestoner/versions.xml",
+            rel: "self",
+            type: "application/atom+xml",
+            title: "Undefined: Milestoner (feed)"
+          }
+        ]
+      )
+    end
+
+    it "answers feed logo" do
+      expect(feed.logo.content).to eq(
+        "https://undefined.io/assets/media/projects/milestoner/logo.png"
+      )
+    end
+
+    it "answers feed rights" do
+      expect(feed.rights.content).to eq("2020")
+    end
+
+    it "answers feed subtitle" do
+      expect(feed.subtitle.content).to eq("A test.")
+    end
+
+    it "answers feed title" do
+      expect(feed.title.content).to eq("Undefined: Milestoner")
+    end
+
+    it "answers feed updated" do
+      expect(feed.updated.content).to eq(at)
+    end
+
+    it "answers feed DC date" do
+      expect(feed.dc_date).to eq(at)
+    end
+
+    it "answers entry id" do
+      expect(feed.entries.first.id.content).to eq(
+        "https://undefined.io/projects/milestoner/versions/3.2.1"
+      )
+    end
+
+    it "answers entry title" do
+      expect(feed.entries.first.title.content).to eq("3.2.1")
+    end
+
+    it "answers entry link" do
+      expect(feed.entries.first.link.href).to eq(
+        "https://undefined.io/projects/milestoner/versions/3.2.1"
+      )
+    end
+
+    it "answers entry rights" do
+      expect(feed.entries.first.rights.content).to eq("2020")
+    end
+
+    it "answers entry published" do
+      expect(feed.entries.first.published.content).to eq(at)
+    end
+
+    it "answers entry updated" do
+      expect(feed.entries.first.updated.content).to eq(at)
+    end
+
+    it "answers entry dc date" do
+      expect(feed.entries.first.dc_date).to eq(at)
+    end
+
+    it "answers entry content" do
+      expect(feed.entries.first.content.content).to include("Added documentation")
+    end
+
+    it "answers entry content type" do
+      expect(feed.entries.first.content.type).to include("html")
+    end
+
+    it "answers entry authors" do
+      content = feed.entries.first.authors.reduce(+"") { |body, item| body.concat item.to_s }
+
+      expect(content).to eq(<<~CONTENT.strip)
+        <author>
+          <name>Zoe Washburne</name>
+          <uri>https://github.com/zoe</uri>
+        </author>
+      CONTENT
+    end
+
+    it "answers entry categories" do
+      content = feed.entries.first.categories.reduce(+"") { |body, item| body.concat item.to_s }
+
+      expect(content).to eq(<<~CONTENT.strip)
+        <category term="milestones"
+          label="Milestones"/>
+      CONTENT
+    end
+
+    it "answers failure when authors are missing" do
+      milestones.first.commits.clear
+
+      expect(builder.call(milestones)).to match(
+        Failure("#{described_class}: Required variables of maker.channel are not set: author.")
+      )
+    end
+
+    it "answers failure without milestones" do
+      expect(builder.call([])).to eq(Failure("No content to build."))
+    end
+
+    it "answers failure when attribute is missing" do
+      milestones.first.committed_at = nil
+
+      expect(builder.call(milestones)).to match(
+        Failure("#{described_class}: Undefined method `strftime' for nil.")
+      )
+    end
+  end
+end
