@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "cff", "~> 1.1"
   spec.add_dependency "cogger", "~> 0.16"
   spec.add_dependency "containable", "~> 0.0"
+  spec.add_dependency "core", "~> 1.3"
   spec.add_dependency "dry-monads", "~> 1.6"
   spec.add_dependency "dry-schema", "~> 1.13"
   spec.add_dependency "etcher", "~> 1.3"
