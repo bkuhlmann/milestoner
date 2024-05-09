@@ -1,2 +1,6 @@
 inherit_gem:
   caliber: config/all.yml
+
+Metrics/BlockLength:
+  AllowedPatterns:
+    - register
