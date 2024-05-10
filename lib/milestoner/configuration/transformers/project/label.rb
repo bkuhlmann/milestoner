@@ -13,9 +13,9 @@ module Milestoner
         using Refinements::String
         using Refinements::Hash
 
-        Label = lambda do |content, key = :project_label, default: Pathname.pwd.basename.to_s|
-          content.fetch_value(key) { default.titleize }
-                 .then { |value| Dry::Monads::Success content.merge!(key => value) }
+        Label = lambda do |attributes, key = :project_label, default: Pathname.pwd.basename.to_s|
+          attributes.fetch_value(key) { default.titleize }
+                    .then { |value| Dry::Monads::Success attributes.merge!(key => value) }
         end
       end
     end

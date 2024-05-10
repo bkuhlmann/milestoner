@@ -10,9 +10,9 @@ RSpec.describe Milestoner::Configuration::Transformers::URI::Profile do
   describe "#call" do
     describe "#call" do
       it "answers formatted URI when URI exists" do
-        content = {profile_domain: "https://example.com", profile_uri: "%<domain>s/%<id>s"}
+        attributes = {profile_domain: "https://example.com", profile_uri: "%<domain>s/%<id>s"}
 
-        expect(transformer.call(content)).to eq(
+        expect(transformer.call(attributes)).to eq(
           Success(
             profile_domain: "https://example.com",
             profile_uri: "https://example.com/%<id>s"
@@ -20,7 +20,7 @@ RSpec.describe Milestoner::Configuration::Transformers::URI::Profile do
         )
       end
 
-      it "answers original content when URI doesn't exist" do
+      it "answers original attributes when URI doesn't exist" do
         expect(transformer.call({})).to eq(Success({}))
       end
     end

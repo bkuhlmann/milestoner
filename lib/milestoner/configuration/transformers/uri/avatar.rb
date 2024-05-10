@@ -6,13 +6,13 @@ module Milestoner
   module Configuration
     module Transformers
       module URI
-        Avatar = lambda do |content, key = :avatar_uri|
-          domain, uri = content.values_at :avatar_domain, key
+        Avatar = lambda do |attributes, key = :avatar_uri|
+          uri, domain = attributes.values_at key, :avatar_domain
 
-          return Dry::Monads::Success content unless uri
+          return Dry::Monads::Success attributes unless uri
 
-          content[key] = format uri, domain:, id: "%<id>s"
-          Dry::Monads::Success content
+          attributes[key] = format uri, domain:, id: "%<id>s"
+          Dry::Monads::Success attributes
         end
       end
     end

@@ -16,9 +16,9 @@ module Milestoner
             super(**)
           end
 
-          def call content
-            content.fetch(key) { specification.homepage_url }
-                   .then { |value| Success content.merge!(key => value) }
+          def call attributes
+            attributes.fetch(key) { specification.homepage_url }
+                      .then { |value| Success attributes.merge!(key => value) }
           end
 
           private

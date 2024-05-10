@@ -18,10 +18,10 @@ module Milestoner
             super(**)
           end
 
-          def call content
-            content.fetch(key) { spec_loader.call(path).homepage_url }
-                   .then { |value| value unless String(value).empty? }
-                   .then { |value| Success content.merge!(key => value) }
+          def call attributes
+            attributes.fetch(key) { spec_loader.call(path).homepage_url }
+                      .then { |value| value unless String(value).empty? }
+                      .then { |value| Success attributes.merge!(key => value) }
           end
 
           private

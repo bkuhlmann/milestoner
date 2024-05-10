@@ -11,9 +11,9 @@ module Milestoner
       module Build
         using Refinements::Hash
 
-        Root = lambda do |content, key = :build_root|
-          content.transform_with! key => -> value { Pathname(value).expand_path }
-          Dry::Monads::Success content
+        Root = lambda do |attributes, key = :build_root|
+          attributes.transform_with! key => -> value { Pathname(value).expand_path }
+          Dry::Monads::Success attributes
         end
       end
     end

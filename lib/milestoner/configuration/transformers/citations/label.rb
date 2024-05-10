@@ -23,10 +23,10 @@ module Milestoner
             @citation = citation
           end
 
-          def call content
-            content.fetch_value(key) { citation.open(path).title }
-                   .then { |value| value unless String(value).empty? }
-                   .then { |value| Success content.merge!(key => value) }
+          def call attributes
+            attributes.fetch_value(key) { citation.open(path).title }
+                      .then { |value| value unless String(value).empty? }
+                      .then { |value| Success attributes.merge!(key => value) }
           end
 
           private

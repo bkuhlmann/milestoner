@@ -9,14 +9,14 @@ RSpec.describe Milestoner::Configuration::Transformers::URI::Review do
 
   describe "#call" do
     it "answers formatted URI when URI exists" do
-      content = {
+      attributes = {
         project_owner: "acme",
         project_name: "test",
         review_domain: "https://example.com",
         review_uri: "%<domain>s/%<owner>s/%<name>s/pulls/%<id>s"
       }
 
-      expect(transformer.call(content)).to eq(
+      expect(transformer.call(attributes)).to eq(
         Success(
           project_owner: "acme",
           project_name: "test",
@@ -26,7 +26,7 @@ RSpec.describe Milestoner::Configuration::Transformers::URI::Review do
       )
     end
 
-    it "answers original content when URI doesn't exist" do
+    it "answers original attributes when URI doesn't exist" do
       expect(transformer.call({})).to eq(Success({}))
     end
   end

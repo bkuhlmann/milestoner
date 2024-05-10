@@ -14,7 +14,7 @@ RSpec.describe Milestoner::Configuration::Transformers::Generator::Label do
       expect(transformer.call({generator_label: "Test"})).to eq(Success(generator_label: "Test"))
     end
 
-    it "answers original content when key is missing" do
+    it "answers original attributes when key is missing" do
       expect(transformer.call({}).success[:generator_label]).to eq("Milestoner")
     end
   end

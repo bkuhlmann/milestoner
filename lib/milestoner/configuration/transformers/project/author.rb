@@ -19,9 +19,9 @@ module Milestoner
             super(**)
           end
 
-          def call content
-            content.fetch_value(key) { git.get("user.name", nil).value_or(nil) }
-                   .then { |value| Success content.merge!(key => value) }
+          def call attributes
+            attributes.fetch_value(key) { git.get("user.name", nil).value_or(nil) }
+                      .then { |value| Success attributes.merge!(key => value) }
           end
 
           private

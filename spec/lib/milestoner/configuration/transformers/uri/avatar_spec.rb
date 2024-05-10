@@ -9,9 +9,9 @@ RSpec.describe Milestoner::Configuration::Transformers::URI::Avatar do
 
   describe "#call" do
     it "answers formatted URI when URI exists" do
-      content = {avatar_domain: "https://avatars.test.com", avatar_uri: "%<domain>s/users/%<id>s"}
+      attributes = {avatar_domain: "https://avatars.test.com", avatar_uri: "%<domain>s/users/%<id>s"}
 
-      expect(transformer.call(content)).to eq(
+      expect(transformer.call(attributes)).to eq(
         Success(
           avatar_domain: "https://avatars.test.com",
           avatar_uri: "https://avatars.test.com/users/%<id>s"
@@ -19,7 +19,7 @@ RSpec.describe Milestoner::Configuration::Transformers::URI::Avatar do
       )
     end
 
-    it "answers original content when URI doesn't exist" do
+    it "answers original attributes when URI doesn't exist" do
       expect(transformer.call({})).to eq(Success({}))
     end
   end

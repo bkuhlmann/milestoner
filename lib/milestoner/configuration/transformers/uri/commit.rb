@@ -6,16 +6,16 @@ module Milestoner
   module Configuration
     module Transformers
       module URI
-        Commit = lambda do |content, key = :commit_uri|
-          owner, name, domain, uri = content.values_at :project_owner,
-                                                       :project_name,
-                                                       :commit_domain,
-                                                       key
+        Commit = lambda do |attributes, key = :commit_uri|
+          uri, owner, name, domain = attributes.values_at key,
+                                                          :project_owner,
+                                                          :project_name,
+                                                          :commit_domain
 
-          return Dry::Monads::Success content unless uri
+          return Dry::Monads::Success attributes unless uri
 
-          content[key] = format uri, domain:, owner:, name:, id: "%<id>s"
-          Dry::Monads::Success content
+          attributes[key] = format uri, domain:, owner:, name:, id: "%<id>s"
+          Dry::Monads::Success attributes
         end
       end
     end

@@ -16,7 +16,7 @@ RSpec.describe Milestoner::Configuration::Transformers::Generator::URI do
       )
     end
 
-    it "answers original content when key is missing" do
+    it "answers original attributes when key is missing" do
       expect(transformer.call({}).success[:generator_uri]).to eq(
         "https://alchemists.io/projects/milestoner"
       )

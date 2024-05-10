@@ -18,9 +18,9 @@ module Milestoner
             super(**)
           end
 
-          def call content
-            content.fetch(key) { spec_loader.call(path).summary }
-                   .then { |value| Success content.merge!(key => value) }
+          def call attributes
+            attributes.fetch(key) { spec_loader.call(path).summary }
+                      .then { |value| Success attributes.merge!(key => value) }
           end
 
           private

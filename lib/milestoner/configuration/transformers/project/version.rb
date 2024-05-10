@@ -18,9 +18,9 @@ module Milestoner
             @versioner = versioner
           end
 
-          def call content
-            content.fetch_value(key) { versioner.call }
-                   .then { |value| Success content.merge!(key => value) }
+          def call attributes
+            attributes.fetch_value(key) { versioner.call }
+                      .then { |value| Success attributes.merge!(key => value) }
           end
 
           private

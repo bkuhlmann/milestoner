@@ -11,9 +11,9 @@ module Milestoner
       module Project
         using Refinements::Hash
 
-        Name = lambda do |content, key = :project_name, default: Pathname.pwd.basename.to_s|
-          content.fetch_value(key) { default }
-                 .then { |value| Dry::Monads::Success content.merge!(key => value) }
+        Name = lambda do |attributes, key = :project_name, default: Pathname.pwd.basename.to_s|
+          attributes.fetch_value(key) { default }
+                    .then { |value| Dry::Monads::Success attributes.merge!(key => value) }
         end
       end
     end

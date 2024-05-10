@@ -20,7 +20,7 @@ module Milestoner
             @xdg_config = xdg_config
           end
 
-          def call(content) = Success content.merge!(key => xdg_config.all.append(default))
+          def call(attributes) = Success attributes.merge!(key => xdg_config.all.append(default))
 
           private
 
