@@ -15,7 +15,7 @@ module Milestoner
           on %w[-d --delete], argument: "NAME"
 
           def call name
-            client.commit(:users) { delete name }
+            client.write(:users) { delete name }
                   .either(method(:success), method(:failure))
           end
 

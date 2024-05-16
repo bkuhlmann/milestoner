@@ -16,7 +16,7 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Create do
       values = "1,test,Test"
       action.call values
 
-      user = cache.commit(:users) { find "Test" }
+      user = cache.read(:users) { find "Test" }
 
       expect(user).to eq(
         Success(

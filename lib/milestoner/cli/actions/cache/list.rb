@@ -16,7 +16,7 @@ module Milestoner
 
           def call(*)
             logger.info { "Listing users..." }
-            client.commit(:users, &:all).bind { |users| print users }
+            client.read(:users, &:all).bind { |users| print users }
           end
 
           private

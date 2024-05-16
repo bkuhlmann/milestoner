@@ -24,7 +24,7 @@ module Milestoner
 
           def process values
             external_id, handle, name = values.split ","
-            client.commit(:users) { upsert({external_id:, handle:, name:}) }
+            client.write(:users) { upsert({external_id:, handle:, name:}) }
           end
 
           def log_info(message) = logger.info { message }

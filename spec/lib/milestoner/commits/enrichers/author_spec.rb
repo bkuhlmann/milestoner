@@ -11,7 +11,7 @@ RSpec.describe Milestoner::Commits::Enrichers::Author do
   describe "#call" do
     it "answers user when found in cache" do
       record = user
-      cache.commit(:users) { upsert record }
+      cache.write(:users) { upsert record }
       commit = Gitt::Models::Commit[author_name: "Test"]
 
       expect(enricher.call(commit)).to eq(user)

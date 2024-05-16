@@ -11,7 +11,7 @@ RSpec.describe Milestoner::Commits::Enrichers::Colleague do
   describe "#call" do
     it "answers users when found in cache" do
       record = user
-      cache.commit(:users) { upsert record }
+      cache.write(:users) { upsert record }
 
       commit = Gitt::Models::Commit[
         trailers: [

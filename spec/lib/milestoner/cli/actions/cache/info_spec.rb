@@ -14,7 +14,7 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Info do
   describe "#call" do
     it "logs path information when cache exists" do
       record = user
-      cache.commit(:users) { upsert record }
+      cache.write(:users) { upsert record }
 
       action.call
       expect(logger.reread).to match(/🟢.+Path: #{temp_dir.join "database.store"}\./)

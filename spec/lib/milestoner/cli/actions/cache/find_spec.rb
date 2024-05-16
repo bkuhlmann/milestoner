@@ -14,7 +14,7 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Find do
   describe "#call" do
     it "finds existing user" do
       record = user
-      cache.commit(:users) { upsert record }
+      cache.write(:users) { upsert record }
       action.call "Test"
 
       expect(kernel).to have_received(:puts).with("1, test, Test")

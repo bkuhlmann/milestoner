@@ -14,15 +14,15 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Delete do
   describe "#call" do
     it "deletes user" do
       record = user
-      cache.commit(:users) { upsert record }
+      cache.write(:users) { upsert record }
       action.call "Test"
 
-      expect(cache.commit(:users, &:all)).to eq(Success([]))
+      expect(cache.read(:users, &:all)).to eq(Success([]))
     end
 
     it "logs user deletion" do
       record = user
-      cache.commit(:users) { upsert record }
+      cache.write(:users) { upsert record }
       action.call "Test"
 
       expect(logger.reread).to match(/🟢.+Deleted: "Test"\./)

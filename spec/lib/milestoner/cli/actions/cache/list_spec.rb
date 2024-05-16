@@ -19,7 +19,7 @@ RSpec.describe Milestoner::CLI::Actions::Cache::List do
 
     it "lists users when users exist" do
       record = user
-      cache.commit(:users) { upsert record }
+      cache.write(:users) { upsert record }
       action.call
 
       expect(kernel).to have_received(:puts).with("1, test, Test")

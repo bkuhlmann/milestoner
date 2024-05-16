@@ -13,7 +13,7 @@ module Milestoner
         end
 
         def call commit
-          cache.commit(:users) { |table| table.find commit.author_name }
+          cache.read(:users) { |table| table.find commit.author_name }
                .value_or(model.new)
         end
 

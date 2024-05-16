@@ -15,7 +15,7 @@ module Milestoner
           on %w[-f --find], argument: "NAME"
 
           def call name
-            client.commit(:users) { find name }
+            client.read(:users) { find name }
                   .either(method(:success), method(:failure))
           end
 

@@ -24,7 +24,7 @@ module Milestoner
         def users_for(trailers) = trailers.map { |trailer| user_for parser.call(trailer.value) }
 
         def user_for person
-          cache.commit(:users) { find person.name }
+          cache.read(:users) { find person.name }
                .value_or(nil)
         end
       end
