@@ -11,7 +11,7 @@
 :git_link: link:https://git-scm.com[Git]
 :git_lint_link: link:https://alchemists.io/projects/git-lint[Git Lint]
 :hanami_link: link:https://hanamirb.org[Hanami]
-:hanami_views_link: link:https://alchemists.io/articles/hanami_views[Hanami View]
+:hanami_views_link: link:https://alchemists.io/articles/hanami_views[Hanami Views]
 :hanamismith_link: link:https://alchemists.io/projects/hanamismith[Hanamismith]
 :lode_link: link:https://alchemists.io/projects/lode[Lode]
 :markdown_link: link:https://daringfireball.net/projects/markdown[Markdown]
@@ -73,7 +73,7 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-exp
 ** image:https://alchemists.io/images/projects/milestoner/icons/commits/refactored.png[Refactored] Refactored
 * Ensures {git_link} commit messages are alphabetically sorted for release note categorization and readability.
 * Provides automatic versioning based on last {git_link} tag and current commit trailers. See {git_commit_anatomy_link} for details.
-* Supports multiple release note build formats: {ascii_doc_link}, {markdown_link}, Stream (console), and Web (HTML). Each are fully customizable via your personal {xdg_link} configuration and {hanami_views_link} templates.
+* Supports multiple release note build formats: {ascii_doc_link}, {markdown_link}, Stream (console), and Web (HTML). Each are fully customizable via your personal {xdg_link} configuration and {hanami_views_link}.
 
 == Requirements
 
@@ -174,7 +174,7 @@ The above can be customized as follows:
 ** `uri`: Required. The URI format for linking to avatars as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the `external_id` of the user stored in the {lode_link} cache.
 * `build`: Manages release note builds.
 ** `format`: Required. The build output format. Multiple formats are supported. Default: web.
-** `layout`: Required. The layout used by the {hanami_views_link} gem when building release notes. Default: page.
+** `layout`: Required. The layout used by {hanami_views_link} when building release notes. Default: page.
 ** `root`: Required. The output location. This can be a relative or absolute path. Defaults to the `tmp` directory of your current project. The path is automatically created if missing.
 * `commit`: Manages commit categories, emojis, and hyperlinks.
 ** `categories`: Required. By default, only five categories are supported which pairs well with the {git_lint_link} gem. Category order is important with the first taking precedence over the second and so forth. Special characters are allowed for prefixes but should be enclosed in quotes. To disable categories, use an empty array. Example: `categories: []`.
@@ -339,7 +339,7 @@ Given the above, the resulting version would be: 2.0.0. This is because the high
 
 ==== Templates
 
-Build template functionality is powered by the {hanami_views_link} gem which means you can customize the HTML structure, CSS style, and more. The quickest way to get started is to copy the `templates` folder structure -- included with this gem -- to your preferred {runcom_link} configuration. For example, this gem's template structure is:
+Build template functionality is powered by {hanami_views_link} which means you can customize the HTML structure, CSS style, and more. The quickest way to get started is to copy the `templates` folder structure -- included with this gem -- to your preferred {runcom_link} configuration. For example, this gem's template structure is:
 
 ....
 lib/milestoner/templates
@@ -371,7 +371,7 @@ This means you could, for example, copy all of this gem's templates to your own 
 cp -r <milestoner_gem_root>/lib/milestoner/templates $HOME/.config/milestoner/templates
 ----
 
-Milestoner searches your {runcom_link} configuration first and, if templates are detected, will be used instead. Otherwise, Milestoner will fall back to it's own templates. Once {runcom_link} has calculated all possible template locations, {hanami_views_link} handles the final loading and evaluation of your templates.
+Milestoner searches your {runcom_link} configuration first and, if templates are detected, will be used instead. Otherwise, Milestoner falls back to it's own templates. Once {runcom_link} has calculated all possible template locations, {hanami_views_link} handle the final loading and evaluation of your templates.
 
 ==== Web Format
 

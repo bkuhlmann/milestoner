@@ -1,5 +1,15 @@
 = Versions
 
+== 17.8.0 (2024-05-25)
+
+* ✅ Fixed RuboCop Style/SuperArguments issue - Brooke Kuhlmann
+* 🟢 Added IRB Kit gem - Brooke Kuhlmann
+* 🟢 Added commit collector range - Brooke Kuhlmann
+* 🟢 Added configuration loaded time - Brooke Kuhlmann
+* 🔼 Updated commits categorizer to pass range to collector - Brooke Kuhlmann
+* 🔼 Updated commits enricher to pass range to categorizer - Brooke Kuhlmann
+* 🔼 Updated to Etcher 1.5.0 - Brooke Kuhlmann
+
 == 17.7.0 (2024-05-16)
 
 * 🟢 Added Core gem - Brooke Kuhlmann
