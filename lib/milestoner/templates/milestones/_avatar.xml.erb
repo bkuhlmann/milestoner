@@ -1,0 +1,5 @@
+<% if name %>
+  <img src="<%= url %>" alt="<%= name %>" width="24" height="24" loading="lazy">
+<% else %>
+  <%= render :icon, icon: "missing_avatar", kind: "Unknown" %>
+<% end %>
