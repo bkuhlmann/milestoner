@@ -24,6 +24,28 @@ RSpec.describe Milestoner::Commits::Collector do
       end
     end
 
+    it "answers specific range of commits when tag exists" do
+      git_repo_dir.change_dir do
+        `git tag 0.0.0`
+        `touch a.txt && git add --all && git commit --message "Added A"`
+        `touch b.txt && git add --all && git commit --message "Added B"`
+
+        subjects = collector.call(min: "0.0.0", max: "HEAD").value_or([]).map(&:subject)
+
+        expect(subjects).to contain_exactly("Added A", "Added B")
+      end
+    end
+
+    it "fails when commit range is invalid and tag exists" do
+      git_repo_dir.change_dir do
+        `git tag 0.0.0`
+
+        expect(collector.call(min: :danger, max: :invalid)).to eq(
+          Failure("Invalid minimum and/or maximum range: danger..invalid.")
+        )
+      end
+    end
+
     it "answers all commits when no tags exist" do
       git_repo_dir.change_dir do
         `touch a.txt && git add --all && git commit --message "Added A"`
