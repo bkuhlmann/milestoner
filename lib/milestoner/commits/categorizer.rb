@@ -7,41 +7,42 @@ module Milestoner
   module Commits
     # Retrieves and categorizes Git repository commit tagged or untagged history.
     class Categorizer
-      include Import[:git]
+      include Import[:git, :input]
 
       using Refinements::Array
 
-      def initialize(collector: Collector.new, expression: Regexp, **)
+      def initialize(collector: Collector.new, **)
         @collector = collector
-        @expression = expression
         super(**)
+
+        @labels = input.commit_categories.pluck :label
+        @pattern = labels.empty? ? // : Regexp.union(labels)
       end
 
-      def call configuration = Container[:configuration]
-        categories = configuration.commit_categories.pluck :label
-
-        categories.reduce({}) { |group, prefix| group.merge prefix => [] }
-                  .merge("Unknown" => [])
-                  .then { |groups| group_by_category categories, groups }
-                  .each_value { |commits| commits.sort_by!(&:subject) }
-                  .values
-                  .flatten
+      def call min: Collector::MIN, max: Collector::MAX
+        collect(min, max).each_value { |commits| commits.sort_by!(&:subject) }
+                         .values
+                         .flatten
       end
 
       private
 
-      attr_reader :collector, :expression
+      attr_reader :collector, :labels, :pattern
 
-      def group_by_category categories, groups
-        collector.call.value_or(Core::EMPTY_ARRAY).each.with_object groups do |commit, collection|
-          category = commit.subject[subject_pattern(categories)]
-          key = collection.key?(category) ? category : "Unknown"
-          collection[key] << commit
-        end
+      def collect min, max
+        collector.call(min:, max:)
+                 .value_or(Core::EMPTY_ARRAY)
+                 .each
+                 .with_object categories do |commit, collection|
+                   category = commit.subject[pattern]
+                   key = collection.key?(category) ? category : "Unknown"
+                   collection[key] << commit
+                 end
       end
 
-      def subject_pattern categories
-        categories.empty? ? expression.new(//) : expression.union(categories)
+      def categories
+        labels.reduce({}) { |group, prefix| group.merge prefix => [] }
+              .merge! "Unknown" => []
       end
     end
   end
