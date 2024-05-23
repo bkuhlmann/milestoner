@@ -14,7 +14,7 @@ module Milestoner
         using Refinements::Array
 
         def initialize(**)
-          super(**)
+          super
           @prefixes = configuration.commit_categories.pluck :label
           @authored_at = Time.at(value.authored_at.to_i).utc
         end
