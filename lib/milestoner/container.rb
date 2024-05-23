@@ -56,6 +56,7 @@ module Milestoner
                       .add_transformer(Configuration::Transformers::URI::Profile)
                       .add_transformer(Configuration::Transformers::URI::Review)
                       .add_transformer(Configuration::Transformers::URI::Tracker)
+                      .add_transformer(Etcher::Transformers::Time.new)
     end
 
     register(:specification) { self[:spec_loader].call "#{__dir__}/../../milestoner.gemspec" }

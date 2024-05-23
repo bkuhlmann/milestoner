@@ -16,6 +16,7 @@ module Milestoner
                        :generator_label,
                        :generator_uri,
                        :generator_version,
+                       :loaded_at,
                        :profile_domain,
                        :profile_uri,
                        :project_author,
