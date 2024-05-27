@@ -17,5 +17,6 @@ keywords:
  - milestones
  - versions
  - releases
-repository-code: https://alchemists.io/projects/milestoner
+repository-code: https://github.com/bkuhlmann/milestoner
 repository-artifact: https://rubygems.org/gems/milestoner
+url: https://alchemists.io/projects/milestoner
