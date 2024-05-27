@@ -8,6 +8,7 @@ detectors:
       - Milestoner::CLI::Actions::Build::Basename#call
       - Milestoner::CLI::Actions::Build::Format#call
       - Milestoner::CLI::Actions::Build::Label#call
+      - Milestoner::CLI::Actions::Build::Max#call
       - Milestoner::CLI::Actions::Build::Root#call
       - Milestoner::CLI::Actions::Build::Version#call
       - Milestoner::CLI::Actions::Publish#call
