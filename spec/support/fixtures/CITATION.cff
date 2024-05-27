@@ -12,5 +12,6 @@ authors:
     orcid: https://orcid.org/0000-0000-0000-0000
 keywords:
  - demo
-repository-code: https://test.com/projects/demo
+repository-code: https://github.com/test/demo
 repository-artifact: https://rubygems.org/gems/demo
+url: https://acme.io/projects/demo
