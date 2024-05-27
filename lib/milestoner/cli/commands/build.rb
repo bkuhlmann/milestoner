@@ -18,6 +18,7 @@ module Milestoner
         on Actions::Build::Format
         on Actions::Build::Label
         on Actions::Build::Layout
+        on Actions::Build::Max
         on Actions::Build::Root
         on Actions::Build::Stylesheet
         on Actions::Build::Version
