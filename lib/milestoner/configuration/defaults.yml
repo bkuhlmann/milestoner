@@ -4,6 +4,7 @@ build:
   file: "index.%<extension>s"
   format: web
   layout: page
+  max: 1
   root: tmp/milestone
   stylesheet: page
 commit:
