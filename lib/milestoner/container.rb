@@ -40,6 +40,7 @@ module Milestoner
                       .add_transformer(Configuration::Transformers::Gems::URI.new)
                       .add_transformer(Configuration::Transformers::Citations::Label.new)
                       .add_transformer(Configuration::Transformers::Citations::Description.new)
+                      .add_transformer(Configuration::Transformers::Citations::URI.new)
                       .add_transformer(Configuration::Transformers::Project::Author.new)
                       .add_transformer(Configuration::Transformers::Project::Label)
                       .add_transformer(:basename, :project_name)
