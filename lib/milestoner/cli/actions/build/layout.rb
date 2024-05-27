@@ -10,11 +10,11 @@ module Milestoner
         class Layout < Sod::Action
           include Import[:input]
 
-          description "Set layout."
+          description "Set view template layout."
 
           ancillary "Use false to disable."
 
-          on %w[-L --layout], argument: "[LAYOUT]"
+          on %w[-L --layout], argument: "[NAME]"
 
           default { Container[:configuration].build_layout }
 
