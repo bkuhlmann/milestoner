@@ -4,7 +4,8 @@ build:
   basename: index
   format: web
   layout: page
-  root: tmp/milestone
+  max: 1
+  root: tmp/milestones
   stylesheet: page
 commit:
   categories:

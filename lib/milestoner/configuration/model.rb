@@ -7,6 +7,7 @@ module Milestoner
                        :build_basename,
                        :build_format,
                        :build_layout,
+                       :build_max,
                        :build_root,
                        :build_stylesheet,
                        :build_template_paths,

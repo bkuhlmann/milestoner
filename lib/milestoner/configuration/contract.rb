@@ -12,6 +12,7 @@ module Milestoner
       required(:build_basename).filled :string
       required(:build_format).filled :string
       required(:build_layout) { str? | bool? }
+      required(:build_max).filled :integer
       required(:build_root).filled Etcher::Types::Pathname
       required(:build_stylesheet) { bool? | str? }
       required(:build_template_paths).array Etcher::Types::Pathname
