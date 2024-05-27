@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "pathname"
 require "sod"
 
 module Milestoner
@@ -16,7 +17,7 @@ module Milestoner
 
           default { Container[:configuration].build_root }
 
-          def call(path = nil) = input.build_root = (path || default).expand_path
+          def call(path = nil) = input.build_root = Pathname(path || default).expand_path
         end
       end
     end
