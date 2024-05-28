@@ -8,7 +8,6 @@ Dry::Schema.load_extensions :monads
 module Milestoner
   module Configuration
     Contract = Dry::Schema.Params do
-      required(:avatar_domain).filled :string
       required(:avatar_uri).filled :string
       required(:build_format).filled :string
       required(:build_layout) { str? | bool? }
@@ -20,14 +19,12 @@ module Milestoner
         required(:label).filled :string
       end
 
-      required(:commit_domain).filled :string
       required(:commit_format).filled :string
       required(:commit_uri).filled :string
       required(:generator_label).filled :string
       required(:generator_uri).filled :string
       required(:generator_version).filled Etcher::Types::Version
       required(:loaded_at).filled :time
-      required(:profile_domain).filled :string
       required(:profile_uri).filled :string
       required(:project_author).filled :string
       optional(:project_description).maybe :string
@@ -36,9 +33,7 @@ module Milestoner
       optional(:project_owner).filled :string
       optional(:project_uri).maybe :string
       required(:project_version).filled Etcher::Types::Version
-      required(:review_domain).filled :string
       required(:review_uri).filled :string
-      required(:tracker_domain).filled :string
       required(:tracker_uri).filled :string
     end
   end

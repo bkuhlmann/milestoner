@@ -51,11 +51,9 @@ module Milestoner
                       .add_transformer(Configuration::Transformers::Generator::Label.new)
                       .add_transformer(Configuration::Transformers::Generator::URI.new)
                       .add_transformer(Configuration::Transformers::Generator::Version.new)
-                      .add_transformer(Configuration::Transformers::URI::Avatar)
-                      .add_transformer(Configuration::Transformers::URI::Commit)
-                      .add_transformer(Configuration::Transformers::URI::Profile)
-                      .add_transformer(Configuration::Transformers::URI::Review)
-                      .add_transformer(Configuration::Transformers::URI::Tracker)
+                      .add_transformer(:string, :commit_uri, id: "%<id>s")
+                      .add_transformer(:string, :review_uri, id: "%<id>s")
+                      .add_transformer(:string, :tracker_uri, id: "%<id>s")
                       .add_transformer(:time)
     end
 

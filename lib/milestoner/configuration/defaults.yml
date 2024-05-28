@@ -1,6 +1,5 @@
 avatar:
-  domain: https://avatars.githubusercontent.com
-  uri: "%<domain>s/u/%<id>s"
+  uri: "https://avatars.githubusercontent.com/u/%<id>s"
 build:
   format: web
   layout: page
@@ -17,15 +16,13 @@ commit:
       label: Removed
     - emoji: 🔁
       label: Refactored
-  domain: https://github.com
   format: asciidoc
-  uri: "%<domain>s/%<owner>s/%<name>s/commit/%<id>s"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s"
 profile:
-  domain: https://github.com
-  uri: "%<domain>s/%<id>s"
+  uri: "https://github.com/%<id>s"
+project:
+  uri: "https://github.com/%<id>s"
 review:
-  domain: https://github.com
-  uri: "%<domain>s/%<owner>s/%<name>s/pulls/%<id>s"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s"
 tracker:
-  domain: https://github.com
-  uri: "%<domain>s/%<owner>s/%<name>s/issues/%<id>s"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s"
