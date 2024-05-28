@@ -29,6 +29,8 @@ module Milestoner
       required(:generator_uri).filled :string
       required(:generator_version).filled Etcher::Types::Version
       required(:loaded_at).filled :time
+      required(:organization_label).filled :string
+      required(:organization_uri).filled :string
       required(:profile_uri).filled :string
       required(:project_author).filled :string
       optional(:project_description).filled :string
