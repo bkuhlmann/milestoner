@@ -22,7 +22,6 @@ module Milestoner
         project_generator
         project_label
         project_name
-        project_uri
         project_version
       ] => :settings
 

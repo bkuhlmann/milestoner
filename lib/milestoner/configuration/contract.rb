@@ -37,6 +37,10 @@ module Milestoner
       optional(:project_label).filled :string
       required(:project_name).filled :string
       required(:project_owner).filled :string
+      optional(:project_uri_home).filled :string
+      optional(:project_uri_icon).filled :string
+      optional(:project_uri_logo).filled :string
+      optional(:project_uri_version).filled :string
       required(:project_version).filled Etcher::Types::Version
       required(:review_uri).filled :string
       required(:tracker_uri).filled :string
