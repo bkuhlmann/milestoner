@@ -60,16 +60,16 @@ RSpec.describe Milestoner::Commits::Enricher do
               format: "asciidoc",
               issue: Milestoner::Models::Link[
                 id: "123",
-                uri: "https://github.com/acme/test/issues/123"
+                uri: "https://github.com/tester/test/issues/123"
               ],
               milestone: "patch",
               notes: "",
               review: Milestoner::Models::Link[
                 id: "All",
-                uri: "https://github.com/acme/test/pulls/"
+                uri: "https://github.com/tester/test/pulls/"
               ],
               signers: [],
-              uri: "https://github.com/acme/test/commit/180dec7d8ae8"
+              uri: "https://github.com/tester/test/commit/180dec7d8ae8"
             ]
           ]
         )

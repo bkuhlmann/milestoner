@@ -10,7 +10,7 @@ RSpec.describe Milestoner::Commits::Enrichers::URI do
   describe "#call" do
     it "answers link when trailer exists" do
       commit = Gitt::Models::Commit[sha: "180dec7d8ae8"]
-      expect(enricher.call(commit)).to eq("https://github.com/acme/test/commit/180dec7d8ae8")
+      expect(enricher.call(commit)).to eq("https://github.com/tester/test/commit/180dec7d8ae8")
     end
   end
 end

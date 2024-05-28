@@ -10,14 +10,12 @@ module Milestoner
                        :build_root,
                        :build_template_paths,
                        :commit_categories,
-                       :commit_domain,
                        :commit_format,
                        :commit_uri,
                        :generator_label,
                        :generator_uri,
                        :generator_version,
                        :loaded_at,
-                       :profile_domain,
                        :profile_uri,
                        :project_author,
                        :project_description,
@@ -27,9 +25,7 @@ module Milestoner
                        :project_owner,
                        :project_uri,
                        :project_version,
-                       :review_domain,
                        :review_uri,
-                       :tracker_domain,
                        :tracker_uri
   end
 end

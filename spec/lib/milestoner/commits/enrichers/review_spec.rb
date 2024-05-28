@@ -10,7 +10,7 @@ RSpec.describe Milestoner::Commits::Enrichers::Review do
   describe "#call" do
     it "answers link when trailer exists" do
       expect(enricher.call).to eq(
-        Milestoner::Models::Link[id: "All", uri: "https://github.com/acme/test/pulls/"]
+        Milestoner::Models::Link[id: "All", uri: "https://github.com/tester/test/pulls/"]
       )
     end
   end
