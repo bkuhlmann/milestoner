@@ -47,12 +47,6 @@ RSpec.describe Milestoner::Views::Context do
     end
   end
 
-  describe "#project_generator" do
-    it "answers generator" do
-      expect(a_context.project_generator).to be(nil)
-    end
-  end
-
   describe "#project_label" do
     it "answers label" do
       expect(a_context.project_label).to eq("Test")

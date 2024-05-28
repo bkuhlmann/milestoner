@@ -25,7 +25,6 @@ module Milestoner
                        :profile_uri,
                        :project_author,
                        :project_description,
-                       :project_generator,
                        :project_label,
                        :project_name,
                        :project_owner,
