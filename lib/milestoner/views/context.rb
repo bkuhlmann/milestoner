@@ -19,7 +19,6 @@ module Milestoner
         generator_version
         project_author
         project_description
-        project_generator
         project_label
         project_name
         project_uri_home
