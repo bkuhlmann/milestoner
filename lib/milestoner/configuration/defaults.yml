@@ -22,6 +22,9 @@ commit:
       label: Refactored
   format: asciidoc
   uri: https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s
+organization:
+  label: Undefined
+  uri: https://undefined.io
 profile:
   uri: https://github.com/%<id>s
 project:
