@@ -16,12 +16,40 @@ RSpec.describe Milestoner::Configuration::Transformers::Gems::URI do
 
     it "answers specification home page URL when key is missing and specification exists" do
       transformer = described_class.new path: SPEC_ROOT.join("support/fixtures/demo.gemspec")
-      expect(transformer.call({}).success[:project_uri]).to eq("https://test.com/projects/demo")
+      expect(transformer.call({})).to eq(Success(project_uri: "https://test.com/projects/demo"))
     end
 
-    it "answers nil value when key and specification are missing" do
+    it "answers formatted URL when specifiers are detected" do
+      attributes = {
+        organization_uri: "https://acme.io",
+        project_name: "test",
+        project_uri: "%<organization_uri>s/projects/%<project_name>s"
+      }
+
+      expect(transformer.call(attributes)).to eq(
+        Success(
+          organization_uri: "https://acme.io",
+          project_name: "test",
+          project_uri: "https://acme.io/projects/test"
+        )
+      )
+    end
+
+    it "answers empty hash when key is missing" do
       transformer = described_class.new path: Pathname("bogus.gemspec")
-      expect(transformer.call({})).to eq(Success({project_uri: nil}))
+      expect(transformer.call({})).to eq(Success({}))
+    end
+
+    it "answers failure when string specifier is missing" do
+      attributes = {project_uri: "%<organization_uri>s/projects/%<project_name>s"}
+      transformer = described_class.new path: Pathname("bogus.gemspec")
+
+      expect(transformer.call(attributes)).to eq(
+        Failure(
+          step: :transform,
+          payload: %(Unable to transform :project_uri, missing specifier: "<organization_uri>".)
+        )
+      )
     end
   end
 end

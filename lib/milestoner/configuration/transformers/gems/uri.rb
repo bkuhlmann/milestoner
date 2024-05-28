@@ -19,14 +19,23 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch(key) { spec_loader.call(path).homepage_url }
-                      .then { |value| value unless String(value).empty? }
-                      .then { |value| Success attributes.merge!(key => value) }
+            process attributes
+            Success attributes
+          rescue KeyError => error
+            Failure step: :transform,
+                    payload: "Unable to transform #{key.inspect}, missing specifier: " \
+                             "\"#{error.message[/<.+>/]}\"."
           end
 
           private
 
           attr_reader :key, :path
+
+          def process attributes
+            attributes.fetch(key) { spec_loader.call(path).homepage_url }
+                      .then { |value| value.match?(/%<.+>s/) ? format(value, attributes) : value }
+                      .then { |value| attributes.merge! key => value unless value.empty? }
+          end
         end
       end
     end
