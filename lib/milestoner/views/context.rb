@@ -22,7 +22,10 @@ module Milestoner
         project_generator
         project_label
         project_name
-        project_uri
+        project_uri_home
+        project_uri_icon
+        project_uri_logo
+        project_uri_version
         project_version
       ] => :settings
 

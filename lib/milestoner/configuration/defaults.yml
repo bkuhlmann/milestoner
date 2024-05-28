@@ -29,7 +29,11 @@ profile:
   uri: https://github.com/%<id>s
 project:
   owner: unknown
-  uri: https://github.com/%<id>s
+  uri:
+    home: "%<organization_uri>s/projects/%<project_name>s"
+    icon: "%<organization_uri>s/assets/media/projects/%<project_name>s/logo.png"
+    logo: "%<organization_uri>s/assets/media/projects/%<project_name>s/logo.png"
+    version: "%<project_uri_home>s/versions/%<id>s"
 review:
   uri: https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s
 tracker:

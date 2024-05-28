@@ -8,6 +8,8 @@ module Milestoner
     module Milestones
       # Produces release notes in HTML format.
       class Show < Hanami::View
+        include Import[:settings]
+
         using Refinements::String
 
         config.default_context = Context.new
@@ -16,7 +18,8 @@ module Milestoner
         config.template = "milestones/show"
 
         expose :commits
-        expose :uri, default: Container[:settings].project_uri
+        expose(:project_uri_home) { settings.project_uri_home }
+        expose(:project_uri_logo) { settings.project_uri_logo }
         expose :at, default: Time.now.utc
         expose(:date) { |at| at.strftime "%Y-%m-%d" }
         expose(:datetime) { |at| at.strftime "%Y-%m-%dT%H:%M:%S%z" }

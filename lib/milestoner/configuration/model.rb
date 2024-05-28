@@ -28,7 +28,10 @@ module Milestoner
                        :project_label,
                        :project_name,
                        :project_owner,
-                       :project_uri,
+                       :project_uri_home,
+                       :project_uri_icon,
+                       :project_uri_logo,
+                       :project_uri_version,
                        :project_version,
                        :review_uri,
                        :tracker_uri
