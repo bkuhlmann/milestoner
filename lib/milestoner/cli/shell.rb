@@ -27,6 +27,7 @@ module Milestoner
           on(Sod::Prefabs::Commands::Config, context:)
           on Commands::Cache
           on Commands::Build
+          on Actions::Next
           on Actions::Publish
           on(Sod::Prefabs::Actions::Version, context:)
           on Sod::Prefabs::Actions::Help, self

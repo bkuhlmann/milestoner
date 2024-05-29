@@ -4,6 +4,7 @@ require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Shell do
   using Refinements::Pathname
+  using Versionaire::Cast
 
   subject(:shell) { described_class.new }
 
@@ -28,6 +29,13 @@ RSpec.describe Milestoner::CLI::Shell do
     it "prints build usage" do
       shell.call %w[build]
       expect(kernel).to have_received(:puts).with(/Build milestone.+/m)
+    end
+
+    it "prints next version" do
+      git_repo_dir.change_dir do
+        shell.call %w[--next]
+        expect(kernel).to have_received(:puts).with(Version("1.2.3"))
+      end
     end
 
     it "creates tag when publishing", :aggregate_failures do
