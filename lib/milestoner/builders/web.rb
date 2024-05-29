@@ -17,27 +17,34 @@ module Milestoner
       end
 
       def call
-        settings.build_root.tap do |path|
-          stylesheet_path.copy path.make_path.join("page.css")
-          write path
-        end
+        copy_stylesheet
+        write.bind { html_path.parent }
       end
 
       private
 
       attr_reader :view, :enricher
 
-      def stylesheet_path
+      def copy_stylesheet
+        return unless settings.build_stylesheet
+
+        path = settings.build_root.join "#{settings.build_stylesheet}.css"
+        stylesheet_template_path.copy path.make_ancestors
+      end
+
+      def stylesheet_template_path
         settings.build_template_paths
                 .map { |path| path.join "public/page.css.erb" }
                 .find(&:exist?)
       end
 
-      def write path
+      def write
         enricher.call.fmap do |commits|
-          path.join("index.html").write view.call commits:, layout: settings.build_layout
+          html_path.write view.call commits:, layout: settings.build_layout
         end
       end
+
+      def html_path = settings.build_root.join settings.build_file.sub("%<extension>s", "html")
     end
   end
 end
