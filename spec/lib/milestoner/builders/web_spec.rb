@@ -18,9 +18,37 @@ RSpec.describe Milestoner::Builders::Web do
   describe "#call" do
     let(:html_path) { temp_dir.join "index.html" }
 
-    it "builds HTML and CSS" do
+    it "builds default HTML and CSS" do
       builder.call
       expect(temp_dir.files).to contain_exactly(html_path, temp_dir.join("page.css"))
+    end
+
+    it "builds custom HTML and CSS" do
+      settings.build_basename = "test"
+      settings.build_stylesheet = "test"
+      builder.call
+
+      expect(temp_dir.files).to contain_exactly(
+        temp_dir.join("test.html"),
+        temp_dir.join("test.css")
+      )
+    end
+
+    it "ignores relative path when building CSS file" do
+      settings.build_stylesheet = "../page"
+      builder.call
+
+      expect(temp_dir.files).to contain_exactly(
+        temp_dir.join("index.html"),
+        temp_dir.join("page.css")
+      )
+    end
+
+    it "builds only HTML when stylesheet is disabled" do
+      settings.build_stylesheet = false
+      builder.call
+
+      expect(temp_dir.files).to contain_exactly(html_path)
     end
 
     it "includes title" do
@@ -41,6 +69,18 @@ RSpec.describe Milestoner::Builders::Web do
     it "includes generator meta" do
       builder.call
       expect(html_path.read).to include(%(<meta name="generator" content="Milestoner 3.2.1">))
+    end
+
+    it "includes stylesheet when enabled" do
+      builder.call
+      expect(html_path.read).to include(%(href="page.css"))
+    end
+
+    it "excludes stylesheet when disabled" do
+      settings.build_stylesheet = false
+      builder.call
+
+      expect(html_path.read).not_to include(%(rel="stylesheet"))
     end
 
     it "includes generator link" do

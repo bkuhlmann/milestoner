@@ -46,8 +46,13 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
       )
     end
 
-    it "answers build path" do
+    it "answers default build path" do
       expect(builder.call).to eq(temp_dir.join("index.adoc"))
+    end
+
+    it "answers custom build path" do
+      settings.build_basename = "test"
+      expect(builder.call).to eq(temp_dir.join("test.adoc"))
     end
   end
 end

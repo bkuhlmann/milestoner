@@ -19,7 +19,13 @@
           href="https://alchemists.io/images/projects/milestoner/logo.png"
           type="image/png"
           sizes="200x200">
-    <link title="<%= project_label %>: Stylesheet" rel="stylesheet" href="page.css" type="text/css">
+
+<% if build_stylesheet %>
+    <link title="<%= project_label %>: Stylesheet"
+          rel="stylesheet"
+          href="<%= build_stylesheet %>.css"
+          type="text/css">
+<% end %>
 
     <script src="https://unpkg.com/alpinejs@3.14" defer></script>
   </head>

@@ -16,11 +16,13 @@ module Milestoner
         super(**)
       end
 
-      def call = settings.build_root.join("index.md").make_ancestors.tap { |path| write path }
+      def call = build_path.make_ancestors.tap { |path| write path }
 
       private
 
       attr_reader :view, :enricher
+
+      def build_path = settings.build_root.join "#{settings.build_basename}.md"
 
       def write path
         enricher.call.fmap do |commits|
