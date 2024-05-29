@@ -9,6 +9,7 @@ module Milestoner
                        :build_format,
                        :build_layout,
                        :build_root,
+                       :build_stylesheet,
                        :build_template_paths,
                        :commit_categories,
                        :commit_format,
