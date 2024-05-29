@@ -29,13 +29,13 @@ module Milestoner
     end
 
     register :configuration do
-      self[:defaults].add_loader(Etcher::Loaders::YAML.new(self["xdg.config"].active))
+      self[:defaults].add_loader(:yaml, self["xdg.config"].active)
                      .then { |registry| Etcher.call registry }
     end
 
     register :defaults do
       Etcher::Registry.new(contract: Configuration::Contract, model: Configuration::Model)
-                      .add_loader(Etcher::Loaders::YAML.new(self[:defaults_path]))
+                      .add_loader(:yaml, self[:defaults_path])
                       .add_transformer(Configuration::Transformers::Build::Root)
                       .add_transformer(Configuration::Transformers::Build::TemplatePaths.new)
                       .add_transformer(Configuration::Transformers::Gems::Label.new)
@@ -56,7 +56,7 @@ module Milestoner
                       .add_transformer(Configuration::Transformers::URI::Profile)
                       .add_transformer(Configuration::Transformers::URI::Review)
                       .add_transformer(Configuration::Transformers::URI::Tracker)
-                      .add_transformer(Etcher::Transformers::Time.new)
+                      .add_transformer(:time)
     end
 
     register(:specification) { self[:spec_loader].call "#{__dir__}/../../milestoner.gemspec" }
