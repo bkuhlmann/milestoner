@@ -22,9 +22,9 @@ module Milestoner
 
         # :reek:TooManyStatements
         def call
-          log_info "Building milestone..."
-
           format = input.build_format
+
+          log_info "Building #{input.project_label} milestone (#{format})..."
 
           case format
             when "ascii_doc" then build_ascii_doc

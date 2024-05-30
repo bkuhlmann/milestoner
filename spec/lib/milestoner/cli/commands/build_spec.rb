@@ -23,7 +23,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building milestone.../)
+        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(ascii_doc\)\.\.\./)
       end
 
       it "builds ASCII Doc file" do
@@ -42,7 +42,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building milestone.../)
+        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(markdown\)\.\.\./)
       end
 
       it "builds Markdown file" do
@@ -58,7 +58,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       before { command.call }
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building milestone.../)
+        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(web\)\.\.\./)
       end
 
       it "builds web files" do
@@ -77,7 +77,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building milestone.../)
+        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(stream\)\.\.\./)
       end
 
       it "builds stream" do
