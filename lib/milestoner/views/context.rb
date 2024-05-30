@@ -13,6 +13,7 @@ module Milestoner
       include Import[:settings]
 
       delegate %i[
+        build_stylesheet
         generator_label
         generator_uri
         generator_version
