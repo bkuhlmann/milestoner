@@ -10,6 +10,7 @@ detectors:
       - Milestoner::CLI::Actions::Build::Label#call
       - Milestoner::CLI::Actions::Build::Max#call
       - Milestoner::CLI::Actions::Build::Root#call
+      - Milestoner::CLI::Actions::Build::Tail#call
       - Milestoner::CLI::Actions::Build::Version#call
       - Milestoner::CLI::Actions::Publish#call
       - Milestoner::Tags::Creator#compute_version

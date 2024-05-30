@@ -21,6 +21,7 @@ module Milestoner
         on Actions::Build::Max
         on Actions::Build::Root
         on Actions::Build::Stylesheet
+        on Actions::Build::Tail
         on Actions::Build::Version
 
         # :reek:TooManyStatements
