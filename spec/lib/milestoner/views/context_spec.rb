@@ -11,6 +11,12 @@ RSpec.describe Milestoner::Views::Context do
 
   include_context "with application dependencies"
 
+  describe "#build_stylesheet" do
+    it "answers stylesheet" do
+      expect(a_context.build_stylesheet).to eq("page")
+    end
+  end
+
   describe "#generator_label" do
     it "answers label" do
       expect(a_context.generator_label).to eq("Milestoner")
