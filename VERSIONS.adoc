@@ -1,5 +1,15 @@
 = Versions
 
+== 17.9.0 (2024-06-01)
+
+* ✅ Fixed CLI layout build action documentation - Brooke Kuhlmann
+* ✅ Fixed CLI root build action to cast to pathname - Brooke Kuhlmann
+* ✅ Fixed build command log message - Brooke Kuhlmann
+* 🟢 Added CLI next action - Brooke Kuhlmann
+* 🔼 Updated Etcher 1.6.0 - Brooke Kuhlmann
+* 🔼 Updated citation URLs - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.2 - Brooke Kuhlmann
+
 == 17.8.0 (2024-05-25)
 
 * ✅ Fixed RuboCop Style/SuperArguments issue - Brooke Kuhlmann

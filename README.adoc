@@ -105,7 +105,7 @@ gem install milestoner
 
 From the command line, type: `milestoner --help`
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/usage.png[Usage,width=690,height=398,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/usage.png[Usage,width=670,height=412,role=focal_point]
 
 === Customization
 
