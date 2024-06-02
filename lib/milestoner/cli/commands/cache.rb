@@ -7,7 +7,7 @@ module Milestoner
     module Commands
       # Handles the building of milestone output.
       class Cache < Sod::Command
-        include Import[:input, :logger]
+        include Import[:settings, :logger]
 
         handle "cache"
 

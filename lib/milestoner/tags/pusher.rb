@@ -6,7 +6,7 @@ module Milestoner
   module Tags
     # Handles publishing of tags to a remote repository.
     class Pusher
-      include Import[:input, :git, :logger]
+      include Import[:settings, :git, :logger]
 
       using Versionaire::Cast
 
@@ -21,7 +21,7 @@ module Milestoner
       end
 
       def compute_version value
-        Version value || input.project_version
+        Version value || settings.project_version
       rescue Versionaire::Error => error
         raise Error, error
       end

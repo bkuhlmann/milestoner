@@ -12,12 +12,17 @@ RSpec.describe Milestoner::CLI::Actions::Build::Version do
   describe "#call" do
     it "answers default version" do
       action.call
-      expect(input.project_version).to match(/\d+\.\d+\.\d+/)
+      expect(settings.project_version).to match(/\d+\.\d+\.\d+/)
     end
 
     it "answers custom version" do
       action.call "0.0.0"
-      expect(input.project_version).to eq(Version("0.0.0"))
+      expect(settings.project_version).to eq(Version("0.0.0"))
+    end
+
+    it "logs error with invalid version" do
+      action.call "bogus"
+      expect(logger.reread).to match(/🛑.+Invalid version/)
     end
   end
 end

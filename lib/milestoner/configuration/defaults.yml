@@ -1,5 +1,5 @@
 avatar:
-  uri: "https://avatars.githubusercontent.com/u/%<id>s"
+  uri: https://avatars.githubusercontent.com/u/%<id>s
 build:
   format: web
   layout: page
@@ -17,12 +17,13 @@ commit:
     - emoji: 🔁
       label: Refactored
   format: asciidoc
-  uri: "https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s"
+  uri: https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s
 profile:
-  uri: "https://github.com/%<id>s"
+  uri: https://github.com/%<id>s
 project:
-  uri: "https://github.com/%<id>s"
+  owner: unknown
+  uri: https://github.com/%<id>s
 review:
-  uri: "https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s"
+  uri: https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s
 tracker:
-  uri: "https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s"
+  uri: https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s

@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds web page output (i.e. HTML and CSS).
     class Web
-      include Milestoner::Import[:input]
+      include Milestoner::Import[:settings]
 
       using Refinements::Pathname
 
@@ -17,7 +17,7 @@ module Milestoner
       end
 
       def call
-        input.build_root.tap do |path|
+        settings.build_root.tap do |path|
           stylesheet_path.copy path.make_path.join("page.css")
           write path
         end
@@ -28,14 +28,14 @@ module Milestoner
       attr_reader :view, :enricher
 
       def stylesheet_path
-        input.build_template_paths
-             .map { |path| path.join "public/page.css.erb" }
-             .find(&:exist?)
+        settings.build_template_paths
+                .map { |path| path.join "public/page.css.erb" }
+                .find(&:exist?)
       end
 
       def write path
         enricher.call.fmap do |commits|
-          path.join("index.html").write view.call commits:, layout: input.build_layout
+          path.join("index.html").write view.call commits:, layout: settings.build_layout
         end
       end
     end

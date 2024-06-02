@@ -80,7 +80,7 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "logs tag exists when previously created" do
       git_repo_dir.change_dir do
-        `git tag #{configuration.project_version}`
+        `git tag #{settings.project_version}`
         creator.call
 
         expect(logger.reread).to match(/⚠️.+Local tag exists: 1.2.3. Skipped./)
@@ -89,7 +89,7 @@ RSpec.describe Milestoner::Tags::Creator do
 
     it "answers false when tag is previously created" do
       git_repo_dir.change_dir do
-        `git tag #{configuration.project_version}`
+        `git tag #{settings.project_version}`
         expect(creator.call).to be(false)
       end
     end

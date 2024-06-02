@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 require "lode"
-require "versionaire"
 
-# rubocop:todo RSpec/MultipleMemoizedHelpers
 RSpec.shared_context "with application dependencies" do
-  using Versionaire::Cast
+  using Refinements::Struct
 
   include_context "with temporary directory"
 
@@ -16,38 +14,28 @@ RSpec.shared_context "with application dependencies" do
     end
   end
 
-  let :configuration do
-    Etcher.new(Milestoner::Container[:defaults])
-          .call(
-            build_root: temp_dir,
-            generator_label: "Test Generator",
-            generator_uri: "https://test.com",
-            generator_version: "3.2.1",
-            project_author: "Test Author",
-            project_description: "Test description.",
-            project_generator: "Test Generator",
-            project_label: "Test Label",
-            project_name: "test",
-            project_owner: "acme",
-            project_uri: "https://project.test",
-            project_version: Version("1.2.3")
-          ).bind(&:dup)
-  end
-
-  let(:input) { configuration.dup }
-  let(:xdg_config) { Runcom::Config.new Milestoner::Container[:defaults_path] }
+  let(:settings) { Milestoner::Container[:settings] }
   let(:kernel) { class_spy Kernel }
   let(:logger) { Cogger.new id: :milestoner, io: StringIO.new, level: :debug }
 
   before do
-    Milestoner::Container.stub! configuration:,
-                                input:,
-                                "xdg.config" => xdg_config,
-                                cache:,
-                                kernel:,
-                                logger:
+    settings.merge! Etcher.call(
+      Milestoner::Container[:registry].remove_loader(1)
+                                      .add_loader(
+                                        :hash,
+                                        project_name: "test",
+                                        project_version: "1.2.3"
+                                      ),
+      build_root: temp_dir,
+      generator_version: "3.2.1",
+      loaded_at: Time.utc(2020, 1, 2, 3, 4, 5),
+      project_author: "Tester",
+      project_description: "A test.",
+      project_label: "Test"
+    )
+
+    Milestoner::Container.stub! cache:, kernel:, logger:
   end
 
   after { Milestoner::Container.restore }
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

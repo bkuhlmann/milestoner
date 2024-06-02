@@ -7,7 +7,7 @@ module Milestoner
     module Actions
       # Handles calculation of next version.
       class Next < Sod::Action
-        include Import[:configuration, :kernel]
+        include Import[:settings, :kernel]
 
         description "Show next version."
 
@@ -15,7 +15,7 @@ module Milestoner
 
         on %w[-n --next]
 
-        def call(*) = kernel.puts configuration.project_version
+        def call(*) = kernel.puts settings.project_version
       end
     end
   end

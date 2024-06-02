@@ -5,14 +5,14 @@ module Milestoner
     module Enrichers
       # Enriches a commit review based on trailer information.
       class Review
-        include Milestoner::Import[:input]
+        include Milestoner::Import[:settings]
 
         def initialize(model: Models::Link, **)
           @model = model
           super(**)
         end
 
-        def call(*) = model[id: "All", uri: format(input.review_uri, id: nil)]
+        def call(*) = model[id: "All", uri: format(settings.review_uri, id: nil)]
 
         private
 

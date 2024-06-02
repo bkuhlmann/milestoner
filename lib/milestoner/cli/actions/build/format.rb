@@ -8,15 +8,15 @@ module Milestoner
       module Build
         # Handles build output format.
         class Format < Sod::Action
-          include Import[:input]
+          include Import[:settings]
 
           description "Set output format."
 
           on %w[-f --format], argument: "[KIND]", allow: %w[ascii_doc markdown stream web]
 
-          default { Container[:configuration].build_format }
+          default { Container[:settings].build_format }
 
-          def call(kind = nil) = input.build_format = kind || default
+          def call(kind = nil) = settings.build_format = kind || default
         end
       end
     end

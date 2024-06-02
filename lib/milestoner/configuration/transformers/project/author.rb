@@ -20,8 +20,11 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch_value(key) { git.get("user.name", nil).value_or(nil) }
-                      .then { |value| Success attributes.merge!(key => value) }
+            attributes.fetch key do
+              git.get("user.name", nil).bind { |value| attributes.merge!(key => value).compress! }
+            end
+
+            Success attributes
           end
 
           private

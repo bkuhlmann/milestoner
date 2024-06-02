@@ -28,14 +28,10 @@ module Milestoner
       end
     end
 
-    register :configuration do
-      self[:defaults].add_loader(:yaml, self["xdg.config"].active)
-                     .then { |registry| Etcher.call registry }
-    end
-
-    register :defaults do
+    register :registry do
       Etcher::Registry.new(contract: Configuration::Contract, model: Configuration::Model)
                       .add_loader(:yaml, self[:defaults_path])
+                      .add_loader(:yaml, self["xdg.config"].active)
                       .add_transformer(Configuration::Transformers::Build::Root)
                       .add_transformer(Configuration::Transformers::Build::TemplatePaths.new)
                       .add_transformer(Configuration::Transformers::Gems::Label.new)
@@ -46,22 +42,22 @@ module Milestoner
                       .add_transformer(Configuration::Transformers::Citations::Description.new)
                       .add_transformer(Configuration::Transformers::Project::Author.new)
                       .add_transformer(Configuration::Transformers::Project::Label)
-                      .add_transformer(Configuration::Transformers::Project::Name)
+                      .add_transformer(:basename, :project_name)
                       .add_transformer(Configuration::Transformers::Project::Version.new)
                       .add_transformer(Configuration::Transformers::Generator::Label.new)
                       .add_transformer(Configuration::Transformers::Generator::URI.new)
                       .add_transformer(Configuration::Transformers::Generator::Version.new)
-                      .add_transformer(:string, :commit_uri, id: "%<id>s")
-                      .add_transformer(:string, :review_uri, id: "%<id>s")
-                      .add_transformer(:string, :tracker_uri, id: "%<id>s")
-                      .add_transformer(:time)
+                      .add_transformer(:format, :commit_uri, id: "%<id>s")
+                      .add_transformer(:format, :review_uri, id: "%<id>s")
+                      .add_transformer(:format, :tracker_uri, id: "%<id>s")
+                      .add_transformer(:time, :loaded_at)
     end
 
+    register(:settings) { Etcher.call(self[:registry]).dup }
     register(:specification) { self[:spec_loader].call "#{__dir__}/../../milestoner.gemspec" }
-    register(:sanitizer) { -> content { Sanitize.fragment content, Sanitize::Config::BASIC } }
+    register :sanitizer, -> content { Sanitize.fragment content, Sanitize::Config::BASIC }
     register(:spec_loader) { Spek::Loader.new }
     register(:git) { Gitt::Repository.new }
-    register(:input) { self[:configuration].dup }
     register(:defaults_path) { Pathname(__dir__).join("configuration/defaults.yml") }
     register(:logger) { Cogger.new id: :milestoner }
     register :kernel, Kernel

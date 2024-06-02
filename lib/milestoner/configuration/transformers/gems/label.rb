@@ -19,9 +19,12 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch(key) { spec_loader.call(path).label }
-                      .then { |value| value unless value == "Undefined" }
-                      .then { |value| Success attributes.merge!(key => value) }
+            attributes.fetch key do
+              value = spec_loader.call(path).label
+              attributes.merge! key => value unless value == "Undefined"
+            end
+
+            Success attributes
           end
 
           private

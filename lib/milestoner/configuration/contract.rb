@@ -27,11 +27,10 @@ module Milestoner
       required(:loaded_at).filled :time
       required(:profile_uri).filled :string
       required(:project_author).filled :string
-      optional(:project_description).maybe :string
+      optional(:project_description).filled :string
       optional(:project_label).filled :string
       required(:project_name).filled :string
-      optional(:project_owner).filled :string
-      optional(:project_uri).maybe :string
+      required(:project_owner).filled :string
       required(:project_version).filled Etcher::Types::Version
       required(:review_uri).filled :string
       required(:tracker_uri).filled :string

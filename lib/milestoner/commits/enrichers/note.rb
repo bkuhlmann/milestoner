@@ -5,7 +5,7 @@ module Milestoner
     module Enrichers
       # Enriches commit notes by rendering as HTML based on trailer information.
       class Note
-        include Milestoner::Import[:input]
+        include Milestoner::Import[:settings]
 
         def initialize(key: "Format", renderer: Renderers::Universal.new, **)
           @key = key
@@ -15,7 +15,7 @@ module Milestoner
 
         def call commit
           commit.trailer_value_for(key)
-                .value_or(input.commit_format)
+                .value_or(settings.commit_format)
                 .then { |format| renderer.call commit.notes, for: format.to_sym }
         end
 

@@ -17,8 +17,8 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch(key) { specification.label }
-                      .then { |value| Success attributes.merge!(key => value) }
+            attributes.fetch(key) { attributes.merge! key => specification.label }
+            Success attributes
           end
 
           private

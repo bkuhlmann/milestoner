@@ -7,7 +7,7 @@ module Milestoner
     module Commands
       # Handles the building of milestone output.
       class Build < Sod::Command
-        include Import[:input, :logger, :kernel]
+        include Import[:settings, :logger, :kernel]
         include Builders::Import[:ascii_doc, :markdown, :stream, :web]
 
         handle "build"
@@ -22,9 +22,9 @@ module Milestoner
 
         # :reek:TooManyStatements
         def call
-          format = input.build_format
+          format = settings.build_format
 
-          log_info "Building #{input.project_label} milestone (#{format})..."
+          log_info "Building #{settings.project_label} milestone (#{format})..."
 
           case format
             when "ascii_doc" then build_ascii_doc

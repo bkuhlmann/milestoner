@@ -8,6 +8,7 @@ RSpec.describe Milestoner::Commits::Categorizer do
   subject(:categorizer) { described_class.new }
 
   include_context "with Git repository"
+  include_context "with application dependencies"
 
   describe "#call" do
     it "answers commits since last tag when tagged" do
@@ -78,10 +79,8 @@ RSpec.describe Milestoner::Commits::Categorizer do
 
       it "answers commits grouped by prefix and alpha-sorted per group" do
         git_repo_dir.change_dir do
-          input = Milestoner::Configuration::Model[
-            commit_categories: [{label: "[one]"}, {label: "=+-#"}, {label: "with spaces"}]
-          ]
-          subjects = described_class.new(input:).call.map(&:subject)
+          settings.commit_categories = [{label: "[one]"}, {label: "=+-#"}, {label: "with spaces"}]
+          subjects = described_class.new(settings:).call.map(&:subject)
 
           expect(subjects).to eq(proof)
         end
@@ -98,8 +97,8 @@ RSpec.describe Milestoner::Commits::Categorizer do
 
       it "answers alphabetically sorted commits" do
         git_repo_dir.change_dir do
-          input = Milestoner::Configuration::Model[commit_categories: []]
-          subjects = described_class.new(input:).call.map(&:subject)
+          settings.commit_categories = []
+          subjects = described_class.new(settings:).call.map(&:subject)
 
           expect(subjects).to eq(["Added documentation", "One", "Two"])
         end

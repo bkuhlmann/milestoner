@@ -10,7 +10,7 @@ module Milestoner
     class Context < Hanami::View::Context
       extend Forwardable
 
-      include Import[:input]
+      include Import[:settings]
 
       delegate %i[
         generator_label
@@ -23,7 +23,7 @@ module Milestoner
         project_name
         project_uri
         project_version
-      ] => :input
+      ] => :settings
 
       def project_slug
         [project_name, project_version].compact.join("_").tr ".", Core::EMPTY_STRING

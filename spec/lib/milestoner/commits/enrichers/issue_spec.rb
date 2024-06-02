@@ -14,7 +14,7 @@ RSpec.describe Milestoner::Commits::Enrichers::Issue do
       expect(enricher.call(commit)).to eq(
         Milestoner::Models::Link[
           id: "123",
-          uri: "https://github.com/tester/test/issues/123"
+          uri: "https://github.com/unknown/test/issues/123"
         ]
       )
     end
@@ -25,7 +25,7 @@ RSpec.describe Milestoner::Commits::Enrichers::Issue do
       expect(enricher.call(commit)).to eq(
         Milestoner::Models::Link[
           id: "All",
-          uri: "https://github.com/acme/test/issues/"
+          uri: "https://github.com/unknown/test/issues/"
         ]
       )
     end

@@ -14,7 +14,7 @@ RSpec.describe Milestoner::Configuration::Transformers::Build::Root do
       )
     end
 
-    it "answers original attributes when key is missing" do
+    it "answers empty hash when key is missing" do
       expect(transformer.call({})).to eq(Success({}))
     end
   end

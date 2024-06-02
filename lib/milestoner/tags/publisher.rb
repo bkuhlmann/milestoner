@@ -4,7 +4,7 @@ module Milestoner
   module Tags
     # Handles the tagging and pushing of a tag to a remote repository.
     class Publisher
-      include Import[:input, :logger]
+      include Import[:settings, :logger]
 
       def initialize(creator: Tags::Creator.new, pusher: Tags::Pusher.new, **)
         super(**)
@@ -15,7 +15,7 @@ module Milestoner
       def call override = nil
         creator.call override
         pusher.call override
-        logger.info { "Published: #{input.project_version}!" }
+        logger.info { "Published: #{settings.project_version}!" }
       end
 
       private
