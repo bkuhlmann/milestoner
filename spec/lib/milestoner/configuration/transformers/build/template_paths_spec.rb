@@ -10,7 +10,7 @@ RSpec.describe Milestoner::Configuration::Transformers::Build::TemplatePaths do
   subject(:transformer) { described_class.new }
 
   describe "#call" do
-    it "answers XDG configuration paths plus gem templates path" do
+    it "answers XDG paths plus gem templates path" do
       expect(transformer.call({})).to eq(
         Success(
           build_template_paths: [

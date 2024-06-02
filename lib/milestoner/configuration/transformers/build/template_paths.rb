@@ -14,17 +14,17 @@ module Milestoner
 
           def initialize key = :build_template_paths,
                          default: Pathname(__dir__).join("../../../templates"),
-                         xdg_config: Runcom::Config.new("milestoner/templates")
+                         xdg: Runcom::Config.new("milestoner/templates")
             @key = key
             @default = default
-            @xdg_config = xdg_config
+            @xdg = xdg
           end
 
-          def call(attributes) = Success attributes.merge!(key => xdg_config.all.append(default))
+          def call(attributes) = Success attributes.merge!(key => xdg.all.append(default))
 
           private
 
-          attr_reader :key, :default, :xdg_config
+          attr_reader :key, :default, :xdg
         end
       end
     end
