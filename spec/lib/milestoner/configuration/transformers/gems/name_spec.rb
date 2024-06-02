@@ -17,9 +17,9 @@ RSpec.describe Milestoner::Configuration::Transformers::Gems::Name do
       expect(transformer.call({})).to eq(Success(project_name: "demo"))
     end
 
-    it "answers nil value when key and specification are missing" do
+    it "answers empty hash when key is missing" do
       transformer = described_class.new path: Pathname("bogus.gemspec")
-      expect(transformer.call({})).to eq(Success({project_name: nil}))
+      expect(transformer.call({})).to eq(Success({}))
     end
   end
 end

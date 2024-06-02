@@ -5,9 +5,9 @@ module Milestoner
     module Enrichers
       # Enriches a commit URI based on trailer information.
       class URI
-        include Milestoner::Import[:input]
+        include Milestoner::Import[:settings]
 
-        def call(commit) = format input.commit_uri, id: commit.sha
+        def call(commit) = format settings.commit_uri, id: commit.sha
       end
     end
   end

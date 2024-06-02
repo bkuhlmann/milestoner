@@ -8,15 +8,15 @@ module Milestoner
       module Build
         # Handles build label.
         class Label < Sod::Action
-          include Import[:input]
+          include Import[:settings]
 
           description "Set label."
 
           on %w[-l --label], argument: "[TEXT]"
 
-          default { Container[:configuration].project_label }
+          default { Container[:settings].project_label }
 
-          def call(label = nil) = input.project_label = label || default
+          def call(label = nil) = settings.project_label = label || default
         end
       end
     end

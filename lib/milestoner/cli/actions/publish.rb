@@ -8,7 +8,7 @@ module Milestoner
     module Actions
       # Handles tag creation and pushing of tag to local repository.
       class Publish < Sod::Action
-        include Import[:configuration]
+        include Import[:settings]
 
         using Versionaire::Cast
 
@@ -18,7 +18,7 @@ module Milestoner
 
         on %w[-p --publish], argument: "[VERSION]"
 
-        default { Container[:configuration].project_version }
+        default { Container[:settings].project_version }
 
         def initialize(publisher: Tags::Publisher.new, **)
           super(**)

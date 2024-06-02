@@ -17,8 +17,8 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch(key) { specification.homepage_url }
-                      .then { |value| Success attributes.merge!(key => value) }
+            attributes.fetch(key) { attributes.merge! key => specification.homepage_url }
+            Success attributes
           end
 
           private

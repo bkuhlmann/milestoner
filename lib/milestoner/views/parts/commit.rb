@@ -9,19 +9,19 @@ module Milestoner
       # Provides presentation for an individual commit.
       # :reek:RepeatedConditional
       class Commit < Hanami::View::Part
-        include Import[:configuration, :sanitizer]
+        include Import[:settings, :sanitizer]
 
         using Refinements::Array
 
         def initialize(**)
           super
-          @prefixes = configuration.commit_categories.pluck :label
+          @prefixes = settings.commit_categories.pluck :label
           @authored_at = Time.at(value.authored_at.to_i).utc
         end
 
-        def avatar_url(user) = format configuration.avatar_uri, id: user.external_id
+        def avatar_url(user) = format settings.avatar_uri, id: user.external_id
 
-        def profile_url(user) = format configuration.profile_uri, id: user.handle
+        def profile_url(user) = format settings.profile_uri, id: user.handle
 
         def kind
           if prefixes.include? prefix then "normal"
@@ -31,9 +31,9 @@ module Milestoner
         end
 
         def emoji
-          configuration.commit_categories
-                       .find { |category| category.fetch(:label) == prefix }
-                       .then { |category| category ? category.fetch(:emoji) : "🔶" }
+          settings.commit_categories
+                  .find { |category| category.fetch(:label) == prefix }
+                  .then { |category| category ? category.fetch(:emoji) : "🔶" }
         end
 
         def icon

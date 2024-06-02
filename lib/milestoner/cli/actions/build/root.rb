@@ -9,15 +9,15 @@ module Milestoner
       module Build
         # Handles build root path.
         class Root < Sod::Action
-          include Import[:input]
+          include Import[:settings]
 
           description "Set root output path."
 
           on %w[-r --root], argument: "[PATH]"
 
-          default { Container[:configuration].build_root }
+          default { Container[:settings].build_root }
 
-          def call(path = nil) = input.build_root = Pathname(path || default).expand_path
+          def call(path = nil) = settings.build_root = Pathname(path || default).expand_path
         end
       end
     end

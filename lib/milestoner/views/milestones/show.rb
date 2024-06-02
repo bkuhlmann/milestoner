@@ -12,11 +12,11 @@ module Milestoner
 
         config.default_context = Context.new
         config.part_namespace = Parts
-        config.paths = Container[:configuration].build_template_paths
+        config.paths = Container[:settings].build_template_paths
         config.template = "milestones/show"
 
         expose :commits
-        expose :uri, default: Container[:configuration].project_uri
+        expose :uri, default: Container[:settings].project_uri
         expose :at, default: Time.now.utc
         expose(:date) { |at| at.strftime "%Y-%m-%d" }
         expose(:datetime) { |at| at.strftime "%Y-%m-%dT%H:%M:%S%z" }

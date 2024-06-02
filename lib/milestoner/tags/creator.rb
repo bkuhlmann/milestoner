@@ -8,7 +8,7 @@ module Milestoner
   module Tags
     # Handles the creation of project repository tags.
     class Creator
-      include Import[:input, :git, :logger]
+      include Import[:settings, :git, :logger]
 
       using Refinements::StringIO
       using Versionaire::Cast
@@ -40,7 +40,7 @@ module Milestoner
       attr_reader :collector, :builder
 
       def compute_version value
-        Version value || input.project_version
+        Version value || settings.project_version
       rescue Versionaire::Error => error
         raise Error, error
       end

@@ -7,7 +7,7 @@ module Milestoner
   module Commits
     # Retrieves and categorizes Git repository commit tagged or untagged history.
     class Categorizer
-      include Import[:git, :input]
+      include Import[:settings]
 
       using Refinements::Array
 
@@ -15,7 +15,7 @@ module Milestoner
         @collector = collector
         super(**)
 
-        @labels = input.commit_categories.pluck :label
+        @labels = settings.commit_categories.pluck :label
         @pattern = labels.empty? ? // : Regexp.union(labels)
       end
 

@@ -8,7 +8,7 @@ module Milestoner
       module Build
         # Handles build layout.
         class Layout < Sod::Action
-          include Import[:input]
+          include Import[:settings]
 
           description "Set view template layout."
 
@@ -16,9 +16,9 @@ module Milestoner
 
           on %w[-L --layout], argument: "[NAME]"
 
-          default { Container[:configuration].build_layout }
+          default { Container[:settings].build_layout }
 
-          def call(layout = nil) = input.build_layout = parse(layout)
+          def call(layout = nil) = settings.build_layout = parse(layout)
 
           private
 

@@ -24,9 +24,8 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch_value(key) { citation.open(path).title }
-                      .then { |value| value unless String(value).empty? }
-                      .then { |value| Success attributes.merge!(key => value) }
+            attributes.fetch(key) { attributes.merge!(key => citation.open(path).title).compress! }
+            Success attributes
           end
 
           private

@@ -41,7 +41,7 @@ RSpec.describe Milestoner::Tags::Pusher do
     end
 
     it "fails when remote tag exists" do
-      version = configuration.project_version
+      version = settings.project_version
       allow(git).to receive(:tag_remote?).with(version).and_return(true)
       result = -> { pusher.call }
 

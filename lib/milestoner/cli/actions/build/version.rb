@@ -9,7 +9,7 @@ module Milestoner
       module Build
         # Handles build version.
         class Version < Sod::Action
-          include Import[:input]
+          include Import[:settings, :logger]
 
           using Versionaire::Cast
 
@@ -19,9 +19,13 @@ module Milestoner
 
           on %w[-v --version], argument: "[VERSION]"
 
-          default { Container[:configuration].project_version }
+          default { Container[:settings].project_version }
 
-          def call(version = nil) = input.project_version = Version(version || default)
+          def call version = nil
+            settings.project_version = Version(version || default)
+          rescue Versionaire::Error => error
+            logger.error { error.message }
+          end
         end
       end
     end

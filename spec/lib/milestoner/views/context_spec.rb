@@ -13,13 +13,13 @@ RSpec.describe Milestoner::Views::Context do
 
   describe "#generator_label" do
     it "answers label" do
-      expect(a_context.generator_label).to eq("Test Generator")
+      expect(a_context.generator_label).to eq("Milestoner")
     end
   end
 
   describe "#generator_uri" do
     it "answers URI" do
-      expect(a_context.generator_uri).to eq("https://test.com")
+      expect(a_context.generator_uri).to eq("https://alchemists.io/projects/milestoner")
     end
   end
 
@@ -31,13 +31,13 @@ RSpec.describe Milestoner::Views::Context do
 
   describe "#project_author" do
     it "answers author" do
-      expect(a_context.project_author).to eq("Test Author")
+      expect(a_context.project_author).to eq("Tester")
     end
   end
 
   describe "#project_description" do
     it "answers description" do
-      expect(a_context.project_description).to eq("Test description.")
+      expect(a_context.project_description).to eq("A test.")
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Milestoner::Views::Context do
 
   describe "#project_label" do
     it "answers label" do
-      expect(a_context.project_label).to eq("Test Label")
+      expect(a_context.project_label).to eq("Test")
     end
   end
 
@@ -65,18 +65,18 @@ RSpec.describe Milestoner::Views::Context do
     end
 
     it "answers name only when version is missing" do
-      input.project_version = nil
+      settings.project_version = nil
       expect(a_context.project_slug).to eq("test")
     end
 
     it "answers version only when name is missing" do
-      input.project_name = nil
+      settings.project_name = nil
       expect(a_context.project_slug).to eq("123")
     end
 
     it "answers empty string when label and version are missing" do
-      input.project_name = nil
-      input.project_version = nil
+      settings.project_name = nil
+      settings.project_version = nil
 
       expect(a_context.project_slug).to eq("")
     end
@@ -84,30 +84,24 @@ RSpec.describe Milestoner::Views::Context do
 
   describe "#project_title" do
     it "answers labeled version" do
-      expect(a_context.project_title).to eq("Test Label 1.2.3")
+      expect(a_context.project_title).to eq("Test 1.2.3")
     end
 
     it "answers label only when version is missing" do
-      input.project_version = nil
-      expect(a_context.project_title).to eq("Test Label")
+      settings.project_version = nil
+      expect(a_context.project_title).to eq("Test")
     end
 
     it "answers version only when label is missing" do
-      input.project_label = nil
+      settings.project_label = nil
       expect(a_context.project_title).to eq("1.2.3")
     end
 
     it "answers empty string when label and version are missing" do
-      input.project_label = nil
-      input.project_version = nil
+      settings.project_label = nil
+      settings.project_version = nil
 
       expect(a_context.project_title).to eq("")
-    end
-  end
-
-  describe "#project_uri" do
-    it "answers URI" do
-      expect(a_context.project_uri).to eq("https://project.test")
     end
   end
 

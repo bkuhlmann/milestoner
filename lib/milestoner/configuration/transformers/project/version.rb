@@ -19,8 +19,8 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch_value(key) { versioner.call }
-                      .then { |value| Success attributes.merge!(key => value) }
+            attributes.fetch_value(key) { attributes.merge! key => versioner.call }
+            Success attributes
           end
 
           private

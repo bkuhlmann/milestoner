@@ -5,14 +5,14 @@ module Milestoner
     module Enrichers
       # Enriches a commit format based on trailer information.
       class Format
-        include Milestoner::Import[:input]
+        include Milestoner::Import[:settings]
 
         def initialize(key: "Format", **)
           @key = key
           super(**)
         end
 
-        def call(commit) = commit.trailer_value_for(key).value_or(input.commit_format)
+        def call(commit) = commit.trailer_value_for(key).value_or(settings.commit_format)
 
         private
 

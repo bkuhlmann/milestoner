@@ -16,7 +16,7 @@ RSpec.describe Milestoner::Configuration::Transformers::Project::Label do
       expect(transformer.call({}, default: "Demo")).to eq(Success({project_label: "Demo"}))
     end
 
-    it "answers titleizes default when key is missing" do
+    it "answers titleized default when key is missing" do
       expect(transformer.call({}, default: "demo")).to eq(Success({project_label: "Demo"}))
     end
   end

@@ -4,14 +4,14 @@ module Milestoner
   module Renderers
     # The primary renderer for multiple input formats as HTML.
     class Universal
-      include Import[:input]
+      include Import[:settings]
 
       DELEGATES = {asciidoc: Asciidoc.new, markdown: Markdown.new}.freeze
 
       def initialize(delegates: DELEGATES, **)
         super(**)
         @delegates = delegates
-        @default_format = input.commit_format.to_sym
+        @default_format = settings.commit_format.to_sym
       end
 
       def call content, for: default_format

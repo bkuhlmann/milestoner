@@ -19,9 +19,9 @@ RSpec.describe Milestoner::Configuration::Transformers::Citations::Label do
       expect(transformer.call({})).to eq(Success(project_label: "Demo"))
     end
 
-    it "answers nil value when key and citation are missing" do
+    it "answers empty hash when key is missing" do
       transformer = described_class.new path: Pathname("bogus.cff")
-      expect(transformer.call({})).to eq(Success({project_label: nil}))
+      expect(transformer.call({})).to eq(Success({}))
     end
   end
 end

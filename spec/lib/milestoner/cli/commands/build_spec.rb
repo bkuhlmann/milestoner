@@ -18,12 +18,12 @@ RSpec.describe Milestoner::CLI::Commands::Build do
   describe "#call" do
     context "with ASCII Doc format" do
       before do
-        input.build_format = "ascii_doc"
+        settings.build_format = "ascii_doc"
         command.call
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(ascii_doc\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test milestone \(ascii_doc\)\.\.\./)
       end
 
       it "builds ASCII Doc file" do
@@ -37,12 +37,12 @@ RSpec.describe Milestoner::CLI::Commands::Build do
 
     context "with Markdown format" do
       before do
-        input.build_format = "markdown"
+        settings.build_format = "markdown"
         command.call
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(markdown\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test milestone \(markdown\)\.\.\./)
       end
 
       it "builds Markdown file" do
@@ -58,7 +58,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       before { command.call }
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(web\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test milestone \(web\)\.\.\./)
       end
 
       it "builds web files" do
@@ -72,12 +72,12 @@ RSpec.describe Milestoner::CLI::Commands::Build do
 
     context "with stream format" do
       before do
-        input.build_format = "stream"
+        settings.build_format = "stream"
         command.call
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test Label milestone \(stream\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test milestone \(stream\)\.\.\./)
       end
 
       it "builds stream" do
@@ -87,7 +87,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
 
     it "aborts with invalid format" do
       logger = instance_spy Cogger::Hub
-      input.build_format = "bogus"
+      settings.build_format = "bogus"
       described_class.new(stream:, logger:).call
 
       expect(logger).to have_received(:abort).with("Invalid build format: bogus.")

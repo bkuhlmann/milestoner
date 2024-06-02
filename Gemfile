@@ -4,6 +4,8 @@ ruby file: ".ruby-version"
 
 source "https://rubygems.org"
 
+gem "etcher", path: "~/Engineering/OSS/etcher"
+
 gemspec
 
 group :quality do

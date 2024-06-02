@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds Markdown page output.
     class Markdown
-      include Milestoner::Import[:input]
+      include Milestoner::Import[:settings]
 
       using Refinements::Pathname
 
@@ -16,7 +16,7 @@ module Milestoner
         super(**)
       end
 
-      def call = input.build_root.join("index.md").make_ancestors.tap { |path| write path }
+      def call = settings.build_root.join("index.md").make_ancestors.tap { |path| write path }
 
       private
 
@@ -24,7 +24,7 @@ module Milestoner
 
       def write path
         enricher.call.fmap do |commits|
-          path.write view.call commits:, layout: input.build_layout, format: :md
+          path.write view.call commits:, layout: settings.build_layout, format: :md
         end
       end
     end
