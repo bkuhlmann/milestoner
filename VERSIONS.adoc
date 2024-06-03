@@ -1,5 +1,55 @@
 = Versions
 
+== 18.0.0 (2024-07-07)
+
+* 🟢 Added ASCII Doc and Markdown profile partials - Brooke Kuhlmann
+* 🟢 Added RSS gem - Brooke Kuhlmann
+* 🟢 Added RSpec enriched tag shared context - Brooke Kuhlmann
+* 🟢 Added XML templates for syndicated feeds - Brooke Kuhlmann
+* 🟢 Added build basename action - Brooke Kuhlmann
+* 🟢 Added build basename configuration - Brooke Kuhlmann
+* 🟢 Added build max CLI action - Brooke Kuhlmann
+* 🟢 Added build max configuration - Brooke Kuhlmann
+* 🟢 Added build style delegation to view context - Brooke Kuhlmann
+* 🟢 Added build stylesheet action - Brooke Kuhlmann
+* 🟢 Added build stylesheet configuration - Brooke Kuhlmann
+* 🟢 Added build tail action - Brooke Kuhlmann
+* 🟢 Added build tail configuration - Brooke Kuhlmann
+* 🟢 Added citation URL configuration transformer - Brooke Kuhlmann
+* 🟢 Added commit tagger - Brooke Kuhlmann
+* 🟢 Added feed builder - Brooke Kuhlmann
+* 🟢 Added organization configuration - Brooke Kuhlmann
+* 🟢 Added project URI configuration - Brooke Kuhlmann
+* 🟢 Added project logo to web, Markdown, and ASCII doc formats - Brooke Kuhlmann
+* 🟢 Added syndication builder - Brooke Kuhlmann
+* 🟢 Added syndication configuration - Brooke Kuhlmann
+* 🟢 Added syndication configuration transformers - Brooke Kuhlmann
+* 🟢 Added syndication refinements - Brooke Kuhlmann
+* 🟢 Added tag model - Brooke Kuhlmann
+* 🟢 Added tag part - Brooke Kuhlmann
+* 🟢 Added tag partials - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🔼 Updated avatar partials - Brooke Kuhlmann
+* 🔼 Updated builders to process tags and use monads - Brooke Kuhlmann
+* 🔼 Updated builders to use basename and stylesheet configurations - Brooke Kuhlmann
+* 🔼 Updated commit partials - Brooke Kuhlmann
+* 🔼 Updated default configuration - Brooke Kuhlmann
+* 🔼 Updated gem URI configuration transformer to respect string formats - Brooke Kuhlmann
+* 🔼 Updated icon partials - Brooke Kuhlmann
+* 🔼 Updated tag creator, pusher, and publisher to use monads - Brooke Kuhlmann
+* 🔼 Updated to Containable 0.2.0 - Brooke Kuhlmann
+* 🔼 Updated to Etcher 2.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Git Lint 8.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Gitt 3.6.0 - Brooke Kuhlmann
+* 🔼 Updated to Infusible 3.8.0 - Brooke Kuhlmann
+* 🔼 Updated to Runcom 11.5.0 - Brooke Kuhlmann
+* 🔼 Updated to Sod 0.12.0 - Brooke Kuhlmann
+* ⛔️ Removed configuration domains - Brooke Kuhlmann
+* ⛔️ Removed configuration template paths transformer XDG keyword suffix - Brooke Kuhlmann
+* ⛔️ Removed error class - Brooke Kuhlmann
+* ⛔️ Removed project generator configuration transformer - Brooke Kuhlmann
+* 🔁 Refactored show templates to use tag partials - Brooke Kuhlmann
+
 == 17.11.0 (2024-07-02)
 
 * 🟢 Added commit versioner debug logging - Brooke Kuhlmann

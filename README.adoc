@@ -5,28 +5,34 @@
 :ascii_doc_link: link:https://asciidoctor.org/docs/what-is-asciidoc[ASCII Doc]
 :cff_link: link:https://github.com/citation-file-format/ruby-cff[CFF]
 :etcher_link: link:https://alchemists.io/projects/etcher[Etcher]
+:firefox_link: link:https://www.mozilla.org/en-US/firefox[Firefox]
 :gem_specification_link: link:https://guides.rubygems.org/specification-reference[Gem Specification]
 :gemsmith_link: link:https://alchemists.io/projects/gemsmith[Gemsmith]
 :git_commit_anatomy_link: link:https://alchemists.io/articles/git_commit_anatomy[Git Commit Anatomy]
 :git_link: link:https://git-scm.com[Git]
 :git_lint_link: link:https://alchemists.io/projects/git-lint[Git Lint]
+:git_trailers_link: link:https://alchemists.io/articles/git_trailers[Git Trailers]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :hanami_views_link: link:https://alchemists.io/articles/hanami_views[Hanami Views]
 :hanamismith_link: link:https://alchemists.io/projects/hanamismith[Hanamismith]
+:iterm_link: link:https://iterm2.com[iTerm 2]
 :lode_link: link:https://alchemists.io/projects/lode[Lode]
 :markdown_link: link:https://daringfireball.net/projects/markdown[Markdown]
+:marked_link: link:https://marked2app.com[Marked 2]
+:net_news_wire_link: link:https://netnewswire.com[NetNewsWire]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :rubygems_link: link:https://rubygems.org[RubyGems]
 :rubysmith_link: link:https://alchemists.io/projects/rubysmith[Rubysmith]
 :runcom_link: link:https://alchemists.io/projects/runcom[Runcom]
 :strict_semantic_versioning_link: link:https://alchemists.io/articles/strict_semantic_versioning[Strict Semantic Versioning]
 :string_formats_link: link:https://ruby-doc.org/3.3.0/format_specifications_rdoc.html[String Formats]
+:syndication_link: link:https://alchemists.io/articles/syndication[Syndication]
 :versionaire_link: link:https://alchemists.io/projects/versionaire[Versionaire]
 :xdg_link: link:https://alchemists.io/projects/xdg[XDG]
 
 = Milestoner
 
-Milestoner is a pure {git_link} based Command Line Interface (CLI) for software deployment automation that is agnostic of the programming language or source control service you use (i.e. GitHub, GitLab, Bitbucket, etc). Each milestone (i.e. {git_link} tag) includes the automatic generation of feature rich release notes sourced from the {git_link} commits that make up the milestone. Finally, each milestone adheres to {strict_semantic_versioning_link} so your milestones remain consistent.
+Milestoner is a pure {git_link} based Command Line Interface (CLI) for software deployment automation that is agnostic of the programming language or source control service you use (i.e. GitHub, GitLab, Bitbucket, etc). Each milestone (i.e. {git_link} tag) includes the automatic generation of feature rich release notes sourced from the {git_link} commits that make up the tag. Finally, each milestone adheres to {strict_semantic_versioning_link} so your milestones remain consistent.
 
 You can use Milestoner to inspect the current state of the next milestone, celebrate the team members that contribute to each milestone, and share information with stakeholders with minimal effort. By having a tool, like Milestoner, you can automate software releases in a consistent and reliable fashion. 🎉
 
@@ -41,30 +47,53 @@ toc::[]
 
 == Screenshots
 
-*ASCII Doc Format* (i.e. `milestoner build --format ascii_doc`)
+The following are screenshots of using this gem to render release notes for the {lode_link} gem. Even though {lode_link} is used for example purposes, please keep in mind that Milestoner can be used for _any project, any programming language_.
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc.png[Usage,width=787,height=257,role=focal_point]
+=== ASCII Doc Format
 
-*Markdown Format* (i.e. `milestoner build --format markdown`)
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-rendered.png[Release Notes,width=890,height=742,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown.png[Usage,width=765,height=257,role=focal_point]
+* *Command*: `milestoner build --format ascii_doc`
+* *Renderer*: {ascii_doc_link}
 
-*Stream Format* (i.e. `milestoner build --format stream`)
+=== Feed Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Usage,width=464,height=280,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-rendered-collapsed.png[Release Notes,width=1121,height=1154,role=focal_point]
 
-*Web Format* (i.e. `milestoner build --format web`)
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-rendered-expanded.png[Release Notes,width=1121,height=1154,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Usage,width=998,height=409,role=focal_point]
+* *Command*: `milestoner build --format feed`
+* *Renderer*: {net_news_wire_link}
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Usage,width=983,height=701,role=focal_point]
+=== Markdown Format
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown-rendered.png[Release Notes,width=712,height=717,role=focal_point]
+
+* *Command*: `milestoner build --format markdown`
+* *Renderer*: {marked_link}
+
+=== Stream Format
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=451,height=370,role=focal_point]
+
+* *Command*: `milestoner build --format stream`
+* *Renderer*: {iterm_link}
+
+=== Web Format
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1150,height=878,role=focal_point]
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Release Notes,width=1150,height=878,role=focal_point]
+
+* *Command*: `milestoner build --format web`
+* *Renderer*: {firefox_link}
 
 == Features
 
 * Uses {versionaire_link} for {strict_semantic_versioning_link}. Example:
 ** Format: `+<major>.<minor>.<patch>+`.
 ** Example: `0.0.0`.
-* Ensures {git_link} commits since last tag (or initialization of repository) are included in the release notes.
+* Defaults to including {git_link} commits since last tag (or initialization of repository) when building release notes. This can be customized further if desired.
 * Ensures {git_link} commit messages are grouped by prefix, in order defined, for categorization. For more details, see link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject Prefix]. Defaults (can be customized):
 ** image:https://alchemists.io/images/projects/milestoner/icons/commits/fixed.png[Fixed] Fixed
 ** image:https://alchemists.io/images/projects/milestoner/icons/commits/added.png[Added] Added
@@ -72,8 +101,8 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-exp
 ** image:https://alchemists.io/images/projects/milestoner/icons/commits/removed.png[Removed] Removed
 ** image:https://alchemists.io/images/projects/milestoner/icons/commits/refactored.png[Refactored] Refactored
 * Ensures {git_link} commit messages are alphabetically sorted for release note categorization and readability.
-* Provides automatic versioning based on last {git_link} tag and current commit trailers. See {git_commit_anatomy_link} for details.
-* Supports multiple release note build formats: {ascii_doc_link}, {markdown_link}, Stream (console), and Web (HTML). Each are fully customizable via your personal {xdg_link} configuration and {hanami_views_link}.
+* Provides automatic versioning based on last {git_link} tag and {git_trailers_link}. See {git_commit_anatomy_link} for details.
+* Supports multiple build formats: {ascii_doc_link}, {syndication_link}, {markdown_link}, Stream (console), and Web (HTML). Each are fully customizable via your personal {xdg_link} and {hanami_views_link} configuration.
 
 == Requirements
 
@@ -122,89 +151,122 @@ The default configuration is:
 [source,yaml]
 ----
 avatar:
-  domain: https://avatars.githubusercontent.com
-  uri: "%<domain>s/u/%<id>s"
+  uri: "https://avatars.githubusercontent.com/u/%<id>s"
 build:
-  format: web
-  layout: page
-  root: tmp/milestone
+  basename: "index"
+  format: "stream"
+  layout: "page"
+  max: 1
+  root: "tmp/milestones"
+  stylesheet: "page"
+  tail: "head"
 commit:
   categories:
-    - emoji: ✅
-      label: Fixed
-    - emoji: 🟢
-      label: Added
-    - emoji: 🔼
-      label: Updated
-    - emoji: ⛔️
-      label: Removed
-    - emoji: 🔁
-      label: Refactored
-  domain: https://github.com
-  format: asciidoc
-  uri: "%<domain>s/%<owner>s/%<name>s/commit/%<id>s"
-generator:
-  label:
-  uri:
-  version:
+    - emoji: "✅"
+      label: "Fixed"
+    - emoji: "🟢"
+      label: "Added"
+    - emoji: "🔼"
+      label: "Updated"
+    - emoji: "⛔️"
+      label: "Removed"
+    - emoji: "🔁"
+      label: "Refactored"
+  format: "asciidoc"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s"
+organization:
+  label: "Undefined"
+  uri: "https://undefined.io"
 profile:
-  domain: https://github.com
-  uri: "%<domain>s/%<id>s"
+  uri: "https://github.com/%<id>s"
 project:
-  author:
-  description:
-  generator:
-  label:
-  name:
-  owner:
+  owner: "undefined"
   uri:
-  version:
+    home: "%<organization_uri>s/projects/%<project_name>s"
+    version: "%<project_uri_home>s/versions/%<id>s"
 review:
-  domain: https://github.com
-  uri: "%<domain>s/%<owner>s/%<name>s/pulls/%<id>s"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s"
+syndication:
+  categories:
+    - label: "Milestones"
+      name: "milestones"
+  entry:
+    label: "%<id>s"
+    uri: "%<project_uri_version>s"
+  id: "%<project_uri_version>s"
+  label: "%<organization_label>s: %<project_label>s"
+  links:
+    - label: "%<organization_label>s: %<project_label>s (web)"
+      mime: "text/html"
+      relation: "alternate"
+      uri: "%<project_uri_home>s/versions"
+    - label: "%<organization_label>s: %<project_label>s (feed)"
+      mime: "application/atom+xml"
+      relation: "self"
+      uri: "%<project_uri_home>s/versions.xml"
 tracker:
-  domain: https://github.com
-  uri: "%<domain>s/%<owner>s/%<name>s/issues/%<id>s"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s"
 ----
 
 The above can be customized as follows:
 
-* `avatar`: Manages team member avatar information.
-** `domain`: Required. The domain of your team member avatars. Default: GitHub.
+* `avatar`: Manages team member avatar details.
 ** `uri`: Required. The URI format for linking to avatars as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the `external_id` of the user stored in the {lode_link} cache.
-* `build`: Manages release note builds.
-** `format`: Required. The build output format. Multiple formats are supported. Default: web.
-** `layout`: Required. The layout used by {hanami_views_link} when building release notes. Default: page.
-** `root`: Required. The output location. This can be a relative or absolute path. Defaults to the `tmp` directory of your current project. The path is automatically created if missing.
-* `commit`: Manages commit categories, emojis, and hyperlinks.
-** `categories`: Required. By default, only five categories are supported which pairs well with the {git_lint_link} gem. Category order is important with the first taking precedence over the second and so forth. Special characters are allowed for prefixes but should be enclosed in quotes. To disable categories, use an empty array. Example: `categories: []`.
+* `build`: Manages build details.
+** `basename`: Required. The build file basename. Default: `index`. Used to customize the built file name.
+** `format`: Required. The build output format. Default: `stream`. Used to determine what format to build the release notes as. Multiple formats are supported.
+** `layout`: Required. The {hanami_views_link} layout used when building release notes. Default: page. This can be disabled when using `false` or customized further -- via your own {xdg_link} configuration -- when providing your own templates and/or partials.
+** `max`: Required. The maximum number of {git_link} tags to build. Default: 1. By default, you are limited to building release notes for changes (commits) since the last tag but you can increase the maximum to build release notes for as many tags as you like.
+** `root`: Required. The the root build directory. Default: `tmp/milestones`. This can be a relative or absolute path and defaults your current project. The path is automatically created if missing.
+** `stylesheet`: Required. The stylesheet basename which is only used by the _web_ format. Default: `page`. This can be a relative path (i.e. `../page`) which is especially handy when build `max` is set to a number greater than one so the release notes for each tag you build loads the stylesheet properly. The path is automatically created if missing.
+* `commit`: Manages commit categories, emojis, hyperlinks, and formatting.
+** `categories`: Required. Defaults to five categories which pairs well with the {git_lint_link} gem. Category order is important with the first taking precedence over the second and so forth. Special characters are allowed for prefixes but should be enclosed in quotes. To disable categories, use an empty array. Example: `categories: []`.
 *** `emoji`: Required. The emoji associated with the label for output purposes. _Used by the {ascii_doc_link}, {markdown_link}, and stream build formats_. Defaults to the provided emojis.
 *** `label`: Required. Allows you to customize the category label. All commits are grouped by label which equates to the prefix, or first word, used in each commit message. The defaults pair well with the {git_lint_link} gem. Defaults to the provided labels.
-** `domain`: Required. The {git_link} repository domain for all commits. Default: GitHub.
-** `format`: Required. Defines the default format used for rendering commit messages unless specified in the commit trailer metadata which takes higher precedence. Default: {ascii_doc_link}.
-** `uri`: Required. The URI format for linking to commits as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit SHA of each commit analyzed at runtime.
-* `generator`: Manages generator information.
+** `format`: Required. Defines the default format used for rendering commit messages unless specified in the commit trailer metadata which takes higher precedence. Default: `asciidoc`.
+** `uri`: Required. The URI for linking to commits as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit SHA of each commit analyzed at runtime.
+* `generator`: Manages generator details.
 ** `label`: Required. The label of the generator used for all software milestones. Default: Milestoner.
 ** `uri`: Required. The URI of the generator used for all software milestones. Defaults to Milestoner's homepage URL as provided by the {gem_specification_link} of this project.
 ** `version`: Required. The version of the generator used for all software milestones. Defaults to Milestoner's current version as provided by the {gem_specification_link} of this project.
-* `profile`: Manages team member profile information.
-** `domain`: Required. The domain of your {git_link} repository. Default: GitHub.
-** `uri`: Required. The URI format for linking to profiles as formatted using {string_formats_link}. The `id` is dynamically calculated via the `handle` of the user stored in the {lode_link} cache. Default: GitHub.
-* `project`: Manages project information.
+* `loaded_at`: Required. Dynamically calculated when the configuration is loaded and is generally meant to represent current time. You can customize this value but is not recommended.
+* `organization`: Manages organization details.
+** `label`: Required. The organization's label. Can be used within other keys via {string_formats_link} and is meant for branding purposes.
+** `uri`: Required. The organization's home page URI. Can be used within other keys via {string_formats_link}.
+* `profile`: Manages team member profile details.
+** `uri`: Required. The URI format for linking to profiles as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the `handle` of the user stored in the {lode_link} cache.
+* `project`: Manages project details.
 ** `author`: Required. The project author. Dynamically calculated by the {etcher_link} gem in the following order: This value or {git_link} configuration user name.
 ** `description`: Optional. The project description. Dynamically calculated by the {etcher_link} gem in the following order: This value, {gem_specification_link} summary, or {cff_link} abstract.
-** `generator`: ⚠️ Deprecated and will be removed in the next major version. Please use the `generator` configuration section mentioned above instead.
 ** `label`: Optional. The project label. Dynamically calculated by the {etcher_link} gem in the following order: This value, {gem_specification_link} metadata label, or {cff_link} title.
 ** `name`: Required. The project name. Dynamically calculated by the {etcher_link} gem in the following order: This value or {gem_specification_link} name.
-** `owner`: Optional. The project owner. This is your source code organization or user handle. Used when formatting URLs (mentioned above). Despite being optional, it is strongly recommended you configure this value so all links are formatted properly.
-** `uri`: Optional. The project URI. Dynamically calculated by the {etcher_link} gem in the following order: This value or {gem_specification_link} homepage.
-** `version`: Required. The project version. Dynamically calculated based on the last {git_link} tag of your project and {git_link} `Milestone` commit trailer metadata. The default is: `0.0.0`. For more on this see, the _Automatic Versioning_ section below. You can configure a value but, keep in mind, the value will be used for _all_ deployments and release notes. Better to let this gem compute this for you.
-* `review`: Manages code review information.
-** `domain`: Required. The domain of your code review service. Default: GitHub.
-** `uri`: Required. The URI format for linking to code reviews as formatted using {string_formats_link}. Default: GitHub. The `id` is currently a _placeholder_ for future feature support when API support is added. For now this links to _all_ code reviews with the goal to link to individual code reviews based on issue tracker metadata from {git_link} commit trailers.
-* `tracker`: Required. Allows you to customize the issue tracker service you are using. Default: GitHub.
-** `domain`: Required. The domain of your issue tracker service. Default: GitHub.
-** `uri`: Required. The URI format for linking to issues as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit `Issue` trailer as linted by {git_lint_link}.
+** `owner`: Required. The project owner. This is your source code organization or user handle. Used when formatting URLs (mentioned above). Default: `undefined`. It is strongly recommended you configure this value so all links are formatted properly.
+** `uri`: Manages project URI details.
+*** `home`: Required. The project home URI. Dynamically calculated by the {etcher_link} gem in the following order: This value, {gem_specification_link} homepage, or {cff_link} URL.
+*** `icon`: Optional. The project icon URI. Used for branding. For example, you could use an organization specific URI: `"%<organization_uri>s/images/projects/%<project_name>s/favicon.ico"`.
+*** `logo`: Optional. The project logo URI. Used for branding. For example, you could use an organization specific URI: `"%<organization_uri>s/images/projects/%<project_name>s/logo.png"`.
+*** `version`: Required. The project version URI. Defaults to the versions folder of your project home URI. This ensures all release notes link back to your project.
+** `version`: Required. The project version. Dynamically calculated based on the last {git_link} tag of your project and {git_link} `Milestone` commit trailer metadata. The default is: `0.0.0`. For more on this see, the _Automatic Versioning_ section below. You can configure a value but is _not recommended_ since any custom value you supply will be used for _all_ deployments and release notes. You're better off letting this gem compute this for you.
+* `review`: Manages code review details.
+** `uri`: Required. The URI format for linking to code reviews as formatted using {string_formats_link}. Default: GitHub. The `id` is currently a _placeholder_ for future feature support when API support is added. For now this links to _all_ code reviews with the goal to link to individual code reviews based on {git_trailers_link}.
+* `syndication`: Manages syndicated feed details when used with the `feed` build format.
+** `categories`: Required. Manages category details.
+*** `label`: Required. The category label. Default: Milestones.
+*** `name`: Required. The category name. Default: milestone.
+** `entry`: Required. Manages feed entry details which are the details of each {git_link} tag.
+*** `label`: Required. The entry label. Default: `%<id>s`. Automatically calculated, at runtime, for the current version.
+*** `uri`: Required. The entry URI. The full URI to your project version. The default uses your project version URI. If customized, ensure you include `%<id>s` so the URI can properly link to the calculated version at runtime.
+** `id`: The ID of your feed which, per Atom specification, should be the the URI of your project (including version) which is why this defaults to your project version URI. If customized, ensure the `%<id>s` is included for proper runtime calculation.
+** `label`: The label of your feed and is what people will see when subscribing to your feed. Defaults to dynamic string formatting based on existing configuration values.
+** `links`: Required. Provides links to HTML and XML versions of your feed. This can be an array of links but generally you only need HTML and XML formats.
+*** `label`: Required. The link label. Defaults to dynamic string formatting based on existing configuration values.
+*** `mime`: Required. The mime type. Defaults to HTML and XML.
+*** `relation`: Required. Identifies the relation of the link which can either be `self` (i.e. XML) or `alternate` (i.e. HTML).
+*** `uri`: Required. The link URI to follow for more information. Defaults to dynamic string formatting based on existing configuration values.
+* `tracker`: Required. Managed issue tracker details.
+** `uri`: Required. The URI format for linking to issues as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit `Issue` trailer as linted by {git_lint_link}. When no ID can be found, this will default to _All_ issues.
+
+As hinted at above, all URIs (including syndication), support {string_formats_link}. This means you can use the `%<key>s` format -- replacing `key` with the key of your choice -- to customize your configuration further.
 
 💡 If you ever need to know what your current configuration looks like you can jump into your applications IRB console and inspect `Milestoner::Container[:configuration]` to see full details.
 
@@ -259,6 +321,10 @@ milestoner cache --info
 
 Once team member information is stored in your cache, you'll be able to build release notes which automatically link to GitHub user information without constantly hitting the GitHub API. _Users are identified by name so the full author name used for each commit message needs to match the same user name as stored in your source repository hosting service._
 
+If you don't update your cache, your release note display a question mark (?) and _unknown_ for team members as highlighted below:
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/no_cache.png[Usage,width=851,height=571,role=focal_point]
+
 === Build
 
 image:https://alchemists.io/images/projects/milestoner/screenshots/usage-build.png[Usage,width=679,height=437,role=focal_point]
@@ -272,7 +338,28 @@ milestoner build --format web
 # 🟢 Milestone built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestone
 ----
 
-💡 The above command is so useful that I use the following `msb` (i.e. Milestoner Build) Bash alias: `rm -rf tmp/milestone && milestoner build --format html && open tmp/milestone/index.html`. This allows me to quickly rebuild release notes for any project and immediately view them in my default browser.
+The above command is so useful that I use the following `msw` (i.e. Milestoner Web) Bash alias to build currest release notes or release notes for several tags:
+
+[source,bash]
+----
+# Label: Milestoner (web)
+# Description: Build milestone(s) in web format.
+# Parameters: $1 (optional): Maximum tags to build. Default: 1.
+msw() {
+  local max=${1:-1}
+
+  rm -rf tmp/milestones
+
+  if [[ "$max" == 1 ]]; then
+    milestoner build --max "$max" --format web && open "tmp/milestones/index.html"
+  else
+    milestoner build --max "$max" --stylesheet "../page" --format web
+    ruby -run -e httpd "tmp/milestones" --port 3030 &
+    open "http://localhost:3030"
+    fg
+  fi
+}
+----
 
 Check out the help documentation (i.e. `milestoner build --help`) for addition usage that explains what command line options you can use to overwrite the current configuration.
 
@@ -347,19 +434,36 @@ lib/milestoner/templates
 │  ├── page.adoc.erb
 │  ├── page.html.erb
 │  ├── page.md.erb
-│  └── page.stream.erb
+│  ├── page.stream.erb
+│  └── page.xml.erb
 ├── milestones
+│  ├── _avatar.adoc.erb
 │  ├── _avatar.html.erb
+│  ├── _avatar.md.erb
+│  ├── _avatar.xml.erb
 │  ├── _commit.adoc.erb
 │  ├── _commit.html.erb
 │  ├── _commit.md.erb
 │  ├── _commit.stream.erb
+│  ├── _commit.xml.erb
+│  ├── _icon.adoc.erb
 │  ├── _icon.html.erb
+│  ├── _icon.md.erb
+│  ├── _icon.xml.erb
+│  ├── _profile.adoc.erb
 │  ├── _profile.html.erb
+│  ├── _profile.md.erb
+│  ├── _profile.xml.erb
+│  ├── _tag.adoc.erb
+│  ├── _tag.html.erb
+│  ├── _tag.md.erb
+│  ├── _tag.stream.erb
+│  ├── _tag.xml.erb
 │  ├── show.adoc.erb
 │  ├── show.html.erb
 │  ├── show.md.erb
-│  └── show.stream.erb
+│  ├── show.stream.erb
+│  └── show.xml.erb
 └── public
    └── page.css.erb
 ....
@@ -371,11 +475,11 @@ This means you could, for example, copy all of this gem's templates to your own 
 cp -r <milestoner_gem_root>/lib/milestoner/templates $HOME/.config/milestoner/templates
 ----
 
-Milestoner searches your {runcom_link} configuration first and, if templates are detected, will be used instead. Otherwise, Milestoner falls back to it's own templates. Once {runcom_link} has calculated all possible template locations, {hanami_views_link} handle the final loading and evaluation of your templates.
+Milestoner searches your {runcom_link} configuration first and, if templates are detected, will be used instead. Otherwise, Milestoner falls back to it's own templates. Once {runcom_link} has calculated all possible template locations, {hanami_views_link} handles the final loading and evaluation of your templates.
 
 ==== Web Format
 
-Of all the build formats supported, the web format is the most powerful, feature rich, and is why it's the default format. The following showcases _some_ of the information rendered in this format based on commit activity.
+Of all the build formats supported, the web format is the most powerful and feature rich. The following showcases _some_ of the information rendered in this format based on commit activity.
 
 *Wit Basic Git Commit*
 
