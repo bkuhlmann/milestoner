@@ -122,11 +122,11 @@ The default configuration is:
 [source,yaml]
 ----
 avatar:
-  domain: https://avatars.githubusercontent.com
-  uri: "%<domain>s/u/%<id>s"
+  uri: "https://avatars.githubusercontent.com/u/%<id>s"
 build:
   format: web
   layout: page
+  max: 1
   root: tmp/milestone
 commit:
   categories:
@@ -140,70 +140,82 @@ commit:
       label: Removed
     - emoji: 🔁
       label: Refactored
-  domain: https://github.com
   format: asciidoc
-  uri: "%<domain>s/%<owner>s/%<name>s/commit/%<id>s"
-generator:
-  label:
-  uri:
-  version:
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s"
 profile:
-  domain: https://github.com
-  uri: "%<domain>s/%<id>s"
+  uri: "https://github.com/%<id>s"
 project:
-  author:
-  description:
-  generator:
-  label:
-  name:
-  owner:
-  uri:
-  version:
+  uri: "%<organization_uri>s/projects/%<project_name>s"
 review:
-  domain: https://github.com
-  uri: "%<domain>s/%<owner>s/%<name>s/pulls/%<id>s"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s"
+syndication:
+  categories:
+    - label: "Milestones"
+      name: "milestones"
+  icon: "%<organization_uri>s/assets/media/projects/%<project_name>s/favicon.ico"
+  label: "%<project_label>s Versions"
+  links:
+    - label: "%<project_label>s Versions (web)"
+      mime: "text/html"
+      relation: "alternate"
+      uri: "%<project_uri>s/versions"
+    - label: "%<project_label>s Versions (feed)"
+      mime: "application/atom+xml"
+      relation: "self"
+      uri: "%<project_uri>s/versions.xml"
+  logo: "%<organization_uri>s/assets/media/projects/%<project_name>s/icon.png"
 tracker:
-  domain: https://github.com
-  uri: "%<domain>s/%<owner>s/%<name>s/issues/%<id>s"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s"
 ----
 
 The above can be customized as follows:
 
 * `avatar`: Manages team member avatar information.
-** `domain`: Required. The domain of your team member avatars. Default: GitHub.
 ** `uri`: Required. The URI format for linking to avatars as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the `external_id` of the user stored in the {lode_link} cache.
 * `build`: Manages release note builds.
 ** `format`: Required. The build output format. Multiple formats are supported. Default: web.
 ** `layout`: Required. The layout used by {hanami_views_link} when building release notes. Default: page.
+** `max`: Required. The maximum number of {git_link} tags to build for. Default: 1.
 ** `root`: Required. The output location. This can be a relative or absolute path. Defaults to the `tmp` directory of your current project. The path is automatically created if missing.
 * `commit`: Manages commit categories, emojis, and hyperlinks.
 ** `categories`: Required. By default, only five categories are supported which pairs well with the {git_lint_link} gem. Category order is important with the first taking precedence over the second and so forth. Special characters are allowed for prefixes but should be enclosed in quotes. To disable categories, use an empty array. Example: `categories: []`.
 *** `emoji`: Required. The emoji associated with the label for output purposes. _Used by the {ascii_doc_link}, {markdown_link}, and stream build formats_. Defaults to the provided emojis.
 *** `label`: Required. Allows you to customize the category label. All commits are grouped by label which equates to the prefix, or first word, used in each commit message. The defaults pair well with the {git_lint_link} gem. Defaults to the provided labels.
-** `domain`: Required. The {git_link} repository domain for all commits. Default: GitHub.
 ** `format`: Required. Defines the default format used for rendering commit messages unless specified in the commit trailer metadata which takes higher precedence. Default: {ascii_doc_link}.
 ** `uri`: Required. The URI format for linking to commits as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit SHA of each commit analyzed at runtime.
 * `generator`: Manages generator information.
 ** `label`: Required. The label of the generator used for all software milestones. Default: Milestoner.
 ** `uri`: Required. The URI of the generator used for all software milestones. Defaults to Milestoner's homepage URL as provided by the {gem_specification_link} of this project.
 ** `version`: Required. The version of the generator used for all software milestones. Defaults to Milestoner's current version as provided by the {gem_specification_link} of this project.
+* `loaded_at`: Required. Dynamically calculated when the configuration is loaded and is generally meant to represent current time. You can customize this value but is not recommended.
+* `organization`: Manages organization information.
+** `uri`: Optional. The organization's home page URI. This can be used within other keys via {string_formats_link}.
 * `profile`: Manages team member profile information.
-** `domain`: Required. The domain of your {git_link} repository. Default: GitHub.
 ** `uri`: Required. The URI format for linking to profiles as formatted using {string_formats_link}. The `id` is dynamically calculated via the `handle` of the user stored in the {lode_link} cache. Default: GitHub.
 * `project`: Manages project information.
 ** `author`: Required. The project author. Dynamically calculated by the {etcher_link} gem in the following order: This value or {git_link} configuration user name.
 ** `description`: Optional. The project description. Dynamically calculated by the {etcher_link} gem in the following order: This value, {gem_specification_link} summary, or {cff_link} abstract.
-** `generator`: ⚠️ Deprecated and will be removed in the next major version. Please use the `generator` configuration section mentioned above instead.
 ** `label`: Optional. The project label. Dynamically calculated by the {etcher_link} gem in the following order: This value, {gem_specification_link} metadata label, or {cff_link} title.
 ** `name`: Required. The project name. Dynamically calculated by the {etcher_link} gem in the following order: This value or {gem_specification_link} name.
 ** `owner`: Optional. The project owner. This is your source code organization or user handle. Used when formatting URLs (mentioned above). Despite being optional, it is strongly recommended you configure this value so all links are formatted properly.
 ** `uri`: Optional. The project URI. Dynamically calculated by the {etcher_link} gem in the following order: This value or {gem_specification_link} homepage.
 ** `version`: Required. The project version. Dynamically calculated based on the last {git_link} tag of your project and {git_link} `Milestone` commit trailer metadata. The default is: `0.0.0`. For more on this see, the _Automatic Versioning_ section below. You can configure a value but, keep in mind, the value will be used for _all_ deployments and release notes. Better to let this gem compute this for you.
 * `review`: Manages code review information.
-** `domain`: Required. The domain of your code review service. Default: GitHub.
 ** `uri`: Required. The URI format for linking to code reviews as formatted using {string_formats_link}. Default: GitHub. The `id` is currently a _placeholder_ for future feature support when API support is added. For now this links to _all_ code reviews with the goal to link to individual code reviews based on issue tracker metadata from {git_link} commit trailers.
+* `syndication`: Manages syndicated feed information when used with the `feed` build format.
+** `categories`: Required. By default, only five categories are supported which pairs well with the {git_lint_link} gem. Category order is important with the first taking precedence over the second and so forth. Special characters are allowed for prefixes but should be enclosed in quotes. To disable categories, use an empty array. Example: `categories: []`.
+*** `label`: Required. Allows you to customize the category label. Default: Milestones.
+*** `name`: Required. Allows you to customize the category name. Default: milestone.
+** `icon`: The favicon associated with your project. Defaults to dynamic string formatting based on existing configuration values.
+** `label`: The label of your feed and is what people will see when subscribing to your feed. Defaults to dynamic string formatting based on existing configuration values.
+
+** `links`: Required. Provides links to HTML and XML versions of your feed. This can be an array of links but generally you only need to your HTML and XML format.
+*** `label`: Required. The link label. Defaults to dynamic string formatting based on existing configuration values.
+*** `mime`: Required. The mime type. Defaults to HTML and XML.
+*** `relation`: Required. Identifies the relation of the link which can either me `self` (i.e. XML) or `alternate` (i.e. HTML).
+*** `uri`: Required. The link URI to follow for more information. Defaults to dynamic string formatting based on existing configuration values.
+** `logo`: The label of your feed and is what people will see when subscribing to your feed. Defaults to dynamic string formatting based on existing configuration values.
 * `tracker`: Required. Allows you to customize the issue tracker service you are using. Default: GitHub.
-** `domain`: Required. The domain of your issue tracker service. Default: GitHub.
 ** `uri`: Required. The URI format for linking to issues as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit `Issue` trailer as linted by {git_lint_link}.
 
 💡 If you ever need to know what your current configuration looks like you can jump into your applications IRB console and inspect `Milestoner::Container[:configuration]` to see full details.
