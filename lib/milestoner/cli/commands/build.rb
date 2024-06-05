@@ -14,11 +14,12 @@ module Milestoner
 
         description "Build milestone."
 
-        on Actions::Build::Label
-        on Actions::Build::Version
-        on Actions::Build::Layout
+        on Actions::Build::Basename
         on Actions::Build::Format
+        on Actions::Build::Label
+        on Actions::Build::Layout
         on Actions::Build::Root
+        on Actions::Build::Version
 
         # :reek:TooManyStatements
         def call
