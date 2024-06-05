@@ -4,6 +4,7 @@ module Milestoner
   module Configuration
     # Defines configuration content as the primary source of truth for use throughout the gem.
     Model = Struct.new :avatar_uri,
+                       :build_basename,
                        :build_format,
                        :build_layout,
                        :build_root,

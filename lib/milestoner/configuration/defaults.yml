@@ -1,6 +1,7 @@
 avatar:
   uri: https://avatars.githubusercontent.com/u/%<id>s
 build:
+  basename: index
   format: web
   layout: page
   root: tmp/milestone
