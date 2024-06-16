@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = "~> 3.3"
   spec.add_dependency "asciidoctor", "~> 2.0"
   spec.add_dependency "cff", "~> 1.1"
-  spec.add_dependency "cogger", "~> 0.16"
+  spec.add_dependency "cogger", "~> 0.21"
   spec.add_dependency "containable", "~> 0.0"
   spec.add_dependency "core", "~> 1.3"
   spec.add_dependency "dry-monads", "~> 1.6"
