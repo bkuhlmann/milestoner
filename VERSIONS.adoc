@@ -1,5 +1,14 @@
 = Versions
 
+== 17.20.0 (2024-06-19)
+
+* 🔼 Updated major, minor, and patch colors - Brooke Kuhlmann
+* 🔼 Updated to Alpine.js 3.14 - Brooke Kuhlmann
+* 🔼 Updated to Caliber 0.58.0 - Brooke Kuhlmann
+* 🔼 Updated to Cogger 0.21.0 - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.3 - Brooke Kuhlmann
+* ⛔️ Removed SimpleCov coverage for eval task - Brooke Kuhlmann
+
 == 17.9.0 (2024-06-01)
 
 * ✅ Fixed CLI layout build action documentation - Brooke Kuhlmann
