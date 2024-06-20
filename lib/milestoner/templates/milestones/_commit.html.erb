@@ -5,9 +5,9 @@
       <span class="subject"><%= commit.subject %></span>
     </div>
 
-    <div class="author">
+    <a href="<%= commit.profile_url commit.author %>" class="author">
       <%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %>
-    </div>
+    </a>
 
     <a href="<%= commit.uri %>" class="files"><%= commit.files_changed %></a>
 

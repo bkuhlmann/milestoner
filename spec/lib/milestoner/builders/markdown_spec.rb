@@ -23,12 +23,33 @@ RSpec.describe Milestoner::Builders::Markdown do
       expect(builder.call.exist?).to be(true)
     end
 
-    it "includes label" do
+    it "includes Markdown logo when present" do
       builder.call
-      expect(content).to match(/# Test 1.2.3 \(\d{4}-\d{2}-\d{2}\)/)
+
+      expect(content).to include(
+        %(<img src="https://undefined.io/assets/media/projects/milestoner/logo.png" ) +
+        %(alt="Logo" width="100" height="100">)
+      )
     end
 
-    it "builds Markdown" do
+    it "doesn't include Markdown logo when not present" do
+      settings.project_uri_logo = nil
+      builder.call
+
+      expect(content).not_to match(/img/)
+    end
+
+    it "includes label and version" do
+      builder.call
+      expect(content).to include("# [Test](https://undefined.io/projects/milestoner) 1.2.3")
+    end
+
+    it "includes date" do
+      builder.call
+      expect(content).to match(/\(\d{4}-\d{2}-\d{2}\)/)
+    end
+
+    it "renders commits with stats" do
       builder.call
 
       expect(content).to include(<<~BODY)
@@ -36,6 +57,15 @@ RSpec.describe Milestoner::Builders::Markdown do
 
         **1 commit. 2 files. 10 deletions. 5 insertions.**
       BODY
+    end
+
+    context "without commits" do
+      let(:enricher) { instance_double Milestoner::Commits::Enricher, call: Success([]) }
+
+      it "renders zero stats" do
+        builder.call
+        expect(content).to include("*0 commits. 0 files. 0 deletions. 0 insertions.*")
+      end
     end
 
     it "includes generator" do

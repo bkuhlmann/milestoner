@@ -1,9 +1,9 @@
 <% if commits.empty? %>
-= <%= project_label %> (<%= date %>)
+= pass:[ ]<% if project_uri_logo %>image:<%= project_uri_logo %>[Logo,50,50]<% end %> pass:[ ]link:<%= project_uri_home %>[<%= project_label %>] (<%= date %>)
 
 *<%= total_commits %>. <%= total_files %>. <%= total_deletions %>. <%= total_insertions %>.*
 <% else %>
-= <%= project_label %> <%= project_version %> (<%= date %>)
+= pass:[ ]<% if project_uri_logo %>image:<%= project_uri_logo %>[Logo,50,50]<% end %> pass:[ ]link:<%= project_uri_home %>[<%= project_label %>] (<%= date %>)
 
 <% commits.each do |commit| %><%= commit.render :commit %><% end %>
 

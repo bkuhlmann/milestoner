@@ -18,19 +18,38 @@ RSpec.describe Milestoner::Builders::Stream do
   describe "#call" do
     let :pattern do
       /
-        \d+\.\d+\.\d+\s\(\d{4}-\d{2}-\d{2}\)\n
+        Test\s\d+\.\d+\.\d+\s\(\d{4}-\d{2}-\d{2}\)\n
         \n
         🟢\sAdded\sdocumentation\s-\sZoe\sWashburne\n
         \n
-        \d+\scommit\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.
-        \n\n
-        Generated\sby\s(Test\sGenerator\s3\.2\.1|Milestoner.+)\.
+        \d+\scommit\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.\n
+        \n
+        Generated\sby\sMilestoner\s3\.2\.1\.
       /mx
     end
 
-    it "writes to standard output" do
+    it "renders project label, version, date, commits, stats, and generator information" do
       builder.call
       expect(kernel).to have_received(:puts).with(pattern)
+    end
+
+    context "without commits" do
+      let :pattern do
+        /
+          Test\s\(\d{4}-\d{2}-\d{2}\)\n
+          \n
+          \d+\scommits\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.\n
+          \n
+          Generated\sby\sMilestoner\s3\.2\.1\.
+        /mx
+      end
+
+      let(:enricher) { instance_double Milestoner::Commits::Enricher, call: Success([]) }
+
+      it "renders no commits and zero stats" do
+        builder.call
+        expect(kernel).to have_received(:puts).with(pattern)
+      end
     end
 
     it "answers kernel" do

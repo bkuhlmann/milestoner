@@ -1,6 +1,10 @@
 <article class="milestone">
   <header class="header">
     <h1 class="title">
+      <% if project_uri_logo %>
+        <img src="<%= project_uri_logo %>" alt="Logo" width="30" height="30">
+      <% end %>
+
       <a href="<%= project_uri_home %>" class="label"><%= project_label %></a>
 
       <% if commits.any? %>
