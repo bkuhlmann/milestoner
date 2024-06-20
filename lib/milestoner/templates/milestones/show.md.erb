@@ -1,9 +1,15 @@
+<% if project_uri_logo %>
+  <p align="center">
+    <img src="<%= project_uri_logo %>" alt="Logo" width="100" height="100">
+  </p>
+<% end %>
+
 <% if commits.empty? %>
-# <%= project_label %> (<%= date %>)
+# [<%= project_label %>](<%= project_uri_home %>) (<%= date %>)
 
 **<%= total_commits %>. <%= total_files %>. <%= total_deletions %>. <%= total_insertions %>.**
 <% else %>
-# <%= project_label %> <%= project_version %> (<%= date %>)
+# [<%= project_label %>](<%= project_uri_home %>) <%= project_version %> (<%= date %>)
 
 <% commits.each do |commit| %><%= commit.render :commit %><% end %>
 

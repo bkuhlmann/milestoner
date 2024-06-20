@@ -83,6 +83,25 @@ RSpec.describe Milestoner::Builders::Web do
       expect(html_path.read).not_to include(%(rel="stylesheet"))
     end
 
+    it "includes logo when present" do
+      builder.call
+
+      expect(html_path.read).to include(
+        %(<img src="https://undefined.io/assets/media/projects/milestoner/logo.png" ) +
+        %(alt="Logo" width="30" height="30">)
+      )
+    end
+
+    it "doesn't include logo when not present" do
+      settings.project_uri_logo = nil
+      builder.call
+
+      expect(html_path.read).not_to include(
+        %(<img src="https://undefined.io/assets/media/projects/milestoner/logo.png" ) +
+        %(alt="Logo" width="30" height="30">)
+      )
+    end
+
     it "includes generator link" do
       builder.call
       url = "https://alchemists.io/projects/milestoner"

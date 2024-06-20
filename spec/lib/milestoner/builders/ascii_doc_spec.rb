@@ -23,12 +23,36 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
       expect(builder.call.exist?).to be(true)
     end
 
-    it "includes label" do
+    it "includes logo when present" do
       builder.call
-      expect(content).to match(/= Test 1.2.3 \(\d{4}-\d{2}-\d{2}\)/)
+
+      expect(content).to include(
+        "image:https://undefined.io/assets/media/projects/milestoner/logo.png[Logo,50,50]"
+      )
     end
 
-    it "builds ASCII Doc" do
+    it "doesn't include logo when not present" do
+      settings.project_uri_logo = nil
+      builder.call
+
+      expect(content).not_to match(/image:/)
+    end
+
+    it "includes label and version" do
+      builder.call
+
+      expect(content).to include(
+        "= pass:[ ]image:https://undefined.io/assets/media/projects/milestoner/logo.png" \
+        "[Logo,50,50]pass:[ ]link:https://undefined.io/projects/milestoner[Test]"
+      )
+    end
+
+    it "includes date" do
+      builder.call
+      expect(content).to match(/\(\d{4}-\d{2}-\d{2}\)/)
+    end
+
+    it "renders commits with stats" do
       builder.call
 
       expect(content).to include(<<~BODY)
@@ -36,6 +60,15 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
 
         *1 commit. 2 files. 10 deletions. 5 insertions.*
       BODY
+    end
+
+    context "without commits" do
+      let(:enricher) { instance_double Milestoner::Commits::Enricher, call: Success([]) }
+
+      it "renders zero stats" do
+        builder.call
+        expect(content).to include("*0 commits. 0 files. 0 deletions. 0 insertions.*")
+      end
     end
 
     it "includes generator" do
