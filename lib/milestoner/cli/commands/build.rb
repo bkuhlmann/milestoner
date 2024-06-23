@@ -7,7 +7,7 @@ module Milestoner
     module Commands
       # Handles the building of milestone output.
       class Build < Sod::Command
-        include Import[:settings, :logger, :kernel]
+        include Import[:settings, :logger, :io]
         include Builders::Import[:ascii_doc, :feed, :markdown, :stream, :web]
 
         handle "build"
@@ -49,7 +49,7 @@ module Milestoner
         def build_markdown = log_info("Milestone built: #{markdown.call}.")
 
         def build_stream
-          kernel.puts
+          io.puts
           stream.call
         end
 

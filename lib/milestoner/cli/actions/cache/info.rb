@@ -8,7 +8,7 @@ module Milestoner
       module Cache
         # Handles cache information.
         class Info < Sod::Action
-          include Import[:kernel, :logger, client: :cache]
+          include Import[:logger, client: :cache]
 
           description "Show information."
 

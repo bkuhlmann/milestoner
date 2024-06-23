@@ -15,7 +15,7 @@ module Milestoner
 
       def initialize(
         collector: Commits::Collector.new,
-        builder: Builders::Stream.new(kernel: StringIO.new),
+        builder: Builders::Stream.new(io: StringIO.new),
         **
       )
         @collector = collector

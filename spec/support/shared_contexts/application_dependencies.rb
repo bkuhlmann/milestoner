@@ -15,8 +15,8 @@ RSpec.shared_context "with application dependencies" do
   end
 
   let(:settings) { Milestoner::Container[:settings] }
-  let(:kernel) { class_spy Kernel }
   let(:logger) { Cogger.new id: :milestoner, io: StringIO.new, level: :debug }
+  let(:io) { StringIO.new }
 
   before do
     settings.merge! Etcher.call(
@@ -30,7 +30,7 @@ RSpec.shared_context "with application dependencies" do
       project_name: "test"
     )
 
-    Milestoner::Container.stub! cache:, kernel:, logger:
+    Milestoner::Container.stub! cache:, logger:, io:
   end
 
   after { Milestoner::Container.restore }

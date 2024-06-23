@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Next do
-  using Versionaire::Cast
+  using Refinements::StringIO
 
   subject(:action) { described_class.new }
 
@@ -12,7 +12,7 @@ RSpec.describe Milestoner::CLI::Actions::Next do
   describe "#call" do
     it "answers next version" do
       action.call
-      expect(kernel).to have_received(:puts).with(Version("1.2.3"))
+      expect(io.reread).to eq("1.2.3\n")
     end
   end
 end

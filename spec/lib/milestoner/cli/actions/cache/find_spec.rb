@@ -6,6 +6,8 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Actions::Cache::Find do
   include Dry::Monads[:result]
 
+  using Refinements::StringIO
+
   subject(:action) { described_class.new }
 
   include_context "with application dependencies"
@@ -17,7 +19,7 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Find do
       cache.write(:users) { upsert record }
       action.call "Test"
 
-      expect(kernel).to have_received(:puts).with("1, test, Test")
+      expect(io.reread).to eq("1, test, Test\n")
     end
 
     it "aborts on failure" do

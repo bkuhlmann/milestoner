@@ -5,6 +5,7 @@ ruby file: ".ruby-version"
 source "https://rubygems.org"
 
 gem "etcher", path: "~/Engineering/OSS/etcher"
+gem "sod", path: "~/Engineering/OSS/sod"
 
 gemspec
 
