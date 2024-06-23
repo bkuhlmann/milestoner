@@ -70,6 +70,6 @@ module Milestoner
     register(:git) { Gitt::Repository.new }
     register(:defaults_path) { Pathname(__dir__).join("configuration/defaults.yml") }
     register(:logger) { Cogger.new id: :milestoner }
-    register :kernel, Kernel
+    register :io, STDOUT
   end
 end

@@ -7,6 +7,7 @@ RSpec.describe Milestoner::Builders::Stream do
   include Dry::Monads[:result]
 
   using Refinements::Pathname
+  using Refinements::StringIO
 
   subject(:builder) { described_class.new enricher: }
 
@@ -30,7 +31,7 @@ RSpec.describe Milestoner::Builders::Stream do
 
     it "renders project label, version, date, commits, stats, and generator information" do
       builder.call
-      expect(kernel).to have_received(:puts).with(pattern)
+      expect(io.reread).to match(pattern)
     end
 
     context "without commits" do
@@ -48,7 +49,7 @@ RSpec.describe Milestoner::Builders::Stream do
 
       it "renders no commits and zero stats" do
         builder.call
-        expect(kernel).to have_received(:puts).with(pattern)
+        expect(io.reread).to match(pattern)
       end
     end
 

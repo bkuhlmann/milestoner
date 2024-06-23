@@ -8,7 +8,7 @@ module Milestoner
       module Cache
         # Handles listing users within the cache.
         class List < Sod::Action
-          include Import[:kernel, :logger, client: :cache]
+          include Import[:logger, :io, client: :cache]
 
           description "List users."
 
@@ -24,7 +24,7 @@ module Milestoner
           def print users
             return logger.info { "No users found." } if users.empty?
 
-            users.each { |user| kernel.puts user.to_h.values.join ", " }
+            users.each { |user| io.puts user.to_h.values.join ", " }
           end
         end
       end

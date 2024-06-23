@@ -8,7 +8,7 @@ module Milestoner
       module Cache
         # Handles finding a user in the cache.
         class Find < Sod::Action
-          include Import[:kernel, :logger, client: :cache]
+          include Import[:logger, :io, client: :cache]
 
           description "Find user."
 
@@ -21,7 +21,7 @@ module Milestoner
 
           private
 
-          def success(user) = kernel.puts user.to_h.values.join(", ")
+          def success(user) = io.puts user.to_h.values.join(", ")
 
           def failure(message) = logger.abort message
         end

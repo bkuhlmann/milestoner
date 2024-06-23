@@ -6,6 +6,8 @@ require "spec_helper"
 RSpec.describe Milestoner::CLI::Actions::Cache::List do
   include Dry::Monads[:result]
 
+  using Refinements::StringIO
+
   subject(:action) { described_class.new }
 
   include_context "with application dependencies"
@@ -22,7 +24,7 @@ RSpec.describe Milestoner::CLI::Actions::Cache::List do
       cache.write(:users) { upsert record }
       action.call
 
-      expect(kernel).to have_received(:puts).with("1, test, Test")
+      expect(io.reread).to eq("1, test, Test\n")
     end
 
     it "logs users missing when users don't exist" do

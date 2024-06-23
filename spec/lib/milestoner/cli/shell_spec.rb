@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "versionaire/cast"
 
 RSpec.describe Milestoner::CLI::Shell do
   using Refinements::Pathname
+  using Refinements::StringIO
   using Versionaire::Cast
 
   subject(:shell) { described_class.new }
@@ -11,30 +13,32 @@ RSpec.describe Milestoner::CLI::Shell do
   include_context "with Git repository"
   include_context "with application dependencies"
 
-  before { Sod::Container.stub! kernel:, logger: }
+  let(:kernel) { class_spy Kernel }
+
+  before { Sod::Container.stub! logger:, io: }
 
   after { Sod::Container.restore }
 
   describe "#call" do
     it "prints configuration usage" do
       shell.call %w[config]
-      expect(kernel).to have_received(:puts).with(/Manage configuration.+/m)
+      expect(io.reread).to match(/Manage configuration.+/m)
     end
 
     it "prints cache usage" do
       shell.call %w[cache]
-      expect(kernel).to have_received(:puts).with(/Manage cache.+/m)
+      expect(io.reread).to match(/Manage cache.+/m)
     end
 
     it "prints build usage" do
       shell.call %w[build]
-      expect(kernel).to have_received(:puts).with(/Build milestone.+/m)
+      expect(io.reread).to match(/Build milestone.+/m)
     end
 
     it "prints next version" do
       git_repo_dir.change_dir do
         shell.call %w[--next]
-        expect(kernel).to have_received(:puts).with(Version("1.2.3"))
+        expect(io.reread).to eq("1.2.3\n")
       end
     end
 
@@ -61,12 +65,12 @@ RSpec.describe Milestoner::CLI::Shell do
 
     it "prints version" do
       shell.call %w[--version]
-      expect(kernel).to have_received(:puts).with(/Milestoner\s\d+\.\d+\.\d+/)
+      expect(io.reread).to match(/Milestoner\s\d+\.\d+\.\d+/)
     end
 
     it "prints help" do
       shell.call %w[--help]
-      expect(kernel).to have_received(:puts).with(/Milestoner.+USAGE.+/m)
+      expect(io.reread).to match(/Milestoner.+USAGE.+/m)
     end
   end
 end

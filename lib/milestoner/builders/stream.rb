@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds I/O stream output.
     class Stream
-      include Milestoner::Import[:settings, :kernel]
+      include Milestoner::Import[:settings, :io]
 
       using Refinements::Pathname
 
@@ -18,8 +18,8 @@ module Milestoner
 
       def call
         enricher.call.fmap do |commits|
-          kernel.puts view.call(commits:, layout: settings.build_layout, format: :stream).to_s
-          kernel
+          io.puts view.call(commits:, layout: settings.build_layout, format: :stream)
+          io
         end
       end
 
