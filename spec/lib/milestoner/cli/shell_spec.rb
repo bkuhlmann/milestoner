@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "versionaire/cast"
+require "versionaire"
 
 RSpec.describe Milestoner::CLI::Shell do
   using Refinements::Pathname
+  using Refinements::String
   using Refinements::StringIO
   using Versionaire::Cast
 
@@ -47,19 +48,21 @@ RSpec.describe Milestoner::CLI::Shell do
         `git fetch --tags && git tag --delete 0.0.0 && git push --delete origin 0.0.0`
         shell.call %w[--publish 0.0.0]
 
-        expect(`git describe --tags --abbrev=0`.chomp).to eq("0.0.0")
-      rescue Milestoner::Error
-        # For CI since it can't push.
-        expect(`git describe --tags --abbrev=0`.chomp).to eq("")
+        if ENV.fetch("CI", false) == "true"
+          # CI can't push tags.
+          expect(`git describe --tags --abbrev=0`.chomp).to eq("")
+        else
+          expect(`git describe --tags --abbrev=0`.chomp).to eq("0.0.0")
+        end
       end
     end
 
     it "fails to publish when remote repository doesn't exist" do
       git_repo_dir.change_dir do
         `git config --unset remote.origin.url`
-        expectation = proc { shell.call %w[--publish 0.0.0] }
+        shell.call %w[--publish 0.0.0]
 
-        expect(&expectation).to raise_error(Milestoner::Error, /not configured/)
+        expect(logger.reread).to match(/🛑.+Remote repository not configured\./)
       end
     end
 

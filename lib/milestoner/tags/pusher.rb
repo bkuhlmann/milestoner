@@ -1,29 +1,38 @@
 # frozen_string_literal: true
 
-require "versionaire"
+require "dry/monads"
 
 module Milestoner
   module Tags
     # Handles publishing of tags to a remote repository.
     class Pusher
-      include Import[:settings, :git, :logger]
+      include Import[:git, :logger]
+      include Dry::Monads[:result]
 
-      using Versionaire::Cast
-
-      def call override = nil
-        version = compute_version override
-
-        fail Error, "Remote repository not configured." unless git.origin?
-        fail Error, "Remote tag exists: #{version}." if git.tag_remote? version
-        fail Error, "Tags could not be pushed to remote repository." if git.tags_push.failure?
-
-        logger.debug "Local tag pushed: #{version}."
+      def call version
+        check_remote_repo(version).bind { check_remote_tag version }
+                                  .bind { push version }
       end
 
-      def compute_version value
-        Version value || settings.project_version
-      rescue Versionaire::Error => error
-        raise Error, error
+      private
+
+      def check_remote_repo version
+        git.origin? ? Success(version) : Failure("Remote repository not configured.")
+      end
+
+      def check_remote_tag version
+        git.tag_remote?(version) ? Failure("Remote tag exists: #{version}.") : Success(version)
+      end
+
+      def push version
+        git.tags_push
+           .either proc { debug version },
+                   proc { Failure "Tags could not be pushed to remote repository." }
+      end
+
+      def debug version
+        logger.debug { "Local tag pushed: #{version}." }
+        Success version
       end
     end
   end
