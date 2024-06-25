@@ -1,49 +1,33 @@
 # frozen_string_literal: true
 
 require "core"
+require "dry/monads"
 require "refinements/string_io"
-require "versionaire"
 
 module Milestoner
   module Tags
     # Handles the creation of project repository tags.
     class Creator
-      include Import[:settings, :git, :logger]
+      include Import[:git, :logger]
+      include Dry::Monads[:result]
 
       using Refinements::StringIO
-      using Versionaire::Cast
 
-      def initialize(
-        collector: Commits::Collector.new,
-        builder: Builders::Stream.new(io: StringIO.new),
-        **
-      )
+      def initialize(collector: Commits::Collector.new, builder: Builders::Stream.new, **)
         @collector = collector
         @builder = builder
         super(**)
       end
 
-      def call override = nil
-        version = compute_version override
+      def call version
+        return Success version if local? version
 
-        return false if local? version
-
-        collection = collector.call.value_or Core::EMPTY_ARRAY
-
-        fail Error, "Unable to tag without commits." if collection.empty?
-
-        create version
+        collect.bind { create version }
       end
 
       private
 
       attr_reader :collector, :builder
-
-      def compute_version value
-        Version value || settings.project_version
-      rescue Versionaire::Error => error
-        raise Error, error
-      end
 
       def local? version
         if git.tag_local? version
@@ -54,17 +38,11 @@ module Milestoner
         end
       end
 
-      def create version
-        build(version).fmap { |body| git.tag_create version, body }
-                      .or { |error| fail Error, error }
-                      .bind { true }
-      end
+      def collect = collector.call.alt_map { |message| message.sub("fatal: y", "Y").sub("\n", ".") }
 
-      def build version
-        builder.call.fmap do |body|
-          "Version #{version}\n\n#{body.reread}\n\n"
-        end
-      end
+      def create(version) = build(version).bind { |body| git.tag_create version, body }
+
+      def build(version) = builder.call.fmap { |body| "Version #{version}\n\n#{body.reread}\n\n" }
     end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "versionaire/cast"
+require "versionaire"
 
 RSpec.describe Milestoner::CLI::Shell do
   using Refinements::Pathname
@@ -57,9 +57,9 @@ RSpec.describe Milestoner::CLI::Shell do
     it "fails to publish when remote repository doesn't exist" do
       git_repo_dir.change_dir do
         `git config --unset remote.origin.url`
-        expectation = proc { shell.call %w[--publish 0.0.0] }
+        shell.call %w[--publish 0.0.0]
 
-        expect(&expectation).to raise_error(Milestoner::Error, /not configured/)
+        expect(logger.reread).to match(/🛑.+Remote repository not configured\./)
       end
     end
 
