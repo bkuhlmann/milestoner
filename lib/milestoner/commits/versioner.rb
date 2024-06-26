@@ -8,7 +8,7 @@ module Milestoner
   module Commits
     # Calculates next version based on commit trailer version keys.
     class Versioner
-      include Import[:git]
+      include Import[:git, :logger]
       include Dry::Monads[:result]
 
       using Versionaire::Cast
@@ -37,6 +37,13 @@ module Milestoner
       end
 
       def bump milestones
+        last_tag_or_fallback_for milestones
+      rescue Versionaire::Error => error
+        logger.debug { error.message }
+        Failure error
+      end
+
+      def last_tag_or_fallback_for milestones
         target = fallback.members.intersection(milestones).first
         git.tag_last.fmap { |tag| target ? Version(tag).bump(target) : fallback }
       end

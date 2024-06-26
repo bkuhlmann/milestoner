@@ -9,6 +9,7 @@ RSpec.describe Milestoner::Commits::Versioner do
   subject(:versioner) { described_class.new }
 
   include_context "with Git repository"
+  include_context "with application dependencies"
 
   describe "#call" do
     it "answers next major version" do
@@ -64,6 +65,25 @@ RSpec.describe Milestoner::Commits::Versioner do
 
     it "answers default version when no tags exist" do
       git_repo_dir.change_dir { expect(versioner.call).to eq(Version("0.0.0")) }
+    end
+
+    it "answers logs debug information for invalid tag" do
+      git_repo_dir.change_dir do
+        `git tag bogus`
+        `touch a.txt && git add --all && git commit --message "Added A" --trailer "Milestone=patch"`
+        versioner.call
+
+        expect(logger.reread).to match(/🔎.+Invalid version/)
+      end
+    end
+
+    it "answers default version with invalid tag" do
+      git_repo_dir.change_dir do
+        `git tag bogus`
+        `touch a.txt && git add --all && git commit --message "Added A" --trailer "Milestone=patch"`
+
+        expect(versioner.call).to eq(Version("0.0.0"))
+      end
     end
   end
 end
