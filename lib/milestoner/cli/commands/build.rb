@@ -5,7 +5,7 @@ require "sod"
 module Milestoner
   module CLI
     module Commands
-      # Handles the building of milestone output.
+      # Handles the building of different milestone formats.
       class Build < Sod::Command
         include Import[:settings, :logger, :io]
         include Builders::Import[:ascii_doc, :feed, :markdown, :stream, :web]
@@ -24,36 +24,21 @@ module Milestoner
         on Actions::Build::Tail
         on Actions::Build::Version
 
-        # :reek:TooManyStatements
         def call
           format = settings.build_format
 
-          log_info "Building #{settings.project_label} milestone (#{format})..."
+          log_info "Building #{settings.project_label} (#{format})..."
 
-          case format
-            when "ascii_doc" then build_ascii_doc
-            when "feed" then feed.call
-            when "markdown" then build_markdown
-            when "stream" then build_stream
-            when "web" then build_web
-            else logger.abort "Invalid build format: #{format}."
+          if infused_keys.include? format.to_sym
+            __send__(format).call
+          else
+            logger.abort "Invalid build format: #{format}."
           end
         end
 
         private
 
         attr_reader :view, :enricher
-
-        def build_ascii_doc = log_info("Milestone built: #{ascii_doc.call}.")
-
-        def build_markdown = log_info("Milestone built: #{markdown.call}.")
-
-        def build_stream
-          io.puts
-          stream.call
-        end
-
-        def build_web = log_info "Milestone built: #{web.call}."
 
         def log_info(message) = logger.info { message }
       end

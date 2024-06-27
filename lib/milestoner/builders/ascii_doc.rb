@@ -4,30 +4,48 @@ require "refinements/pathname"
 
 module Milestoner
   module Builders
-    # Builds Markdown page output.
+    # Builds ASCII Doc output.
     class ASCIIDoc
-      include Milestoner::Import[:settings]
+      include Milestoner::Import[:settings, :logger]
 
       using Refinements::Pathname
 
-      def initialize(view: Views::Milestones::Show.new, enricher: Commits::Enricher.new, **)
+      def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
+        @tagger = tagger
         @view = view
-        @enricher = enricher
         super(**)
       end
 
-      def call = build_path.make_ancestors.tap { |path| write path }
+      def call
+        tagger.call
+              .fmap { |tags| build tags }
+              .alt_map { |message| failure message }
+      end
 
       private
 
-      attr_reader :view, :enricher
+      attr_reader :tagger, :view
 
-      def build_path = settings.build_root.join "#{settings.build_basename}.adoc"
+      def build tags
+        tags.each { |tag| write tag }
+        settings.build_root
+      end
 
-      def write path
-        enricher.call.fmap do |commits|
-          path.write view.call commits:, layout: settings.build_layout, format: :adoc
-        end
+      def write tag
+        path = make_path tag
+
+        path.write view.call(tag:, layout: settings.build_layout, format: :adoc)
+        logger.info { "Built: #{path}." }
+      end
+
+      def make_path tag
+        version = settings.build_max == 1 ? "" : tag.version
+        settings.build_root.join(version, settings.build_basename).make_ancestors.sub_ext ".adoc"
+      end
+
+      def failure message
+        logger.error { message }
+        message
       end
     end
   end

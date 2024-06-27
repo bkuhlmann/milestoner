@@ -48,7 +48,7 @@
       <div class="panel">
         <h3 class="label">Author</h3>
 
-        <p class="item">
+        <p class="line">
           <%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %>
           <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>
         </p>
@@ -57,7 +57,7 @@
           <h3 class="label">Collaborators</h3>
 
           <% commit.collaborators.each do |collaborator| %>
-            <p class="item">
+            <p class="line">
               <%= render :avatar, name: collaborator.name, url: commit.avatar_url(collaborator) %>
               <%= render :profile, name: collaborator.name, url: commit.profile_url(collaborator) %>
             </p>
@@ -68,7 +68,7 @@
           <h3 class="label">Signers</h3>
 
           <% commit.signers.each do |signer| %>
-            <p class="item">
+            <p class="line">
               <%= render :avatar, name: signer.name, url: commit.avatar_url(signer) %>
               <%= render :profile, name: signer.name, url: commit.profile_url(signer) %>
             </p>
@@ -77,13 +77,23 @@
 
         <h3 class="label">Signature</h3>
 
-        <p class="item pill <%= commit.security %>">
+        <p class="line pill <%= commit.security %>">
           <span class="signature"><%= commit.signature %></span>
         </p>
 
+        <% unless String(commit.fingerprint).empty? %>
+          <h3 class="label">Fingerprint</h3>
+          <p class="line"><%= commit.fingerprint %></p>
+        <% end %>
+
+        <% unless String(commit.fingerprint_key).empty? %>
+          <h3 class="label">Fingerprint Primary Key</h3>
+          <p class="line"><%= commit.fingerprint_key %></p>
+        <% end %>
+
         <h3 class="label">Created</h3>
 
-        <p class="item at">
+        <p class="line at">
           <time datetime="<%= commit.at %>" class="date"><%= commit.date %></time>
           <time datetime="<%= commit.at %>" class="weekday"><%= commit.weekday %></time>
           <time datetime="<%= commit.at %>" class="time"><%= commit.time %></time>

@@ -23,15 +23,11 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test milestone \(ascii_doc\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test \(ascii_doc\)\.\.\./)
       end
 
       it "builds ASCII Doc file" do
         expect(temp_dir.join("index.adoc").exist?).to be(true)
-      end
-
-      it "logs end of build" do
-        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir.join "index.adoc"}/)
       end
     end
 
@@ -54,7 +50,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test milestone \(feed\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test \(feed\)\.\.\./)
       end
 
       it "builds XML file" do
@@ -69,15 +65,11 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test milestone \(markdown\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test \(markdown\)\.\.\./)
       end
 
       it "builds Markdown file" do
         expect(temp_dir.join("index.md").exist?).to be(true)
-      end
-
-      it "logs end of build" do
-        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir.join "index.md"}/)
       end
     end
 
@@ -85,15 +77,11 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       before { command.call }
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test milestone \(web\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test \(web\)\.\.\./)
       end
 
       it "builds web files" do
         expect(web).to have_received(:call)
-      end
-
-      it "logs end of build" do
-        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir}/)
       end
     end
 
@@ -104,7 +92,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
 
       it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test milestone \(stream\)\.\.\./)
+        expect(logger.reread).to match(/🟢.+Building Test \(stream\)\.\.\./)
       end
 
       it "builds stream" do

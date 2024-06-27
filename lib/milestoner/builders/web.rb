@@ -4,45 +4,70 @@ require "refinements/pathname"
 
 module Milestoner
   module Builders
-    # Builds web page output (i.e. HTML and CSS).
+    # Builds web output (i.e. HTML and CSS).
     class Web
-      include Milestoner::Import[:settings]
+      include Milestoner::Import[:settings, :logger]
 
       using Refinements::Pathname
 
-      def initialize(view: Views::Milestones::Show.new, enricher: Commits::Enricher.new, **)
+      def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
+        @tagger = tagger
         @view = view
-        @enricher = enricher
         super(**)
       end
 
       def call
+        settings.build_root.make_path
         copy_stylesheet
-        write.bind { html_path.parent }
+
+        tagger.call
+              .fmap { |tags| build tags }
+              .alt_map { |message| failure message }
       end
 
       private
 
-      attr_reader :view, :enricher
+      attr_reader :tagger, :view
+
+      def build tags
+        tags.each { |tag| write tag }
+        settings.build_root
+      end
 
       def copy_stylesheet
-        file_name = settings.build_stylesheet
+        return unless settings.build_stylesheet
 
-        return unless file_name
+        stylesheet_template.copy stylesheet_path
+        logger.info { "Built: #{stylesheet_path}." }
+      end
 
+      def stylesheet_template
         settings.build_template_paths
                 .map { |path| path.join "public/page.css.erb" }
                 .find(&:exist?)
-                .copy settings.build_root.make_path.join "#{Pathname(file_name).name}.css"
+                .copy settings.build_root.make_path.join stylesheet_path
       end
 
-      def write
-        enricher.call.fmap do |commits|
-          html_path.write view.call commits:, layout: settings.build_layout
-        end
+      def stylesheet_path
+        settings.build_root.join "#{Pathname(settings.build_stylesheet).name}.css"
       end
 
-      def html_path = settings.build_root.join "#{settings.build_basename}.html"
+      def write tag
+        path = make_path tag
+
+        path.write view.call(tag:, layout: settings.build_layout)
+        logger.info { "Built: #{path}." }
+      end
+
+      def make_path tag
+        version = settings.build_max == 1 ? "" : tag.version
+        settings.build_root.join(version, settings.build_basename).make_ancestors.sub_ext ".html"
+      end
+
+      def failure message
+        logger.error { message }
+        message
+      end
     end
   end
 end
