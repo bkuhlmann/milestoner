@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds I/O stream output.
     class Stream
-      include Milestoner::Import[:settings, :io]
+      include Milestoner::Import[:settings, :logger, :io]
 
       using Refinements::Pathname
 
@@ -17,15 +17,24 @@ module Milestoner
       end
 
       def call
-        enricher.call.fmap do |commits|
-          io.puts view.call(commits:, layout: settings.build_layout, format: :stream)
-          io
-        end
+        enricher.call
+                .fmap { |commits| write commits }
+                .alt_map { |message| failure message }
       end
 
       private
 
       attr_reader :view, :enricher
+
+      def write commits
+        io.puts view.call(commits:, layout: settings.build_layout, format: :stream)
+        io
+      end
+
+      def failure message
+        logger.error { message }
+        message
+      end
     end
   end
 end

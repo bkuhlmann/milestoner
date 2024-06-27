@@ -29,10 +29,6 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       it "builds ASCII Doc file" do
         expect(temp_dir.join("index.adoc").exist?).to be(true)
       end
-
-      it "logs end of build" do
-        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir.join "index.adoc"}/)
-      end
     end
 
     context "with feed format" do
@@ -75,10 +71,6 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       it "builds Markdown file" do
         expect(temp_dir.join("index.md").exist?).to be(true)
       end
-
-      it "logs end of build" do
-        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir.join "index.md"}/)
-      end
     end
 
     context "with web format (default)" do
@@ -90,10 +82,6 @@ RSpec.describe Milestoner::CLI::Commands::Build do
 
       it "builds web files" do
         expect(web).to have_received(:call)
-      end
-
-      it "logs end of build" do
-        expect(logger.reread).to match(/🟢.+Milestone built: #{temp_dir}/)
       end
     end
 

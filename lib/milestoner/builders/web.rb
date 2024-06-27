@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds web page output (i.e. HTML and CSS).
     class Web
-      include Milestoner::Import[:settings]
+      include Milestoner::Import[:settings, :logger]
 
       using Refinements::Pathname
 
@@ -17,19 +17,31 @@ module Milestoner
       end
 
       def call
-        copy_stylesheet
-        write.bind { html_path.parent }
+        enricher.call
+                .fmap { |commits| write commits }
+                .fmap { |path| success path }
+                .alt_map { |message| failure message }
       end
 
       private
 
       attr_reader :view, :enricher
 
-      def copy_stylesheet
-        return unless settings.build_stylesheet
+      def write commits
+        copy_stylesheet
 
-        path = settings.build_root.join "#{settings.build_stylesheet}.css"
-        stylesheet_template_path.copy path.make_ancestors
+        settings.build_root
+                .join(settings.build_file)
+                .sub("%<extension>s", "html")
+                .write view.call(commits:, layout: settings.build_layout)
+      end
+
+      def copy_stylesheet
+        file_name = settings.build_stylesheet
+
+        return unless file_name
+
+        stylesheet_template_path.copy settings.build_root.make_path.join "#{file_name}.css"
       end
 
       def stylesheet_template_path
@@ -38,13 +50,15 @@ module Milestoner
                 .find(&:exist?)
       end
 
-      def write
-        enricher.call.fmap do |commits|
-          html_path.write view.call commits:, layout: settings.build_layout
-        end
+      def success path
+        logger.info { "Milestone built: #{path}." }
+        path
       end
 
-      def html_path = settings.build_root.join settings.build_file.sub("%<extension>s", "html")
+      def failure message
+        logger.error { message }
+        message
+      end
     end
   end
 end

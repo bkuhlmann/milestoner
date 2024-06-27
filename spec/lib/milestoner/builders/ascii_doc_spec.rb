@@ -16,12 +16,8 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
   let(:enricher) { instance_double Milestoner::Commits::Enricher, call: Success([commit]) }
 
   describe "#call" do
-    let(:content) { temp_dir.join("index.adoc").read }
-
-    it "creates root path when missing" do
-      temp_dir.delete
-      expect(builder.call.exist?).to be(true)
-    end
+    let(:content) { path.read }
+    let(:path) { temp_dir.join "index.adoc" }
 
     it "includes logo when present" do
       builder.call
@@ -62,13 +58,10 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
       BODY
     end
 
-    context "without commits" do
-      let(:enricher) { instance_double Milestoner::Commits::Enricher, call: Success([]) }
-
-      it "renders zero stats" do
-        builder.call
-        expect(content).to include("*0 commits. 0 files. 0 deletions. 0 insertions.*")
-      end
+    it "renders zero stats without commits" do
+      allow(enricher).to receive(:call).and_return(Success([]))
+      builder.call
+      expect(content).to include("*0 commits. 0 files. 0 deletions. 0 insertions.*")
     end
 
     it "includes generator" do
@@ -79,13 +72,31 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
       )
     end
 
-    it "answers default build path" do
-      expect(builder.call).to eq(temp_dir.join("index.adoc"))
+    it "logs path when success" do
+      builder.call
+      expect(logger.reread).to match(/🟢.+Milestone built: #{path}\./)
     end
 
     it "answers custom build path" do
       settings.build_file = temp_dir.join "test.adoc"
-      expect(builder.call).to eq(temp_dir.join("test.adoc"))
+      expect(builder.call).to eq(Success(temp_dir.join("test.adoc")))
+    end
+
+    it "answers path when success" do
+      expect(builder.call).to eq(Success(path))
+    end
+
+    context "with failure" do
+      before { allow(enricher).to receive(:call).and_return(Failure("Danger!")) }
+
+      it "logs error" do
+        builder.call
+        expect(logger.reread).to match(/🛑.+Danger!/)
+      end
+
+      it "answers message" do
+        expect(builder.call).to eq(Failure("Danger!"))
+      end
     end
   end
 end

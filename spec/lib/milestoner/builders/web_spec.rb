@@ -101,8 +101,26 @@ RSpec.describe Milestoner::Builders::Web do
       )
     end
 
-    it "answers build path" do
-      expect(builder.call).to eq(temp_dir)
+    it "logs path when success" do
+      builder.call
+      expect(logger.reread).to match(/🟢.+Milestone built: #{html_path}\./)
+    end
+
+    it "answers path when success" do
+      expect(builder.call).to eq(Success(html_path))
+    end
+
+    context "with failure" do
+      before { allow(enricher).to receive(:call).and_return(Failure("Danger!")) }
+
+      it "logs error" do
+        builder.call
+        expect(logger.reread).to match(/🛑.+Danger!/)
+      end
+
+      it "answers message" do
+        expect(builder.call).to eq(Failure("Danger!"))
+      end
     end
   end
 end

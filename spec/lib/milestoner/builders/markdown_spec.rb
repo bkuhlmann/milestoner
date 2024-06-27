@@ -16,12 +16,8 @@ RSpec.describe Milestoner::Builders::Markdown do
   let(:enricher) { instance_double Milestoner::Commits::Enricher, call: Success([commit]) }
 
   describe "#call" do
-    let(:content) { temp_dir.join("index.md").read }
-
-    it "creates root path when missing" do
-      temp_dir.delete
-      expect(builder.call.exist?).to be(true)
-    end
+    let(:content) { path.read }
+    let(:path) { temp_dir.join "index.md" }
 
     it "includes Markdown logo when present" do
       builder.call
@@ -76,13 +72,31 @@ RSpec.describe Milestoner::Builders::Markdown do
       )
     end
 
-    it "answers default build path" do
-      expect(builder.call).to eq(temp_dir.join("index.md"))
+    it "logs path when success" do
+      builder.call
+      expect(logger.reread).to match(/🟢.+Milestone built: #{path}\./)
     end
 
     it "answers custom build path" do
       settings.build_file = "test.md"
-      expect(builder.call).to eq(temp_dir.join("test.md"))
+      expect(builder.call).to eq(Success(temp_dir.join("test.md")))
+    end
+
+    it "answers path when success" do
+      expect(builder.call).to eq(Success(path))
+    end
+
+    context "with failure" do
+      before { allow(enricher).to receive(:call).and_return(Failure("Danger!")) }
+
+      it "logs error" do
+        builder.call
+        expect(logger.reread).to match(/🛑.+Danger!/)
+      end
+
+      it "answers message" do
+        expect(builder.call).to eq(Failure("Danger!"))
+      end
     end
   end
 end

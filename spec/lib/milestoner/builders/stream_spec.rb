@@ -53,8 +53,21 @@ RSpec.describe Milestoner::Builders::Stream do
       end
     end
 
-    it "answers kernel" do
-      expect(builder.call).to be_a(Kernel)
+    it "answers I/O when success" do
+      expect(builder.call).to match(Success(kind_of(StringIO)))
+    end
+
+    context "with failure" do
+      before { allow(enricher).to receive(:call).and_return(Failure("Danger!")) }
+
+      it "logs error" do
+        builder.call
+        expect(logger.reread).to match(/🛑.+Danger!/)
+      end
+
+      it "answers message" do
+        expect(builder.call).to eq(Failure("Danger!"))
+      end
     end
   end
 end

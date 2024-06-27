@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds Markdown page output.
     class ASCIIDoc
-      include Milestoner::Import[:settings]
+      include Milestoner::Import[:settings, :logger]
 
       using Refinements::Pathname
 
@@ -16,18 +16,33 @@ module Milestoner
         super(**)
       end
 
-      def call = build_path.make_ancestors.tap { |path| write path }
+      def call
+        enricher.call
+                .fmap { |commits| write commits }
+                .fmap { |path| success path }
+                .alt_map { |message| failure message }
+      end
 
       private
 
       attr_reader :view, :enricher
 
-      def build_path = settings.build_root.join settings.build_file.sub("%<extension>s", "adoc")
+      def write commits
+        settings.build_root
+                .join(settings.build_file)
+                .sub("%<extension>s", "adoc")
+                .make_ancestors
+                .write view.call(commits:, layout: settings.build_layout, format: :adoc)
+      end
 
-      def write path
-        enricher.call.fmap do |commits|
-          path.write view.call commits:, layout: settings.build_layout, format: :adoc
-        end
+      def success path
+        logger.info { "Milestone built: #{path}." }
+        path
+      end
+
+      def failure message
+        logger.error { message }
+        message
       end
     end
   end
