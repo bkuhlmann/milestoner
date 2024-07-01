@@ -14,9 +14,11 @@ module Milestoner
         end
 
         def call commit
+          uri = input.tracker_uri
+
           commit.trailer_value_for(key)
-                .fmap { |value| model[id: value, uri: format(input.tracker_uri, id: value)] }
-                .value_or(model.new)
+                .either -> value { model[id: value, uri: format(uri, id: value)] },
+                        proc { model[id: "All", uri: format(uri, id: nil)] }
         end
 
         private

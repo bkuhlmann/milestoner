@@ -17,17 +17,8 @@
       <span class="insertions"><%= commit.total_insertions %></span>
     </span>
 
-    <% if commit.issue.id %>
-      <a href="<%= commit.issue.uri %>" class="issue"><%= commit.issue.id %></a>
-    <% else %>
-      <span class="issue">-</span>
-    <% end %>
-
-    <% if commit.review.id %>
-      <a href="<%= commit.review.uri %>" class="review"><%= commit.review.id %></a>
-    <% else %>
-      <span class="review">-</span>
-    <% end %>
+    <a href="<%= commit.issue.uri %>" class="issue"><%= commit.issue.id %></a>
+    <a href="<%= commit.review.uri %>" class="review"><%= commit.review.id %></a>
   </summary>
 
   <div class="details">

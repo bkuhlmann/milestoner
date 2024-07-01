@@ -21,7 +21,13 @@ RSpec.describe Milestoner::Commits::Enrichers::Issue do
 
     it "answers empty issue when trailer doesn't exist" do
       commit = Gitt::Models::Commit[trailers: []]
-      expect(enricher.call(commit)).to eq(Milestoner::Models::Link.new)
+
+      expect(enricher.call(commit)).to eq(
+        Milestoner::Models::Link[
+          id: "All",
+          uri: "https://github.com/acme/test/issues/"
+        ]
+      )
     end
   end
 end
