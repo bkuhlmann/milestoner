@@ -1,6 +1,14 @@
 = Versions
 
-== 17.20.0 (2024-06-19)
+== 17.11.0 (2024-07-02)
+
+* 🟢 Added commit versioner debug logging - Brooke Kuhlmann
+* 🔼 Updated commit issue enricher to always provide URI - Brooke Kuhlmann
+* 🔼 Updated to IRB Kit 0.3.0 - Brooke Kuhlmann
+* 🔼 Updated to Refinements 12.5.0 - Brooke Kuhlmann
+* 🔼 Updated web format page layout link images - Brooke Kuhlmann
+
+== 17.10.0 (2024-06-19)
 
 * 🔼 Updated major, minor, and patch colors - Brooke Kuhlmann
 * 🔼 Updated to Alpine.js 3.14 - Brooke Kuhlmann
