@@ -9,6 +9,8 @@ module Milestoner
       body
       deletions
       files_changed
+      fingerprint
+      fingerprint_key
       insertions
       notes
       sha
