@@ -1,11 +1,1 @@
-<% if commits.empty? %>
-<%= project_label %> (<%= date %>)
-
-<%= total_commits %>. <%= total_files %>. <%= total_deletions %>. <%= total_insertions %>.
-<% else %>
-<%= project_label %> <%= project_version %> (<%= date %>)
-
-<% commits.each do |commit| %><%= commit.render :commit %><% end %>
-
-<%= total_commits %>. <%= total_files %>. <%= total_deletions %>. <%= total_insertions %>.
-<% end %>
+<%= tag.render :tag %>
