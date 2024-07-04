@@ -1,18 +1,20 @@
 <section>
-  <p style="display: flex; align-items: center; justify-content:center;">
+  <p style="display: flex; align-items: center; justify-content: center;">
     <img src="<%= project_uri_logo %>" alt="Logo" height=100 width=100>
   </p>
 
-  <% if tag.empty? %>
-    <p>All is quiet.</p>
-  <% else %>
+  <% unless tag.empty? %>
+    <p style="display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+      <%= render :avatar, name: tag.author.name, url: tag.avatar_url(tag.author) %>
+      <%= render :profile, name: tag.author.name, url: tag.profile_url(tag.author) %>
+      |
+      <%= tag.security %>
+    </p>
+
     <% tag.commits.each do |commit| %>
       <%= commit.render :commit %>
     <% end %>
   <% end %>
-
-  <br/>
-  <hr/>
 
   <p>
     <strong>

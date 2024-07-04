@@ -1,0 +1,82 @@
+<article class="milestone">
+  <header class="header">
+    <h1 class="title">
+      <% if project_uri_logo %>
+        <img src="<%= project_uri_logo %>" alt="Logo" width="30" height="30">
+      <% end %>
+
+      <a href="<%= project_uri_home %>" class="label"><%= project_label %></a>
+
+      <% if tag.commits.any? %>
+        <span class="version"><%= tag.version %></span>
+      <% end %>
+    </h1>
+
+    <time datetime="<%= tag.committed_datetime %>" class="date"><%= tag.committed_date %></time>
+  </header>
+
+  <% if tag.empty? %>
+    <p class="dormant"></p>
+  <% else %>
+    <section class="body" x-data="{open: false}">
+      <div class="overview">
+        <div class="owner">
+          <%= render :avatar, name: tag.author.name, url: tag.avatar_url(tag.author) %>
+          <%= render :profile, name: tag.author.name, url: tag.profile_url(tag.author) %>
+        </div>
+
+        <% if tag.signature %>
+          <button class="button secure" popovertarget="po-tag">
+            <span class="signature">Tag (valid)</span>
+          </button>
+
+          <dialog id="po-tag" class="popover" popover="auto">
+            <h1 class="label">Version <%= tag.version %></h1>
+
+            <h2 class="sublabel">SHA</h2>
+            <p><%= tag.sha %></p>
+
+            <h2 class="sublabel">Signature</h2>
+            <pre><%= tag.signature %></pre>
+          </dialog>
+        <% else %>
+          <button class="button insecure" popovertarget="po-tag">
+            <span class="signature">Tag (invalid)</span>
+          </button>
+
+          <dialog id="po-tag" class="popover" popover="auto">
+            <h1 class="label">Version <%= tag.version %></h1>
+            <p>No security. Signature not detected.</p>
+          </dialog>
+        <% end %>
+
+        <div class="actions">
+          <button class="button toggle" x-on:click="open = true">Expand</button>
+          <button class="button toggle" x-on:click="open = false">Collapse</button>
+        </div>
+      </div>
+
+      <div class="columns">
+        <span class="label">Commit</span>
+        <span class="label">Author</span>
+        <span class="label">Files</span>
+        <span class="label">Lines</span>
+        <span class="label">Issue</span>
+        <span class="label">Review</span>
+      </div>
+
+      <% tag.commits.each do |commit| %>
+        <%= commit.render :commit %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <footer class="footer">
+    <p class="totals">
+      <span class="commits"><%= tag.total_commits %>.</span>
+      <span class="files"><%= tag.total_files %>.</span>
+      <span class="deletions"><%= tag.total_deletions %>.</span>
+      <span class="insertions"><%= tag.total_insertions %>.</span>
+    </p>
+  </footer>
+</article>
