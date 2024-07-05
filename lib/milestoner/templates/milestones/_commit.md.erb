@@ -1,1 +1,1 @@
-- <%= commit.emoji %> <%= commit.subject %> - *<%= commit.author.name %>*
+- <%= commit.emoji %> <%= commit.subject %> - <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>

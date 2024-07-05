@@ -1,7 +1,7 @@
 <details id="<%= commit.sha %>" class="row" x-bind:open="open">
   <summary class="summary <%= commit.kind %>">
     <div class="title">
-      <%= render :icon, icon: commit.icon, kind: commit.kind %>
+      <%= render :icon, name: commit.icon, alt: commit.kind %>
       <span class="subject"><%= commit.subject %></span>
     </div>
 
