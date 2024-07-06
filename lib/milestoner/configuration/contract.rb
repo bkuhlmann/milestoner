@@ -15,6 +15,7 @@ module Milestoner
       required(:build_max).filled :integer
       required(:build_root).filled Etcher::Types::Pathname
       required(:build_stylesheet) { bool? | str? }
+      required(:build_tail).filled :string
       required(:build_template_paths).array Etcher::Types::Pathname
 
       required(:commit_categories).array(:hash) do

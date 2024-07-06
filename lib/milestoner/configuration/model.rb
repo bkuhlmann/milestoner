@@ -10,6 +10,7 @@ module Milestoner
                        :build_max,
                        :build_root,
                        :build_stylesheet,
+                       :build_tail,
                        :build_template_paths,
                        :commit_categories,
                        :commit_format,

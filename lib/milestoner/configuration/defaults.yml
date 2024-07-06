@@ -7,6 +7,7 @@ build:
   max: 1
   root: tmp/milestones
   stylesheet: page
+  tail: head
 commit:
   categories:
     - emoji: ✅
