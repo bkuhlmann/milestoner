@@ -23,11 +23,11 @@ RSpec.describe Milestoner::Builders::Markdown do
       before { settings.build_max = 1 }
 
       it "includes logo when present" do
+        settings.project_uri_logo = "https://acme.io/icon.png"
         builder.call
 
         expect(content).to include(
-          %(<img src="https://undefined.io/assets/media/projects/milestoner/logo.png" ) +
-          %(alt="Logo" width="100" height="100">)
+          %(<img src="https://acme.io/icon.png" alt="Logo" width="100" height="100">)
         )
       end
 
@@ -41,7 +41,7 @@ RSpec.describe Milestoner::Builders::Markdown do
       it "includes label and version" do
         builder.call
 
-        expect(content).to include("# [Test](https://undefined.io/projects/milestoner) 1.2.3")
+        expect(content).to include("# [Test](https://undefined.io/projects/test) 1.2.3")
       end
 
       it "includes date" do

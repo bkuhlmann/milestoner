@@ -23,11 +23,13 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
       before { settings.build_max = 1 }
 
       it "includes logo, label, version, and date" do
+        settings.project_uri_logo = "https://acme.io/logo.png"
+
         builder.call
 
         expect(content).to include(
-          "= pass:[ ]image:https://undefined.io/assets/media/projects/milestoner/logo.png" \
-          "[Logo,50,50]link:https://undefined.io/projects/milestoner[Test] 1.2.3 (2024-07-04)"
+          "= pass:[ ]image:https://acme.io/logo.png[Logo,50,50]pass:[ ]" \
+          "link:https://undefined.io/projects/test[Test] 1.2.3 (2024-07-04)"
         )
       end
 

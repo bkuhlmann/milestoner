@@ -57,11 +57,11 @@ RSpec.describe Milestoner::Builders::Web do
       end
 
       it "includes logo when present" do
+        settings.project_uri_logo = "https://acme.io/logo.png"
         builder.call
 
         expect(html_path.read).to include(
-          %(<img src="https://undefined.io/assets/media/projects/milestoner/logo.png" ) +
-          %(alt="Logo" width="30" height="30">)
+          %(<img src="https://acme.io/logo.png" alt="Logo" width="30" height="30">)
         )
       end
 

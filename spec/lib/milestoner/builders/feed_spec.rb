@@ -24,13 +24,25 @@ RSpec.describe Milestoner::Builders::Feed do
       end
     end
 
-    it "renders logo" do
+    it "renders logo when present" do
+      settings.project_uri_logo = "https://acme.io/logo.png"
+
       git_repo_dir.change_dir do
         `git tag 0.0.0`
         `touch a.txt && git add --all && git commit --message "Added A"`
 
         builder.call
-        expect(content).to include("logo.png")
+        expect(content).to include("https://acme.io/logo.png")
+      end
+    end
+
+    it "doesn't render logo when not present" do
+      git_repo_dir.change_dir do
+        `git tag 0.0.0`
+        `touch a.txt && git add --all && git commit --message "Added A"`
+
+        builder.call
+        expect(content).not_to include("logo")
       end
     end
 

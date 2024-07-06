@@ -73,19 +73,7 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
     end
 
-    context "with web format (default)" do
-      before { command.call }
-
-      it "logs start of build" do
-        expect(logger.reread).to match(/🟢.+Building Test \(web\)\.\.\./)
-      end
-
-      it "builds web files" do
-        expect(web).to have_received(:call)
-      end
-    end
-
-    context "with stream format" do
+    context "with stream format (default)" do
       before do
         settings.build_format = "stream"
         command.call
@@ -97,6 +85,21 @@ RSpec.describe Milestoner::CLI::Commands::Build do
 
       it "builds stream" do
         expect(stream).to have_received(:call)
+      end
+    end
+
+    context "with web format" do
+      before do
+        settings.build_format = "web"
+        command.call
+      end
+
+      it "logs start of build" do
+        expect(logger.reread).to match(/🟢.+Building Test \(web\)\.\.\./)
+      end
+
+      it "builds web files" do
+        expect(web).to have_received(:call)
       end
     end
 

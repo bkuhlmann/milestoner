@@ -1,45 +1,43 @@
 avatar:
-  uri: https://avatars.githubusercontent.com/u/%<id>s
+  uri: "https://avatars.githubusercontent.com/u/%<id>s"
 build:
-  basename: index
-  format: web
-  layout: page
+  basename: "index"
+  format: "stream"
+  layout: "page"
   max: 1
-  root: tmp/milestones
-  stylesheet: page
-  tail: head
+  root: "tmp/milestones"
+  stylesheet: "page"
+  tail: "head"
 commit:
   categories:
-    - emoji: ✅
-      label: Fixed
-    - emoji: 🟢
-      label: Added
-    - emoji: 🔼
-      label: Updated
-    - emoji: ⛔️
-      label: Removed
-    - emoji: 🔁
-      label: Refactored
-  format: asciidoc
-  uri: https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s
+    - emoji: "✅"
+      label: "Fixed"
+    - emoji: "🟢"
+      label: "Added"
+    - emoji: "🔼"
+      label: "Updated"
+    - emoji: "⛔️"
+      label: "Removed"
+    - emoji: "🔁"
+      label: "Refactored"
+  format: "asciidoc"
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/commit/%<id>s"
 organization:
-  label: Undefined
-  uri: https://undefined.io
+  label: "Undefined"
+  uri: "https://undefined.io"
 profile:
-  uri: https://github.com/%<id>s
+  uri: "https://github.com/%<id>s"
 project:
-  owner: unknown
+  owner: "undefined"
   uri:
     home: "%<organization_uri>s/projects/%<project_name>s"
-    icon: "%<organization_uri>s/assets/media/projects/%<project_name>s/logo.png"
-    logo: "%<organization_uri>s/assets/media/projects/%<project_name>s/logo.png"
     version: "%<project_uri_home>s/versions/%<id>s"
 review:
-  uri: https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s"
 syndication:
   categories:
-    - label: Milestones
-      name: milestones
+    - label: "Milestones"
+      name: "milestones"
   entry:
     label: "%<id>s"
     uri: "%<project_uri_version>s"
@@ -47,12 +45,12 @@ syndication:
   label: "%<organization_label>s: %<project_label>s"
   links:
     - label: "%<organization_label>s: %<project_label>s (web)"
-      mime: text/html
-      relation: alternate
+      mime: "text/html"
+      relation: "alternate"
       uri: "%<project_uri_home>s/versions"
     - label: "%<organization_label>s: %<project_label>s (feed)"
-      mime: application/atom+xml
-      relation: self
+      mime: "application/atom+xml"
+      relation: "self"
       uri: "%<project_uri_home>s/versions.xml"
 tracker:
-  uri: https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s
+  uri: "https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s"

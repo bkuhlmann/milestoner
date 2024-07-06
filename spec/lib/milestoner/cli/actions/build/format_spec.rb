@@ -10,12 +10,12 @@ RSpec.describe Milestoner::CLI::Actions::Build::Format do
   describe "#call" do
     it "answers default version" do
       action.call
-      expect(settings.build_format).to match("web")
+      expect(settings.build_format).to match("stream")
     end
 
     it "answers custom version" do
-      action.call "stream"
-      expect(settings.build_format).to eq("stream")
+      action.call "feed"
+      expect(settings.build_format).to eq("feed")
     end
   end
 end

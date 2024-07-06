@@ -41,14 +41,26 @@ RSpec.describe Milestoner::Syndication::Builder do
       expect(feed.generator.version).to eq("3.2.1")
     end
 
-    it "answers feed icon" do
-      expect(feed.icon.content).to eq(
-        "https://undefined.io/assets/media/projects/test/logo.png"
-      )
+    it "answers feed icon (default)" do
+      expect(feed.icon).to be(nil)
+    end
+
+    it "answers feed icon (custom)" do
+      settings.project_uri_icon = "https://acme.io/icon.png"
+      expect(feed.icon.content).to eq("https://acme.io/icon.png")
+    end
+
+    it "answers feed logo (default)" do
+      expect(feed.logo).to be(nil)
+    end
+
+    it "answers feed logo (custom)" do
+      settings.project_uri_logo = "https://acme.io/logo.png"
+      expect(feed.logo.content).to eq("https://acme.io/logo.png")
     end
 
     it "answers feed ID" do
-      expect(feed.id.content).to eq("https://undefined.io/projects/milestoner")
+      expect(feed.id.content).to eq("https://undefined.io/projects/test")
     end
 
     it "answers feed links" do
@@ -71,12 +83,6 @@ RSpec.describe Milestoner::Syndication::Builder do
             title: "Undefined: Milestoner (feed)"
           }
         ]
-      )
-    end
-
-    it "answers feed logo" do
-      expect(feed.logo.content).to eq(
-        "https://undefined.io/assets/media/projects/test/logo.png"
       )
     end
 
