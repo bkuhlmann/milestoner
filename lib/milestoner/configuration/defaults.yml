@@ -5,6 +5,7 @@ build:
   format: web
   layout: page
   root: tmp/milestone
+  stylesheet: page
 commit:
   categories:
     - emoji: ✅
