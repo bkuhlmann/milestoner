@@ -1,4 +1,3 @@
-
 <% if tag.empty? %>
 <%= project_label %> (<%= tag.committed_date %>)
 
@@ -6,7 +5,9 @@
 <% else %>
 <%= project_label %> <%= tag.version %> (<%= tag.committed_date %>)
 
+<% if tag.version != project_version %>
 <%= tag.author.name %> | <%= tag.security %>
+<% end %>
 
 <% tag.commits.each do |commit| %><%= commit.render :commit %><% end %>
 

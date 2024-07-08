@@ -18,7 +18,7 @@ module Milestoner
 
       def call
         tagger.call
-              .fmap { |tags| build tags }
+              .fmap { |tags| write tags }
               .alt_map { |message| failure message }
       end
 
@@ -26,13 +26,14 @@ module Milestoner
 
       attr_reader :tagger, :view
 
-      def build(tags) = tags.reduce(+"") { |content, tag| content.concat write(tag) }
+      def write(tags) = build(tags).tap { |content| io.write content }
 
-      def write tag
-        view.call(tag:, layout: settings.build_layout, format: :stream).tap do |content|
-          io.write content
-        end
+      def build tags
+        tags.reduce([]) { |content, tag| content.append render(tag) }
+            .join(%(\n\n))
       end
+
+      def render(tag) = view.call tag:, layout: settings.build_layout, format: :stream
 
       def failure message
         logger.error { message }
