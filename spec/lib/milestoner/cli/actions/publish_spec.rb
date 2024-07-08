@@ -17,6 +17,13 @@ RSpec.describe Milestoner::CLI::Actions::Publish do
   let(:version) { Version "1.2.3" }
 
   describe "#call" do
+    it "enforces a build maximum of one" do
+      settings.build_max = 5
+      action.call version
+
+      expect(settings.build_max).to eq(1)
+    end
+
     it "calls publisher with default version" do
       action.call version
       expect(publisher).to have_received(:call).with(version)

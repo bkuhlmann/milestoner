@@ -28,6 +28,8 @@ module Milestoner
         end
 
         def call version = nil
+          settings.build_max = 1
+
           case publisher.call Version(version || default)
             in Success(version) then version
             in Failure(message) then log_error message
