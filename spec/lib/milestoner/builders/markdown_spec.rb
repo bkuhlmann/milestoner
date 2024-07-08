@@ -41,7 +41,7 @@ RSpec.describe Milestoner::Builders::Markdown do
       it "includes label and version" do
         builder.call
 
-        expect(content).to include("# [Test](https://undefined.io/projects/test) 1.2.3")
+        expect(content).to include("# [Test](https://undefined.io/projects/test) 0.0.0")
       end
 
       it "includes date" do

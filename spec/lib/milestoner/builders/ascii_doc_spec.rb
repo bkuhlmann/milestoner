@@ -29,7 +29,7 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
 
         expect(content).to include(
           "= pass:[ ]image:https://acme.io/logo.png[Logo,50,50]pass:[ ]" \
-          "link:https://undefined.io/projects/test[Test] 1.2.3 (2024-07-04)"
+          "link:https://undefined.io/projects/test[Test] 0.0.0 (2024-07-04)"
         )
       end
 

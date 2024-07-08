@@ -3,7 +3,7 @@
 
 *<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.*
 <% else %>
-= pass:[ ]<% if project_uri_logo %>image:<%= project_uri_logo %>[Logo,50,50]pass:[ ]<% end %>link:<%= project_uri_home %>[<%= project_label %>] <%= project_version %> (<%= tag.committed_date %>)
+= pass:[ ]<% if project_uri_logo %>image:<%= project_uri_logo %>[Logo,50,50]pass:[ ]<% end %>link:<%= project_uri_home %>[<%= project_label %>] <%= tag.version %> (<%= tag.committed_date %>)
 
 <%= render :avatar, name: tag.author.name, url: tag.avatar_url(tag.author) %> <%= render :profile, name: tag.author.name, url: tag.profile_url(tag.author) %> | <%= tag.security %>
 
