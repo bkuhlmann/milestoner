@@ -2,7 +2,6 @@
 
 require "core"
 require "dry/monads"
-require "refinements/string_io"
 
 module Milestoner
   module Tags
@@ -10,8 +9,6 @@ module Milestoner
     class Creator
       include Import[:git, :logger]
       include Dry::Monads[:result]
-
-      using Refinements::StringIO
 
       def initialize(collector: Commits::Collector.new, builder: Builders::Stream.new, **)
         @collector = collector
@@ -42,7 +39,7 @@ module Milestoner
 
       def create(version) = build(version).bind { |body| git.tag_create version, body }
 
-      def build(version) = builder.call.fmap { |body| "Version #{version}\n\n#{body.reread}\n\n" }
+      def build(version) = builder.call.fmap { |body| "Version #{version}\n\n#{body}\n\n" }
     end
   end
 end

@@ -26,12 +26,13 @@ module Milestoner
 
       attr_reader :tagger, :view
 
-      def build tags
-        tags.each { |tag| write tag }
-        io
-      end
+      def build(tags) = tags.reduce(+"") { |content, tag| content.concat write(tag) }
 
-      def write(tag) = io.write view.call(tag:, layout: settings.build_layout, format: :stream)
+      def write tag
+        view.call(tag:, layout: settings.build_layout, format: :stream).tap do |content|
+          io.write content
+        end
+      end
 
       def failure message
         logger.error { message }

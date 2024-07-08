@@ -17,58 +17,44 @@ RSpec.describe Milestoner::Builders::Stream do
   let(:tagger) { instance_double Milestoner::Commits::Tagger, call: Success(tags) }
 
   describe "#call" do
-    context "with single tag" do
-      let :pattern do
-        /
-          \n
-          Test\s\d+\.\d+\.\d+\s\(\d{4}-\d{2}-\d{2}\)\n
-          \n
-          Malcolm\sReynolds\s\|\s🔒\sTag\s\(valid\)\n
-          \n
-          🟢\sAdded\sdocumentation\s-\sZoe\sWashburne\n
-          \n
-          \d+\scommit\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.\n
-          \n\n
-          Generated\sby\sMilestoner\s3\.2\.1\.\n
-        /mx
-      end
+    let :tagged_pattern do
+      /
+        \n
+        Test\s\d+\.\d+\.\d+\s\(\d{4}-\d{2}-\d{2}\)\n
+        \n
+        Malcolm\sReynolds\s\|\s🔒\sTag\s\(valid\)\n
+        \n
+        🟢\sAdded\sdocumentation\s-\sZoe\sWashburne\n
+        \n
+        \d+\scommit\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.\n
+        \n\n
+        Generated\sby\sMilestoner\s3\.2\.1\.\n
+      /mx
+    end
 
+    let(:multi_tagged_pattern) { /#{tagged_pattern}\n/ }
+
+    context "with single tag" do
       before { tags.pop }
 
       it "renders content" do
         builder.call
-        expect(io.reread).to match(pattern)
+        expect(io.reread).to match(tagged_pattern)
       end
 
-      it "answers I/O when success" do
-        expect(builder.call).to match(Success(kind_of(StringIO)))
+      it "answers content when success" do
+        expect(builder.call).to match(Success(tagged_pattern))
       end
     end
 
     context "with multiple tag" do
-      let :pattern do
-        /
-          \n
-          Test\s\d+\.\d+\.\d+\s\(\d{4}-\d{2}-\d{2}\)\n
-          \n
-          Malcolm\sReynolds\s\|\s🔒\sTag\s\(valid\)\n
-          \n
-          🟢\sAdded\sdocumentation\s-\sZoe\sWashburne\n
-          \n
-          \d+\scommit\.\s\d+\sfiles\.\s\d+\sdeletions\.\s\d+\sinsertions\.\n
-          \n\n
-          Generated\sby\sMilestoner\s3\.2\.1\.\n
-          \n
-        /mx
-      end
-
       it "renders content" do
         builder.call
-        expect(io.reread).to match(pattern)
+        expect(io.reread).to match(multi_tagged_pattern)
       end
 
-      it "answers I/O when success" do
-        expect(builder.call).to match(Success(kind_of(StringIO)))
+      it "answers content when success" do
+        expect(builder.call).to match(Success(multi_tagged_pattern))
       end
     end
 
