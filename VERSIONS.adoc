@@ -1,5 +1,12 @@
 = Versions
 
+== 18.0.1 (2024-07-08)
+
+* ✅ Fixed CLI publish action to enforce build maximum of one - Brooke Kuhlmann
+* ✅ Fixed multi-tag version for ASCII Doc, Markdown, and stream formats - Brooke Kuhlmann
+* ✅ Fixed stream builder to answer content instead of I/O instance - Brooke Kuhlmann
+* ✅ Fixed stream builder to ignore tag validity for current version - Brooke Kuhlmann
+
 == 18.0.0 (2024-07-07)
 
 * 🟢 Added ASCII Doc and Markdown profile partials - Brooke Kuhlmann
