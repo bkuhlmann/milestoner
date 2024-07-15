@@ -2,6 +2,7 @@
 
 require "dry/monads"
 require "refinements/pathname"
+require "refinements/struct"
 require "versionaire"
 
 module Milestoner
@@ -14,6 +15,7 @@ module Milestoner
 
       using Refinements::Pathname
       using Versionaire::Cast
+      using Refinements::Struct
 
       def initialize(enricher: Commits::Enricher.new, model: Models::Tag, **)
         @enricher = enricher
@@ -67,9 +69,7 @@ module Milestoner
       end
 
       def author tag
-        tag = tag.dup
-        tag.author_name ||= settings.project_author
-        author_enricher.call tag
+        author_enricher.call tag.with(author_name: tag.author_name || settings.project_author)
       end
 
       def committed_at(at) = at ? Time.at(at.to_i).utc : settings.loaded_at

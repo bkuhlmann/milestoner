@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
+require "refinements/binding"
+
 module Milestoner
   module Renderers
     # The primary renderer for multiple input formats as HTML.
     class Universal
       include Import[:settings]
+
+      using Refinements::Binding
 
       DELEGATES = {asciidoc: Asciidoc.new, markdown: Markdown.new}.freeze
 
@@ -14,9 +18,7 @@ module Milestoner
         @default_format = settings.commit_format.to_sym
       end
 
-      def call content, for: default_format
-        delegates.fetch(binding.local_variable_get(:for)).call content
-      end
+      def call(content, for: default_format) = delegates.fetch(binding[:for]).call content
 
       private
 
