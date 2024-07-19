@@ -30,7 +30,7 @@ module Milestoner
 
       def build tags
         tags.reduce([]) { |content, tag| content.append render(tag) }
-            .join(%(\n\n))
+            .join(%(\n#{"-" * 80}\n\n))
       end
 
       def render(tag) = view.call tag:, layout: settings.build_layout, format: :stream
