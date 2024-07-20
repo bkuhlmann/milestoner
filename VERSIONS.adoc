@@ -1,5 +1,18 @@
 = Versions
 
+== 18.1.0 (2024-07-20)
+
+* ✅ Fixed green and red stylesheet colors - Brooke Kuhlmann
+* ✅ Fixed project icon and logo URLs to be fully optional - Brooke Kuhlmann
+* ✅ Fixed stream spec failure - Brooke Kuhlmann
+* ✅ Fixed web format page title when building multiple tags - Brooke Kuhlmann
+* 🟢 Added Alpine.js subresource integrity - Brooke Kuhlmann
+* 🟢 Added horizontal line break between multiple streams - Brooke Kuhlmann
+* 🔼 Updated to Etcher 2.1.0 - Brooke Kuhlmann
+* 🔼 Updated to Refinements 12.7.0 - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.4 - Brooke Kuhlmann
+* ⛔️ Removed excess spacing in stream formats - Brooke Kuhlmann
+
 == 18.0.1 (2024-07-08)
 
 * ✅ Fixed CLI publish action to enforce build maximum of one - Brooke Kuhlmann

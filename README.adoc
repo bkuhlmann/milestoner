@@ -12,6 +12,7 @@
 :git_link: link:https://git-scm.com[Git]
 :git_lint_link: link:https://alchemists.io/projects/git-lint[Git Lint]
 :git_trailers_link: link:https://alchemists.io/articles/git_trailers[Git Trailers]
+:git_notes_link: link:https://alchemists.io/articles/git_notes[Git Notes]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :hanami_views_link: link:https://alchemists.io/articles/hanami_views[Hanami Views]
 :hanamismith_link: link:https://alchemists.io/projects/hanamismith[Hanamismith]
@@ -38,7 +39,7 @@ You can use Milestoner to inspect the current state of the next milestone, celeb
 
 Milestoner pairs well with the following gems:
 
-* {git_lint_link}: Lints each {git_link} commit to ensure they are of high quality for historic inspection and release note generation.
+* {git_lint_link}: Lints each {git_link} commit to ensure they are of high quality for readability, historic inspection, and release note generation.
 * {rubysmith_link}: Automates building new {ruby_link} projects.
 * {gemsmith_link}: Automates building new {rubygems_link} projects.
 * {hanamismith_link}: Automates building new {hanami_link} projects.
@@ -47,43 +48,43 @@ toc::[]
 
 == Screenshots
 
-The following are screenshots of using this gem to render release notes for the {lode_link} gem. Even though {lode_link} is used for example purposes, please keep in mind that Milestoner can be used for _any project, any programming language_.
+The following are screenshots of using this gem to render release notes for the {lode_link} gem. Even though {lode_link} is used for example purposes, keep in mind that Milestoner can be used for _any project and/or programming language_.
 
 === ASCII Doc Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-rendered.png[Release Notes,width=890,height=742,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc.png[Release Notes,width=882,height=738,role=focal_point]
 
 * *Command*: `milestoner build --format ascii_doc`
 * *Renderer*: {ascii_doc_link}
 
 === Feed Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-rendered-collapsed.png[Release Notes,width=1121,height=1154,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-collapsed.png[Release Notes,width=1109,height=1143,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-rendered-expanded.png[Release Notes,width=1121,height=1154,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-expanded.png[Release Notes,width=1109,height=1143,role=focal_point]
 
 * *Command*: `milestoner build --format feed`
 * *Renderer*: {net_news_wire_link}
 
 === Markdown Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown-rendered.png[Release Notes,width=712,height=717,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown.png[Release Notes,width=789,height=718,role=focal_point]
 
 * *Command*: `milestoner build --format markdown`
 * *Renderer*: {marked_link}
 
 === Stream Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=451,height=370,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=586,height=341,role=focal_point]
 
 * *Command*: `milestoner build --format stream`
 * *Renderer*: {iterm_link}
 
 === Web Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1150,height=878,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1195,height=878,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Release Notes,width=1150,height=878,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Release Notes,width=1195,height=878,role=focal_point]
 
 * *Command*: `milestoner build --format web`
 * *Renderer*: {firefox_link}
@@ -95,14 +96,21 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-exp
 ** Example: `0.0.0`.
 * Defaults to including {git_link} commits since last tag (or initialization of repository) when building release notes. This can be customized further if desired.
 * Ensures {git_link} commit messages are grouped by prefix, in order defined, for categorization. For more details, see link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject Prefix]. Defaults (can be customized):
-** image:https://alchemists.io/images/projects/milestoner/icons/commits/fixed.png[Fixed] Fixed
-** image:https://alchemists.io/images/projects/milestoner/icons/commits/added.png[Added] Added
-** image:https://alchemists.io/images/projects/milestoner/icons/commits/updated.png[Updated] Updated
-** image:https://alchemists.io/images/projects/milestoner/icons/commits/removed.png[Removed] Removed
-** image:https://alchemists.io/images/projects/milestoner/icons/commits/refactored.png[Refactored] Refactored
+** image:https://alchemists.io/images/projects/milestoner/icons/fixed.png[Fixed] Fixed
+** image:https://alchemists.io/images/projects/milestoner/icons/added.png[Added] Added
+** image:https://alchemists.io/images/projects/milestoner/icons/updated.png[Updated] Updated
+** image:https://alchemists.io/images/projects/milestoner/icons/removed.png[Removed] Removed
+** image:https://alchemists.io/images/projects/milestoner/icons/refactored.png[Refactored] Refactored
 * Ensures {git_link} commit messages are alphabetically sorted for release note categorization and readability.
 * Provides automatic versioning based on last {git_link} tag and {git_trailers_link}. See {git_commit_anatomy_link} for details.
-* Supports multiple build formats: {ascii_doc_link}, {syndication_link}, {markdown_link}, Stream (console), and Web (HTML). Each are fully customizable via your personal {xdg_link} and {hanami_views_link} configuration.
+* Supports multiple build formats:
+** {ascii_doc_link}
+** {syndication_link}
+** {markdown_link}
+** Stream (console)
+** link:https://html.spec.whatwg.org/multipage[Web]
+* Supports {git_notes_link}.
+* Supports customization via your personal {xdg_link} and {hanami_views_link} configuration.
 
 == Requirements
 
@@ -268,7 +276,7 @@ The above can be customized as follows:
 
 As hinted at above, all URIs (including syndication), support {string_formats_link}. This means you can use the `%<key>s` format -- replacing `key` with the key of your choice -- to customize your configuration further.
 
-💡 If you ever need to know what your current configuration looks like you can jump into your applications IRB console and inspect `Milestoner::Container[:configuration]` to see full details.
+💡 If you need to know what your current configuration looks like, you can jump into your applications IRB console and inspect `Milestoner::Container[:settings]` to see full details.
 
 === Config
 
@@ -321,7 +329,7 @@ milestoner cache --info
 
 Once team member information is stored in your cache, you'll be able to build release notes which automatically link to GitHub user information without constantly hitting the GitHub API. _Users are identified by name so the full author name used for each commit message needs to match the same user name as stored in your source repository hosting service._
 
-If you don't update your cache, your release note display a question mark (?) and _unknown_ for team members as highlighted below:
+If you don't use the cache, your release notes use a question mark (?) and _unknown_ for team members as highlighted below:
 
 image:https://alchemists.io/images/projects/milestoner/screenshots/no_cache.png[Usage,width=851,height=571,role=focal_point]
 
@@ -338,7 +346,7 @@ milestoner build --format web
 # 🟢 Milestone built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestone
 ----
 
-The above command is so useful that I use the following `msw` (i.e. Milestoner Web) Bash alias to build currest release notes or release notes for several tags:
+The above command is so useful that I use the following `msw` (i.e. Milestoner Web) Bash alias to build current release notes or release notes for several tags:
 
 [source,bash]
 ----
@@ -365,7 +373,7 @@ Check out the help documentation (i.e. `milestoner build --help`) for addition u
 
 ==== Automatic Versioning
 
-As mentioned earlier, the calculation of version information happens automatically for you based on your last {git_link} tag and any {git_link} commit trailer metadata used. If none of this information is present, then the default version of `0.0.0` is used instead. All of this information is available to you via the following command:
+As mentioned earlier, the calculation of version information happens automatically based on your last {git_link} tag and any {git_link} commit trailer metadata used. If none of this information is present, then the default version of `0.0.0` is used instead. All of this information is available to you via the following command:
 
 [source,bash]
 ----
@@ -383,7 +391,7 @@ milestoner build --format stream
 milestoner build --format stream --version 1.2.3
 ----
 
-By default, automatic versioning is based on your last known {git_link} tag and the version is bumped based on {git_link} commit trailer information from untagged commits (i.e. those commits created since the last tag). All of this is managed via the {versionaire_link} gem. To ensure automatic versioning works properly, you only need to add the `Milestone` {git_link} commit trailer with a value of: `patch`, `minor`, or `major`. Here's an example assuming you have published Version 1.0.0:
+By default, automatic versioning is based on your last known {git_link} tag. The version is bumped based on {git_link} commit trailer information from untagged commits (i.e. commits created since the last tag). All of this is managed via the {versionaire_link} gem. To ensure automatic versioning works properly, you only need to add the `Milestone` {git_link} commit trailer with a value of: `patch`, `minor`, or `major`. Here's an example assuming you have published Version 1.0.0:
 
 ....
 # First commit.
@@ -426,7 +434,8 @@ Given the above, the resulting version would be: 2.0.0. This is because the high
 
 ==== Templates
 
-Build template functionality is powered by {hanami_views_link} which means you can customize the HTML structure, CSS style, and more. The quickest way to get started is to copy the `templates` folder structure -- included with this gem -- to your preferred {runcom_link} configuration. For example, this gem's template structure is:
+Build template functionality is powered by {hanami_views_link} which means you can completely customize _all_ build formats, templates, partials, stylesheets, images, and so much more.
+The quickest way to start customization is to copy the `templates` folder structure -- included with this gem -- to your preferred {runcom_link} configuration (i.e. global or local). For example, this gem's template structure is:
 
 ....
 lib/milestoner/templates
@@ -468,28 +477,42 @@ lib/milestoner/templates
    └── page.css.erb
 ....
 
-This means you could, for example, copy all of this gem's templates to your own {runcom_link} configuration to customize how you like. Example:
+This means you could, for example, copy all of Milestoner's default templates to your own {runcom_link} configuration and customize as you see fit. Example (using global configuration):
 
 [source,bash]
 ----
 cp -r <milestoner_gem_root>/lib/milestoner/templates $HOME/.config/milestoner/templates
 ----
 
-Milestoner searches your {runcom_link} configuration first and, if templates are detected, will be used instead. Otherwise, Milestoner falls back to it's own templates. Once {runcom_link} has calculated all possible template locations, {hanami_views_link} handles the final loading and evaluation of your templates.
+Milestoner searches your {runcom_link} configuration first and, if templates are detected, will be used instead. Otherwise, Milestoner falls back to it's own templates. Once {runcom_link} has calculated all possible template locations, {hanami_views_link} handles the final loading and rendering of the templates.
 
-==== Web Format
+==== Formats
 
-Of all the build formats supported, the web format is the most powerful and feature rich. The following showcases _some_ of the information rendered in this format based on commit activity.
+Of all build formats supported, the web format is the most powerful and feature rich. The following showcases _some_ of the information rendered in this format based on commit activity.
 
-*Wit Basic Git Commit*
+*With Basic Git Commit*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-overview.png[Usage,width=1228,height=808,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-overview.png[Overview,width=1119,height=910,role=focal_point]
 
-*With Git Commit Notes and Trailers*
+*With Collaborators and Signers*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-notes_and_collaborators.png[Usage,width=1228,height=808,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-collaborators_and_signers.png[Collaborators and Signers,width=1118,height=1003,role=focal_point]
 
-Each milestone is meant to provide you with the right amount of statistical information you can make informed decisions.
+*With Invalid Tag*
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_invalid.png[Invalid Tag,width=1119,height=910,role=focal_point]
+
+*With Valid Tag*
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_valid.png[Valid Tag,width=1119,height=910,role=focal_point]
+
+*With Notes*
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-notes.png[Notes,width=1119,height=910,role=focal_point]
+
+💡 See {git_notes_link} to learn more.
+
+You'll find all formats render similar information with the feed format being the closest but most formats are not as feature rich as the web format. Each milestone is meant to provide you with the right amount of statistical information you can make informed decisions.
 
 == Security
 
