@@ -10,22 +10,27 @@
     <meta name="author" content="<%= project_author %>">
     <meta name="generator" content="<%= generator_label %> <%= generator_version %>">
 
-    <link title="<%= project_label %>: Favorite Icon"
-          rel="icon"
-          href="https://alchemists.io/images/projects/milestoner/favicon.ico"
-          sizes="32x32">
-    <link title="<%= project_label %>: Apple Icon"
-          rel="apple-touch-icon"
-          href="https://alchemists.io/images/projects/milestoner/logo.png"
-          type="image/png"
-          sizes="200x200">
+    <% if project_uri_icon %>
+      <link title="<%= project_label %>: Favorite Icon"
+            rel="icon"
+            href="<%= project_uri_icon %>"
+            sizes="32x32">
+    <% end %>
 
-<% if build_stylesheet %>
-    <link title="<%= project_label %>: Stylesheet"
-          rel="stylesheet"
-          href="<%= build_stylesheet %>.css"
-          type="text/css">
-<% end %>
+    <% if project_uri_logo %>
+      <link title="<%= project_label %>: Apple Icon"
+            rel="apple-touch-icon"
+            href="<%= project_uri_logo %>"
+            type="image/png"
+            sizes="200x200">
+    <% end %>
+
+    <% if build_stylesheet %>
+      <link title="<%= project_label %>: Stylesheet"
+            rel="stylesheet"
+            href="<%= build_stylesheet %>.css"
+            type="text/css">
+    <% end %>
 
     <script src="https://unpkg.com/alpinejs@3.14" defer></script>
   </head>
