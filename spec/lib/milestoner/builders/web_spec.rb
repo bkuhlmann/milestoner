@@ -26,7 +26,7 @@ RSpec.describe Milestoner::Builders::Web do
 
       it "includes title" do
         builder.call
-        expect(html_path.read).to include("<title>Test 1.2.3</title>")
+        expect(html_path.read).to include("<title>Test 0.0.0</title>")
       end
 
       it "includes description meta" do

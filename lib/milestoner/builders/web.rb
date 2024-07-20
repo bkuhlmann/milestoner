@@ -54,6 +54,7 @@ module Milestoner
 
       def write tag
         path = make_path tag
+        settings.project_version = tag.version
 
         path.write view.call(tag:, layout: settings.build_layout)
         logger.info { "Built: #{path}." }
