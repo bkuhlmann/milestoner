@@ -10,7 +10,11 @@ module Milestoner
       include Import[:git, :logger]
       include Dry::Monads[:result]
 
-      def initialize(collector: Commits::Collector.new, builder: Builders::Stream.new, **)
+      def initialize(
+        collector: Commits::Collector.new,
+        builder: Builders::Stream.new(io: StringIO.new),
+        **
+      )
         @collector = collector
         @builder = builder
         super(**)
