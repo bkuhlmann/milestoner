@@ -16,7 +16,7 @@ module Milestoner
 
           default { Container[:settings].build_max }
 
-          def call(max = nil) = settings.build_max = max || default
+          def call(max = default) = settings.build_max = max
         end
       end
     end

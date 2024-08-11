@@ -16,7 +16,7 @@ module Milestoner
 
           default { Container[:settings].build_format }
 
-          def call(kind = nil) = settings.build_format = kind || default
+          def call(kind = default) = settings.build_format = kind
         end
       end
     end

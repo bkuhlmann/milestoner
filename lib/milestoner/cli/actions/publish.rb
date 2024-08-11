@@ -27,10 +27,10 @@ module Milestoner
           @publisher = publisher
         end
 
-        def call version = nil
+        def call version = default
           settings.build_max = 1
 
-          case publisher.call Version(version || default)
+          case publisher.call Version(version)
             in Success(version) then version
             in Failure(message) then log_error message
             else log_error "Publish failed, unable to parse result."

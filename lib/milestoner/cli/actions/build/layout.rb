@@ -18,16 +18,8 @@ module Milestoner
 
           default { Container[:settings].build_layout }
 
-          def call(layout = nil) = settings.build_layout = parse(layout)
-
-          private
-
-          def parse value
-            case value
-              in "false" then false
-              in String then value
-              else default
-            end
+          def call layout = default
+            settings.build_layout = layout == "false" ? false : layout
           end
         end
       end

@@ -18,7 +18,7 @@ module Milestoner
 
           default { Container[:settings].build_tail }
 
-          def call(reference = nil) = settings.build_tail = reference || default
+          def call(reference = default) = settings.build_tail = reference
         end
       end
     end

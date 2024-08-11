@@ -16,7 +16,7 @@ module Milestoner
 
           default { Container[:settings].project_label }
 
-          def call(label = nil) = settings.project_label = label || default
+          def call(label = default) = settings.project_label = label
         end
       end
     end

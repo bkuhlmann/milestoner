@@ -18,16 +18,8 @@ module Milestoner
 
           default { Container[:settings].build_stylesheet }
 
-          def call(name = nil) = settings.build_stylesheet = parse(name)
-
-          private
-
-          def parse value
-            case value
-              in "false" then false
-              in String then value
-              else default
-            end
+          def call name = default
+            settings.build_stylesheet = name == "false" ? false : name
           end
         end
       end

@@ -19,7 +19,7 @@ module Milestoner
 
           default { Container[:settings].build_basename }
 
-          def call(name = nil) = settings.build_basename = name || default
+          def call(name = default) = settings.build_basename = name
         end
       end
     end

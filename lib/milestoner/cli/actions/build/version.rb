@@ -21,8 +21,8 @@ module Milestoner
 
           default { Container[:settings].project_version }
 
-          def call version = nil
-            settings.project_version = Version(version || default)
+          def call version = default
+            settings.project_version = Version version
           rescue Versionaire::Error => error
             logger.error { error.message }
           end

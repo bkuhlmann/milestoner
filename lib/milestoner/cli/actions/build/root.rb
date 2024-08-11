@@ -17,7 +17,7 @@ module Milestoner
 
           default { Container[:settings].build_root }
 
-          def call(path = nil) = settings.build_root = Pathname(path || default).expand_path
+          def call(path = default) = settings.build_root = Pathname(path).expand_path
         end
       end
     end
