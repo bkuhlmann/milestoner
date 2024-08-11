@@ -1,5 +1,12 @@
 = Versions
 
+== 18.2.0 (2024-08-11)
+
+* ✅ Fixed syndication builder spec to use larger REXML scurity limit - Brooke Kuhlmann
+* ✅ Fixed tag creator to not stream details - Brooke Kuhlmann
+* 🔼 Updated to Sod 0.14.0 - Brooke Kuhlmann
+* ⛔️ Removed Guard - Brooke Kuhlmann
+
 == 18.1.0 (2024-07-20)
 
 * ✅ Fixed green and red stylesheet colors - Brooke Kuhlmann
