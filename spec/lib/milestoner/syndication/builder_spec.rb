@@ -17,8 +17,6 @@ RSpec.describe Milestoner::Syndication::Builder do
     let(:authors) { [Milestoner::Models::User[external_id: 1, handle: "test", name: "Test User"]] }
     let(:at) { Time.utc 2024, 7, 5, 1, 1, 1 }
 
-    before { REXML::Security.entity_expansion_text_limit = 1_000_000 }
-
     it "answers feed author name" do
       expect(feed.author.name.content).to eq("Zoe Washburne")
     end
