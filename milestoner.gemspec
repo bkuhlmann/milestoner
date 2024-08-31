@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/bkuhlmann/milestoner/issues",
     "changelog_uri" => "https://alchemists.io/projects/milestoner/versions",
-    "documentation_uri" => "https://alchemists.io/projects/milestoner",
+    "homepage_uri" => "https://alchemists.io/projects/milestoner",
     "funding_uri" => "https://github.com/sponsors/bkuhlmann",
     "label" => "Milestoner",
     "rubygems_mfa_required" => "true",
