@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "infusible", "~> 3.8"
   spec.add_dependency "lode", "~> 1.4"
   spec.add_dependency "redcarpet", "~> 3.6"
-  spec.add_dependency "refinements", "~> 12.7"
+  spec.add_dependency "refinements", "~> 12.8"
   spec.add_dependency "rss", "~> 0.3"
   spec.add_dependency "runcom", "~> 11.5"
   spec.add_dependency "sanitize", "~> 6.1"
