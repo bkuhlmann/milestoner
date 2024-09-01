@@ -1,5 +1,16 @@
 = Versions
 
+== 18.3.0 (2024-09-01)
+
+* 🟢 Added README Developer Certificate of Origin documentation - Brooke Kuhlmann
+* 🔼 Updated gem specification documentation URI as homepage URI - Brooke Kuhlmann
+* 🔼 Updated gem specification to support Ruby 3.4.0 - Brooke Kuhlmann
+* 🔼 Updated to Cogger 0.26.0 - Brooke Kuhlmann
+* 🔼 Updated to Core 1.7.0 - Brooke Kuhlmann
+* 🔼 Updated to Gitt 3.8.0 - Brooke Kuhlmann
+* 🔼 Updated to Refinements 12.8.0 - Brooke Kuhlmann
+* ⛔️ Removed syndiation builder REXML security text limit - Brooke Kuhlmann
+
 == 18.2.0 (2024-08-11)
 
 * ✅ Fixed syndication builder spec to use larger REXML scurity limit - Brooke Kuhlmann
