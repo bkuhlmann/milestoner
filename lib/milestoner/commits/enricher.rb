@@ -40,8 +40,8 @@ module Milestoner
       attr_reader :categorizer, :model
 
       def build_attributes commit
-        infused_keys.each.with_object({}) do |command, attributes|
-          attributes[command] = __send__(command).call commit
+        infused_keys.each.with_object({}) do |key, attributes|
+          attributes[key] = __send__(key).call commit
         end
       end
     end
