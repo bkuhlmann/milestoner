@@ -28,7 +28,11 @@
       <h1 class="bar">Message</h1>
 
       <div class="content">
-        <%= commit.safe_body %>
+        <% if commit.body.empty? %>
+          <p>None.</p>
+        <% else %>
+          <%= commit.safe_body %>
+        <% end %>
       </div>
     </div>
 
