@@ -1,1 +1,48 @@
-* <%= commit.emoji %> <%= commit.subject %> - <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>
+.<%= commit.emoji %> <%= commit.subject %> - <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>
+[%collapsible]
+====
+*Message*
+
+<% if commit.body_lines && commit.body_lines.any? %>
+<%= commit.body_lines.join "\n" %>
+<% else %>
+None.
+<% end %>
+
+<% unless commit.notes.empty? %>
+*Notes*
+
+_Notes are detected but can't be rendered at the moment. Support will be added in the next Milestoner version._
+<% end %>
+
+*Author*
+
+<%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %> <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>
+
+<% if commit.collaborators.any? %>
+*Collaborators*
+
+<% commit.collaborators.each do |collaborator| %>
+* <%= render :avatar, name: collaborator.name, url: commit.avatar_url(collaborator) %> <%= render :profile, name: collaborator.name, url: commit.profile_url(collaborator) %>
+<% end %>
+<% end %>
+
+<% if commit.signers.any? %>
+*Signers*
+
+<% commit.signers.each do |signer| %>
+* <%= render :avatar, name: signer.name, url: commit.avatar_url(signer) %> <%= render :profile, name: signer.name, url: commit.profile_url(signer) %>
+<% end %>
+<% end %>
+
+*Details*
+
+* Milestone: <%= commit.tag.capitalize %>
+* Signature: <%= commit.signature %>
+* Files: link:<%= commit.uri %>[<%= commit.files_changed %>]
+* Lines: <%= commit.total_deletions %>/<%= commit.total_insertions %>
+* Issue: link:<%= commit.issue.uri %>[<%= commit.issue.id %>]
+* Review: link:<%= commit.review.uri %>[<%= commit.review.id %>]
+
+_<%= commit.datetime %>_
+====

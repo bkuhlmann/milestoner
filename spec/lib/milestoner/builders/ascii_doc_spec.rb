@@ -68,17 +68,82 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
         expect(content).to include("🔓 Tag (invalid)")
       end
 
-      it "renders commits with stats" do
+      it "renders commit summary" do
         builder.call
 
-        expect(content).to include(<<~BODY)
-          * 🟢 Added documentation - link:https://github.com/zoe[Zoe Washburne]
-
-          *1 commit. 2 files. 10 deletions. 5 insertions.*
-        BODY
+        expect(content).to include(
+          ".🟢 Added documentation - link:https://github.com/zoe[Zoe Washburne]"
+        )
       end
 
-      it "includes generator" do
+      it "renders commit message" do
+        builder.call
+
+        expect(content).to include(<<~CONTENT)
+          [%collapsible]
+          ====
+          *Message*
+
+          None.
+        CONTENT
+      end
+
+      it "renders commit author" do
+        builder.call
+
+        expect(content).to include(<<~CONTENT)
+          *Author*
+
+          image:https://avatars.githubusercontent.com/u/1[Zoe Washburne,24,24] link:https://github.com/zoe[Zoe Washburne]
+        CONTENT
+      end
+
+      it "renders collaborators" do
+        builder.call
+
+        expect(content).to include(<<~CONTENT)
+          *Collaborators*
+
+          * image:https://avatars.githubusercontent.com/u/2[River Tam,24,24] link:https://github.com/river[River Tam]
+        CONTENT
+      end
+
+      it "renders signers" do
+        builder.call
+
+        expect(content).to include(<<~CONTENT)
+          *Signers*
+
+          * image:https://avatars.githubusercontent.com/u/3[Malcolm Renolds,24,24] link:https://github.com/mal[Malcolm Renolds]
+        CONTENT
+      end
+
+      it "renders details" do
+        builder.call
+
+        expect(content).to include(<<~CONTENT)
+          *Details*
+
+          * Milestone: Patch
+          * Signature: Good
+          * Files: link:https://source.firefly.com/serenity/commit/180dec7d8ae8[2]
+          * Lines: -10/+5
+          * Issue: link:https://issue.firefly.com/123[123]
+          * Review: link:https://review.firefly.com/456[999]
+        CONTENT
+      end
+
+      it "renders commit date/time" do
+        builder.call
+        expect(content).to include("_2023-01-01 (Sunday) at 17:10 PM UTC_")
+      end
+
+      it "renders commits stats" do
+        builder.call
+        expect(content).to include("*1 commit. 2 files. 10 deletions. 5 insertions.*")
+      end
+
+      it "renders generator" do
         builder.call
 
         expect(content).to include(
