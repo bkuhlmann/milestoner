@@ -3,7 +3,6 @@
 require "cff"
 require "dry/monads"
 require "pathname"
-require "refinements/hash"
 
 module Milestoner
   module Configuration
@@ -12,8 +11,6 @@ module Milestoner
         # Conditionally updates project description based on citation details.
         class Description
           include Dry::Monads[:result]
-
-          using Refinements::Hash
 
           def initialize key = :project_description,
                          path: Pathname.pwd.join("CITATION.cff"),
@@ -25,7 +22,8 @@ module Milestoner
 
           def call attributes
             attributes.fetch key do
-              attributes.merge!(key => citation.open(path).abstract).compress!
+              value = citation.open(path).abstract
+              attributes.merge! key => value unless value.empty?
             end
 
             Success attributes

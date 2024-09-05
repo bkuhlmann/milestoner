@@ -3,7 +3,6 @@
 require "cff"
 require "dry/monads"
 require "pathname"
-require "refinements/hash"
 
 module Milestoner
   module Configuration
@@ -12,8 +11,6 @@ module Milestoner
         # Conditionally updates project URI based on citation URL.
         class URI
           include Dry::Monads[:result]
-
-          using Refinements::Hash
 
           def initialize key = :project_uri,
                          path: Pathname.pwd.join("CITATION.cff"),
@@ -39,7 +36,7 @@ module Milestoner
           def process attributes
             attributes.fetch(key) { citation.open(path).url }
                       .then { |value| value.match?(/%<.+>s/) ? format(value, attributes) : value }
-                      .then { |value| attributes.merge!(key => value).compress! }
+                      .then { |value| attributes.merge! key => value unless value.empty? }
           end
         end
       end

@@ -3,7 +3,6 @@
 require "cff"
 require "dry/monads"
 require "pathname"
-require "refinements/hash"
 
 module Milestoner
   module Configuration
@@ -12,8 +11,6 @@ module Milestoner
         # Conditionally updates project label based on citation details.
         class Label
           include Dry::Monads[:result]
-
-          using Refinements::Hash
 
           def initialize key = :project_label,
                          path: Pathname.pwd.join("CITATION.cff"),
@@ -24,7 +21,11 @@ module Milestoner
           end
 
           def call attributes
-            attributes.fetch(key) { attributes.merge!(key => citation.open(path).title).compress! }
+            attributes.fetch key do
+              value = citation.open(path).title
+              attributes.merge! key => value unless value.empty?
+            end
+
             Success attributes
           end
 

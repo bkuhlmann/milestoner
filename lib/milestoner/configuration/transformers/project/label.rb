@@ -2,7 +2,6 @@
 
 require "dry/monads"
 require "pathname"
-require "refinements/hash"
 require "refinements/string"
 
 module Milestoner
@@ -11,10 +10,9 @@ module Milestoner
       # Conditionally updates label based on current directory.
       module Project
         using Refinements::String
-        using Refinements::Hash
 
         Label = lambda do |attributes, key = :project_label, default: Pathname.pwd.basename.to_s|
-          attributes.fetch(key) { attributes.merge!(key => default.titleize).compress! }
+          attributes.fetch(key) { attributes.merge! key => default.titleize }
           Dry::Monads::Success attributes
         end
       end

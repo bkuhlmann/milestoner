@@ -2,7 +2,6 @@
 
 require "dry/monads"
 require "pathname"
-require "refinements/hash"
 
 module Milestoner
   module Configuration
@@ -13,8 +12,6 @@ module Milestoner
           include Import[:spec_loader]
           include Dry::Monads[:result]
 
-          using Refinements::Hash
-
           def initialize(key = :project_description, path: "#{Pathname.pwd.basename}.gemspec", **)
             @key = key
             @path = path
@@ -23,7 +20,8 @@ module Milestoner
 
           def call attributes
             attributes.fetch key do
-              attributes.merge!(key => spec_loader.call(path).summary).compress!
+              value = spec_loader.call(path).summary
+              attributes.merge! key => value if value
             end
 
             Success attributes
