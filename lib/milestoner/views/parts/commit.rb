@@ -65,6 +65,8 @@ module Milestoner
 
         def at = authored_at.strftime "%Y-%m-%dT%H:%M:%S%z"
 
+        def datetime = authored_at.strftime "%Y-%m-%d (%A) at %H:%M %p %Z"
+
         def weekday = authored_at.strftime "%A"
 
         def date = authored_at.strftime "%Y-%m-%d"

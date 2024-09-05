@@ -191,6 +191,12 @@ RSpec.describe Milestoner::Views::Parts::Commit do
     end
   end
 
+  describe "#datetime" do
+    it "answers human friendly date and time" do
+      expect(part.datetime).to eq("2023-01-01 (Sunday) at 17:10 PM UTC")
+    end
+  end
+
   describe "#weekday" do
     it "answers weekday" do
       expect(part.weekday).to eq("Sunday")
