@@ -6,7 +6,7 @@ require "spec_helper"
 RSpec.describe Milestoner::Models::Commit do
   describe ".for" do
     it "answers commit for Gitt commit" do
-      commit = described_class.for Gitt::Models::Commit[body_lines: [], raw: "original"],
+      commit = described_class.for Gitt::Models::Commit[body_paragraphs: [], raw: "original"],
                                    author: "Author",
                                    collaborators: ["Collaborator"],
                                    signers: ["Signer"]

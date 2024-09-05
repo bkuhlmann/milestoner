@@ -7,6 +7,7 @@ module Milestoner
     COMMIT_COMMON_ATTRIBUTES = %i[
       authored_at
       body
+      body_lines
       deletions
       files_changed
       fingerprint

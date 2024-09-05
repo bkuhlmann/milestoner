@@ -56,6 +56,7 @@ RSpec.describe Milestoner::Commits::Enricher do
               author: Milestoner::Models::User.new,
               authored_at: "1672593010",
               body:,
+              body_lines: [],
               deletions: 10,
               files_changed: 2,
               insertions: 5,
