@@ -72,11 +72,7 @@
 
   <p>
     <em style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
-      <time datetime="<%= commit.at %>"><%= commit.date %></time>
-      <time datetime="<%= commit.at %>">(<%= commit.weekday %>)</time>
-      at
-      <time datetime="<%= commit.at %>"><%= commit.time %></time>
-      <time datetime="<%= commit.at %>"><%= commit.zone %></time>
+      <%= commit.datetime %>
     </em>
   </p>
 
