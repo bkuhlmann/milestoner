@@ -6,7 +6,6 @@ require "etcher"
 require "gitt"
 require "lode"
 require "runcom"
-require "sanitize"
 require "spek"
 
 module Milestoner
@@ -65,7 +64,7 @@ module Milestoner
 
     register(:settings) { Etcher.call(self[:registry]).dup }
     register(:specification) { self[:spec_loader].call "#{__dir__}/../../milestoner.gemspec" }
-    register :sanitizer, -> content { Sanitize.fragment content, Sanitize::Config::BASIC }
+    register(:sanitizer) { Sanitizer.new }
     register(:spec_loader) { Spek::Loader.new }
     register(:git) { Gitt::Repository.new }
     register(:defaults_path) { Pathname(__dir__).join("configuration/defaults.yml") }
