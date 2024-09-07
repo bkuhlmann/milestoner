@@ -1,5 +1,20 @@
 = Versions
 
+== 18.4.0 (2024-09-07)
+
+* ✅ Fixed commit HTML and XML partials to use same missing message - Brooke Kuhlmann
+* ✅ Fixed transformers to not compress attributes - Brooke Kuhlmann
+* 🟢 Added ASCII Doc commit details - Brooke Kuhlmann
+* 🟢 Added commit model body lines - Brooke Kuhlmann
+* 🟢 Added commit part human friendly date/time - Brooke Kuhlmann
+* 🟢 Added sanitizer - Brooke Kuhlmann
+* 🔼 Updated container to use new sanitizer - Brooke Kuhlmann
+* 🔼 Updated to Gitt 3.9.0 - Brooke Kuhlmann
+* 🔼 Updated to Lode 1.8.0 - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.3.5 - Brooke Kuhlmann
+* 🔁 Refactored commit XML partial to use datetime - Brooke Kuhlmann
+* 🔁 Refactored commit enricher infused keys terminology - Brooke Kuhlmann
+
 == 18.3.0 (2024-09-01)
 
 * 🟢 Added README Developer Certificate of Origin documentation - Brooke Kuhlmann

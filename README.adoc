@@ -52,7 +52,9 @@ The following are screenshots of using this gem to render release notes for the 
 
 === ASCII Doc Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc.png[Release Notes,width=882,height=738,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-collapsed.png[Release Notes,width=1149,height=830,role=focal_point]
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-expanded.png[Release Notes,width=1149,height=1054,role=focal_point]
 
 * *Command*: `milestoner build --format ascii_doc`
 * *Renderer*: {ascii_doc_link}
