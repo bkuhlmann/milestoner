@@ -19,13 +19,22 @@ module Milestoner
 
     attr_reader :defaults, :client
 
-    def configuration
-      client::Config.merge defaults,
-                           elements: defaults[:elements].including("img", "video"),
-                           attributes: defaults[:attributes].merge(
-                             "img" => %w[alt class height id loading src width],
-                             "video" => %w[class controls height id poster src width]
-                           )
+    def configuration = client::Config.merge(defaults, elements:, attributes:)
+
+    def elements
+      defaults[:elements].including "audio", "details", "img", "source", "span", "summary", "video"
+    end
+
+    def attributes
+      defaults[:attributes].merge(
+        all: %w[class id],
+        "a" => %w[href title],
+        "audio" => %w[autoplay controls controlslist crossorigin loop muted preload src],
+        "details" => %w[name open],
+        "img" => %w[alt height loading src width],
+        "source" => %w[type src srcset sizes media height width],
+        "video" => %w[controls height poster src width]
+      )
     end
   end
 end
