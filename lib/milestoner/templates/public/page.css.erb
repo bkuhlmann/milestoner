@@ -2,6 +2,308 @@
   --font-family: Verdana;
 }
 
+/* Rouge (https://rouge.jneen.net) */
+.rouge.highlight {
+  --color-berry: hsl(240, 18%, 40%);
+  --color-blue: hsl(223, 100%, 74%);
+  --color-cold: hsl(189, 100%, 93%);
+  --color-dark: hsl(191, 12%, 27%);
+  --color-eclipse: hsl(0, 3%, 21%);
+  --color-enoki: hsl(60, 30%, 95%);
+  --color-goblin: hsl(84, 82%, 49%);
+  --color-green: hsl(140, 67%, 66%);
+  --color-grey: hsl(0, 0%, 65%);
+  --color-ice: hsl(184, 74%, 83%);
+  --color-ink: hsl(210, 4%, 11%);
+  --color-khaki: hsl(35, 26%, 75%);
+  --color-lime: hsl(82, 100%, 58%);
+  --color-purple: hsl(259, 60%, 79.4%);
+  --color-red: hsl(0, 100%, 73%);
+  --color-sea: hsl(190, 100%, 60%);
+  --color-sky: hsl(203, 93%, 74%);
+  --color-teal: hsl(189, 23%, 53%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-yellow: hsl(49, 100%, 59%);
+
+  table {
+    td {
+      padding: 5px;
+    }
+
+    pre {
+      margin: 0;
+    }
+  }
+
+  .c, .ch, .cd, .cpf {
+    color: var(--color-grey);
+    font-style: italic;
+  }
+
+  .cm {
+    color: var(--color-berry);
+    font-style: italic;
+  }
+
+  .c1 {
+    color: var(--color-grey);
+    font-style: italic;
+  }
+
+  .cp {
+    color: var(--color-teal);
+    font-weight: bold;
+  }
+
+  .cs {
+    color: var(--color-dark);
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .err {
+    color: var(--color-enoki);
+    background-color: var(--color-eclipse);
+  }
+
+  .gi {
+    color: var(--color-lime);
+  }
+
+  .gd {
+    color: var(--color-blue);
+  }
+
+  .ge {
+    color: var(--color-ink);
+    font-style: italic;
+  }
+
+  .gr {
+    color: var(--color-blue);
+  }
+
+  .gt {
+    color: var(--color-blue);
+  }
+
+  .gh {
+    color: var(--color-eclipse);
+  }
+
+  .go {
+    color: var(--color-eclipse);
+  }
+
+  .gp {
+    color: var(--color-sea);
+  }
+
+  .gs {
+    font-weight: bold;
+  }
+
+  .gu {
+    color: var(--color-dark);
+  }
+
+  .k, .kv {
+    color: var(--color-sky);
+    font-weight: bold;
+  }
+
+  .kc {
+    color: var(--color-sea);
+    font-weight: bold;
+  }
+
+  .kd {
+    color: var(--color-sea);
+    font-weight: bold;
+  }
+
+  .kp {
+    color: var(--color-ice);
+    font-weight: bold;
+  }
+
+  .kr {
+    color: var(--color-sea);
+    font-weight: bold;
+  }
+
+  .kt {
+    color: var(--color-sea);
+    font-weight: bold;
+  }
+
+  .kn {
+    color: var(--color-blue);
+    font-weight: bold;
+  }
+
+  .ow {
+    color: var(--color-blue);
+    font-weight: bold;
+  }
+
+  .o {
+    color: var(--color-blue);
+    font-weight: bold;
+  }
+
+  .mf {
+    color: var(--color-ice);
+  }
+
+  .mh {
+    color: var(--color-purple);
+  }
+
+  .il {
+    color: var(--color-purple);
+  }
+
+  .mi {
+    color: var(--color-ice);
+  }
+
+  .mo {
+    color: var(--color-purple);
+  }
+
+  .m, .mb, .mx {
+    color: var(--color-purple);
+  }
+
+  .se {
+    color: var(--color-purple);
+  }
+
+  .sb {
+    color: var(--color-khaki);
+  }
+
+  .sc {
+    color: var(--color-khaki);
+  }
+
+  .sd {
+    color: var(--color-khaki);
+  }
+
+  .s2 {
+    color: var(--color-khaki);
+  }
+
+  .sh {
+    color: var(--color-khaki);
+  }
+
+  .si {
+    color: var(--color-purple);
+  }
+
+  .sx {
+    color: var(--color-green);
+  }
+
+  .sr {
+    color: var(--color-ice);
+  }
+
+  .s1 {
+    color: var(--color-khaki);
+  }
+
+  .ss {
+    color: var(--color-green);
+  }
+
+  .s, .sa, .dl {
+    color: var(--color-khaki);
+  }
+
+  .n {
+    color: var(--color-white);
+  }
+
+  .na {
+    color: var(--color-lime);
+  }
+
+  .nc {
+    color: var(--color-lime);
+    font-weight: bold;
+  }
+
+  .nd {
+    color: var(--color-lime);
+    font-weight: bold;
+  }
+
+  .ne {
+    color: var(--color-lime);
+    font-weight: bold;
+  }
+
+  .nf, .fm {
+    color: var(--color-goblin);
+    font-weight: bold;
+  }
+
+  .no {
+    color: var(--color-sea);
+  }
+
+  .bp {
+    color: var(--color-enoki);
+  }
+
+  .nb {
+    color: var(--color-cold);
+  }
+
+  .ni {
+    color: var(--color-enoki);
+  }
+
+  .nn {
+    color: var(--color-lime);
+  }
+
+  .vc {
+    color: var(--color-red);
+  }
+
+  .vg {
+    color: var(--color-enoki);
+  }
+
+  .vi {
+    color: var(--color-yellow);
+  }
+
+  .nv, .vm {
+    color: var(--color-enoki);
+  }
+
+  .w {
+    color: var(--color-enoki);
+  }
+
+  .nl {
+    color: var(--color-enoki);
+    font-weight: bold;
+  }
+
+  .nt {
+    color: var(--color-cold);
+  }
+
+  color: var(--color-enoki);
+}
+
 .milestone {
   --border-width: 0.15rem;
   --color-black: hsl(0, 0%, 0%);
