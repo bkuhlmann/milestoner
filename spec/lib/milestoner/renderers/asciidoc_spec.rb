@@ -41,5 +41,22 @@ RSpec.describe Milestoner::Renderers::Asciidoc do
         </div>
       PROOF
     end
+
+    it "answers HTML code block with syntax highlighting" do
+      html = renderer.call <<~CONTENT
+        [source,ruby]
+        ----
+        1 + 1 = 2
+        ----
+      CONTENT
+
+      expect(html).to eq(<<~PROOF.strip)
+        <div class="listingblock">
+        <div class="content">
+        <pre class="rouge highlight"><code data-lang="ruby"><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+        </div>
+        </div>
+      PROOF
+    end
   end
 end
