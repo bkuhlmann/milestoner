@@ -317,10 +317,12 @@
   --color-ice: hsl(216, 100%, 98%);
   --color-major: hsl(7, 79%, 32%);
   --color-minor: hsl(221, 79%, 32%);
+  --color-night: hsl(216, 9%, 21%);
   --color-orange: hsl(24.8, 100%, 50.2%);
   --color-patch: hsl(156, 79%, 32%);
   --color-powder: hsl(0, 0%, 98%);
   --color-red: hsl(0, 84.1%, 44.5%);
+  --color-silver: hsl(224, 33%, 94%);
   --color-slate: hsl(211, 23%, 41%);
   --color-smoke: hsl(229, 31%, 93%);
   --color-white: hsl(0, 0%, 100%);
@@ -330,6 +332,62 @@
   flex-direction: column;
   font-family: var(--font-family);
   margin: 0 12vw;
+
+  blockquote {
+    background-color: var(--color-silver);
+    border-left: 0.5rem solid var(--color-slate);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+
+    p {
+      margin: 0;
+      quotes: "\201C""\201D";
+
+      &::before, &::after {
+        font-family: cursive;
+        font-size: 1.5rem;
+      }
+
+      &::before {
+        content: open-quote;
+        padding-right: 0.3rem;
+      }
+
+      &::after {
+        content: close-quote;
+        padding-left: 0.1rem;
+      }
+    }
+  }
+
+  :not(pre) > code {
+    background-color: var(--color-night);
+    border-radius: 0.3rem;
+    color: var(--color-white);
+    font-size: 0.95rem;
+    padding: 0.1rem 0.3rem;
+  }
+
+  pre:not([class^=language]) {
+    background-color: var(--color-night);
+    color: var(--color-ghost);
+    line-height: 1.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+  }
+
+  pre {
+    border-radius: 0.5rem;
+    font-weight: 400;
+    padding: 0.5rem;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
 
   .normal {
     border-bottom-color: var(--color-ghost);
@@ -348,6 +406,7 @@
 
   .avatar {
     border-radius: 50%;
+    height: fit-content;
   }
 
   .pill {
@@ -440,8 +499,9 @@
   }
 
   .overview {
-    display: flex;
     align-items: center;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 0.5rem;
   }
