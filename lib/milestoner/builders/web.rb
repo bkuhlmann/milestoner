@@ -17,9 +17,6 @@ module Milestoner
       end
 
       def call
-        settings.build_root.make_path
-        copy_stylesheet
-
         tagger.call
               .fmap { |tags| build tags }
               .alt_map { |message| failure message }
@@ -30,9 +27,13 @@ module Milestoner
       attr_reader :tagger, :view
 
       def build tags
+        make_root
+        copy_stylesheet
         tags.each { |tag| write tag }
         settings.build_root
       end
+
+      def make_root = settings.build_root.make_path
 
       def copy_stylesheet
         return unless settings.build_stylesheet
