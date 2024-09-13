@@ -24,7 +24,11 @@ RSpec.describe Milestoner::CLI::Actions::Cache::List do
       cache.write(:users) { upsert record }
       action.call
 
-      expect(io.reread).to eq("1, test, Test\n")
+      expect(io.reread).to eq(<<~CONTENT)
+        External ID, Handle, Name
+        -------------------------
+        1, "test", "Test"
+      CONTENT
     end
 
     it "logs users missing when users don't exist" do

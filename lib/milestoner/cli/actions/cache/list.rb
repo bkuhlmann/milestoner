@@ -24,7 +24,15 @@ module Milestoner
           def print users
             return logger.info { "No users found." } if users.empty?
 
-            users.each { |user| io.puts user.to_h.values.join ", " }
+            header
+            users.each { |user| io.puts user.to_h.values.map(&:inspect).join ", " }
+          end
+
+          def header
+            header = "External ID, Handle, Name"
+
+            io.puts header
+            io.puts "-" * header.size
           end
         end
       end
