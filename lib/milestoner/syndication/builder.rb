@@ -21,7 +21,7 @@ module Milestoner
       end
 
       def call tags
-        return Failure "No content." if tags.empty?
+        return Failure "No tags or commits." if tags.empty?
 
         Success build_feed(tags).to_s
       rescue NoMethodError, RSS::Error => error

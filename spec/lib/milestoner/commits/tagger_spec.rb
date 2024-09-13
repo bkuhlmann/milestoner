@@ -15,14 +15,19 @@ RSpec.describe Milestoner::Commits::Tagger do
   include_context "with Git repository"
 
   describe "#call" do
-    it "answers empty array when tail is tag" do
-      settings.build_tail = "tag"
-
+    it "answers default version for commits with no tag" do
       git_repo_dir.change_dir do
-        `touch a.txt && git add --all && git commit --message "Added A"`
-        `git tag 0.0.1 --message 0.0.1`
-
-        expect(tagger.call.success.map(&:version)).to eq([])
+        expect(tagger.call).to match(
+          Success(
+            array_including(
+              have_attributes(
+                author: Milestoner::Models::User.new,
+                commits: [have_attributes(subject: "Added documentation")],
+                version: Version("1.2.3")
+              )
+            )
+          )
+        )
       end
     end
 
@@ -54,8 +59,22 @@ RSpec.describe Milestoner::Commits::Tagger do
       end
     end
 
-    it "answers empty array when nothing exists" do
-      git_repo_dir.change_dir { expect(tagger.call).to eq(Success([])) }
+    it "answers failure when tail is tag" do
+      settings.build_tail = "tag"
+
+      git_repo_dir.change_dir do
+        `touch a.txt && git add --all && git commit --message "Added A"`
+        `git tag 0.0.1 --message 0.0.1`
+
+        expect(tagger.call).to eq(Failure("No tags or commits."))
+      end
+    end
+
+    it "answers failure when no tags or commits exist" do
+      temp_dir.change_dir do
+        `git init`
+        expect(tagger.call).to eq(Failure("No tags or commits."))
+      end
     end
 
     context "with cache and custom build maximum" do
@@ -114,16 +133,16 @@ RSpec.describe Milestoner::Commits::Tagger do
     context "with invalid version" do
       before { settings.project_version = "bogus" }
 
-      it "answers empty array" do
+      it "logs error for no tags or commits" do
         git_repo_dir.change_dir do
           `git tag 0.0.0 --message 0.0.0`
           `touch a.txt && git add --all && git commit --message "Added A"`
 
-          expect(tagger.call).to eq(Success([]))
+          expect(tagger.call).to eq(Failure("No tags or commits."))
         end
       end
 
-      it "logs error" do
+      it "logs error for invalid version" do
         git_repo_dir.change_dir do
           `git tag 0.0.0 --message 0.0.0`
           `touch a.txt && git add --all && git commit --message "Added A"`

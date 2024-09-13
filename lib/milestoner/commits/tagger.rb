@@ -24,14 +24,16 @@ module Milestoner
       end
 
       def call
-        git.tags("--sort=taggerdate")
-           .fmap { |tags| tail tags.last(settings.build_max).map(&:version) }
-           .fmap { |references| slice(references).reverse }
+        collect.fmap { |tags| tail tags.last(settings.build_max).map(&:version) }
+               .fmap { |references| slice(references).reverse }
+               .bind { |tags| tags.empty? ? Failure("No tags or commits.") : Success(tags) }
       end
 
       private
 
       attr_reader :enricher, :model
+
+      def collect = git.tagged? ? git.tags("--sort=taggerdate") : placeholder_with_commits
 
       def tail references
         references.append "HEAD" if settings.build_tail == "head"
@@ -65,6 +67,21 @@ module Milestoner
           sha: tag.sha,
           signature: tag.signature,
           version: Version(tag.version || settings.project_version),
+        ]
+      end
+
+      def placeholder_with_commits = enricher.call.fmap { |commits| placeholder_for commits }
+
+      def placeholder_for commits
+        return commits if commits.empty?
+
+        [
+          model[
+            author: commits.last.author,
+            commits:,
+            committed_at: Time.now,
+            version: settings.project_version
+          ]
         ]
       end
 

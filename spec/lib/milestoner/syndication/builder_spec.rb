@@ -14,7 +14,6 @@ RSpec.describe Milestoner::Syndication::Builder do
 
   describe "#call" do
     let(:feed) { builder.call(tags).bind { |body| RSS::Parser.parse body } }
-    let(:authors) { [Milestoner::Models::User[external_id: 1, handle: "test", name: "Test User"]] }
     let(:at) { Time.utc 2024, 7, 5, 1, 1, 1 }
 
     it "answers feed author name" do
@@ -175,7 +174,7 @@ RSpec.describe Milestoner::Syndication::Builder do
     end
 
     it "answers failure without milestones" do
-      expect(builder.call([])).to eq(Failure("No content."))
+      expect(builder.call([])).to eq(Failure("No tags or commits."))
     end
 
     it "answers failure when attribute is missing" do

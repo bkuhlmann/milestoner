@@ -105,10 +105,10 @@ RSpec.describe Milestoner::Builders::Feed do
       end
     end
 
-    it "logs error with nothing to build" do
-      git_repo_dir.change_dir do
+    it "logs error when syndication builder fails" do
+      temp_dir.change_dir do
         builder.call
-        expect(logger.reread).to match(/🛑.+No content./)
+        expect(logger.reread).to match(/🛑.+Required variables/)
       end
     end
   end
