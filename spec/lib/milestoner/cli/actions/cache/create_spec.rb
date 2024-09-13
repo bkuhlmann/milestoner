@@ -35,5 +35,25 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Create do
 
       expect(logger.reread).to match(/🟢.+Created: "Test"./)
     end
+
+    it "logs error with too many values" do
+      action.call "1,test,Test,bogus"
+      expect(logger.reread).to match(/🛑.+Too many values given./)
+    end
+
+    it "logs error when name is missing" do
+      action.call "1,test"
+      expect(logger.reread).to match(/🛑.+Name must be supplied./)
+    end
+
+    it "logs error when handle and name are missing" do
+      action.call "1"
+      expect(logger.reread).to match(/🛑.+Handle and Name must be supplied./)
+    end
+
+    it "logs error with no elements" do
+      action.call ""
+      expect(logger.reread).to match(/🛑.+No values given./)
+    end
   end
 end
