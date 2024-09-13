@@ -8,7 +8,6 @@ module Milestoner
     # Builds syndicated feed output.
     class Feed
       include Milestoner::Import[:settings, :logger]
-      include Dry::Monads[:result]
 
       using Refinements::Pathname
 
