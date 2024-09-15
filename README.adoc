@@ -111,10 +111,10 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-exp
 * Provides automatic versioning based on last {git_link} tag and {git_trailers_link}. See {git_commit_anatomy_link} for details.
 * Supports multiple build formats:
 ** {ascii_doc_link}
-** {syndication_link}
+** {syndication_link} (feed)
 ** {markdown_link}
 ** Stream (console)
-** link:https://html.spec.whatwg.org/multipage[Web]
+** link:https://html.spec.whatwg.org/multipage[Web] (HTML)
 * Supports {git_notes_link}.
 * Supports customization via your personal {xdg_link}, {runcom_link}, and/or {hanami_views_link} configuration.
 
@@ -277,7 +277,7 @@ The above can be customized as follows:
 *** `mime`: Required. The mime type. Defaults to HTML and XML.
 *** `relation`: Required. Identifies the relation of the link which can either be `self` (i.e. XML) or `alternate` (i.e. HTML).
 *** `uri`: Required. The link URI to follow for more information. Defaults to dynamic string formatting based on existing configuration values.
-* `tracker`: Required. Managed issue tracker details.
+* `tracker`: Required. Manages issue tracker details.
 ** `uri`: Required. The URI format for linking to issues as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit `Issue` trailer as linted by {git_lint_link}. When no ID can be found, this will default to _All_ issues.
 
 As hinted at above, all URIs (including syndication), support {string_formats_link}. This means you can use the `%<key>s` format -- replacing `key` with the key of your choice -- to customize your configuration further.
@@ -296,7 +296,7 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/usage-cache.p
 
 Milestoner's cache allows you to enrich user information (i.e. authors, collaborators, etc) by storing information in a `PStore` database as managed by the {lode_link} gem. Cache location, as with the Config, is managed by the {runcom_link} gem.
 
-User information should be sourced from whatever service you use for managing your source code. For example, when using GitHub, your workflow might look like this:
+User information should be sourced from whatever service used for managing your source code. For example, when using GitHub, your workflow might look like this:
 
 [source,bash]
 ----
@@ -393,9 +393,11 @@ Check out the help documentation (i.e. `milestoner build --help`) for addition u
 
 ==== Commits
 
-By default, all {git_link} commit messages support {ascii_doc_link} syntax but you can use {markdown_link} if customized.
+By default, all {git_link} commit messages support {ascii_doc_link} syntax but you can use {markdown_link} too.
 
-{ascii_doc_link} is rendered using the {ascii_doctor_link} gem while {markdown_link} is rendered using the {redcarpet_link} gem. Regardless of what renderer you choose, each supports syntax highlighting via the {rouge_link} gem. This also means you can customize the {rouge_style} stylesheet as documented in the xref:_templates[Templates] section below.
+{ascii_doc_link} is rendered using the {ascii_doctor_link} gem while {markdown_link} is rendered using the {redcarpet_link} gem. Regardless of what renderer you choose, each supports syntax highlighting via the {rouge_link} gem. This also means you can customize the {rouge_link} styles via the `page.css` template as documented in the xref:_templates[Templates] section below.
+
+ℹ️ The {rouge_link} CSS classes are slightly cryptic in terms of readability but you can see how they are applied when inspecting the HTML DOM.
 
 Here's a couple examples of commit messages using {ascii_doc_link} and {markdown_link} syntax:
 
@@ -461,7 +463,7 @@ The following attributes are limited to only a few elements like `a`, `abbr`, an
 
 * link:https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/title[title]
 
-Other attributes are allowed as well but are specific to each element. Ultimately, if you don't see an attribute being rendered then it's because it's not allowed.
+An additional set of attributes are allowed but are specific to each element and fairly limited. Ultimately, if you don't see an attribute being rendered then it's not allowed.
 
 ==== Trailers
 
@@ -536,7 +538,7 @@ Given the above, the resulting version would be: 2.0.0. This is because the high
 
 ==== Templates
 
-Build template functionality is powered by {hanami_views_link} which means you can completely customize _all_ build formats, templates, partials, stylesheets, images, and so much more.
+Template functionality is powered by {hanami_views_link} which means you can completely customize _all_ build formats, templates, partials, stylesheets, images, and much more.
 The quickest way to start customization is to copy the `templates` folder structure -- included with this gem -- to your preferred {runcom_link} configuration (i.e. global or local). For example, this gem's template structure is:
 
 ....
@@ -614,7 +616,7 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-no
 
 *With ASCII Doc/Markdown*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-asdcii_doc[ASCII Doc,width=908,height=1938,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-ascii_doc.png[ASCII Doc,width=908,height=1938,role=focal_point]
 
 💡 See {git_notes_link} to learn more.
 
