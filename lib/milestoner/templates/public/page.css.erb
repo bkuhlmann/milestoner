@@ -17,6 +17,7 @@
   --color-ink: hsl(210, 4%, 11%);
   --color-khaki: hsl(35, 26%, 75%);
   --color-lime: hsl(82, 100%, 58%);
+  --color-pink: hsl(342, 100%, 75%);
   --color-purple: hsl(259, 60%, 79.4%);
   --color-red: hsl(0, 100%, 73%);
   --color-sea: hsl(190, 100%, 60%);
@@ -148,8 +149,12 @@
   }
 
   .o {
-    color: var(--color-blue);
+    color: var(--color-pink);
     font-weight: bold;
+  }
+
+  .p {
+    color: var(--color-pink);
   }
 
   .mf {
@@ -201,7 +206,7 @@
   }
 
   .si {
-    color: var(--color-purple);
+    color: var(--color-pink);
   }
 
   .sx {
@@ -365,7 +370,7 @@
     border-radius: 0.3rem;
     color: var(--color-white);
     font-size: 0.95rem;
-    padding: 0.1rem 0.3rem;
+    padding: 0.1rem 0.2rem;
   }
 
   pre:not([class^=language]) {
@@ -381,6 +386,7 @@
     border-radius: 0.5rem;
     font-weight: 400;
     padding: 0.5rem;
+    word-break: break-word;
   }
 
   img, video {
@@ -415,6 +421,7 @@
   }
 
   .popover {
+    border-color: var(--color-black);
     border-radius: 0.5rem;
     padding: 1rem;
     max-width: calc(100vw - 20%);
@@ -460,21 +467,11 @@
   .secure {
     background-color: var(--color-green);
     color: var(--color-white);
-
-    .signature::before {
-      content: "\1F512";
-      margin-right: 0.5rem;
-    }
   }
 
   .insecure {
     background-color: var(--color-red);
     color: var(--color-white);
-
-    .signature::before {
-      content: "\1F513";
-      margin-right: 0.5rem;
-    }
   }
 
   .header {
@@ -562,9 +559,30 @@
     }
 
     &::before {
+      color: var(--color-carbon);
       content: "\25B6";
       cursor: pointer;
       width: 0.5rem;
+    }
+
+    &:has(~ * .major)::before {
+      color: var(--color-major);
+    }
+
+    &:has(~ * .minor)::before {
+      color: var(--color-minor);
+    }
+
+    &:has(~ * .patch)::before {
+      color: var(--color-patch);
+    }
+
+    &:has(~ * .rebase)::before {
+      color: var(--color-orange);
+    }
+
+    &:has(~ * .invalid)::before {
+      color: var(--color-red);
     }
 
     &:hover {
@@ -622,12 +640,14 @@
 
     .tag {
       align-self: stretch;
+      border-radius: 0.3rem;
       grid-area: tag;
+      margin: 1rem 0;
+      padding: 0 0.2rem;
       padding: 0.5rem 0.2rem 0.5rem 0.1rem;
       text-align: center;
       text-transform: capitalize;
       writing-mode: vertical-lr;
-      padding: 0 0.2rem;
     }
 
     .major {
@@ -675,6 +695,11 @@
       padding: 0 0.5rem 0.5rem 0.5rem;
     }
 
+    .content {
+      margin: 0 0.5rem;
+      word-break: break-word;
+    }
+
     .message {
       background-color: var(--color-grey);
       border-radius: 0.5rem;
@@ -683,11 +708,6 @@
 
       .bar {
         background-color: var(--color-smoke);
-      }
-
-      .content {
-        margin: 0 0.5rem;
-        word-break: break-word;
       }
     }
 
@@ -700,9 +720,17 @@
       .bar {
         background-color: var(--color-butter);
       }
+    }
 
-      .content {
-        margin: 0 0.5rem;
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .item {
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
       }
     }
 
