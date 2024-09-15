@@ -3,6 +3,7 @@
 :figure-caption!:
 
 :ascii_doc_link: link:https://asciidoctor.org/docs/what-is-asciidoc[ASCII Doc]
+:ascii_doctor_link: link:https://asciidoctor.org[Asciidoctor]
 :cff_link: link:https://github.com/citation-file-format/ruby-cff[CFF]
 :etcher_link: link:https://alchemists.io/projects/etcher[Etcher]
 :firefox_link: link:https://www.mozilla.org/en-US/firefox[Firefox]
@@ -11,8 +12,8 @@
 :git_commit_anatomy_link: link:https://alchemists.io/articles/git_commit_anatomy[Git Commit Anatomy]
 :git_link: link:https://git-scm.com[Git]
 :git_lint_link: link:https://alchemists.io/projects/git-lint[Git Lint]
-:git_trailers_link: link:https://alchemists.io/articles/git_trailers[Git Trailers]
 :git_notes_link: link:https://alchemists.io/articles/git_notes[Git Notes]
+:git_trailers_link: link:https://alchemists.io/articles/git_trailers[Git Trailers]
 :hanami_link: link:https://hanamirb.org[Hanami]
 :hanami_views_link: link:https://alchemists.io/articles/hanami_views[Hanami Views]
 :hanamismith_link: link:https://alchemists.io/projects/hanamismith[Hanamismith]
@@ -21,12 +22,15 @@
 :markdown_link: link:https://daringfireball.net/projects/markdown[Markdown]
 :marked_link: link:https://marked2app.com[Marked 2]
 :net_news_wire_link: link:https://netnewswire.com[NetNewsWire]
+:redcarpet_link: link:https://github.com/vmg/redcarpet[Redcarpet]
+:rouge_link: link:https://rouge.jneen.net[Rouge]
 :ruby_link: link:https://www.ruby-lang.org[Ruby]
 :rubygems_link: link:https://rubygems.org[RubyGems]
 :rubysmith_link: link:https://alchemists.io/projects/rubysmith[Rubysmith]
 :runcom_link: link:https://alchemists.io/projects/runcom[Runcom]
+:sanitize_link: link:https://github.com/rgrove/sanitize[Sanitize]
 :strict_semantic_versioning_link: link:https://alchemists.io/articles/strict_semantic_versioning[Strict Semantic Versioning]
-:string_formats_link: link:https://ruby-doc.org/3.3.0/format_specifications_rdoc.html[String Formats]
+:string_formats_link: link:https://docs.ruby-lang.org/en/master/format_specifications_rdoc.html[String Formats]
 :syndication_link: link:https://alchemists.io/articles/syndication[Syndication]
 :versionaire_link: link:https://alchemists.io/projects/versionaire[Versionaire]
 :xdg_link: link:https://alchemists.io/projects/xdg[XDG]
@@ -50,7 +54,7 @@ toc::[]
 
 The following are screenshots of using this gem to render release notes for the {lode_link} gem. Even though {lode_link} is used for example purposes, keep in mind that Milestoner can be used for _any project and/or programming language_.
 
-=== ASCII Doc Format
+=== ASCII Doc
 
 image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-collapsed.png[Release Notes,width=1149,height=830,role=focal_point]
 
@@ -59,7 +63,7 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_d
 * *Command*: `milestoner build --format ascii_doc`
 * *Renderer*: {ascii_doc_link}
 
-=== Feed Format
+=== Feed
 
 image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-collapsed.png[Release Notes,width=1109,height=1143,role=focal_point]
 
@@ -75,14 +79,14 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdow
 * *Command*: `milestoner build --format markdown`
 * *Renderer*: {marked_link}
 
-=== Stream Format
+=== Stream
 
 image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=586,height=341,role=focal_point]
 
 * *Command*: `milestoner build --format stream`
 * *Renderer*: {iterm_link}
 
-=== Web Format
+=== Web
 
 image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1195,height=878,role=focal_point]
 
@@ -112,7 +116,7 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-exp
 ** Stream (console)
 ** link:https://html.spec.whatwg.org/multipage[Web]
 * Supports {git_notes_link}.
-* Supports customization via your personal {xdg_link} and {hanami_views_link} configuration.
+* Supports customization via your personal {xdg_link}, {runcom_link}, and/or {hanami_views_link} configuration.
 
 == Requirements
 
@@ -297,34 +301,38 @@ User information should be sourced from whatever service you use for managing yo
 [source,bash]
 ----
 milestoner cache --list
-# 🟢 Listing users...
-# 🟢 No users found.
+# 🟢 [milestoner] Listing users...
+# 🟢 [milestoner] No users found.
 
 milestoner cache --create "111,jsmith,Jane Smith"
-# 🟢 Created: "Jane Smith"
+# 🟢 [milestoner] Created: "Jane Smith"
 
 milestoner cache --create "222,jdoe,John Doe"
-# 🟢 Created: "John Doe"
+# 🟢 [milestoner] Created: "John Doe"
 
 milestoner cache --create "333,jgrey,Jill Grey"
-# 🟢 Created: "Jill Grey"
+# 🟢 [milestoner] Created: "Jill Grey"
 
 milestoner cache --list
-# 🟢 Listing users...
-# 111, jsmith, Jane Smith
-# 222, jdoe, John Doe
-# 333, jgrey, Jill Grey
+# 🟢 [milestoner] Listing users...
+# External ID, Handle, Name
+# -------------------------
+# "111", "jsmith", "Jane Smith"
+# "222", "jdoe", "John Doe"
+# "333", "jgrey", "Jill Grey"
 
 milestoner cache --delete "Jill Grey"
-🟢 Deleted: "Jill Grey".
+# 🟢 [milestoner] Deleted: "Jill Grey".
 
 milestoner cache --list
-# 🟢 Listing users...
-# 111, jsmith, Jane Smith
-# 222, jdoe, John Doe
+# 🟢 [milestoner] Listing users...
+# External ID, Handle, Name
+# -------------------------
+# "111", "jsmith", "Jane Smith"
+# "222", "jdoe", "John Doe"
 
 milestoner cache --info
-# 🟢 Path: /Users/demo/.cache/milestoner/database.store.
+# 🟢 [milestoner] Path: /Users/bkuhlmann/.cache/milestoner/database.store.
 ----
 
 💡 Use `+https://api.github.com/users/<handle>+` to acquire the external ID for any GitHub user.
@@ -333,7 +341,7 @@ Once team member information is stored in your cache, you'll be able to build re
 
 If you don't use the cache, your release notes use a question mark (?) and _unknown_ for team members as highlighted below:
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/no_cache.png[Usage,width=851,height=571,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/no_cache.png[Usage,width=916,height=397,role=focal_point]
 
 === Build
 
@@ -344,8 +352,9 @@ The build command allows you to quickly build release notes to check the current
 [source,bash]
 ----
 milestoner build --format web
-# 🟢 Building milestone...
-# 🟢 Milestone built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestone
+# 🟢 [milestoner] Building Milestoner (web)...
+# 🟢 [milestoner] Built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestones/page.css.
+# 🟢 [milestoner] Built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestones/index.html.
 ----
 
 The above command is so useful that I use the following `msw` (i.e. Milestoner Web) Bash alias to build current release notes or release notes for several tags:
@@ -357,21 +366,112 @@ The above command is so useful that I use the following `msw` (i.e. Milestoner W
 # Parameters: $1 (optional): Maximum tags to build. Default: 1.
 msw() {
   local max=${1:-1}
+  local root="tmp/milestones"
+  local path="$root/index.html"
 
   rm -rf tmp/milestones
 
   if [[ "$max" == 1 ]]; then
-    milestoner build --max "$max" --format web && open "tmp/milestones/index.html"
+    milestoner build --max "$max" --format web
+
+    if [[ -f "$path" ]]; then
+      open "$path"
+    fi
   else
     milestoner build --max "$max" --stylesheet "../page" --format web
-    ruby -run -e httpd "tmp/milestones" --port 3030 &
-    open "http://localhost:3030"
-    fg
+
+    if [[ -d "$root" ]]; then
+      ruby -run -e httpd "tmp/milestones" --port 3030 &
+      open "http://localhost:3030"
+      fg
+    fi
   fi
 }
 ----
 
 Check out the help documentation (i.e. `milestoner build --help`) for addition usage that explains what command line options you can use to overwrite the current configuration.
+
+==== Commits
+
+By default, all {git_link} commit messages support {ascii_doc_link} syntax but you can use {markdown_link} if customized.
+
+{ascii_doc_link} is rendered using the {ascii_doctor_link} gem while {markdown_link} is rendered using the {redcarpet_link} gem. Regardless of what renderer you choose, each supports syntax highlighting via the {rouge_link} gem. This also means you can customize the {rouge_style} stylesheet as documented in the xref:_templates[Templates] section below.
+
+Here's a couple examples of commit messages using {ascii_doc_link} and {markdown_link} syntax:
+
+*ASCII Doc*
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/syntax-ascii_doc.png[ASCII Doc,width=950,height=763,role=focal_point]
+
+*Markdown*
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/syntax-markdown.png[Markdown,width=933,height=921,role=focal_point]
+
+💡 To see an example of what this renders to HTML as, see the xref:_formats[Formats] section below.
+
+==== Sanitization
+
+Sanitization of commit messages is handled by the {sanitize_link} gem. This means you can only use a limited set of HTML elements (this includes {ascii_doc_link} and {markdown_link} rendering). Here's what's allowed:
+
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/b[b]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/em[em]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/i[i]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strong[strong]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/u[u]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a[a]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/abbr[abbr]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/blockquote[blockquote]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/br[br]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/cite[cite]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/code[code]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd[dd]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn[dfn]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl[dl]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt[dt]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd[kbd]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li[li]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mark[mark]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ol[ol]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/p[p]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/pre[pre]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/q[q]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/s[s]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/samp[samp]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/small[small]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strike[strike]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sub[sub]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sup[sup]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time[time]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul[ul]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/var[var]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio[audio]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details[details]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img[img]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source[source]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/span[span]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary[summary]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video[video]
+
+The following global attributes are allowed for all elements:
+
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id[id]
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class[class]
+
+The following attributes are limited to only a few elements like `a`, `abbr`, and `dfn` for the most part.
+
+* link:https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/title[title]
+
+Other attributes are allowed as well but are specific to each element. Ultimately, if you don't see an attribute being rendered then it's because it's not allowed.
+
+==== Trailers
+
+Multiple {git_trailers_link} for your commits are supported which are detailed in the linked article. At a minimum, the `Milestone` trailer is highly recommended since this is how Milestoner handles xref:_automatic_versioning[Automatic Versioning] for you.
+
+One of the more powerful features of using {git_trailers_link} in your commit messages is they give you the ability to fully resolve what is defined in your default global xref:_customization[configuration]. Here's a more detailed breakdown:
+
+* *Format* (optional): Use `ascii_doc` or `markdown` for the value to control what syntax used to render your commit message. The default is `ascii_doc` but if your configuration uses a different default you can override that per commit message if desired.
+* *Issue* (optional): When supplied, Milestoner will automatically associate your commit with the corresponding issue ID you provide as a value. This works in conjunction with your xref:_customization[configuration].
+* *Milestone* (optional): This is detailed in the xref:_automatic_versioning[Automatic Versioning] section below.
 
 ==== Automatic Versioning
 
@@ -494,23 +594,27 @@ Of all build formats supported, the web format is the most powerful and feature 
 
 *With Basic Git Commit*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-overview.png[Overview,width=1119,height=910,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-overview.png[Overview,width=1119,height=902,role=focal_point]
 
 *With Collaborators and Signers*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-collaborators_and_signers.png[Collaborators and Signers,width=1118,height=1003,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-collaborators_and_signers.png[Collaborators and Signers,width=903,height=903,role=focal_point]
 
 *With Invalid Tag*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_invalid.png[Invalid Tag,width=1119,height=910,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_invalid.png[Invalid Tag,width=881,height=403,role=focal_point]
 
 *With Valid Tag*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_valid.png[Valid Tag,width=1119,height=910,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_valid.png[Valid Tag,width=688,height=771,role=focal_point]
 
 *With Notes*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-notes.png[Notes,width=1119,height=910,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-notes.png[Notes,width=903,height=757,role=focal_point]
+
+*With ASCII Doc/Markdown*
+
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-asdcii_doc[ASCII Doc,width=908,height=1938,role=focal_point]
 
 💡 See {git_notes_link} to learn more.
 

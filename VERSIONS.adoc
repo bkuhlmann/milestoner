@@ -1,5 +1,22 @@
 = Versions
 
+== 18.5.0 (2024-09-15)
+
+* ✅ Fixed cache creation with invalid values - Brooke Kuhlmann
+* ✅ Fixed tagger to account for repositories with no tags - Brooke Kuhlmann
+* ✅ Fixed web builder to only build the stylesheet if there are tags - Brooke Kuhlmann
+* 🟢 Added ASCII Doc renderer syntax highlighting - Brooke Kuhlmann
+* 🟢 Added Markdown renderer syntax highlighting - Brooke Kuhlmann
+* 🟢 Added Rouge gem - Brooke Kuhlmann
+* 🟢 Added Rouge styles - Brooke Kuhlmann
+* 🟢 Added Warning gem - Brooke Kuhlmann
+* 🟢 Added commit message and note styles - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🔼 Updated RSpec to ignore Rouge warnings - Brooke Kuhlmann
+* 🔼 Updated cache list to include headers and string values - Brooke Kuhlmann
+* 🔼 Updated sanitizer to include common elements and attributes - Brooke Kuhlmann
+* ⛔️ Removed feed builder monad behavior - Brooke Kuhlmann
+
 == 18.4.0 (2024-09-07)
 
 * ✅ Fixed commit HTML and XML partials to use same missing message - Brooke Kuhlmann
