@@ -6,7 +6,7 @@ require "refinements/array"
 module Milestoner
   module Views
     module Parts
-      # Represents an individual commit.
+      # Provides commit presentation logic.
       # :reek:RepeatedConditional
       class Commit < Hanami::View::Part
         include Import[:settings, :sanitizer]
@@ -23,9 +23,19 @@ module Milestoner
           @authored_at = Time.at(value.authored_at.to_i).utc
         end
 
-        def avatar_url(user) = format settings.avatar_uri, id: user.external_id
+        def avatar_url user
+          warn "`#{self.class}##{__method__}` is deprecated, use user scope instead.",
+               category: :deprecated
 
-        def profile_url(user) = format settings.profile_uri, id: user.handle
+          format settings.avatar_uri, id: user.external_id
+        end
+
+        def profile_url user
+          warn "`#{self.class}##{__method__}` is deprecated, use user scope instead.",
+               category: :deprecated
+
+          format settings.profile_uri, id: user.handle
+        end
 
         def kind
           if prefixes.include? prefix then "normal"

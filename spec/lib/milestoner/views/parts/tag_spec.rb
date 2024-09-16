@@ -20,6 +20,11 @@ RSpec.describe Milestoner::Views::Parts::Tag do
   end
 
   describe "#avatar_url" do
+    it "prints deprecation to standard error" do
+      expectation = proc { part.avatar_url user }
+      expect(&expectation).to output(/deprecated/).to_stderr
+    end
+
     it "answers URL for user" do
       expect(part.avatar_url(user)).to eq("https://avatars.githubusercontent.com/u/1")
     end
@@ -62,6 +67,11 @@ RSpec.describe Milestoner::Views::Parts::Tag do
   end
 
   describe "#profile_url" do
+    it "prints deprecation to standard error" do
+      expectation = proc { part.avatar_url user }
+      expect(&expectation).to output(/deprecated/).to_stderr
+    end
+
     it "answers URL for user" do
       expect(part.profile_url(user)).to eq("https://github.com/test")
     end

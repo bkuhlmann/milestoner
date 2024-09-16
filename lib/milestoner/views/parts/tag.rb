@@ -6,7 +6,7 @@ require "refinements/string"
 module Milestoner
   module Views
     module Parts
-      # Represents an individual tag.
+      # Provides tag presentation logic.
       class Tag < Hanami::View::Part
         include Import[:settings]
 
@@ -15,7 +15,12 @@ module Milestoner
         decorate :commits
         decorate :author, as: :user
 
-        def avatar_url(user) = format settings.avatar_uri, id: user.external_id
+        def avatar_url user
+          warn "`#{self.class}##{__method__}` is deprecated, use user scope instead.",
+               category: :deprecated
+
+          format settings.avatar_uri, id: user.external_id
+        end
 
         def committed_at fallback: Time.now.utc
           value.committed_at.then { |at| at ? Time.at(at) : fallback }
@@ -27,7 +32,12 @@ module Milestoner
 
         def empty? = value.commits.empty?
 
-        def profile_url(user) = format settings.profile_uri, id: user.handle
+        def profile_url user
+          warn "`#{self.class}##{__method__}` is deprecated, use user scope instead.",
+               category: :deprecated
+
+          format settings.profile_uri, id: user.handle
+        end
 
         def security = value.signature ? "🔒 Tag (secure)" : "🔓 Tag (insecure)"
 
