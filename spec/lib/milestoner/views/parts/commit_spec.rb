@@ -12,7 +12,7 @@ RSpec.describe Milestoner::Views::Parts::Commit do
 
   let :view do
     Class.new Hanami::View do
-      config.paths = [Bundler.root.join("lib/milestoner/templates/releases")]
+      config.paths = [Bundler.root.join("lib/milestoner/templates")]
       config.template = "n/a"
     end
   end

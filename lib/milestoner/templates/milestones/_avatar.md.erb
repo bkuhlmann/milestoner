@@ -1,2 +1,1 @@
-<% if name %><img src="<%= url %>" alt="<%= name %>" width="24" height="24" loading="lazy"><% else %>
-<%= render :icon, name: "missing", alt: "Unknown" %><% end %>
+<img src="<%= user.avatar_url %>" alt="<%= user.image_alt %>" width="24" height="24" loading="lazy">

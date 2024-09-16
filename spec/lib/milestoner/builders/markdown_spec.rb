@@ -54,8 +54,7 @@ RSpec.describe Milestoner::Builders::Markdown do
 
         expect(content).to include(
           %(<img src="https://avatars.githubusercontent.com/u/1" alt="Malcolm Reynolds" ) +
-          %(width="24" height="24" loading="lazy"> ) +
-          "[Malcolm Reynolds](https://github.com/mal)"
+          %(width="24" height="24" loading="lazy"> [Malcolm Reynolds](https://github.com/mal))
         )
       end
 

@@ -87,16 +87,48 @@ RSpec.describe Milestoner::Builders::Web do
         expect(html_path.read).not_to include(%(<div class="owner">))
       end
 
+      it "renders message" do
+        builder.call
+
+        content = <<~CONTENT.gsub(/^(?=\s*(<|\w))/, "    ").sub("\n    \n", "\n\n")
+          <div class="message">
+            <h1 class="bar">Message</h1>
+            <div class="content">
+              For link:https://asciidoctor.org[ASCII Doc].
+
+            </div>
+          </div>
+        CONTENT
+
+        expect(html_path.read).to include(content)
+      end
+
+      it "renders notes" do
+        builder.call
+
+        content = <<~CONTENT.gsub(/^(?=\s*<)/, "    ").sub("\n    \n", "\n\n")
+          <div class="notes">
+            <h2 class="bar">Notes</h2>
+            <div class="content">
+              <p class="line">None.</p>
+
+            </div>
+          </div>
+        CONTENT
+
+        expect(html_path.read).to include(content)
+      end
+
       it "renders valid when signature exists" do
         builder.call
-        expect(html_path.read).to include("Tag (valid)")
+        expect(html_path.read).to include("🔒 Tag (secure)")
       end
 
       it "renders invalid when signature doesn't exist" do
         tag.signature = nil
         builder.call
 
-        expect(html_path.read).to include("Tag (invalid)")
+        expect(html_path.read).to include("🔓 Tag (insecure)")
       end
 
       it "includes generator link" do

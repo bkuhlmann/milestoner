@@ -88,6 +88,16 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
         CONTENT
       end
 
+      it "renders notes" do
+        builder.call
+
+        expect(content).to include(<<~CONTENT)
+          *Notes*
+
+          None.
+        CONTENT
+      end
+
       it "renders commit author" do
         builder.call
 

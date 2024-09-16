@@ -1,9 +1,7 @@
 <article class="milestone">
   <header class="header">
     <h1 class="title">
-      <% if project_uri_logo %>
-        <img src="<%= project_uri_logo %>" alt="Logo" width="30" height="30">
-      <% end %>
+      <%= scope(:logo).call %>
 
       <a href="<%= project_uri_home %>" class="label"><%= project_label %></a>
 
@@ -21,34 +19,10 @@
     <section class="body" x-data="{open: false}">
       <div class="overview">
         <div class="owner">
-          <%= render :avatar, name: tag.author.name, url: tag.avatar_url(tag.author) %>
-          <%= render :profile, name: tag.author.name, url: tag.profile_url(tag.author) %>
+          <%= render :user, user: tag.author %>
         </div>
 
-        <% if tag.signature %>
-          <button class="button secure" popovertarget="po-tag">
-            <span class="signature">Tag (valid)</span>
-          </button>
-
-          <dialog id="po-tag" class="popover" popover="auto">
-            <h1 class="label">Version <%= tag.version %></h1>
-
-            <h2 class="sublabel">SHA</h2>
-            <p><%= tag.sha %></p>
-
-            <h2 class="sublabel">Signature</h2>
-            <pre><%= tag.signature %></pre>
-          </dialog>
-        <% else %>
-          <button class="button insecure" popovertarget="po-tag">
-            <span class="signature">Tag (invalid)</span>
-          </button>
-
-          <dialog id="po-tag" class="popover" popover="auto">
-            <h1 class="label">Version <%= tag.version %></h1>
-            <p>No security. Signature not detected.</p>
-          </dialog>
-        <% end %>
+        <%= scope(:tag_signature, tag:).call %>
 
         <div class="actions">
           <button class="button toggle" x-on:click="open = true">Expand</button>

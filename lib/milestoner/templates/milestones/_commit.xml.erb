@@ -1,56 +1,28 @@
 <details>
   <summary style="display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-    <%= render :icon, name: commit.icon, alt: commit.kind %>
+    <img src="https://alchemists.io/images/projects/milestoner/icons/<%= commit.icon %>.png"
+         alt="<%= commit.kind %>"
+         width="24"
+         height="24"
+         loading="lazy">
     <%= commit.subject %>
   </summary>
 
   <h4>Message</h4>
+  <%= scope(:content, content: commit.safe_body).call %>
 
-  <% if commit.body.empty? %>
-    <p>None.</p>
-  <% else %>
-    <%= commit.safe_body %>
-  <% end %>
-
-  <% unless commit.notes.empty? %>
-    <details>
-      <summary>Notes</summary>
-      <%= commit.notes.html_safe %>
-    </details>
-  <% end %>
+  <h4>Notes</h4>
+  <%= scope(:content, content: commit.safe_notes).call %>
 
   <h4>Author</h4>
 
-  <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
-    <%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %>
-    <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>
-  </span>
+  <p><%= render :user, user: commit.author %></p>
 
-  <% if commit.collaborators.any? %>
-    <h4>Collaborators</h4>
+  <h4>Collaborators</h4>
+  <%= scope(:users, users: commit.collaborators).call %>
 
-    <ul>
-      <% commit.collaborators.each do |collaborator| %>
-        <li style="display: inline-flex; align-items: center; gap: 0.5rem;">
-          <%= render :avatar, name: collaborator.name, url: commit.avatar_url(collaborator) %>
-          <%= render :profile, name: collaborator.name, url: commit.profile_url(collaborator) %>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-
-  <% if commit.signers.any? %>
-    <h4>Signers</h4>
-
-    <ul>
-      <% commit.signers.each do |signer| %>
-        <li style="display: inline-flex; align-items: center; gap: 0.5rem;">
-          <%= render :avatar, name: signer.name, url: commit.avatar_url(signer) %>
-          <%= render :profile, name: signer.name, url: commit.profile_url(signer) %>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
+  <h4>Signers</h4>
+  <%= scope(:users, users: commit.signers).call %>
 
   <h4>Details</h4>
 

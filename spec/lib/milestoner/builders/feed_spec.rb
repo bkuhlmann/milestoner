@@ -52,7 +52,7 @@ RSpec.describe Milestoner::Builders::Feed do
         `touch a.txt && git add --all && git commit --message "Added A"`
 
         builder.call
-        expect(content).to include("missing.png")
+        expect(content).to include("https://avatars.githubusercontent.com/u/1")
       end
     end
 
@@ -63,6 +63,16 @@ RSpec.describe Milestoner::Builders::Feed do
 
         builder.call
         expect(content).to include("🔓 Tag (insecure)")
+      end
+    end
+
+    it "renders notes" do
+      git_repo_dir.change_dir do
+        `git tag 0.0.0`
+        `touch a.txt && git add --all && git commit --message "Added A"`
+
+        builder.call
+        expect(content).to match(/Notes.+None/m)
       end
     end
 

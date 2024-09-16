@@ -1,12 +1,17 @@
 <details id="<%= commit.sha %>" class="row" x-bind:open="open">
   <summary class="summary <%= commit.kind %>">
     <div class="title">
-      <%= render :icon, name: commit.icon, alt: commit.kind %>
+      <img src="https://alchemists.io/images/projects/milestoner/icons/<%= commit.icon %>.png"
+           alt="<%= commit.kind %>"
+           class="icon"
+           width="24"
+           height="24"
+           loading="lazy">
       <span class="subject"><%= commit.subject %></span>
     </div>
 
-    <a href="<%= commit.profile_url commit.author %>" class="author">
-      <%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %>
+    <a href="<%= commit.author.profile_url %>" class="author">
+      <%= render :avatar, user: commit.author %>
     </a>
 
     <a href="<%= commit.uri %>" class="files"><%= commit.files_changed %></a>
@@ -26,58 +31,30 @@
 
     <div class="message">
       <h1 class="bar">Message</h1>
-
       <div class="content">
-        <% if commit.body.empty? %>
-          <p>None.</p>
-        <% else %>
-          <%= commit.safe_body %>
-        <% end %>
+        <%= scope(:content, content: commit.safe_body).call %>
       </div>
     </div>
 
-    <% unless commit.notes.empty? %>
-      <div class="notes">
-        <h2 class="bar">Notes</h2>
-
-        <div class="content">
-          <%= commit.notes.html_safe %>
-        </div>
+    <div class="notes">
+      <h2 class="bar">Notes</h2>
+      <div class="content">
+        <%= scope(:content, content: commit.safe_notes).call %>
       </div>
-    <% end %>
+    </div>
 
     <div class="info">
       <h2 class="bar">Info</h2>
 
       <div class="panel">
         <h3 class="label">Author</h3>
+        <p class="line"><%= render :user, user: commit.author %></p>
 
-        <p class="line">
-          <%= render :avatar, name: commit.author.name, url: commit.avatar_url(commit.author) %>
-          <%= render :profile, name: commit.author.name, url: commit.profile_url(commit.author) %>
-        </p>
+        <h3 class="label">Collaborators</h3>
+        <%= scope(:users, users: commit.collaborators).call %>
 
-        <% if commit.collaborators.any? %>
-          <h3 class="label">Collaborators</h3>
-
-          <% commit.collaborators.each do |collaborator| %>
-            <p class="line">
-              <%= render :avatar, name: collaborator.name, url: commit.avatar_url(collaborator) %>
-              <%= render :profile, name: collaborator.name, url: commit.profile_url(collaborator) %>
-            </p>
-          <% end %>
-        <% end %>
-
-        <% if commit.signers.any? %>
-          <h3 class="label">Signers</h3>
-
-          <% commit.signers.each do |signer| %>
-            <p class="line">
-              <%= render :avatar, name: signer.name, url: commit.avatar_url(signer) %>
-              <%= render :profile, name: signer.name, url: commit.profile_url(signer) %>
-            </p>
-          <% end %>
-        <% end %>
+        <h3 class="label">Signers</h3>
+        <%= scope(:users, users: commit.signers).call %>
 
         <h3 class="label">Signature</h3>
 
