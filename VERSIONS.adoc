@@ -1,5 +1,31 @@
 = Versions
 
+== 18.6.0 (2024-09-20)
+
+* ✅ Fixed README typos and links - Brooke Kuhlmann
+* 🟢 Added CSS dynamic color for HTML summary elements - Brooke Kuhlmann
+* 🟢 Added commit and tag view part URL deprecations - Brooke Kuhlmann
+* 🟢 Added commit signature popover for web format - Brooke Kuhlmann
+* 🟢 Added content partials - Brooke Kuhlmann
+* 🟢 Added content scope - Brooke Kuhlmann
+* 🟢 Added custom view scope builder - Brooke Kuhlmann
+* 🟢 Added logo partials - Brooke Kuhlmann
+* 🟢 Added logo scope - Brooke Kuhlmann
+* 🟢 Added none partials - Brooke Kuhlmann
+* 🟢 Added secure and insecure tag partials - Brooke Kuhlmann
+* 🟢 Added tag signature scope - Brooke Kuhlmann
+* 🟢 Added user decoration to existing parts - Brooke Kuhlmann
+* 🟢 Added user part - Brooke Kuhlmann
+* 🟢 Added user partials - Brooke Kuhlmann
+* 🟢 Added users scope - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🔼 Updated Rouge 4.4.0 - Brooke Kuhlmann
+* 🔼 Updated context class description - Brooke Kuhlmann
+* 🔼 Updated enriched commit shared context fingerprint defaults - Brooke Kuhlmann
+* 🔼 Updated partials to use parts, scopes, and partials - Brooke Kuhlmann
+* 🔼 Updated tag part to render secure/insecure tags - Brooke Kuhlmann
+* ⛔️ Removed icon partials - Brooke Kuhlmann
+
 == 18.5.0 (2024-09-15)
 
 * ✅ Fixed cache creation with invalid values - Brooke Kuhlmann

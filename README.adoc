@@ -56,41 +56,41 @@ The following are screenshots of using this gem to render release notes for the 
 
 === ASCII Doc
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-collapsed.png[Release Notes,width=1149,height=830,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-collapsed.png[Release Notes,width=1160,height=831,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-expanded.png[Release Notes,width=1149,height=1054,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-expanded.png[Release Notes,width=1160,height=1335,role=focal_point]
 
 * *Command*: `milestoner build --format ascii_doc`
 * *Renderer*: {ascii_doc_link}
 
 === Feed
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-collapsed.png[Release Notes,width=1109,height=1143,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-collapsed.png[Release Notes,width=1275,height=954,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-expanded.png[Release Notes,width=1109,height=1143,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-expanded.png[Release Notes,width=1275,height=1613,role=focal_point]
 
 * *Command*: `milestoner build --format feed`
 * *Renderer*: {net_news_wire_link}
 
 === Markdown Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown.png[Release Notes,width=789,height=718,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown.png[Release Notes,width=796,height=703,role=focal_point]
 
 * *Command*: `milestoner build --format markdown`
 * *Renderer*: {marked_link}
 
 === Stream
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=586,height=341,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=566,height=320,role=focal_point]
 
 * *Command*: `milestoner build --format stream`
 * *Renderer*: {iterm_link}
 
 === Web
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1195,height=878,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1296,height=647,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Release Notes,width=1195,height=878,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Release Notes,width=1296,height=1032,role=focal_point]
 
 * *Command*: `milestoner build --format web`
 * *Renderer*: {firefox_link}
@@ -559,19 +559,34 @@ lib/milestoner/templates
 │  ├── _commit.md.erb
 │  ├── _commit.stream.erb
 │  ├── _commit.xml.erb
-│  ├── _icon.adoc.erb
-│  ├── _icon.html.erb
-│  ├── _icon.md.erb
-│  ├── _icon.xml.erb
+│  ├── _content.adoc.erb
+│  ├── _content.html.erb
+│  ├── _content.xml.erb
+│  ├── _logo.adoc.erb
+│  ├── _logo.html.erb
+│  ├── _logo.md.erb
+│  ├── _logo.xml.erb
+│  ├── _none.adoc.erb
+│  ├── _none.html.erb
+│  ├── _none.xml.erb
 │  ├── _profile.adoc.erb
 │  ├── _profile.html.erb
 │  ├── _profile.md.erb
 │  ├── _profile.xml.erb
+│  ├── _tag-insecure.html.erb
+│  ├── _tag-secure.html.erb
 │  ├── _tag.adoc.erb
 │  ├── _tag.html.erb
 │  ├── _tag.md.erb
 │  ├── _tag.stream.erb
 │  ├── _tag.xml.erb
+│  ├── _user.adoc.erb
+│  ├── _user.html.erb
+│  ├── _user.md.erb
+│  ├── _user.xml.erb
+│  ├── _users.adoc.erb
+│  ├── _users.html.erb
+│  ├── _users.xml.erb
 │  ├── show.adoc.erb
 │  ├── show.html.erb
 │  ├── show.md.erb
@@ -594,25 +609,25 @@ Milestoner searches your {runcom_link} configuration first and, if templates are
 
 Of all build formats supported, the web format is the most powerful and feature rich. The following showcases _some_ of the information rendered in this format based on commit activity.
 
-*With Basic Git Commit*
+*Overview*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-overview.png[Overview,width=1119,height=902,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-overview.png[ASCII Doc,width=1157,height=843,role=focal_point]
 
-*With Collaborators and Signers*
+*With Valid Commit Signature*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-collaborators_and_signers.png[Collaborators and Signers,width=903,height=903,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-commit_valid.png[ASCII Doc,width=1235,height=950,role=focal_point]
 
-*With Invalid Tag*
+*With Invalid Commit Signature*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_invalid.png[Invalid Tag,width=881,height=403,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-commit_invalid.png[ASCII Doc,width=1235,height=950,role=focal_point]
 
 *With Valid Tag*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_valid.png[Valid Tag,width=688,height=771,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_valid.png[ASCII Doc,width=1089,height=1084,role=focal_point]
 
-*With Notes*
+*With Invalid Tag*
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-notes.png[Notes,width=903,height=757,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/web_format-tag_invalid.png[ASCII Doc,width=978,height=571,role=focal_point]
 
 *With ASCII Doc/Markdown*
 
