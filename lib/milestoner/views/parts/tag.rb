@@ -13,6 +13,7 @@ module Milestoner
         using Refinements::String
 
         decorate :commits
+        decorate :author, as: :user
 
         def avatar_url(user) = format settings.avatar_uri, id: user.external_id
 

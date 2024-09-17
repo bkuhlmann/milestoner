@@ -13,6 +13,10 @@ module Milestoner
 
         using Refinements::Array
 
+        decorate :author, as: :user
+        decorate :collaborators, as: :users
+        decorate :signers, as: :users
+
         def initialize(**)
           super
           @prefixes = settings.commit_categories.pluck :label
