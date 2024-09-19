@@ -1,0 +1,13 @@
+<button class="button secure" popovertarget="po-tag">
+  <span class="signature"><%= tag.security %></span>
+</button>
+
+<div id="po-tag" class="popover secure" popover="auto">
+  <h1 class="label">Version <%= tag.version %></h1>
+
+  <h2 class="sublabel">SHA</h2>
+  <pre><%= tag.sha %></pre>
+
+  <h2 class="sublabel">Signature</h2>
+  <pre><%= tag.signature %></pre>
+</div>
