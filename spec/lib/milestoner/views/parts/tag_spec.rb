@@ -69,12 +69,12 @@ RSpec.describe Milestoner::Views::Parts::Tag do
 
   describe "#security" do
     it "answers good when secure" do
-      expect(part.security).to eq("🔒 Tag (valid)")
+      expect(part.security).to eq("🔒 Tag (secure)")
     end
 
     it "answers invalid when insecure" do
       tag.signature = nil
-      expect(part.security).to eq("🔓 Tag (invalid)")
+      expect(part.security).to eq("🔓 Tag (insecure)")
     end
   end
 

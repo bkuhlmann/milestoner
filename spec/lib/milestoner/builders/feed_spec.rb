@@ -56,13 +56,13 @@ RSpec.describe Milestoner::Builders::Feed do
       end
     end
 
-    it "renders invalid signature" do
+    it "renders insecure signature" do
       git_repo_dir.change_dir do
         `git tag 0.0.0`
         `touch a.txt && git add --all && git commit --message "Added A"`
 
         builder.call
-        expect(content).to include("🔓 Tag (invalid)")
+        expect(content).to include("🔓 Tag (insecure)")
       end
     end
 

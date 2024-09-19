@@ -25,7 +25,7 @@ RSpec.describe Milestoner::Builders::Stream do
         <<~CONTENT
           Test 0.1.0 (2024-07-05)
 
-          Malcolm Reynolds | 🔒 Tag (valid)
+          Malcolm Reynolds | 🔒 Tag (secure)
 
           🟢 Added documentation - Zoe Washburne
 
@@ -53,7 +53,7 @@ RSpec.describe Milestoner::Builders::Stream do
         <<~CONTENT
           Test 0.1.0 (2024-07-05)
 
-          Malcolm Reynolds | 🔒 Tag (valid)
+          Malcolm Reynolds | 🔒 Tag (secure)
 
           🟢 Added documentation - Zoe Washburne
 
@@ -65,7 +65,7 @@ RSpec.describe Milestoner::Builders::Stream do
 
           Test 0.0.0 (2024-07-04)
 
-          Malcolm Reynolds | 🔒 Tag (valid)
+          Malcolm Reynolds | 🔒 Tag (secure)
 
           🟢 Added documentation - Zoe Washburne
 

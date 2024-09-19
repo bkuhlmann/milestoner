@@ -29,7 +29,7 @@ module Milestoner
 
         def profile_url(user) = format settings.profile_uri, id: user.handle
 
-        def security = value.signature ? "🔒 Tag (valid)" : "🔓 Tag (invalid)"
+        def security = value.signature ? "🔒 Tag (secure)" : "🔓 Tag (insecure)"
 
         def total_commits
           value.commits.size.then { |total| "#{total} commit".pluralize "s", total }

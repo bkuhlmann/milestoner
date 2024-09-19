@@ -66,16 +66,16 @@ RSpec.describe Milestoner::Builders::Markdown do
         expect(content).not_to include("Malcolm Reynolds")
       end
 
-      it "renders valid when signature exists" do
+      it "renders secure when signature exists" do
         builder.call
-        expect(content).to include("🔒 Tag (valid)")
+        expect(content).to include("🔒 Tag (secure)")
       end
 
-      it "renders invalid when signature doesn't exist" do
+      it "renders insecure when signature doesn't exist" do
         tag.signature = nil
         builder.call
 
-        expect(content).to include("🔓 Tag (invalid)")
+        expect(content).to include("🔓 Tag (insecure)")
       end
 
       it "renders content" do
