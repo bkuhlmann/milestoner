@@ -181,6 +181,12 @@ RSpec.describe Milestoner::Views::Parts::Commit do
     end
   end
 
+  describe "#popover_id" do
+    it "answers ID" do
+      expect(part.popover_id).to eq("po-180dec7d8ae8")
+    end
+  end
+
   describe "#security" do
     it "answers secure with valid signature" do
       expect(part.security).to eq("secure")
@@ -191,6 +197,56 @@ RSpec.describe Milestoner::Views::Parts::Commit do
 
       it "answers insecure" do
         expect(part.security).to eq("insecure")
+      end
+    end
+  end
+
+  describe "#signature_label" do
+    it "answers secure with valid signature" do
+      expect(part.signature_label).to eq("🔒 Good")
+    end
+
+    context "with invalid signature" do
+      let(:commit) { Milestoner::Models::Commit[signature: "Bad"] }
+
+      it "answers insecure" do
+        expect(part.signature_label).to eq("🔓 Bad")
+      end
+    end
+  end
+
+  describe "#fingerprint" do
+    context "with fingerprint" do
+      let(:commit) { Milestoner::Models::Commit[fingerprint: "abc"] }
+
+      it "answers fingerprint" do
+        expect(part.fingerprint).to eq("abc")
+      end
+    end
+
+    context "with no fingerprint" do
+      let(:commit) { Milestoner::Models::Commit[fingerprint: ""] }
+
+      it "answers N/A" do
+        expect(part.fingerprint).to eq("N/A")
+      end
+    end
+  end
+
+  describe "#fingerprint_key" do
+    context "with fingerprint" do
+      let(:commit) { Milestoner::Models::Commit[fingerprint_key: "abc"] }
+
+      it "answers key" do
+        expect(part.fingerprint_key).to eq("abc")
+      end
+    end
+
+    context "with no key" do
+      let(:commit) { Milestoner::Models::Commit[fingerprint_key: ""] }
+
+      it "answers N/A" do
+        expect(part.fingerprint_key).to eq("N/A")
       end
     end
   end

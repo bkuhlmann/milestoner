@@ -58,19 +58,21 @@
 
         <h3 class="label">Signature</h3>
 
-        <p class="line pill <%= commit.security %>">
-          <span class="signature"><%= commit.signature %></span>
-        </p>
+        <button class="button line <%= commit.security %>" popovertarget="<%= commit.popover_id %>">
+          <span class="signature"><%= commit.signature_label %></span>
+        </button>
 
-        <% unless String(commit.fingerprint).empty? %>
-          <h3 class="label">Fingerprint</h3>
-          <p class="line"><%= commit.fingerprint %></p>
-        <% end %>
+        <dialog id="<%= commit.popover_id %>" class="popover <%= commit.security %>" popover="auto">
+          <h2 class="sublabel">SHA</h2>
+          <pre><%= commit.sha %></pre>
 
-        <% unless String(commit.fingerprint_key).empty? %>
-          <h3 class="label">Fingerprint Primary Key</h3>
-          <p class="line"><%= commit.fingerprint_key %></p>
-        <% end %>
+          <h2 class="sublabel">Fingerprint</h2>
+          <pre><%= commit.fingerprint %></pre>
+
+          <h2 class="sublabel">Fingerprint Primary Key</h2>
+          <pre><%= commit.fingerprint_key %></pre>
+          </p>
+        </dialog>
 
         <h3 class="label">Created</h3>
 

@@ -75,7 +75,17 @@ module Milestoner
           value.milestone
         end
 
+        def popover_id = "po-#{value.sha}"
+
         def security = value.signature == "Good" ? "secure" : "insecure"
+
+        def signature_label
+          value.signature.then { |kind| kind == "Good" ? "🔒 #{kind}" : "🔓 #{kind}" }
+        end
+
+        def fingerprint = value.fingerprint.then { |text| text.empty? ? "N/A" : text }
+
+        def fingerprint_key = value.fingerprint_key.then { |text| text.empty? ? "N/A" : text }
 
         def at = authored_at.strftime "%Y-%m-%dT%H:%M:%S%z"
 
