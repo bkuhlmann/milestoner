@@ -14,6 +14,8 @@ RSpec.shared_context "with enriched commit" do
       deletions: 10,
       format: :asciidoc,
       files_changed: 2,
+      fingerprint: "",
+      fingerprint_key: "",
       issue: Milestoner::Models::Link[id: "123", uri: "https://issue.firefly.com/123"],
       insertions: 5,
       notes: "",
