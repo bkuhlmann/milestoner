@@ -12,7 +12,7 @@ module Milestoner
         using Refinements::Hash
 
         Root = lambda do |attributes, key = :build_root|
-          attributes.transform_with! key => -> value { Pathname(value).expand_path }
+          attributes.transform_value!(key) { |value| Pathname(value).expand_path }
           Dry::Monads::Success attributes
         end
       end
