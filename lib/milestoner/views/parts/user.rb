@@ -5,7 +5,7 @@ require "hanami/view"
 module Milestoner
   module Views
     module Parts
-      # Provides user presentation logic.
+      # The user presentation logic.
       class User < Hanami::View::Part
         include Import[:settings]
 

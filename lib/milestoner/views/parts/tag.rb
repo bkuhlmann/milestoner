@@ -6,7 +6,7 @@ require "refinements/string"
 module Milestoner
   module Views
     module Parts
-      # Provides tag presentation logic.
+      # The tag presentation logic.
       class Tag < Hanami::View::Part
         include Import[:settings]
 

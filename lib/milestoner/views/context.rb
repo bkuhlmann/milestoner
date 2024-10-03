@@ -6,7 +6,7 @@ require "hanami/view"
 
 module Milestoner
   module Views
-    # Provides a custom context.
+    # The view context.
     class Context < Hanami::View::Context
       extend Forwardable
 

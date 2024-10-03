@@ -6,7 +6,7 @@ require "hanami/view"
 module Milestoner
   module Views
     module Scopes
-      # Provides content specific behavior for partials.
+      # The content specific behavior for partials.
       class Content < Hanami::View::Scope
         def content = String locals.fetch(:content, Core::EMPTY_STRING)
 

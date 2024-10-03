@@ -5,7 +5,7 @@ require "hanami/view"
 module Milestoner
   module Views
     module Scopes
-      # Provides tag signature specific behavior for partials.
+      # The tag signature specific behavior for partials.
       class TagSignature < Hanami::View::Scope
         def initialize(part: Parts::Tag.new(value: Models::Tag.new), **)
           @part = part

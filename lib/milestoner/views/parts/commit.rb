@@ -6,7 +6,7 @@ require "refinements/array"
 module Milestoner
   module Views
     module Parts
-      # Provides commit presentation logic.
+      # The commit presentation logic.
       # :reek:RepeatedConditional
       class Commit < Hanami::View::Part
         include Import[:settings, :sanitizer]

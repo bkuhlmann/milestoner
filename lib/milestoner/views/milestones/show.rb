@@ -5,7 +5,7 @@ require "hanami/view"
 module Milestoner
   module Views
     module Milestones
-      # Renders release notes.
+      # The show view.
       class Show < Hanami::View
         include Import[:settings]
 
