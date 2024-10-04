@@ -12,6 +12,26 @@ RSpec.describe Milestoner::Syndication::Builder do
   include_context "with application dependencies"
   include_context "with enriched tag"
 
+  describe ".authors_for" do
+    it "answers unique commit authors" do
+      expect(described_class.authors_for(tags)).to eq(
+        [Milestoner::Models::User[external_id: "1", handle: "zoe", name: "Zoe Washburne"]]
+      )
+    end
+
+    it "answers unique tag authors" do
+      tags.each { |tag| tag.commits.clear }
+
+      expect(described_class.authors_for(tags)).to eq(
+        [Milestoner::Models::User[external_id: "1", handle: "mal", name: "Malcolm Reynolds"]]
+      )
+    end
+
+    it "answers empty authors for empty tags" do
+      expect(described_class.authors_for([])).to eq([])
+    end
+  end
+
   describe "#call" do
     let(:feed) { builder.call(tags).bind { |body| RSS::Parser.parse body } }
     let(:at) { Time.utc 2024, 7, 5, 1, 1, 1 }
@@ -166,10 +186,11 @@ RSpec.describe Milestoner::Syndication::Builder do
     end
 
     it "answers failure when authors are missing" do
+      tag.author = Milestoner::Models::User.new
       tag.commits.clear
 
       expect(builder.call([tag])).to match(
-        Failure("#{described_class}: Required variables of maker.channel are not set: author.")
+        Failure("#{described_class}: Required variables of maker.channel.author are not set: name.")
       )
     end
 

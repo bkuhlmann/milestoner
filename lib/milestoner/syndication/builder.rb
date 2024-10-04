@@ -14,6 +14,12 @@ module Milestoner
 
       using Refine
 
+      def self.authors_for tags
+        tags.flat_map { |tag| tag.commits.map(&:author) }
+            .then { |users| users.any? ? users : tags.map(&:author) }
+            .uniq
+      end
+
       def initialize(client: RSS::Maker, view: Views::Milestones::Show.new, **)
         super(**)
         @client = client
@@ -56,10 +62,7 @@ module Milestoner
       def build_channel_elements node, tags
         build_links node
         build_generator node
-
-        build_authors node,
-                      tags.flat_map { |tag| tag.commits.map(&:author) }
-                          .uniq
+        build_authors node, self.class.authors_for(tags)
 
         node.categories.build label: settings.project_label, term: settings.project_name
       end
