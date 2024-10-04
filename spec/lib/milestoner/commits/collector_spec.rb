@@ -14,6 +14,16 @@ RSpec.describe Milestoner::Commits::Collector do
   describe "#call" do
     let(:subjects) { collector.call.value_or([]).map(&:subject) }
 
+    it "answers commits from first commit to tag when tag exists" do
+      git_repo_dir.change_dir do
+        `git tag 0.0.0`
+
+        subjects = collector.call(min: nil, max: "0.0.0").value_or([]).map(&:subject)
+
+        expect(subjects).to contain_exactly("Added documentation")
+      end
+    end
+
     it "answers commits since last tag when tag exists" do
       git_repo_dir.change_dir do
         `git tag 0.0.0`

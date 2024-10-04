@@ -20,6 +20,7 @@ module Milestoner
         case [min, max]
           in MIN, MAX then git.tag_last.bind { |tag| git.commits "#{tag}..#{max}" }
           in String, String then git.commits "#{min}..#{max}"
+          in nil, String then git.commits max
           else Failure "Invalid minimum and/or maximum range: #{min}..#{max}."
         end
       end
