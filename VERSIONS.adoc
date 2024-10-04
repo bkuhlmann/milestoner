@@ -1,5 +1,14 @@
 = Versions
 
+== 18.7.0 (2024-10-04)
+
+* ✅ Fixed collector to find all commits when only given a tag - Brooke Kuhlmann
+* ✅ Fixed syndication builder to account for missing commit or tag authors - Brooke Kuhlmann
+* ✅ Fixed tagger to account for repositories with only a single tag - Brooke Kuhlmann
+* ✅ Fixed view object descriptions - Brooke Kuhlmann
+* 🔼 Updated to Refinements 12.9.0 - Brooke Kuhlmann
+* 🔁 Refactored build root transformer to use transform value - Brooke Kuhlmann
+
 == 18.6.0 (2024-09-20)
 
 * ✅ Fixed README typos and links - Brooke Kuhlmann
