@@ -66,14 +66,35 @@ RSpec.describe Milestoner::Commits::Tagger do
         `touch a.txt && git add --all && git commit --message "Added A"`
         `git tag 0.0.1 --message 0.0.1`
 
-        expect(tagger.call).to eq(Failure("No tags or commits."))
+        expect(tagger.call.success.first).to have_attributes(
+          author: Milestoner::Models::User.new,
+          commits: kind_of(Array),
+          committed_at: kind_of(Time),
+          sha: kind_of(String),
+          signature: "",
+          version: Version("0.0.1")
+        )
       end
     end
 
-    it "answers failure when no tags or commits exist" do
+    it "answers empty tag no tags or commits exist" do
       temp_dir.change_dir do
         `git init`
-        expect(tagger.call).to eq(Failure("No tags or commits."))
+
+        expect(tagger.call).to eq(
+          Success(
+            [
+              Milestoner::Models::Tag[
+                author: Milestoner::Models::User.new,
+                commits: [],
+                committed_at: settings.loaded_at,
+                sha: nil,
+                signature: nil,
+                version: Version("1.2.3")
+              ]
+            ]
+          )
+        )
       end
     end
 

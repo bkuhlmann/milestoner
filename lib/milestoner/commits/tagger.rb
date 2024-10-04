@@ -35,8 +35,10 @@ module Milestoner
 
       def collect = git.tagged? ? git.tags("--sort=taggerdate") : placeholder_with_commits
 
+      # :reek:FeatureEnvy
       def tail references
         references.append "HEAD" if settings.build_tail == "head"
+        references.prepend nil if references.one?
         references
       end
 
