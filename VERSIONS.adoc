@@ -1,5 +1,11 @@
 = Versions
 
+== 18.8.0 (2024-10-17)
+
+* 🔼 Updated to Infusible 3.11.0 - Brooke Kuhlmann
+* 🔼 Updated to Sod 0.17.0 - Brooke Kuhlmann
+* 🔼 Updated to Zeitwerk 2.7.0 - Brooke Kuhlmann
+
 == 18.7.0 (2024-10-04)
 
 * ✅ Fixed collector to find all commits when only given a tag - Brooke Kuhlmann
