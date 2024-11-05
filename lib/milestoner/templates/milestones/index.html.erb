@@ -1,0 +1,31 @@
+<section class="milestones">
+  <h1 class="title">
+    <a href="<%= project_uri_home %>" class="label"><%= project_label %></a> Versions
+  </h1>
+
+  <p>All versions adhere to the <a href="https://alchemists.io/articles/strict_semantic_versioning">Strict Semantic Versioning</a> as enforced with <a href="https://alchemists.io/projects/versionaire">Versionaire</a> and automated by <a href="<%= generator_uri %>"><%= generator_label %></a>. Briefly, this means:</p>
+
+  <ul>
+    <li><strong>Major</strong> (X.y.z): Incremented for any backwards incompatible public API changes.</li>
+    <li><strong>Minor</strong> (x.Y.z): Incremented for new, backwards compatible, public API enhancements/fixes.</li>
+    <li><strong>Patch</strong> (x.y.Z): Incremented for small, backwards compatible, bug fixes.</li>
+  </ul>
+
+  <ul class="list">
+    <% tags.each do |tag| %>
+      <li class="item">
+        <a href="<%= tag.version %>"
+           class="version"
+           hx-get="<%= tag.version %>"
+           hx-select=".milestone"
+           hx-target=".milestones"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+          <%= tag.version %>
+        </a>
+
+        <span class="date"><%= tag.committed_date %></span>
+      </li>
+    <% end %>
+  </ul>
+</section>
