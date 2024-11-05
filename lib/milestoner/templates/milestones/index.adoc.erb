@@ -1,0 +1,13 @@
+== link:<%= project_uri_home %>[<%= project_label %>] Versions
+
+All versions adhere to the link:https://alchemists.io/articles/strict_semantic_versioning[Strict Semantic Versioning] as enforced with link:https://alchemists.io/projects/versionaire[Versionaire] and automated by link:<%= generator_uri %>[<%= generator_label %>]. Briefly, this means:
+
+* *Major* (X.y.z): Incremented for any backwards incompatible public API changes.
+* *Minor* (x.Y.z): Incremented for new, backwards compatible, public API enhancements/fixes.
+* *Patch* (x.y.Z): Incremented for small, backwards compatible, bug fixes.
+
+=== History
+
+<% tags.each do |tag| %>
+* link:<%= tag.version %>[<%= tag.version %>] (<%= tag.committed_date %>)
+<% end %>
