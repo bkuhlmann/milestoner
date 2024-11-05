@@ -5,16 +5,17 @@ require "refinements/pathname"
 
 module Milestoner
   module Builders
-    # Builds web output (i.e. HTML and CSS).
+    # Builds web files,
     class Web
       include Milestoner::Dependencies[:settings, :logger]
+      include Site::Dependencies[:indexer, :pager, :styler]
 
+      using Refinements::Array
       using Refinements::Pathname
 
-      def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
-        @tagger = tagger
-        @view = view
+      def initialize(tagger: Commits::Tagger.new, **)
         super(**)
+        @tagger = tagger
       end
 
       def call
@@ -25,46 +26,13 @@ module Milestoner
 
       private
 
-      attr_reader :tagger, :view
+      attr_reader :tagger
 
       def build tags
-        make_root
-        copy_stylesheet
-        tags.each { |tag| write tag }
+        styler.call
+        indexer.call tags
+        tags.ring { |future, present, past| pager.call past, present, future }
         settings.build_output
-      end
-
-      def make_root = settings.build_output.make_path
-
-      def copy_stylesheet
-        return unless settings.build_stylesheet
-
-        stylesheet_template.copy stylesheet_path
-        logger.info { "Built: #{stylesheet_path}." }
-      end
-
-      def stylesheet_template
-        settings.build_template_paths
-                .map { |path| path.join "public/page.css.erb" }
-                .find(&:exist?)
-                .copy settings.build_output.make_path.join stylesheet_path
-      end
-
-      def stylesheet_path
-        settings.build_output.join "#{Pathname(settings.build_stylesheet).name}.css"
-      end
-
-      def write tag
-        path = make_path tag
-        settings.project_version = tag.version
-
-        path.write view.call(past: tag, tag:, future: tag, layout: settings.build_layout)
-        logger.info { "Built: #{path}." }
-      end
-
-      def make_path tag
-        version = settings.build_max == 1 ? "" : tag.version
-        settings.build_output.join(version, settings.build_basename).make_ancestors.sub_ext ".html"
       end
 
       def failure message
