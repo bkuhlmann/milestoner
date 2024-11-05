@@ -1,6 +1,4 @@
 <section>
-  <%= scope(:logo).call %>
-
   <% unless tag.empty? %>
     <p style="display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
       <%= render :user, user: tag.author %> | <%= tag.security %>
