@@ -16,7 +16,7 @@ module Milestoner
         config.scope_builder = Milestoner::Views::ScopeBuilder
         config.template = "milestones/show"
 
-        expose :tag
+        expose :past, :tag, :future
       end
     end
   end
