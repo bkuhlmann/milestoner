@@ -1,9 +1,22 @@
 <article class="milestone">
   <header class="header">
-    <h1 class="title">
-      <%= scope(:logo).call %>
+    <% if tag.index? %>
+      <a href="../"
+         class="root"
+         hx-get="../"
+         hx-select=".milestones"
+         hx-trigger="click, keyup[key=='v'] from:body"
+         hx-target=".milestone"
+         hx-swap="outerHTML"
+         hx-push-url="true">
+        Versions
+      </a>
+    <% end %>
 
-      <a href="<%= project_uri_home %>" class="label"><%= project_label %></a>
+    <h1 class="title">
+      <a href="<%= project_uri_home %>" class="label">
+        <%= project_label %>
+      </a>
 
       <% if tag.commits.any? %>
         <span class="version"><%= tag.version %></span>
@@ -52,5 +65,51 @@
       <span class="deletions"><%= tag.total_deletions %>.</span>
       <span class="insertions"><%= tag.total_insertions %>.</span>
     </p>
+
+    <ul class="actions">
+      <li>
+        <a href="/<%= past.version %>"
+           class="action"
+           data-direction="previous"
+           hx-get="/<%= past.version %>"
+           hx-select=".milestone"
+           hx-trigger="click, keyup[key=='ArrowLeft'] from:body"
+           hx-target=".milestone"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+          Previous
+          (<%= past.version %>)
+        </a>
+      </li>
+
+      <li>
+        <button class="help" popovertarget="po-shortcuts">ℹ️</button>
+
+        <div id="po-shortcuts" class="popover" popover="auto">
+          <h2 class="label">Keyboard Shortcuts</h2>
+
+          <ul>
+            <li class="shortcut"><kbd class="key">v</kbd>: View versions.</li>
+            <li class="shortcut"><kbd class="key">←</kbd>: View previous version.</li>
+            <li class="shortcut"><kbd class="key">→</kbd>: View next version.</li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <a href="/<%= future.version %>"
+           class="action"
+           data-direction="next"
+           hx-get="/<%= future.version %>"
+           hx-select=".milestone"
+           hx-trigger="click, keyup[key=='ArrowRight'] from:body"
+           hx-target=".milestone"
+           hx-swap="outerHTML"
+           hx-push-url="true">
+          Next
+          (<%= future.version %>)
+        </a>
+      </li>
+    </ul>
   </footer>
 </article>
