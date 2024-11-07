@@ -21,7 +21,7 @@ RSpec.describe Milestoner::Views::Scopes::Logo do
       settings.project_uri_logo = "https://test.io/logo.png"
 
       expect(scope.call).to eq(
-        %(<img src="https://test.io/logo.png" alt="Logo" width="30" height="30">\n)
+        %(<img src="https://test.io/logo.png" alt="Logo" width="100" height="100">\n)
       )
     end
 

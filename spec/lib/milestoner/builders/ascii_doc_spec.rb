@@ -27,10 +27,13 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
 
         builder.call
 
-        expect(content).to include(
-          "= pass:[ ]image:https://acme.io/logo.png[Logo,50,50]pass:[ ]" \
-          "link:https://undefined.io/projects/test[Test] 0.0.0 (2024-07-04)"
-        )
+        expect(content).to include(<<~CONTENT)
+          [.text-center]
+          image:https://acme.io/logo.png[Logo,100,100]
+
+
+          = link:https://undefined.io/projects/test[Test] 0.0.0 (2024-07-04)
+        CONTENT
       end
 
       it "doesn't include logo when not present" do
