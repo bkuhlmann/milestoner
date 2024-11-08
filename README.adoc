@@ -56,41 +56,41 @@ The following are screenshots of using this gem to render release notes for the 
 
 === ASCII Doc
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-collapsed.png[Release Notes,width=1160,height=831,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-collapsed.png[Release Notes,width=924,height=1224,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-expanded.png[Release Notes,width=1160,height=1335,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-ascii_doc-expanded.png[Release Notes,width=924,height=1552,role=focal_point]
 
 * *Command*: `milestoner build --format ascii_doc`
 * *Renderer*: {ascii_doc_link}
 
 === Feed
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-collapsed.png[Release Notes,width=1275,height=954,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-collapsed.png[Release Notes,width=1450,height=972,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-expanded.png[Release Notes,width=1275,height=1613,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-feed-expanded.png[Release Notes,width=1350,height=1731,role=focal_point]
 
 * *Command*: `milestoner build --format feed`
 * *Renderer*: {net_news_wire_link}
 
 === Markdown Format
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown.png[Release Notes,width=796,height=703,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-markdown.png[Release Notes,width=967,height=919,role=focal_point]
 
 * *Command*: `milestoner build --format markdown`
 * *Renderer*: {marked_link}
 
 === Stream
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=566,height=320,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-stream.png[Release Notes,width=1001,height=407,role=focal_point]
 
 * *Command*: `milestoner build --format stream`
 * *Renderer*: {iterm_link}
 
 === Web
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1296,height=647,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-collapsed.png[Release Notes,width=1323,height=1048,role=focal_point]
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Release Notes,width=1296,height=1032,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-expanded.png[Release Notes,width=1323,height=1540,role=focal_point]
 
 * *Command*: `milestoner build --format web`
 * *Renderer*: {firefox_link}
@@ -102,9 +102,9 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-exp
 ** Example: `0.0.0`.
 * Defaults to including {git_link} commits since last tag (or initialization of repository) when building release notes. This can be customized further if desired.
 * Ensures {git_link} commit messages are grouped by prefix, in order defined, for categorization. For more details, see link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject Prefix]. Defaults (can be customized):
-** image:https://alchemists.io/images/projects/milestoner/icons/fixed.png[Fixed] Fixed
 ** image:https://alchemists.io/images/projects/milestoner/icons/added.png[Added] Added
 ** image:https://alchemists.io/images/projects/milestoner/icons/updated.png[Updated] Updated
+** image:https://alchemists.io/images/projects/milestoner/icons/fixed.png[Fixed] Fixed
 ** image:https://alchemists.io/images/projects/milestoner/icons/removed.png[Removed] Removed
 ** image:https://alchemists.io/images/projects/milestoner/icons/refactored.png[Refactored] Refactored
 * Ensures {git_link} commit messages are alphabetically sorted for release note categorization and readability.
@@ -169,19 +169,20 @@ avatar:
 build:
   basename: "index"
   format: "stream"
+  index: true
   layout: "page"
   max: 1
-  root: "tmp/milestones"
-  stylesheet: "page"
+  output: "tmp/milestones"
+  stylesheet: true
   tail: "head"
 commit:
   categories:
-    - emoji: "✅"
-      label: "Fixed"
     - emoji: "🟢"
       label: "Added"
     - emoji: "🔼"
       label: "Updated"
+    - emoji: "✅"
+      label: "Fixed"
     - emoji: "⛔️"
       label: "Removed"
     - emoji: "🔁"
@@ -200,6 +201,9 @@ project:
     version: "%<project_uri_home>s/versions/%<id>s"
 review:
   uri: "https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s"
+stylesheet:
+  path: "page.css"
+  uri: "../page"
 syndication:
   categories:
     - label: "Milestones"
@@ -218,6 +222,8 @@ syndication:
       mime: "application/atom+xml"
       relation: "self"
       uri: "%<project_uri_home>s/versions.xml"
+tag:
+  subject: "Version %<project_version>s"
 tracker:
   uri: "https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s"
 ----
@@ -229,10 +235,11 @@ The above can be customized as follows:
 * `build`: Manages build details.
 ** `basename`: Required. The build file basename. Default: `index`. Used to customize the built file name.
 ** `format`: Required. The build output format. Default: `stream`. Used to determine what format to build the release notes as. Multiple formats are supported.
+** `index`: Required. Enables (or disables) building the versions index page for web format only. Default: true.
 ** `layout`: Required. The {hanami_views_link} layout used when building release notes. Default: page. This can be disabled when using `false` or customized further -- via your own {xdg_link} configuration -- when providing your own templates and/or partials.
 ** `max`: Required. The maximum number of {git_link} tags to build. Default: 1. By default, you are limited to building release notes for changes (commits) since the last tag but you can increase the maximum to build release notes for as many tags as you like.
-** `root`: Required. The the root build directory. Default: `tmp/milestones`. This can be a relative or absolute path and defaults your current project. The path is automatically created if missing.
-** `stylesheet`: Required. The stylesheet basename which is only used by the _web_ format. Default: `page`. This can be a relative path (i.e. `../page`) which is especially handy when build `max` is set to a number greater than one so the release notes for each tag you build loads the stylesheet properly. The path is automatically created if missing.
+** `output`: Required. The the directory for all generated output. Default: `tmp/milestones`. This can be a relative or absolute path and defaults to the current working directory. The path is automatically created if missing.
+** `stylesheet`: Required. Enables (or disables) building the stylesheet for web format only. Default: true.
 * `commit`: Manages commit categories, emojis, hyperlinks, and formatting.
 ** `categories`: Required. Defaults to five categories which pairs well with the {git_lint_link} gem. Category order is important with the first taking precedence over the second and so forth. Special characters are allowed for prefixes but should be enclosed in quotes. To disable categories, use an empty array. Example: `categories: []`.
 *** `emoji`: Required. The emoji associated with the label for output purposes. _Used by the {ascii_doc_link}, {markdown_link}, and stream build formats_. Defaults to the provided emojis.
@@ -263,6 +270,9 @@ The above can be customized as follows:
 ** `version`: Required. The project version. Dynamically calculated based on the last {git_link} tag of your project and {git_link} `Milestone` commit trailer metadata. The default is: `0.0.0`. For more on this see, the _Automatic Versioning_ section below. You can configure a value but is _not recommended_ since any custom value you supply will be used for _all_ deployments and release notes. You're better off letting this gem compute this for you.
 * `review`: Manages code review details.
 ** `uri`: Required. The URI format for linking to code reviews as formatted using {string_formats_link}. Default: GitHub. The `id` is currently a _placeholder_ for future feature support when API support is added. For now this links to _all_ code reviews with the goal to link to individual code reviews based on {git_trailers_link}.
+* `stylesheet`: Manages stylesheet configuration for `web` build format.
+** `path`: Required. The relative (or absolute) path to where the stylesheet is built. Default: `page.css`. The path is automatically created if non-existing. A relative path is always relative to the build root as configured above.
+** `uri`: Required. The relative (or absolute) path for linking to the stylesheet within the page layout. Default: "../page".
 * `syndication`: Manages syndicated feed details when used with the `feed` build format.
 ** `categories`: Required. Manages category details.
 *** `label`: Required. The category label. Default: Milestones.
@@ -277,6 +287,8 @@ The above can be customized as follows:
 *** `mime`: Required. The mime type. Defaults to HTML and XML.
 *** `relation`: Required. Identifies the relation of the link which can either be `self` (i.e. XML) or `alternate` (i.e. HTML).
 *** `uri`: Required. The link URI to follow for more information. Defaults to dynamic string formatting based on existing configuration values.
+* `tag`: Required. Manages tag creation.
+** `subject`: Required. The tag subject. Default: `+Version %<project_version>s+`. Example: "Version 1.2.3". You can use a string literal or include any configuration key for a dynamic subject. In the case of `project_version` this is calculated at runtime.
 * `tracker`: Required. Manages issue tracker details.
 ** `uri`: Required. The URI format for linking to issues as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit `Issue` trailer as linted by {git_lint_link}. When no ID can be found, this will default to _All_ issues.
 
@@ -341,11 +353,11 @@ Once team member information is stored in your cache, you'll be able to build re
 
 If you don't use the cache, your release notes use a question mark (?) and _unknown_ for team members as highlighted below:
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/no_cache.png[Usage,width=916,height=397,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/no_cache.png[Usage,width=978,height=618,role=focal_point]
 
 === Build
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/usage-build.png[Usage,width=679,height=437,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/usage-build.png[Usage,width=787,height=675,role=focal_point]
 
 The build command allows you to quickly build release notes to check the current status of your project or deploy a new milestone. By default, the build command uses either the default or custom configuration as documented in the _Configuration_ section above. This means, when using the defaults, you can immediately build the release notes for your project in a temporary directory:
 
@@ -353,8 +365,8 @@ The build command allows you to quickly build release notes to check the current
 ----
 milestoner build --format web
 # 🟢 [milestoner] Building Milestoner (web)...
-# 🟢 [milestoner] Built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestones/page.css.
-# 🟢 [milestoner] Built: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestones/index.html.
+# 🟢 [milestoner] Created: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestones/page.css.
+# 🟢 [milestoner] Created: /Users/bkuhlmann/Engineering/OSS/milestoner/tmp/milestones/index.html.
 ----
 
 The above command is so useful that I use the following `msw` (i.e. Milestoner Web) Bash alias to build current release notes or release notes for several tags:
@@ -378,7 +390,7 @@ msw() {
       open "$path"
     fi
   else
-    milestoner build --max "$max" --stylesheet "../page" --format web
+    milestoner build --max "$max" --format web
 
     if [[ -d "$root" ]]; then
       ruby -run -e httpd "tmp/milestones" --port 3030 &
@@ -544,56 +556,58 @@ The quickest way to start customization is to copy the `templates` folder struct
 ....
 lib/milestoner/templates
 ├── layouts
-│  ├── page.adoc.erb
-│  ├── page.html.erb
-│  ├── page.md.erb
-│  ├── page.stream.erb
-│  └── page.xml.erb
+│   ├── page.adoc.erb
+│   ├── page.git.erb
+│   ├── page.html.erb
+│   ├── page.md.erb
+│   ├── page.stream.erb
+│   └── page.xml.erb
 ├── milestones
-│  ├── _avatar.adoc.erb
-│  ├── _avatar.html.erb
-│  ├── _avatar.md.erb
-│  ├── _avatar.xml.erb
-│  ├── _commit.adoc.erb
-│  ├── _commit.html.erb
-│  ├── _commit.md.erb
-│  ├── _commit.stream.erb
-│  ├── _commit.xml.erb
-│  ├── _content.adoc.erb
-│  ├── _content.html.erb
-│  ├── _content.xml.erb
-│  ├── _logo.adoc.erb
-│  ├── _logo.html.erb
-│  ├── _logo.md.erb
-│  ├── _logo.xml.erb
-│  ├── _none.adoc.erb
-│  ├── _none.html.erb
-│  ├── _none.xml.erb
-│  ├── _profile.adoc.erb
-│  ├── _profile.html.erb
-│  ├── _profile.md.erb
-│  ├── _profile.xml.erb
-│  ├── _tag-insecure.html.erb
-│  ├── _tag-secure.html.erb
-│  ├── _tag.adoc.erb
-│  ├── _tag.html.erb
-│  ├── _tag.md.erb
-│  ├── _tag.stream.erb
-│  ├── _tag.xml.erb
-│  ├── _user.adoc.erb
-│  ├── _user.html.erb
-│  ├── _user.md.erb
-│  ├── _user.xml.erb
-│  ├── _users.adoc.erb
-│  ├── _users.html.erb
-│  ├── _users.xml.erb
-│  ├── show.adoc.erb
-│  ├── show.html.erb
-│  ├── show.md.erb
-│  ├── show.stream.erb
-│  └── show.xml.erb
+│   ├── _avatar.adoc.erb
+│   ├── _avatar.html.erb
+│   ├── _avatar.md.erb
+│   ├── _avatar.xml.erb
+│   ├── _commit.adoc.erb
+│   ├── _commit.git.erb
+│   ├── _commit.html.erb
+│   ├── _commit.md.erb
+│   ├── _commit.stream.erb
+│   ├── _commit.xml.erb
+│   ├── _content.adoc.erb
+│   ├── _content.html.erb
+│   ├── _content.xml.erb
+│   ├── _logo.adoc.erb
+│   ├── _logo.html.erb
+│   ├── _logo.md.erb
+│   ├── _logo.xml.erb
+│   ├── _none.adoc.erb
+│   ├── _none.html.erb
+│   ├── _none.xml.erb
+│   ├── _profile.adoc.erb
+│   ├── _profile.html.erb
+│   ├── _profile.md.erb
+│   ├── _profile.xml.erb
+│   ├── _tag-insecure.html.erb
+│   ├── _tag-secure.html.erb
+│   ├── _user.adoc.erb
+│   ├── _user.html.erb
+│   ├── _user.md.erb
+│   ├── _user.xml.erb
+│   ├── _users.adoc.erb
+│   ├── _users.html.erb
+│   ├── _users.md.erb
+│   ├── _users.xml.erb
+│   ├── index.adoc.erb
+│   ├── index.html.erb
+│   ├── index.md.erb
+│   ├── show.adoc.erb
+│   ├── show.git.erb
+│   ├── show.html.erb
+│   ├── show.md.erb
+│   ├── show.stream.erb
+│   └── show.xml.erb
 └── public
-   └── page.css.erb
+    └── page.css.erb
 ....
 
 This means you could, for example, copy all of Milestoner's default templates to your own {runcom_link} configuration and customize as you see fit. Example (using global configuration):

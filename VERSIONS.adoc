@@ -1,5 +1,78 @@
 = Versions
 
+== 19.0.0 (2024-12-27)
+
+* ✅ Fixed tag enricher build max and tail calculation for first version - Brooke Kuhlmann
+* 🟢 Added ASCII Doc builder container - Brooke Kuhlmann
+* 🟢 Added ASCII Doc builder dependencies - Brooke Kuhlmann
+* 🟢 Added ASCII Doc builder indexer - Brooke Kuhlmann
+* 🟢 Added ASCII Doc pager - Brooke Kuhlmann
+* 🟢 Added CLI build index action - Brooke Kuhlmann
+* 🟢 Added Git templates - Brooke Kuhlmann
+* 🟢 Added HTML template past and future versions - Brooke Kuhlmann
+* 🟢 Added Markdown builder dependencies - Brooke Kuhlmann
+* 🟢 Added Markdown container - Brooke Kuhlmann
+* 🟢 Added Markdown indexer - Brooke Kuhlmann
+* 🟢 Added Markdown pager - Brooke Kuhlmann
+* 🟢 Added builder path resolver - Brooke Kuhlmann
+* 🟢 Added commit/tag part colors, emojis, and created/updated date/times - Brooke Kuhlmann
+* 🟢 Added durationer - Brooke Kuhlmann
+* 🟢 Added index build configuration - Brooke Kuhlmann
+* 🟢 Added index templates - Brooke Kuhlmann
+* 🟢 Added index view - Brooke Kuhlmann
+* 🟢 Added page header, body, and footer - Brooke Kuhlmann
+* 🟢 Added site build container - Brooke Kuhlmann
+* 🟢 Added site build dependencies - Brooke Kuhlmann
+* 🟢 Added site build indexer - Brooke Kuhlmann
+* 🟢 Added site build pager - Brooke Kuhlmann
+* 🟢 Added site build styler - Brooke Kuhlmann
+* 🟢 Added stylesheet configuration - Brooke Kuhlmann
+* 🟢 Added syndication indexer - Brooke Kuhlmann
+* 🟢 Added tag builder - Brooke Kuhlmann
+* 🟢 Added tag duration - Brooke Kuhlmann
+* 🟢 Added tag index - Brooke Kuhlmann
+* 🟢 Added tag subject configuration - Brooke Kuhlmann
+* 🟢 Added total duration to build formats - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🔼 Updated Infusible dependency terminology - Brooke Kuhlmann
+* 🔼 Updated build root as build output - Brooke Kuhlmann
+* 🔼 Updated build stylesheet configuration to only be a boolean - Brooke Kuhlmann
+* 🔼 Updated commit categorizer and enricher to use position - Brooke Kuhlmann
+* 🔼 Updated commit category order in default configuration - Brooke Kuhlmann
+* 🔼 Updated commit enrichment to provide HTML body and notes - Brooke Kuhlmann
+* 🔼 Updated creator to use builder - Brooke Kuhlmann
+* 🔼 Updated logos to use larger width and height - Brooke Kuhlmann
+* 🔼 Updated stylesheet with new structure - Brooke Kuhlmann
+* 🔼 Updated to CFF 1.3.0 - Brooke Kuhlmann
+* 🔼 Updated to Caliber 0.68.0 - Brooke Kuhlmann
+* 🔼 Updated to Cogger 1.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Containable 1.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Core 2.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Etcher 3.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Git Lint 9.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Gitt 4.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Hanami View 2.2.0 - Brooke Kuhlmann
+* 🔼 Updated to IRB Kit 1.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Infusible 4.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Lode 2.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Refinements 13.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Rouge 4.5.0 - Brooke Kuhlmann
+* 🔼 Updated to Ruby 3.4.0 - Brooke Kuhlmann
+* 🔼 Updated to Runcom 12.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Sod 1.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Spek 4.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Tone 2.0.0 - Brooke Kuhlmann
+* 🔼 Updated to Versionaire 14.0.0 - Brooke Kuhlmann
+* ⛔️ Removed avatar and profile URLs from view parts - Brooke Kuhlmann
+* ⛔️ Removed build root configuration transformer - Brooke Kuhlmann
+* ⛔️ Removed tag templates - Brooke Kuhlmann
+* 🔁 Refactored ASCII Doc builder to use ADoc builders - Brooke Kuhlmann
+* 🔁 Refactored Markdown builder to use Markdown builders - Brooke Kuhlmann
+* 🔁 Refactored commit tagger as tag enricher - Brooke Kuhlmann
+* 🔁 Refactored feed builder to use indexer - Brooke Kuhlmann
+* 🔁 Refactored syndication within builders - Brooke Kuhlmann
+* 🔁 Refactored web builder to use site builders - Brooke Kuhlmann
+
 == 18.12.0 (2024-12-15)
 
 * 🟢 Added Tone gem - Brooke Kuhlmann
