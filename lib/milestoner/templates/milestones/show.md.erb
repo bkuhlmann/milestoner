@@ -1,1 +1,14 @@
-<%= tag.render :tag %>
+<% if tag.empty? %>
+# [<%= project_label %>](<%= project_uri_home %>) (<%= tag.committed_date %>)
+
+**<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.**
+<% else %>
+# [<%= project_label %>](<%= project_uri_home %>) <%= tag.version %> (<%= tag.committed_date %>)
+<%= render :user, user: tag.author %> | <%= tag.security %>
+
+<% tag.commits.each do |commit| %><%= commit.render :commit %><% end %>
+
+**<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.**
+
+[Previous (<%= past.version %>)](<%= past.version %>) | [Next (<%= future.version %>)](<%= future.version %>)
+<% end %>

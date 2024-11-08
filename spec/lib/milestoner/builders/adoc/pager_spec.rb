@@ -42,7 +42,7 @@ RSpec.describe Milestoner::Builders::ADoc::Pager do
       builder.call past, present, future
 
       expect(path.read).to include(
-        "= link:https://undefined.io/projects/test[Test] 0.1.0 (2024-07-04)"
+        "== link:https://undefined.io/projects/test[Test] 0.1.0 (2024-07-04)"
       )
     end
 
