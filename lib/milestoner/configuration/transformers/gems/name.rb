@@ -9,7 +9,7 @@ module Milestoner
       module Gems
         # Conditionally updates project name based on specification name.
         class Name
-          include Import[:spec_loader]
+          include Dependencies[:spec_loader]
           include Dry::Monads[:result]
 
           def initialize(key = :project_name, path: "#{Pathname.pwd.basename}.gemspec", **)

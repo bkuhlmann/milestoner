@@ -7,7 +7,7 @@ module Milestoner
     module Parts
       # The user presentation logic.
       class User < Hanami::View::Part
-        include Import[:settings]
+        include Dependencies[:settings]
 
         def name = value.name.then { |text| text || "Unknown" }
 

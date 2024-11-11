@@ -8,7 +8,7 @@ module Milestoner
       module Build
         # Handles build label.
         class Label < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set label."
 

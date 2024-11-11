@@ -6,9 +6,9 @@ module Milestoner
   module Commits
     # Enriches commits and associated trailers for final processing.
     class Enricher
-      include Import[:settings]
+      include Dependencies[:settings]
 
-      include Enrichers::Import[
+      include Enrichers::Dependencies[
         :author,
         :body,
         :collaborators,

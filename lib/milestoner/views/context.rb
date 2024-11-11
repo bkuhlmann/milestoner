@@ -10,7 +10,7 @@ module Milestoner
     class Context < Hanami::View::Context
       extend Forwardable
 
-      include Import[:settings]
+      include Dependencies[:settings]
 
       delegate %i[
         build_stylesheet

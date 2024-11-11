@@ -5,7 +5,7 @@ module Milestoner
     module Enrichers
       # Enriches a commit review based on trailer information.
       class Review
-        include Milestoner::Import[:settings]
+        include Milestoner::Dependencies[:settings]
 
         def initialize(model: Models::Link, **)
           super(**)

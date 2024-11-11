@@ -7,7 +7,7 @@ module Milestoner
   module Tags
     # Handles the creation of project repository tags.
     class Creator
-      include Import[:git, :logger]
+      include Dependencies[:git, :logger]
       include Dry::Monads[:result]
 
       def initialize(

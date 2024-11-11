@@ -8,7 +8,7 @@ module Milestoner
       module Cache
         # Handles finding a user in the cache.
         class Find < Sod::Action
-          include Import[:logger, :io, client: :cache]
+          include Dependencies[:logger, :io, client: :cache]
 
           description "Find user."
 

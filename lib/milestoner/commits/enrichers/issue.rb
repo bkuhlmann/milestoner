@@ -5,7 +5,7 @@ module Milestoner
     module Enrichers
       # Enriches a commit issue based on trailer information.
       class Issue
-        include Milestoner::Import[:settings]
+        include Milestoner::Dependencies[:settings]
 
         def initialize(key: "Issue", model: Models::Link, **)
           super(**)

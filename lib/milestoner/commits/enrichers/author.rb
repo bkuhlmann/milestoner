@@ -5,7 +5,7 @@ module Milestoner
     module Enrichers
       # Enriches a commit author by using cache.
       class Author
-        include Milestoner::Import[:cache]
+        include Milestoner::Dependencies[:cache]
 
         def initialize(model: Models::User, **)
           super(**)

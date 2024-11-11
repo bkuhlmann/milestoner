@@ -6,7 +6,7 @@ module Milestoner
   module Tags
     # Handles the tagging and pushing of a tag to a remote repository.
     class Publisher
-      include Import[:logger]
+      include Dependencies[:logger]
       include Dry::Monads[:result]
 
       def initialize(creator: Tags::Creator.new, pusher: Tags::Pusher.new, **)

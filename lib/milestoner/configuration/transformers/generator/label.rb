@@ -8,7 +8,7 @@ module Milestoner
       module Generator
         # Conditionally updates generator label based on gem specification.
         class Label
-          include Import[:specification]
+          include Dependencies[:specification]
           include Dry::Monads[:result]
 
           def initialize(key = :generator_label, **)

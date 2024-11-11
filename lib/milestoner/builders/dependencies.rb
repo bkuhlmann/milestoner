@@ -4,6 +4,6 @@ require "infusible"
 
 module Milestoner
   module Builders
-    Import = Infusible[Container]
+    Dependencies = Infusible[Container]
   end
 end

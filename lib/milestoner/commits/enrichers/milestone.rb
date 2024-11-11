@@ -5,7 +5,7 @@ module Milestoner
     module Enrichers
       # Enriches a commit milestone based on trailer information.
       class Milestone
-        include Milestoner::Import[:settings]
+        include Milestoner::Dependencies[:settings]
 
         def initialize(key: "Milestone", default: "unknown", **)
           super(**)

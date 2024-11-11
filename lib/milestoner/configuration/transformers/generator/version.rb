@@ -8,7 +8,7 @@ module Milestoner
       module Generator
         # Conditionally updates generator version based on gem specification.
         class Version
-          include Import[:specification]
+          include Dependencies[:specification]
           include Dry::Monads[:result]
 
           def initialize(key = :generator_version, **)

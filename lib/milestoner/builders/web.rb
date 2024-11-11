@@ -7,7 +7,7 @@ module Milestoner
   module Builders
     # Builds web output (i.e. HTML and CSS).
     class Web
-      include Milestoner::Import[:settings, :logger]
+      include Milestoner::Dependencies[:settings, :logger]
 
       using Refinements::Pathname
 

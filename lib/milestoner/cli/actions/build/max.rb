@@ -8,7 +8,7 @@ module Milestoner
       module Build
         # Handles build maximum.
         class Max < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set maximum number of tags to process."
 

@@ -9,8 +9,8 @@ module Milestoner
   module Commits
     # Assembles all commits for a tag.
     class Tagger
-      include Milestoner::Import[:git, :settings, :logger]
-      include Enrichers::Import[author_enricher: :author]
+      include Milestoner::Dependencies[:git, :settings, :logger]
+      include Enrichers::Dependencies[author_enricher: :author]
       include Dry::Monads[:result]
 
       using Refinements::Pathname

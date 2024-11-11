@@ -7,7 +7,7 @@ module Milestoner
     module Enrichers
       # Enriches a commit colleague by using cache.
       class Colleague
-        include Milestoner::Import[:cache]
+        include Milestoner::Dependencies[:cache]
 
         def initialize(key:, parser: Gitt::Parsers::Person.new, **)
           super(**)

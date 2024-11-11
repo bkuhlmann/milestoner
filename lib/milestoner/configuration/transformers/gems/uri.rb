@@ -9,7 +9,7 @@ module Milestoner
       module Gems
         # Conditionally updates project URI based on specification home page URL.
         class URI
-          include Import[:spec_loader]
+          include Dependencies[:spec_loader]
           include Dry::Monads[:result]
 
           def initialize(key = :project_uri, path: "#{Pathname.pwd.basename}.gemspec", **)

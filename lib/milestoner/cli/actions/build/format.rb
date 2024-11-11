@@ -8,7 +8,7 @@ module Milestoner
       module Build
         # Handles build output format.
         class Format < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set output format."
 

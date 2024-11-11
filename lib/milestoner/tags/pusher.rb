@@ -6,7 +6,7 @@ module Milestoner
   module Tags
     # Handles publishing of tags to a remote repository.
     class Pusher
-      include Import[:git, :logger]
+      include Dependencies[:git, :logger]
       include Dry::Monads[:result]
 
       def call version

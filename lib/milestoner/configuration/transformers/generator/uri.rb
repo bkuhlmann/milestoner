@@ -8,7 +8,7 @@ module Milestoner
       module Generator
         # Conditionally updates generator URI based on gem specification.
         class URI
-          include Import[:specification]
+          include Dependencies[:specification]
           include Dry::Monads[:result]
 
           def initialize(key = :generator_uri, **)

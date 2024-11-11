@@ -3,5 +3,5 @@
 require "infusible"
 
 module Milestoner
-  Import = Infusible[Container]
+  Dependencies = Infusible[Container]
 end

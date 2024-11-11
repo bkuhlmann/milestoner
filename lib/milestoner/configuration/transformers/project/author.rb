@@ -8,7 +8,7 @@ module Milestoner
       module Project
         # Conditionally updates author based on Git user.
         class Author
-          include Import[:git]
+          include Dependencies[:git]
           include Dry::Monads[:result]
 
           def initialize(key = :project_author, **)

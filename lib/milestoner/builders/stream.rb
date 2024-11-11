@@ -4,12 +4,12 @@ module Milestoner
   module Builders
     # Builds I/O stream output.
     class Stream
-      include Milestoner::Import[:settings, :logger, :io]
+      include Milestoner::Dependencies[:settings, :logger, :io]
 
       def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
+        super(**)
         @tagger = tagger
         @view = view
-        super(**)
       end
 
       def call
