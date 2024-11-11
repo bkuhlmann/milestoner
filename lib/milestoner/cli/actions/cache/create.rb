@@ -9,7 +9,7 @@ module Milestoner
       module Cache
         # Handles creating or updating a user within the cache.
         class Create < Sod::Action
-          include Import[:logger, client: :cache]
+          include Dependencies[:logger, client: :cache]
 
           description "Create user."
 

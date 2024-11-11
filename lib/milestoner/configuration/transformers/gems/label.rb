@@ -9,7 +9,7 @@ module Milestoner
       module Gems
         # Conditionally updates project label based on specification label.
         class Label
-          include Import[:spec_loader]
+          include Dependencies[:spec_loader]
           include Dry::Monads[:result]
 
           def initialize(key = :project_label, path: "#{Pathname.pwd.basename}.gemspec", **)

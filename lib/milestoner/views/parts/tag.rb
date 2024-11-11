@@ -8,7 +8,7 @@ module Milestoner
     module Parts
       # The tag presentation logic.
       class Tag < Hanami::View::Part
-        include Import[:settings]
+        include Dependencies[:settings]
 
         using Refinements::String
 

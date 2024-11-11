@@ -9,7 +9,7 @@ module Milestoner
       # The commit presentation logic.
       # :reek:RepeatedConditional
       class Commit < Hanami::View::Part
-        include Import[:settings, :sanitizer]
+        include Dependencies[:settings, :sanitizer]
 
         using Refinements::Array
 

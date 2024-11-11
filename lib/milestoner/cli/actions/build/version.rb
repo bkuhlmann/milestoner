@@ -9,7 +9,7 @@ module Milestoner
       module Build
         # Handles build version.
         class Version < Sod::Action
-          include Import[:settings, :logger]
+          include Dependencies[:settings, :logger]
 
           using Versionaire::Cast
 

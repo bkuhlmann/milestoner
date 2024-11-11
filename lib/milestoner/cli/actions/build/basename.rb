@@ -9,7 +9,7 @@ module Milestoner
       module Build
         # Handles output path.
         class Basename < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set basename."
 

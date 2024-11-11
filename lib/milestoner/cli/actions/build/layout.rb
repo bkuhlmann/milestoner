@@ -8,7 +8,7 @@ module Milestoner
       module Build
         # Handles build layout.
         class Layout < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set view template layout."
 

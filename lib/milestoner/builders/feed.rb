@@ -6,14 +6,14 @@ module Milestoner
   module Builders
     # Builds syndicated feed output.
     class Feed
-      include Milestoner::Import[:settings, :logger]
+      include Milestoner::Dependencies[:settings, :logger]
 
       using Refinements::Pathname
 
       def initialize(tagger: Commits::Tagger.new, syndicator: Syndication::Builder.new, **)
+        super(**)
         @tagger = tagger
         @syndicator = syndicator
-        super(**)
       end
 
       def call

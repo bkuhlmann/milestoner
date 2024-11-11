@@ -8,7 +8,7 @@ module Milestoner
       module Build
         # Handles build tail.
         class Tail < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set tail reference."
 

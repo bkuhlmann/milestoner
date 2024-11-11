@@ -6,7 +6,7 @@ module Milestoner
   module Renderers
     # The primary renderer for multiple input formats as HTML.
     class Universal
-      include Import[:settings]
+      include Dependencies[:settings]
 
       using Refinements::Binding
 

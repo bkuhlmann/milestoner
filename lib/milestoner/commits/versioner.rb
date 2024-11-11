@@ -8,7 +8,7 @@ module Milestoner
   module Commits
     # Calculates next version based on commit trailer version keys.
     class Versioner
-      include Import[:git, :logger]
+      include Dependencies[:git, :logger]
       include Dry::Monads[:result]
 
       using Versionaire::Cast

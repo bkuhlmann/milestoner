@@ -9,7 +9,7 @@ module Milestoner
     # Builds feed in Atom format.
     # :reek:DataClump
     class Builder
-      include Import[:settings]
+      include Dependencies[:settings]
       include Dry::Monads[:result]
 
       using Refine

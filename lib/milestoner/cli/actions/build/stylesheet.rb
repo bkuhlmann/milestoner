@@ -8,7 +8,7 @@ module Milestoner
       module Build
         # Handles build stylesheet.
         class Stylesheet < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set stylesheet file name or relative path."
 

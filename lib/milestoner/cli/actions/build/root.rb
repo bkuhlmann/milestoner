@@ -9,7 +9,7 @@ module Milestoner
       module Build
         # Handles build root path.
         class Root < Sod::Action
-          include Import[:settings]
+          include Dependencies[:settings]
 
           description "Set root output path."
 

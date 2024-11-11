@@ -7,7 +7,7 @@ module Milestoner
     module Milestones
       # The show view.
       class Show < Hanami::View
-        include Import[:settings]
+        include Dependencies[:settings]
 
         config.default_context = Context.new
         config.part_namespace = Parts

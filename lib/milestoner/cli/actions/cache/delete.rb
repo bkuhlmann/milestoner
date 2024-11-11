@@ -8,7 +8,7 @@ module Milestoner
       module Cache
         # Handles deleting a user from the cache.
         class Delete < Sod::Action
-          include Import[:logger, client: :cache]
+          include Dependencies[:logger, client: :cache]
 
           description "Delete user."
 

@@ -8,7 +8,7 @@ module Milestoner
       module Cache
         # Handles listing users within the cache.
         class List < Sod::Action
-          include Import[:logger, :io, client: :cache]
+          include Dependencies[:logger, :io, client: :cache]
 
           description "List users."
 

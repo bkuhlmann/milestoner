@@ -5,7 +5,7 @@ module Milestoner
     module Enrichers
       # Enriches a commit format based on trailer information.
       class Format
-        include Milestoner::Import[:settings]
+        include Milestoner::Dependencies[:settings]
 
         def initialize(key: "Format", **)
           super(**)

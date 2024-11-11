@@ -9,7 +9,7 @@ module Milestoner
       module Gems
         # Conditionally updates project description based on specification summary.
         class Description
-          include Import[:spec_loader]
+          include Dependencies[:spec_loader]
           include Dry::Monads[:result]
 
           def initialize(key = :project_description, path: "#{Pathname.pwd.basename}.gemspec", **)

@@ -9,7 +9,7 @@ module Milestoner
     module Actions
       # Handles tag creation and pushing of tag to local repository.
       class Publish < Sod::Action
-        include Import[:settings, :logger]
+        include Dependencies[:settings, :logger]
         include Dry::Monads[:result]
 
         using Versionaire::Cast

@@ -5,7 +5,7 @@ module Milestoner
     module Enrichers
       # Enriches commit text by rendering as HTML based on trailer information.
       class Body
-        include Milestoner::Import[:settings]
+        include Milestoner::Dependencies[:settings]
 
         def initialize(key: "Format", renderer: Renderers::Universal.new, **)
           super(**)

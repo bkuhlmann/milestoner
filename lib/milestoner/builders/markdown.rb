@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds Markdown output.
     class Markdown
-      include Milestoner::Import[:settings, :logger]
+      include Milestoner::Dependencies[:settings, :logger]
 
       using Refinements::Pathname
 

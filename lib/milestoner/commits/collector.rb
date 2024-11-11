@@ -7,7 +7,7 @@ module Milestoner
     # Collects commits since last tag, a specific range, or all commits if untagged.
     class Collector
       include Dry::Monads[:result]
-      include Import[:git]
+      include Dependencies[:git]
 
       MIN = :last
       MAX = :HEAD

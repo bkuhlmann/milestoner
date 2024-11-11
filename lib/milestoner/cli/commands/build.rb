@@ -7,8 +7,8 @@ module Milestoner
     module Commands
       # Handles the building of different milestone formats.
       class Build < Sod::Command
-        include Import[:settings, :logger, :io]
-        include Builders::Import[:ascii_doc, :feed, :markdown, :stream, :web]
+        include Dependencies[:settings, :logger, :io]
+        include Builders::Dependencies[:ascii_doc, :feed, :markdown, :stream, :web]
 
         handle "build"
 

@@ -6,7 +6,7 @@ module Milestoner
   module Builders
     # Builds ASCII Doc output.
     class ASCIIDoc
-      include Milestoner::Import[:settings, :logger]
+      include Milestoner::Dependencies[:settings, :logger]
 
       using Refinements::Pathname
 
