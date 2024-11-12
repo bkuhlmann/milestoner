@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "refinements/array"
 require "refinements/pathname"
 
 module Milestoner

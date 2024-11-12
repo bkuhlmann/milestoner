@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
-require "refinements/pathname"
-
 module Milestoner
   module Builders
     # Builds I/O stream output.
     class Stream
       include Milestoner::Import[:settings, :logger, :io]
-
-      using Refinements::Pathname
 
       def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
         @tagger = tagger

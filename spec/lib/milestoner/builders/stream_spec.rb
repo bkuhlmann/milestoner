@@ -7,7 +7,6 @@ require "versionaire"
 RSpec.describe Milestoner::Builders::Stream do
   include Dry::Monads[:result]
 
-  using Refinements::Pathname
   using Refinements::StringIO
   using Refinements::Struct
   using Versionaire::Cast
