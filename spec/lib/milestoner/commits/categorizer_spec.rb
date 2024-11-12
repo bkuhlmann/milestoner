@@ -42,10 +42,10 @@ RSpec.describe Milestoner::Commits::Categorizer do
 
       let :proof do
         [
-          "Fixed README typos",
           "Added documentation",
           "Updated gem dependencies",
           "Updated version release notes",
+          "Fixed README typos",
           "Removed unused stylesheets",
           "Refactored authorization",
           "This is not a good commit message"

@@ -10,12 +10,12 @@ build:
   tail: "head"
 commit:
   categories:
-    - emoji: "✅"
-      label: "Fixed"
     - emoji: "🟢"
       label: "Added"
     - emoji: "🔼"
       label: "Updated"
+    - emoji: "✅"
+      label: "Fixed"
     - emoji: "⛔️"
       label: "Removed"
     - emoji: "🔁"
