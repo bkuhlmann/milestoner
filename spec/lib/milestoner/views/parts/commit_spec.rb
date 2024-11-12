@@ -137,7 +137,7 @@ RSpec.describe Milestoner::Views::Parts::Commit do
     let :commit do
       Milestoner::Models::Commit[
         subject: "Test",
-        body: %(<a href="https://test.com">Test</a><script>Danger!</script>)
+        body_html: %(<a href="https://test.com">Test</a><script>Danger!</script>)
       ]
     end
 
@@ -150,7 +150,7 @@ RSpec.describe Milestoner::Views::Parts::Commit do
     let :commit do
       Milestoner::Models::Commit[
         subject: "Test",
-        notes: %(<a href="https://test.com">Test</a><script>Danger!</script>)
+        notes_html: %(<a href="https://test.com">Test</a><script>Danger!</script>)
       ]
     end
 

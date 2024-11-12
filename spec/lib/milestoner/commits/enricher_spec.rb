@@ -16,6 +16,7 @@ RSpec.describe Milestoner::Commits::Enricher do
   let(:categorizer) { instance_double Milestoner::Commits::Categorizer, call: [git_commit] }
 
   let :git_commit do
+    commit.with
     Gitt::Models::Commit[
       author_email: "zoe@firefly.com",
       author_name: "Zoe Washburne",
@@ -58,8 +59,8 @@ RSpec.describe Milestoner::Commits::Enricher do
               author: Milestoner::Models::User.new,
               authored_at: "1672593010",
               authored_relative_at: "1 day ago",
-              body:,
-              body_lines: [],
+              body: "For link:https://test.io[Test].",
+              body_html: body,
               collaborators: [],
               committed_at: "1672611315",
               committed_relative_at: "5 minutes ago",
@@ -73,7 +74,7 @@ RSpec.describe Milestoner::Commits::Enricher do
                 uri: "https://github.com/tester/test/issues/123"
               ],
               milestone: "patch",
-              notes: "",
+              notes_html: "",
               review: Milestoner::Models::Link[
                 id: "All",
                 uri: "https://github.com/tester/test/pulls/"

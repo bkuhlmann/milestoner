@@ -84,7 +84,7 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
           ====
           *Message*
 
-          None.
+          For link:https://asciidoctor.org[ASCII Doc].
         CONTENT
       end
 

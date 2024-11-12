@@ -10,13 +10,13 @@ module Milestoner
         extend Containable
 
         register(:author) { Author.new }
-        register(:body) { Body.new }
+        register(:body_html) { Body.new }
         register(:collaborators) { Colleague.new key: "Co-authored-by" }
         register(:created_at) { Time.new key: :authored_at }
         register(:format) { Format.new }
         register(:issue) { Issue.new }
         register(:milestone) { Milestone.new }
-        register(:notes) { Note.new }
+        register(:notes_html) { Note.new }
         register(:review) { Review.new }
         register(:signers) { Colleague.new key: "Signed-off-by" }
         register(:updated_at) { Time.new key: :committed_at }

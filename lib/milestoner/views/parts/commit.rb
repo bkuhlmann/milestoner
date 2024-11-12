@@ -43,9 +43,9 @@ module Milestoner
           end
         end
 
-        def safe_body = sanitizer.call(value.body).html_safe
+        def safe_body = sanitizer.call(value.body_html).html_safe
 
-        def safe_notes = sanitizer.call(value.notes).html_safe
+        def safe_notes = sanitizer.call(value.notes_html).html_safe
 
         def total_deletions = format "%d", -value.deletions
 

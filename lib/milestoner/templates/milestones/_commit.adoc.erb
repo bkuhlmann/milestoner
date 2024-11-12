@@ -3,11 +3,11 @@
 ====
 *Message*
 
-<%= scope(:content, content: Array(commit.body_lines).join("\n")).call %>
+<%= scope(:content, content: commit.body).call %>
 
 *Notes*
 
-<%= scope(:content, content: commit.safe_notes).call %>
+<%= scope(:content, content: commit.notes).call %>
 
 *Author*
 
