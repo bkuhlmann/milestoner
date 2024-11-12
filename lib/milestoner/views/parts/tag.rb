@@ -15,13 +15,6 @@ module Milestoner
         decorate :commits
         decorate :author, as: :user
 
-        def avatar_url user
-          warn "`#{self.class}##{__method__}` is deprecated, use user scope instead.",
-               category: :deprecated
-
-          format settings.avatar_uri, id: user.external_id
-        end
-
         def commit_count = value.commits.size
 
         def committed_at fallback: Time.now
@@ -35,13 +28,6 @@ module Milestoner
         def deletion_count = value.commits.sum(&:deletions)
 
         def empty? = value.commits.empty?
-
-        def profile_url user
-          warn "`#{self.class}##{__method__}` is deprecated, use user scope instead.",
-               category: :deprecated
-
-          format settings.profile_uri, id: user.handle
-        end
 
         def file_count = value.commits.sum(&:files_changed)
 
