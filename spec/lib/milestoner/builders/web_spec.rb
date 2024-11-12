@@ -94,7 +94,7 @@ RSpec.describe Milestoner::Builders::Web do
           <div class="message">
             <h1 class="bar">Message</h1>
             <div class="content">
-              For link:https://asciidoctor.org[ASCII Doc].
+              For <a href="https://asciidoctor.org" rel="nofollow">ASCII Doc</a>.
 
             </div>
           </div>
@@ -110,7 +110,7 @@ RSpec.describe Milestoner::Builders::Web do
           <div class="notes">
             <h2 class="bar">Notes</h2>
             <div class="content">
-              For link:https://asciidoctor.org[ASCII Doc].
+              For <a href="https://asciidoctor.org" rel="nofollow">ASCII Doc</a>.
 
             </div>
           </div>

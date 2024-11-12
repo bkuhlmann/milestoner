@@ -8,7 +8,6 @@ module Milestoner
       authored_at
       authored_relative_at
       body
-      body_lines
       committed_at
       committed_relative_at
       deletions
@@ -25,11 +24,13 @@ module Milestoner
 
     COMMIT_ENRICHED_ATTRIBUTES = %i[
       author
+      body_html
       collaborators
       created_at
       format
       issue
       milestone
+      notes_html
       position
       review
       signers

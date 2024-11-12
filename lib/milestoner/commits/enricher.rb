@@ -10,13 +10,13 @@ module Milestoner
 
       include Enrichers::Dependencies[
         :author,
-        :body,
+        :body_html,
         :collaborators,
         :created_at,
         :format,
         :issue,
         :milestone,
-        :notes,
+        :notes_html,
         :review,
         :signers,
         :updated_at,
