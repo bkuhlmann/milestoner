@@ -7,17 +7,13 @@ module Milestoner
   module Tags
     # Handles the creation of project repository tags.
     class Creator
-      include Dependencies[:git, :logger]
+      include Dependencies[:settings, :git, :logger]
       include Dry::Monads[:result]
 
-      def initialize(
-        collector: Commits::Collector.new,
-        builder: Builders::Stream.new(io: StringIO.new),
-        **
-      )
+      def initialize(collector: Commits::Collector.new, builder: Builder.new, **)
+        super(**)
         @collector = collector
         @builder = builder
-        super(**)
       end
 
       def call version
@@ -41,9 +37,11 @@ module Milestoner
 
       def collect = collector.call.alt_map { |message| message.sub("fatal: y", "Y").sub("\n", ".") }
 
-      def create(version) = build(version).bind { |body| git.tag_create version, body }
+      def create version
+        builder.call(version).bind { |body| git.tag_create version, "#{subject}\n\n#{body}\n\n" }
+      end
 
-      def build(version) = builder.call.fmap { |body| "Version #{version}\n\n#{body}\n\n" }
+      def subject = format(settings.tag_subject, **settings.to_h)
     end
   end
 end
