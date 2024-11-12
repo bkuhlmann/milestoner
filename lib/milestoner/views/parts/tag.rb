@@ -22,6 +22,8 @@ module Milestoner
           format settings.avatar_uri, id: user.external_id
         end
 
+        def commit_count = value.commits.size
+
         def committed_at fallback: Time.now
           value.committed_at.then { |at| at ? Time.at(at) : fallback }
         end
@@ -29,6 +31,8 @@ module Milestoner
         def committed_date = committed_at.strftime "%Y-%m-%d"
 
         def committed_datetime = committed_at.strftime "%Y-%m-%dT%H:%M:%S%z"
+
+        def deletion_count = value.commits.sum(&:deletions)
 
         def empty? = value.commits.empty?
 
@@ -39,23 +43,25 @@ module Milestoner
           format settings.profile_uri, id: user.handle
         end
 
+        def file_count = value.commits.sum(&:files_changed)
+
+        def insertion_count = value.commits.sum(&:insertions)
+
         def security = value.signature ? "🔒 Tag (secure)" : "🔓 Tag (insecure)"
 
-        def total_commits
-          value.commits.size.then { |total| "#{total} commit".pluralize "s", total }
-        end
+        def total_commits = commit_count.then { |total| "#{total} commit".pluralize "s", total }
 
-        def total_files
-          value.commits.sum(&:files_changed).then { |total| "#{total} file".pluralize "s", total }
-        end
+        def total_files = file_count.then { |total| "#{total} file".pluralize "s", total }
 
         def total_deletions
-          value.commits.sum(&:deletions).then { |total| "#{total} deletion".pluralize "s", total }
+          deletion_count.then { |total| "#{total} deletion".pluralize "s", total }
         end
 
         def total_insertions
-          value.commits.sum(&:insertions).then { |total| "#{total} insertion".pluralize "s", total }
+          insertion_count.then { |total| "#{total} insertion".pluralize "s", total }
         end
+
+        def uri = format settings.project_uri_version, id: value.version
       end
     end
   end

@@ -30,6 +30,12 @@ RSpec.describe Milestoner::Views::Parts::Tag do
     end
   end
 
+  describe "#commit_count" do
+    it "answers count" do
+      expect(part.commit_count).to eq(1)
+    end
+  end
+
   describe "#committed_at" do
     let(:at) { Time.new 2024, 7, 4, 2, 2, 2 }
 
@@ -55,6 +61,12 @@ RSpec.describe Milestoner::Views::Parts::Tag do
     end
   end
 
+  describe "#deletion_count" do
+    it "answers count" do
+      expect(part.deletion_count).to eq(10)
+    end
+  end
+
   describe "#empty?" do
     it "answers true when empty" do
       tag.commits.clear
@@ -74,6 +86,18 @@ RSpec.describe Milestoner::Views::Parts::Tag do
 
     it "answers URL for user" do
       expect(part.profile_url(user)).to eq("https://github.com/test")
+    end
+  end
+
+  describe "#file_count" do
+    it "answers count" do
+      expect(part.file_count).to eq(2)
+    end
+  end
+
+  describe "#insertion_count" do
+    it "answers count" do
+      expect(part.insertion_count).to eq(5)
     end
   end
 
@@ -129,6 +153,12 @@ RSpec.describe Milestoner::Views::Parts::Tag do
 
     it "answers plural" do
       expect(part.total_insertions).to eq("5 insertions")
+    end
+  end
+
+  describe "#uri" do
+    it "answers URI" do
+      expect(part.uri).to eq("https://undefined.io/projects/test/versions/0.0.0")
     end
   end
 end
