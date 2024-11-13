@@ -1,19 +1,22 @@
 # frozen_string_literal: true
 
+require "refinements/array"
 require "refinements/pathname"
 
 module Milestoner
   module Builders
-    # Builds Markdown output.
+    # Builds Markdown files.
     class Markdown
       include Milestoner::Dependencies[:settings, :logger]
+      include MD::Dependencies[:indexer, :pager]
 
+      using Refinements::Array
       using Refinements::Pathname
 
       def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
+        super(**)
         @tagger = tagger
         @view = view
-        super(**)
       end
 
       def call
@@ -27,20 +30,9 @@ module Milestoner
       attr_reader :tagger, :view
 
       def build tags
-        tags.each { |tag| write tag }
+        indexer.call tags
+        tags.ring { |future, present, past| pager.call past, present, future }
         settings.build_output
-      end
-
-      def write tag
-        path = make_path tag
-
-        path.write view.call(tag:, layout: settings.build_layout, format: :md)
-        logger.info { "Built: #{path}." }
-      end
-
-      def make_path tag
-        version = settings.build_max == 1 ? "" : tag.version
-        settings.build_output.join(version, settings.build_basename).make_ancestors.sub_ext ".md"
       end
 
       def failure message
