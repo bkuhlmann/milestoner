@@ -56,5 +56,7 @@ syndication:
       mime: "application/atom+xml"
       relation: "self"
       uri: "%<project_uri_home>s/versions.xml"
+tag:
+  subject: "Version %<project_version>s"
 tracker:
   uri: "https://github.com/%<project_owner>s/%<project_name>s/issues/%<id>s"
