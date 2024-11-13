@@ -6,6 +6,7 @@ Zeitwerk::Loader.new.then do |loader|
   loader.inflector.inflect "adoc" => "ADoc",
                            "ascii_doc" => "ASCIIDoc",
                            "cli" => "CLI",
+                           "md" => "MD",
                            "uri" => "URI"
   loader.tag = File.basename __FILE__, ".rb"
   loader.push_dir __dir__
