@@ -64,6 +64,7 @@ module Milestoner
         required(:uri).filled :string
       end
 
+      required(:tag_subject).filled :string
       required(:tracker_uri).filled :string
     end
   end
