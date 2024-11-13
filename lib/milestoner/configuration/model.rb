@@ -42,6 +42,7 @@ module Milestoner
                        :syndication_id,
                        :syndication_label,
                        :syndication_links,
+                       :tag_subject,
                        :tracker_uri
   end
 end
