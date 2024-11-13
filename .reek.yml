@@ -14,6 +14,7 @@ detectors:
   TooManyMethods:
     exclude:
       - Milestoner::Views::Parts::Commit
+      - Milestoner::Views::Parts::Tag
   TooManyStatements:
     exclude:
       - Milestoner::CLI::Shell#cli
