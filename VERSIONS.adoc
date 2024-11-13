@@ -1,5 +1,13 @@
 = Versions
 
+== 18.11.0 (2024-11-13)
+
+* ✅ Fixed builder requirements - Brooke Kuhlmann
+* ✅ Fixed date/time rendering to be local time - Brooke Kuhlmann
+* 🟢 Added tag part count and URI methods - Brooke Kuhlmann
+* 🔼 Updated to Alpine 3.14.3 - Brooke Kuhlmann
+* 🔼 Updated to Sod 0.20.0 - Brooke Kuhlmann
+
 == 18.10.0 (2024-11-09)
 
 * 🔼 Updated to Caliber 0.64.0 - Brooke Kuhlmann
