@@ -253,13 +253,13 @@ RSpec.describe Milestoner::Views::Parts::Commit do
 
   describe "#at" do
     it "answers machine readable date and time" do
-      expect(part.at).to eq("2023-01-01T17:10:10+0000")
+      expect(part.at).to eq("2023-01-01T10:10:10-0700")
     end
   end
 
   describe "#datetime" do
     it "answers human friendly date and time" do
-      expect(part.datetime).to eq("2023-01-01 (Sunday) at 17:10 PM UTC")
+      expect(part.datetime).to eq("2023-01-01 (Sunday) 10:10 AM MST")
     end
   end
 
@@ -277,13 +277,13 @@ RSpec.describe Milestoner::Views::Parts::Commit do
 
   describe "#time" do
     it "answers time" do
-      expect(part.time).to eq("17:10 PM")
+      expect(part.time).to eq("10:10 AM")
     end
   end
 
   describe "#zone" do
     it "answers timezone" do
-      expect(part.zone).to eq("UTC")
+      expect(part.zone).to eq("MST")
     end
   end
 end

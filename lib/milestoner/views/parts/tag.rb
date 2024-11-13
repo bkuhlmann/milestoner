@@ -22,7 +22,7 @@ module Milestoner
           format settings.avatar_uri, id: user.external_id
         end
 
-        def committed_at fallback: Time.now.utc
+        def committed_at fallback: Time.now
           value.committed_at.then { |at| at ? Time.at(at) : fallback }
         end
 

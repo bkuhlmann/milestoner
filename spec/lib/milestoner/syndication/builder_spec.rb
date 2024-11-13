@@ -34,7 +34,7 @@ RSpec.describe Milestoner::Syndication::Builder do
 
   describe "#call" do
     let(:feed) { builder.call(tags).bind { |body| RSS::Parser.parse body } }
-    let(:at) { Time.utc 2024, 7, 5, 1, 1, 1 }
+    let(:at) { Time.new 2024, 7, 5, 1, 1, 1 }
 
     it "answers feed author name" do
       expect(feed.author.name.content).to eq("Zoe Washburne")

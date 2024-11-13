@@ -20,7 +20,7 @@ module Milestoner
         def initialize(**)
           super
           @prefixes = settings.commit_categories.pluck :label
-          @authored_at = Time.at(value.authored_at.to_i).utc
+          @authored_at = Time.at value.authored_at.to_i
         end
 
         def avatar_url user
@@ -89,13 +89,13 @@ module Milestoner
 
         def at = authored_at.strftime "%Y-%m-%dT%H:%M:%S%z"
 
-        def datetime = authored_at.strftime "%Y-%m-%d (%A) at %H:%M %p %Z"
+        def datetime = authored_at.strftime "%Y-%m-%d (%A) %I:%M %p %Z"
 
         def weekday = authored_at.strftime "%A"
 
         def date = authored_at.strftime "%Y-%m-%d"
 
-        def time = authored_at.strftime "%H:%M %p"
+        def time = authored_at.strftime "%I:%M %p"
 
         def zone = authored_at.strftime "%Z"
 

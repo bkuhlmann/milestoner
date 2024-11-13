@@ -145,7 +145,7 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
 
       it "renders commit date/time" do
         builder.call
-        expect(content).to include("_2023-01-01 (Sunday) at 17:10 PM UTC_")
+        expect(content).to include("_2023-01-01 (Sunday) 10:10 AM MST_")
       end
 
       it "renders commits stats" do

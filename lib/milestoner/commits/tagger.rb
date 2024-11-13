@@ -91,7 +91,7 @@ module Milestoner
         author_enricher.call tag.with(author_name: tag.author_name || settings.project_author)
       end
 
-      def committed_at(at) = at ? Time.at(at.to_i).utc : settings.loaded_at
+      def committed_at(at) = at ? Time.at(at.to_i) : settings.loaded_at
     end
   end
 end

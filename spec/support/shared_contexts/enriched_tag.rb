@@ -8,7 +8,7 @@ RSpec.shared_context "with enriched tag" do
       Milestoner::Models::Tag[
         author: Milestoner::Models::User[external_id: "1", handle: "mal", name: "Malcolm Reynolds"],
         commits: [commit],
-        committed_at: Time.utc(2024, 7, 5, 1, 1, 1),
+        committed_at: Time.new(2024, 7, 5, 1, 1, 1),
         sha: "6c352cce068b11b8f8b4b2078199df6a353c0d1d",
         signature: tag_signature,
         version: "0.1.0"
@@ -21,7 +21,7 @@ RSpec.shared_context "with enriched tag" do
     Milestoner::Models::Tag[
       author: Milestoner::Models::User[external_id: "1", handle: "mal", name: "Malcolm Reynolds"],
       commits: [commit],
-      committed_at: Time.utc(2024, 7, 4, 2, 2, 2),
+      committed_at: Time.new(2024, 7, 4, 2, 2, 2),
       sha: "e189297458b52e1be51bfe5237e2d602dad274fa",
       signature: tag_signature,
       version: "0.0.0"

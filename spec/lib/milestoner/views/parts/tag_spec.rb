@@ -31,7 +31,7 @@ RSpec.describe Milestoner::Views::Parts::Tag do
   end
 
   describe "#committed_at" do
-    let(:at) { Time.utc 2024, 7, 4, 2, 2, 2 }
+    let(:at) { Time.new 2024, 7, 4, 2, 2, 2 }
 
     it "answers actual" do
       expect(part.committed_at).to eq(at)
@@ -51,7 +51,7 @@ RSpec.describe Milestoner::Views::Parts::Tag do
 
   describe "#committed_datetime" do
     it "answers RFC 3339 format for year, month, day, hour, minute, second, and time zone" do
-      expect(part.committed_datetime).to eq("2024-07-04T02:02:02+0000")
+      expect(part.committed_datetime).to eq("2024-07-04T02:02:02-0600")
     end
   end
 
