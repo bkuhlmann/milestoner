@@ -28,7 +28,9 @@ jobs:
 
       - run:
           name: Rake
-          command: bundle exec rake
+          command: |
+            export TZ="America/Denver"
+            bundle exec rake
 
       - store_artifacts:
           name: SimpleCov Report
