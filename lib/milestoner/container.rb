@@ -7,6 +7,7 @@ require "gitt"
 require "lode"
 require "runcom"
 require "spek"
+require "tone"
 
 module Milestoner
   # Provides a global gem container for injection into other objects.
@@ -68,6 +69,7 @@ module Milestoner
     register(:spec_loader) { Spek::Loader.new }
     register(:git) { Gitt::Repository.new }
     register(:defaults_path) { Pathname(__dir__).join("configuration/defaults.yml") }
+    register(:color) { Tone.new }
     register(:logger) { Cogger.new id: :milestoner }
     register :io, STDOUT
   end
