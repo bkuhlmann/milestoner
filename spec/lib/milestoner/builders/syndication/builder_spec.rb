@@ -2,10 +2,8 @@
 
 require "spec_helper"
 
-RSpec.describe Milestoner::Syndication::Builder do
+RSpec.describe Milestoner::Builders::Syndication::Builder do
   include Dry::Monads[:result]
-
-  using Refinements::Struct
 
   subject(:builder) { described_class.new }
 
