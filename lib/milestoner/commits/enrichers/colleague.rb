@@ -10,9 +10,9 @@ module Milestoner
         include Milestoner::Import[:cache]
 
         def initialize(key:, parser: Gitt::Parsers::Person.new, **)
+          super(**)
           @key = key
           @parser = parser
-          super(**)
         end
 
         def call(commit) = commit.find_trailers(key).bind { |trailers| users_for(trailers).compact }

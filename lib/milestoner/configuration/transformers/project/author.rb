@@ -12,8 +12,8 @@ module Milestoner
           include Dry::Monads[:result]
 
           def initialize(key = :project_author, **)
-            @key = key
             super(**)
+            @key = key
           end
 
           def call attributes

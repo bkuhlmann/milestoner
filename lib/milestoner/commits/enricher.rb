@@ -24,9 +24,9 @@ module Milestoner
       include Dry::Monads[:result]
 
       def initialize(categorizer: Commits::Categorizer.new, model: Models::Commit, **)
+        super(**)
         @categorizer = categorizer
         @model = model
-        super(**)
       end
 
       def call min: Collector::MIN, max: Collector::MAX

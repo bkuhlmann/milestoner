@@ -8,9 +8,9 @@ module Milestoner
         include Milestoner::Import[:settings]
 
         def initialize(key: "Milestone", default: "unknown", **)
+          super(**)
           @key = key
           @default = default
-          super(**)
         end
 
         def call(commit) = commit.trailer_value_for(key).value_or(default)

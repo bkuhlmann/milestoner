@@ -12,9 +12,9 @@ module Milestoner
       using Refinements::Array
 
       def initialize(collector: Collector.new, **)
-        @collector = collector
         super(**)
 
+        @collector = collector
         @labels = settings.commit_categories.pluck :label
         @pattern = labels.empty? ? // : Regexp.union(labels)
       end

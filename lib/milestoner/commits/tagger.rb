@@ -18,9 +18,9 @@ module Milestoner
       using Refinements::Struct
 
       def initialize(enricher: Commits::Enricher.new, model: Models::Tag, **)
+        super(**)
         @enricher = enricher
         @model = model
-        super(**)
       end
 
       def call

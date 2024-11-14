@@ -8,8 +8,8 @@ module Milestoner
         include Milestoner::Import[:settings]
 
         def initialize(key: "Format", **)
-          @key = key
           super(**)
+          @key = key
         end
 
         def call(commit) = commit.trailer_value_for(key).value_or(settings.commit_format)

@@ -8,9 +8,9 @@ module Milestoner
         include Milestoner::Import[:settings]
 
         def initialize(key: "Format", renderer: Renderers::Universal.new, **)
+          super(**)
           @key = key
           @renderer = renderer
-          super(**)
         end
 
         def call commit

@@ -8,8 +8,8 @@ module Milestoner
         include Milestoner::Import[:settings]
 
         def initialize(model: Models::Link, **)
-          @model = model
           super(**)
+          @model = model
         end
 
         def call(*) = model[id: "All", uri: format(settings.review_uri, id: nil)]

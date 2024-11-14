@@ -12,8 +12,8 @@ module Milestoner
           include Dry::Monads[:result]
 
           def initialize(key = :generator_version, **)
-            @key = key
             super(**)
+            @key = key
           end
 
           def call attributes
