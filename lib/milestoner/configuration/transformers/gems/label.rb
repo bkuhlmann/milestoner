@@ -13,9 +13,9 @@ module Milestoner
           include Dry::Monads[:result]
 
           def initialize(key = :project_label, path: "#{Pathname.pwd.basename}.gemspec", **)
+            super(**)
             @key = key
             @path = path
-            super(**)
           end
 
           def call attributes

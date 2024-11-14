@@ -16,9 +16,9 @@ module Milestoner
       DEFAULTS = {trailer_key: "Milestone", fallback: Versionaire::Version.new}.freeze
 
       def initialize(defaults: DEFAULTS, collector: Collector.new, **)
+        super(**)
         @defaults = defaults
         @collector = collector
-        super(**)
       end
 
       def call

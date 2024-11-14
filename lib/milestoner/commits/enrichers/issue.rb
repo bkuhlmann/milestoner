@@ -8,9 +8,9 @@ module Milestoner
         include Milestoner::Import[:settings]
 
         def initialize(key: "Issue", model: Models::Link, **)
+          super(**)
           @key = key
           @model = model
-          super(**)
         end
 
         def call commit

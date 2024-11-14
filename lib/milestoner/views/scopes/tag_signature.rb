@@ -8,8 +8,8 @@ module Milestoner
       # The tag signature specific behavior for partials.
       class TagSignature < Hanami::View::Scope
         def initialize(part: Parts::Tag.new(value: Models::Tag.new), **)
-          @part = part
           super(**)
+          @part = part
         end
 
         def tag = locals.fetch :tag, part

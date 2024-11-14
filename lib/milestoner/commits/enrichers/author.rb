@@ -8,8 +8,8 @@ module Milestoner
         include Milestoner::Import[:cache]
 
         def initialize(model: Models::User, **)
-          @model = model
           super(**)
+          @model = model
         end
 
         def call commit
