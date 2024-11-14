@@ -6,7 +6,7 @@ module Milestoner
     class Stream
       include Milestoner::Dependencies[:settings, :logger, :io]
 
-      def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
+      def initialize(tagger: Tags::Enricher.new, view: Views::Milestones::Show.new, **)
         super(**)
         @tagger = tagger
         @view = view

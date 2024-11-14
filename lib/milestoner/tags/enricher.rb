@@ -6,20 +6,20 @@ require "refinements/struct"
 require "versionaire"
 
 module Milestoner
-  module Commits
-    # Assembles all commits for a tag.
-    class Tagger
+  module Tags
+    # Builds a collection of enriched tags and associated commits.
+    class Enricher
       include Milestoner::Dependencies[:git, :settings, :logger]
-      include Enrichers::Dependencies[author_enricher: :author]
+      include Commits::Enrichers::Dependencies[author_enricher: :author]
       include Dry::Monads[:result]
 
       using Refinements::Pathname
       using Versionaire::Cast
       using Refinements::Struct
 
-      def initialize(enricher: Commits::Enricher.new, model: Models::Tag, **)
+      def initialize(committer: Commits::Enricher.new, model: Models::Tag, **)
         super(**)
-        @enricher = enricher
+        @committer = committer
         @model = model
       end
 
@@ -31,7 +31,7 @@ module Milestoner
 
       private
 
-      attr_reader :enricher, :model
+      attr_reader :committer, :model
 
       def collect = git.tagged? ? git.tags("--sort=taggerdate") : placeholder_with_commits
 
@@ -51,7 +51,7 @@ module Milestoner
       def add_enrichment(all, *) = enrich(*).bind { |entry| all.append entry }
 
       def enrich min, max
-        enricher.call(min:, max:).bind { |commits| build_record git.tag_show(max), commits }
+        committer.call(min:, max:).bind { |commits| build_record git.tag_show(max), commits }
       end
 
       def build_record result, commits
@@ -72,7 +72,7 @@ module Milestoner
         ]
       end
 
-      def placeholder_with_commits = enricher.call.fmap { |commits| placeholder_for commits }
+      def placeholder_with_commits = committer.call.fmap { |commits| placeholder_for commits }
 
       def placeholder_for commits
         return commits if commits.empty?

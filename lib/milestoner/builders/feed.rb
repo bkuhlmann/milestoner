@@ -10,7 +10,7 @@ module Milestoner
 
       using Refinements::Pathname
 
-      def initialize(tagger: Commits::Tagger.new, indexer: Syndication::Indexer.new, **)
+      def initialize(tagger: Tags::Enricher.new, indexer: Syndication::Indexer.new, **)
         super(**)
         @tagger = tagger
         @indexer = indexer
