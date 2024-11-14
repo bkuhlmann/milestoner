@@ -3,7 +3,7 @@
 require "dry/monads"
 require "spec_helper"
 
-RSpec.describe Milestoner::Commits::Tagger do
+RSpec.describe Milestoner::Tags::Enricher do
   include Dry::Monads[:result]
 
   using Refinements::Pathname

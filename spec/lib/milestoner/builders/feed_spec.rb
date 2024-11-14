@@ -14,7 +14,7 @@ RSpec.describe Milestoner::Builders::Feed do
   include_context "with enriched tag"
 
   describe "#call" do
-    let(:tagger) { instance_double Milestoner::Commits::Tagger, call: Success([tag]) }
+    let(:tagger) { instance_double Milestoner::Tags::Enricher, call: Success([tag]) }
     let(:path) { temp_dir.join "index.xml" }
 
     it "builds index and single version" do
@@ -27,7 +27,7 @@ RSpec.describe Milestoner::Builders::Feed do
     end
 
     context "with failure" do
-      let(:tagger) { instance_double Milestoner::Commits::Tagger }
+      let(:tagger) { instance_double Milestoner::Tags::Enricher }
 
       before { allow(tagger).to receive(:call).and_return(Failure("Danger!")) }
 

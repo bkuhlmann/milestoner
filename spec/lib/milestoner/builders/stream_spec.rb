@@ -18,7 +18,7 @@ RSpec.describe Milestoner::Builders::Stream do
   include_context "with enriched tag"
 
   let(:color) { Tone.new }
-  let(:tagger) { instance_double Milestoner::Commits::Tagger, call: Success(tags) }
+  let(:tagger) { instance_double Milestoner::Tags::Enricher, call: Success(tags) }
 
   describe "#call" do
     context "with single tag" do

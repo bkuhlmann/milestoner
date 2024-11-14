@@ -15,7 +15,7 @@ RSpec.describe Milestoner::Builders::Web do
 
   describe "#call" do
     context "with single tag" do
-      let(:tagger) { instance_double Milestoner::Commits::Tagger, call: Success([tag]) }
+      let(:tagger) { instance_double Milestoner::Tags::Enricher, call: Success([tag]) }
 
       it "builds stylesheet, index, and single version" do
         builder.call
@@ -33,7 +33,7 @@ RSpec.describe Milestoner::Builders::Web do
     end
 
     context "with multiple tags" do
-      let(:tagger) { instance_double Milestoner::Commits::Tagger, call: Success(tags) }
+      let(:tagger) { instance_double Milestoner::Tags::Enricher, call: Success(tags) }
 
       it "builds stylesheet, index, and multiple versions" do
         builder.call
@@ -52,7 +52,7 @@ RSpec.describe Milestoner::Builders::Web do
     end
 
     context "with failure" do
-      let(:tagger) { instance_double Milestoner::Commits::Tagger }
+      let(:tagger) { instance_double Milestoner::Tags::Enricher }
 
       before { allow(tagger).to receive(:call).and_return(Failure("Danger!")) }
 

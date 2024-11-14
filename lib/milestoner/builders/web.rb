@@ -13,7 +13,7 @@ module Milestoner
       using Refinements::Array
       using Refinements::Pathname
 
-      def initialize(tagger: Commits::Tagger.new, **)
+      def initialize(tagger: Tags::Enricher.new, **)
         super(**)
         @tagger = tagger
       end

@@ -13,7 +13,7 @@ module Milestoner
       using Refinements::Array
       using Refinements::Pathname
 
-      def initialize(tagger: Commits::Tagger.new, view: Views::Milestones::Show.new, **)
+      def initialize(tagger: Tags::Enricher.new, view: Views::Milestones::Show.new, **)
         super(**)
         @tagger = tagger
         @view = view
