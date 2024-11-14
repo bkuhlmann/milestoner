@@ -4,6 +4,8 @@ jobs:
     working_directory: ~/project
     docker:
       - image: bkuhlmann/alpine-ruby:latest
+        environment:
+          TZ: America/Denver
     steps:
       - checkout
 
@@ -28,9 +30,7 @@ jobs:
 
       - run:
           name: Rake
-          command: |
-            export TZ="America/Denver"
-            bundle exec rake
+          command: bundle exec rake
 
       - store_artifacts:
           name: SimpleCov Report
