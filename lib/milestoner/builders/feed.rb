@@ -6,34 +6,25 @@ module Milestoner
   module Builders
     # Builds syndicated feed output.
     class Feed
-      include Milestoner::Dependencies[:settings, :logger]
+      include Milestoner::Dependencies[:logger]
 
       using Refinements::Pathname
 
-      def initialize(tagger: Commits::Tagger.new, syndicator: Syndication::Builder.new, **)
+      def initialize(tagger: Commits::Tagger.new, indexer: Syndication::Indexer.new, **)
         super(**)
         @tagger = tagger
-        @syndicator = syndicator
+        @indexer = indexer
       end
 
       def call
         tagger.call
-              .bind { |tags| syndicator.call tags }
-              .fmap { |body| write body }
+              .bind { |tags| indexer.call tags }
               .alt_map { |message| failure message }
       end
 
       private
 
-      attr_reader :tagger, :syndicator
-
-      def write body
-        root = settings.build_output
-        path = root.join(settings.build_basename).make_ancestors.sub_ext(".xml").write body
-
-        logger.info { "Built: #{path}." }
-        root
-      end
+      attr_reader :tagger, :indexer
 
       def failure message
         logger.error { message }
