@@ -29,6 +29,6 @@
 * Lines: <%= commit.total_deletions %>/<%= commit.total_insertions %>
 * Issue: link:<%= commit.issue.uri %>[<%= commit.issue.id %>]
 * Review: link:<%= commit.review.uri %>[<%= commit.review.id %>]
-
-_<%= commit.datetime %>_
+* Created: <%= commit.created_at_human %>
+* Updated: <%= commit.updated_at_human %>
 ====

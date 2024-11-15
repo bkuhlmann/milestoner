@@ -9,7 +9,7 @@ module Milestoner
       # The commit presentation logic.
       # :reek:RepeatedConditional
       class Commit < Hanami::View::Part
-        include Dependencies[:settings, :sanitizer]
+        include Dependencies[:settings, :sanitizer, :color]
 
         using Refinements::Array
 
@@ -20,12 +20,35 @@ module Milestoner
         def initialize(**)
           super
           @prefixes = settings.commit_categories.pluck :label
-          @authored_at = Time.at value.authored_at.to_i
         end
+
+        def colored_author(*custom)
+          custom.push :bold, :blue if custom.empty?
+          color[author.name, *custom]
+        end
+
+        def colored_created_relative_at(*custom)
+          custom.push :bright_purple if custom.empty?
+          color[authored_relative_at, *custom]
+        end
+
+        def colored_updated_relative_at(*custom)
+          custom.push :cyan if custom.empty?
+          color[committed_relative_at, *custom]
+        end
+
+        def colored_sha(*custom)
+          custom.push :yellow if custom.empty?
+          color[sha[...12], *custom]
+        end
+
+        def created_at_human = created_at.strftime "%Y-%m-%d (%A) %I:%M %p %Z"
+
+        def created_at_machine = created_at.strftime "%Y-%m-%dT%H:%M:%S%z"
 
         def kind
           if prefixes.include? prefix then "normal"
-          elsif value.directive? then "alert"
+          elsif directive? then "alert"
           else "error"
           end
         end
@@ -38,58 +61,59 @@ module Milestoner
 
         def icon
           if prefixes.include? prefix then String(prefix).downcase
-          elsif value.directive? then "rebase"
+          elsif directive? then "rebase"
           else "invalid"
           end
         end
 
-        def safe_body = sanitizer.call(value.body_html).html_safe
+        def milestone_emoji
+          case milestone
+            when "major" then "🔴"
+            when "minor" then "🔵"
+            when "patch" then "🟢"
+            else "⚪️"
+          end
+        end
 
-        def safe_notes = sanitizer.call(value.notes_html).html_safe
+        def safe_body = sanitizer.call(body_html).html_safe
 
-        def total_deletions = format "%d", -value.deletions
+        def safe_notes = sanitizer.call(notes_html).html_safe
+
+        def total_deletions = format "%d", -deletions
 
         # :reek:FeatureEnvy
         def total_insertions
-          value.insertions.then { |total| total.positive? ? "+#{total}" : total.to_s }
+          insertions.then { |total| total.positive? ? "+#{total}" : total.to_s }
         end
 
         def tag
-          return "rebase" if value.directive?
+          return "rebase" if directive?
           return "invalid" unless prefixes.include? prefix
 
-          value.milestone
+          milestone
         end
 
-        def popover_id = "po-#{value.sha}"
+        def popover_id = "po-#{sha}"
 
-        def security = value.signature == "Good" ? "secure" : "insecure"
+        def security = signature == "Good" ? "secure" : "insecure"
+
+        def signature_emoji = signature.then { |kind| kind == "Good" ? "🔒" : "🔓" }
+
+        def signature_id = value.fingerprint.then { |text| text.empty? ? "N/A" : text }
+
+        def signature_key = value.fingerprint_key.then { |text| text.empty? ? "N/A" : text }
 
         def signature_label
-          value.signature.then { |kind| kind == "Good" ? "🔒 #{kind}" : "🔓 #{kind}" }
+          signature.then { |kind| kind == "Good" ? "🔒 #{kind}" : "🔓 #{kind}" }
         end
 
-        def fingerprint = value.fingerprint.then { |text| text.empty? ? "N/A" : text }
+        def updated_at_human = updated_at.strftime "%Y-%m-%d (%A) %I:%M %p %Z"
 
-        def fingerprint_key = value.fingerprint_key.then { |text| text.empty? ? "N/A" : text }
-
-        def at = authored_at.strftime "%Y-%m-%dT%H:%M:%S%z"
-
-        def datetime = authored_at.strftime "%Y-%m-%d (%A) %I:%M %p %Z"
-
-        def weekday = authored_at.strftime "%A"
-
-        def date = authored_at.strftime "%Y-%m-%d"
-
-        def time = authored_at.strftime "%I:%M %p"
-
-        def zone = authored_at.strftime "%Z"
+        def updated_at_machine = updated_at.strftime "%Y-%m-%dT%H:%M:%S%z"
 
         private
 
-        attr_reader :prefixes, :authored_at
-
-        def prefix = value.prefix
+        attr_reader :prefixes
       end
     end
   end

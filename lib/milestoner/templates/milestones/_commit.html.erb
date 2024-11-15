@@ -77,10 +77,13 @@
         <h3 class="label">Created</h3>
 
         <p class="line at">
-          <time datetime="<%= commit.at %>" class="date"><%= commit.date %></time>
-          <time datetime="<%= commit.at %>" class="weekday"><%= commit.weekday %></time>
-          <time datetime="<%= commit.at %>" class="time"><%= commit.time %></time>
-          <time datetime="<%= commit.at %>" class="zone"><%= commit.zone %></time>
+          <time datetime="<%= commit.created_at_machine %>"><%= commit.created_at_human %></time>
+        </p>
+
+        <h3 class="label">Updated</h3>
+
+        <p class="line at">
+          <time datetime="<%= commit.updated_at_machine %>"><%= commit.updated_at_human %></time>
         </p>
       </div>
     </div>

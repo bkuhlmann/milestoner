@@ -7,3 +7,4 @@ Metrics/BlockLength:
 Metrics/CollectionLiteralLength:
   Exclude:
     - "spec/support/shared_contexts/enriched_commit.rb"
+    - "spec/lib/milestoner/builders/stream_spec.rb"

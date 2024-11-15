@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "gitt"
 require "spec_helper"
+require "tone/rspec/matchers/have_color"
 
 RSpec.describe Milestoner::Views::Parts::Tag do
   using Refinements::Struct
@@ -16,6 +16,28 @@ RSpec.describe Milestoner::Views::Parts::Tag do
     Class.new Hanami::View do
       config.paths = [Bundler.root.join("lib/milestoner/templates")]
       config.template = "n/a"
+    end
+  end
+
+  let(:color) { Tone.new }
+
+  describe "#colored_total_deletions" do
+    it "uses default color" do
+      expect(part.colored_total_deletions).to have_color(color, ["10 deletions", :green])
+    end
+
+    it "uses custom color" do
+      expect(part.colored_total_deletions(:black)).to have_color(color, ["10 deletions", :black])
+    end
+  end
+
+  describe "#colored_total_insertions" do
+    it "uses default color" do
+      expect(part.colored_total_insertions).to have_color(color, ["5 insertions", :red])
+    end
+
+    it "uses custom color" do
+      expect(part.colored_total_insertions(:black)).to have_color(color, ["5 insertions", :black])
     end
   end
 
