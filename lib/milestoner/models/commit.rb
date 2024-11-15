@@ -6,9 +6,13 @@ module Milestoner
   module Models
     COMMIT_COMMON_ATTRIBUTES = %i[
       authored_at
+      authored_relative_at
       body
       body_lines
+      committed_at
+      committed_relative_at
       deletions
+      encoding
       files_changed
       fingerprint
       fingerprint_key
@@ -22,11 +26,14 @@ module Milestoner
     COMMIT_ENRICHED_ATTRIBUTES = %i[
       author
       collaborators
+      created_at
       format
       issue
       milestone
+      position
       review
       signers
+      updated_at
       uri
     ].freeze
 

@@ -55,6 +55,7 @@ RSpec.describe Milestoner::Commits::Enricher do
             Milestoner::Models::Commit[
               author: Milestoner::Models::User.new,
               authored_at: "1672593010",
+              authored_relative_at: "1 day ago",
               body:,
               body_lines: [],
               deletions: 10,
