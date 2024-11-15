@@ -8,14 +8,24 @@ module Milestoner
     module Parts
       # The tag presentation logic.
       class Tag < Hanami::View::Part
-        include Dependencies[:settings]
+        include Dependencies[:settings, :color]
 
         using Refinements::String
 
         decorate :commits
         decorate :author, as: :user
 
-        def commit_count = value.commits.size
+        def colored_total_deletions(*custom)
+          custom.push :green if custom.empty?
+          color[total_deletions, *custom]
+        end
+
+        def colored_total_insertions(*custom)
+          custom.push :red if custom.empty?
+          color[total_insertions, *custom]
+        end
+
+        def commit_count = commits.size
 
         def committed_at fallback: Time.now
           value.committed_at.then { |at| at ? Time.at(at) : fallback }
@@ -25,15 +35,15 @@ module Milestoner
 
         def committed_datetime = committed_at.strftime "%Y-%m-%dT%H:%M:%S%z"
 
-        def deletion_count = value.commits.sum(&:deletions)
+        def deletion_count = commits.sum(&:deletions)
 
-        def empty? = value.commits.empty?
+        def empty? = commits.empty?
 
-        def file_count = value.commits.sum(&:files_changed)
+        def file_count = commits.sum(&:files_changed)
 
-        def insertion_count = value.commits.sum(&:insertions)
+        def insertion_count = commits.sum(&:insertions)
 
-        def security = value.signature ? "🔒 Tag (secure)" : "🔓 Tag (insecure)"
+        def security = signature ? "🔒 Tag (secure)" : "🔓 Tag (insecure)"
 
         def total_commits = commit_count.then { |total| "#{total} commit".pluralize "s", total }
 
@@ -47,7 +57,7 @@ module Milestoner
           insertion_count.then { |total| "#{total} insertion".pluralize "s", total }
         end
 
-        def uri = format settings.project_uri_version, id: value.version
+        def uri = format settings.project_uri_version, id: version
       end
     end
   end

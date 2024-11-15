@@ -140,12 +140,9 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
           * Lines: -10/+5
           * Issue: link:https://issue.firefly.com/123[123]
           * Review: link:https://review.firefly.com/456[999]
+          * Created: 2023-01-01 (Sunday) 10:10 AM MST
+          * Updated: 2023-01-01 (Sunday) 03:15 PM MST
         CONTENT
-      end
-
-      it "renders commit date/time" do
-        builder.call
-        expect(content).to include("_2023-01-01 (Sunday) 10:10 AM MST_")
       end
 
       it "renders commits stats" do

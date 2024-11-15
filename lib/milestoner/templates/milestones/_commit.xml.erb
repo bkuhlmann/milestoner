@@ -40,13 +40,9 @@
 
     <li>Issue: <a href="<%= commit.issue.uri %>"><%= commit.issue.id %></a></li>
     <li>Review: <a href="<%= commit.review.uri %>"><%= commit.review.id %></a></li>
+    <li>Created: <%= commit.created_at_human %></li>
+    <li>Updated: <%= commit.updated_at_human %></li>
   </ul>
-
-  <p>
-    <em style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
-      <%= commit.datetime %>
-    </em>
-  </p>
 
   <hr/>
 </details>
