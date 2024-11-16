@@ -13,7 +13,7 @@ RSpec.describe Milestoner::Commits::Enricher do
   include_context "with application dependencies"
   include_context "with enriched commit"
 
-  let(:categorizer) { instance_double Milestoner::Commits::Categorizer, call: [git_commit] }
+  let(:categorizer) { instance_double Milestoner::Commits::Categorizer, call: [[1, git_commit]] }
 
   let :git_commit do
     commit.with
@@ -75,6 +75,7 @@ RSpec.describe Milestoner::Commits::Enricher do
               ],
               milestone: "patch",
               notes_html: "",
+              position: 1,
               review: Milestoner::Models::Link[
                 id: "All",
                 uri: "https://github.com/tester/test/pulls/"

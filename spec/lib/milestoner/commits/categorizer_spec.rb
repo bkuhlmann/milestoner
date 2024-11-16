@@ -11,6 +11,8 @@ RSpec.describe Milestoner::Commits::Categorizer do
   include_context "with application dependencies"
 
   describe "#call" do
+    let(:subjects) { categorizer.call.map { |_, commit| commit.subject } }
+
     it "answers commits since last tag when tagged" do
       git_repo_dir.change_dir do
         `git tag 0.0.0`
@@ -18,14 +20,12 @@ RSpec.describe Milestoner::Commits::Categorizer do
         `git add --all .`
         `git commit --message "Removed README"`
 
-        expect(categorizer.call.map(&:subject)).to contain_exactly("Removed README")
+        expect(subjects).to contain_exactly("Removed README")
       end
     end
 
     it "answers all commits when not tagged" do
-      git_repo_dir.change_dir do
-        expect(categorizer.call.map(&:subject)).to contain_exactly("Added documentation")
-      end
+      git_repo_dir.change_dir { expect(subjects).to contain_exactly("Added documentation") }
     end
 
     context "with prefixed commits" do
@@ -53,11 +53,13 @@ RSpec.describe Milestoner::Commits::Categorizer do
       end
 
       it "answers commits grouped by prefix and alpha-sorted per group" do
-        git_repo_dir.change_dir { expect(categorizer.call.map(&:subject)).to eq(proof) }
+        git_repo_dir.change_dir { expect(subjects).to eq(proof) }
       end
     end
 
     context "with prefixed commits using special characters" do
+      subject(:categorizer) { described_class.new settings: }
+
       let :proof do
         [
           "[one] more",
@@ -80,14 +82,14 @@ RSpec.describe Milestoner::Commits::Categorizer do
       it "answers commits grouped by prefix and alpha-sorted per group" do
         git_repo_dir.change_dir do
           settings.commit_categories = [{label: "[one]"}, {label: "=+-#"}, {label: "with spaces"}]
-          subjects = described_class.new(settings:).call.map(&:subject)
-
           expect(subjects).to eq(proof)
         end
       end
     end
 
     context "without prefixed commits" do
+      subject(:categorizer) { described_class.new settings: }
+
       before do
         git_repo_dir.change_dir do
           `touch a.txt && git add --all && git commit --message "One"`
@@ -98,8 +100,6 @@ RSpec.describe Milestoner::Commits::Categorizer do
       it "answers alphabetically sorted commits" do
         git_repo_dir.change_dir do
           settings.commit_categories = []
-          subjects = described_class.new(settings:).call.map(&:subject)
-
           expect(subjects).to eq(["Added documentation", "One", "Two"])
         end
       end

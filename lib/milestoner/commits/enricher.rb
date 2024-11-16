@@ -33,13 +33,15 @@ module Milestoner
 
       def call min: Collector::MIN, max: Collector::MAX
         categorizer.call(min:, max:)
-                   .map { |commit| model.for(commit, **build_attributes(commit)) }
+                   .map { |(position, commit)| build_record position, commit }
                    .then { |commits| Success commits }
       end
 
       private
 
       attr_reader :categorizer, :model
+
+      def build_record(position, commit) = model.for commit, position:, **build_attributes(commit)
 
       def build_attributes commit
         infused_keys.each.with_object({}) do |key, attributes|
