@@ -19,10 +19,11 @@ module Milestoner
         @pattern = labels.empty? ? // : Regexp.union(labels)
       end
 
+      # :reek:NestedIterators
       def call min: Collector::MIN, max: Collector::MAX
-        collect(min, max).each_value { |commits| commits.sort_by!(&:subject) }
+        collect(min, max).each_value { |commits| commits.sort_by! { |_, commit| commit.subject } }
                          .values
-                         .flatten
+                         .reduce(&:concat)
       end
 
       private
@@ -33,10 +34,11 @@ module Milestoner
         collector.call(min:, max:)
                  .value_or(Core::EMPTY_ARRAY)
                  .each
-                 .with_object categories do |commit, collection|
+                 .with_index(1)
+                 .with_object categories do |(commit, position), collection|
                    category = commit.subject[pattern]
                    key = collection.key?(category) ? category : "Unknown"
-                   collection[key] << commit
+                   collection[key] << [position, commit]
                  end
       end
 
