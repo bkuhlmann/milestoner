@@ -106,11 +106,11 @@ RSpec.describe Milestoner::Builders::Web do
       it "renders notes" do
         builder.call
 
-        content = <<~CONTENT.gsub(/^(?=\s*<)/, "    ").sub("\n    \n", "\n\n")
+        content = <<~CONTENT.gsub(/^(?=\s*(<|\w))/, "    ").sub("\n    \n", "\n\n")
           <div class="notes">
             <h2 class="bar">Notes</h2>
             <div class="content">
-              <p class="line">None.</p>
+              For link:https://asciidoctor.org[ASCII Doc].
 
             </div>
           </div>

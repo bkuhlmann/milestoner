@@ -4,3 +4,6 @@ inherit_gem:
 Metrics/BlockLength:
   AllowedPatterns:
     - register
+Metrics/CollectionLiteralLength:
+  Exclude:
+    - "spec/support/shared_contexts/enriched_commit.rb"

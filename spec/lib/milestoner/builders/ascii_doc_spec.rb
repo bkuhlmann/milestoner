@@ -94,7 +94,7 @@ RSpec.describe Milestoner::Builders::ASCIIDoc do
         expect(content).to include(<<~CONTENT)
           *Notes*
 
-          None.
+          For link:https://asciidoctor.org[ASCII Doc].
         CONTENT
       end
 
