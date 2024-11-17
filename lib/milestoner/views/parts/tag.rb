@@ -8,7 +8,7 @@ module Milestoner
     module Parts
       # The tag presentation logic.
       class Tag < Hanami::View::Part
-        include Dependencies[:settings, :color]
+        include Dependencies[:settings, :color, :durationer]
 
         using Refinements::String
 
@@ -37,6 +37,14 @@ module Milestoner
 
         def deletion_count = commits.sum(&:deletions)
 
+        def duration
+          return 0 if commits.empty?
+
+          min = commits.min_by(&:created_at)
+          max = commits.max_by(&:updated_at)
+          (max.updated_at - min.created_at).to_i
+        end
+
         def empty? = commits.empty?
 
         def file_count = commits.sum(&:files_changed)
@@ -54,6 +62,8 @@ module Milestoner
         def total_deletions
           deletion_count.then { |total| "#{total} deletion".pluralize "s", total }
         end
+
+        def total_duration = duration.zero? ? "0 seconds" : durationer.call(duration)
 
         def total_insertions
           insertion_count.then { |total| "#{total} insertion".pluralize "s", total }

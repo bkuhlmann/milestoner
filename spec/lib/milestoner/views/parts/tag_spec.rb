@@ -78,6 +78,24 @@ RSpec.describe Milestoner::Views::Parts::Tag do
     end
   end
 
+  describe "#duration" do
+    it "answers duration in seconds with single commit" do
+      expect(part.duration).to eq(18305)
+    end
+
+    it "answers duration in seconds with multiple commits" do
+      tag.commits.push commit.with(created_at: Time.new(2023, 1), updated_at: Time.new(2023, 2)),
+                       commit.with(created_at: Time.new(2023, 2), updated_at: Time.new(2023, 1))
+
+      expect(part.duration).to eq(2_678_400)
+    end
+
+    it "answers zero with no commits" do
+      tag.commits.clear
+      expect(part.duration).to eq(0)
+    end
+  end
+
   describe "#empty?" do
     it "answers true when empty" do
       tag.commits.clear
@@ -131,7 +149,7 @@ RSpec.describe Milestoner::Views::Parts::Tag do
 
   describe "#total_files" do
     it "answers singular" do
-      tag.commits = [commit.merge(files_changed: 1)]
+      tag.commits = [commit.with(files_changed: 1)]
       expect(part.total_files).to eq("1 file")
     end
 
@@ -142,7 +160,7 @@ RSpec.describe Milestoner::Views::Parts::Tag do
 
   describe "#total_deletions" do
     it "answers singular" do
-      tag.commits = [commit.merge(deletions: 1)]
+      tag.commits = [commit.with(deletions: 1)]
       expect(part.total_deletions).to eq("1 deletion")
     end
 
@@ -151,9 +169,23 @@ RSpec.describe Milestoner::Views::Parts::Tag do
     end
   end
 
+  describe "#total_duration" do
+    it "answers human readable duration" do
+      tag.commits.push commit.with(created_at: Time.new(2023, 1), updated_at: Time.new(2023, 1)),
+                       commit.with(created_at: Time.new(2023, 2), updated_at: Time.new(2023, 2))
+
+      expect(part.total_duration).to eq("31 days")
+    end
+
+    it "answers zero seconds when duration is zero" do
+      tag.commits.clear
+      expect(part.total_duration).to eq("0 seconds")
+    end
+  end
+
   describe "#total_insertions" do
     it "answers singular" do
-      tag.commits = [commit.merge(insertions: 1)]
+      tag.commits = [commit.with(insertions: 1)]
       expect(part.total_insertions).to eq("1 insertion")
     end
 
