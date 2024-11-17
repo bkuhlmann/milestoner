@@ -24,14 +24,16 @@ RSpec.describe Milestoner::Commits::Enricher do
       body: "For link:https://test.io[Test].",
       body_lines: [],
       body_paragraphs: [],
+      committed_at: "1672611315",
+      committed_relative_at: "5 minutes ago",
+      deletions: 10,
+      files_changed: 2,
+      insertions: 5,
       lines: [],
       raw: "",
       sha: "180dec7d8ae8",
-      subject: "Added documentation",
       signature: "Good",
-      deletions: 10,
-      insertions: 5,
-      files_changed: 2,
+      subject: "Added documentation",
       trailers: [
         Gitt::Models::Trailer[key: "Issue", value: "123"],
         Gitt::Models::Trailer[key: "Tracker", value: "git_hub"],
@@ -58,14 +60,14 @@ RSpec.describe Milestoner::Commits::Enricher do
               authored_relative_at: "1 day ago",
               body:,
               body_lines: [],
+              collaborators: [],
+              committed_at: "1672611315",
+              committed_relative_at: "5 minutes ago",
+              created_at: Time.new(2023, 1, 1, 10, 10, 10, "-0700"),
               deletions: 10,
               files_changed: 2,
-              insertions: 5,
-              sha: "180dec7d8ae8",
-              signature: "Good",
-              subject: "Added documentation",
-              collaborators: [],
               format: "asciidoc",
+              insertions: 5,
               issue: Milestoner::Models::Link[
                 id: "123",
                 uri: "https://github.com/tester/test/issues/123"
@@ -76,7 +78,11 @@ RSpec.describe Milestoner::Commits::Enricher do
                 id: "All",
                 uri: "https://github.com/tester/test/pulls/"
               ],
+              sha: "180dec7d8ae8",
+              signature: "Good",
               signers: [],
+              subject: "Added documentation",
+              updated_at: Time.new(2023, 1, 1, 15, 15, 15, "-0700"),
               uri: "https://github.com/tester/test/commit/180dec7d8ae8"
             ]
           ]

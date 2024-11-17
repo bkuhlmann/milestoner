@@ -12,12 +12,14 @@ module Milestoner
         :author,
         :body,
         :collaborators,
+        :created_at,
         :format,
         :issue,
         :milestone,
         :notes,
         :review,
         :signers,
+        :updated_at,
         :uri
       ]
 
