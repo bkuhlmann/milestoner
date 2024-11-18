@@ -2,6 +2,7 @@
 # [<%= project_label %>](<%= project_uri_home %>) (<%= tag.committed_date %>)
 
 **<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.**
+**<%= tag.total_duration %>.**
 <% else %>
 # [<%= project_label %>](<%= project_uri_home %>) <%= tag.version %> (<%= tag.committed_date %>)
 <%= render :user, user: tag.author %> | <%= tag.security %>
@@ -9,6 +10,7 @@
 <% tag.commits.each do |commit| %><%= commit.render :commit %><% end %>
 
 **<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.**
+**<%= tag.total_duration %>.**
 
 [Previous (<%= past.version %>)](<%= past.version %>) | [Next (<%= future.version %>)](<%= future.version %>)
 <% end %>

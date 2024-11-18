@@ -83,9 +83,24 @@ RSpec.describe Milestoner::Builders::MD::Pager do
       BODY
     end
 
-    it "renders previous and next links" do
+    it "renders totals" do
       builder.call past, present, future
-      expect(path.read).to include("[Previous (0.0.0)](0.0.0) | [Next (1.0.0)](1.0.0)")
+
+      expect(path.read).to include <<~CONTENT
+        **1 commit. 2 files. 10 deletions. 5 insertions.**
+        **5 hours, 5 minutes, and 5 seconds.**
+      CONTENT
+    end
+
+    it "renders zero totals with no commits" do
+      present = Milestoner::Models::Tag[commits: [], version: "0.1.0"]
+
+      builder.call past, present, future
+
+      expect(path.read).to include <<~CONTENT
+        **0 commits. 0 files. 0 deletions. 0 insertions.**
+        **0 seconds.**
+      CONTENT
     end
 
     it "includes generator" do
@@ -96,12 +111,9 @@ RSpec.describe Milestoner::Builders::MD::Pager do
       )
     end
 
-    it "renders zero stats with no commits" do
-      present = Milestoner::Models::Tag[commits: [], version: "0.1.0"]
-
+    it "renders previous and next links" do
       builder.call past, present, future
-
-      expect(path.read).to include("*0 commits. 0 files. 0 deletions. 0 insertions.*")
+      expect(path.read).to include("[Previous (0.0.0)](0.0.0) | [Next (1.0.0)](1.0.0)")
     end
 
     it "answers file path" do
