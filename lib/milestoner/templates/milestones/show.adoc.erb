@@ -2,6 +2,7 @@
 == link:<%= project_uri_home %>[<%= project_label %>] (<%= tag.committed_date %>)
 
 *<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.*
+*<%= tag.total_duration %>.*
 <% else %>
 == link:<%= project_uri_home %>[<%= project_label %>] <%= tag.version %> (<%= tag.committed_date %>)
 
@@ -9,7 +10,8 @@
 
 <% tag.commits.each do |commit| %><%= commit.render :commit %><% end %>
 
-*<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.*
+*<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.* +
+*<%= tag.total_duration %>.*
 
 link:<%= past.version %>[Previous (<%= past.version %>)] | link:<%= future.version %>[Next (<%= future.version %>)]
 <% end %>

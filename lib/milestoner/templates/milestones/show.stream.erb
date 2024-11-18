@@ -2,6 +2,7 @@
 <%= project_label %> (<%= tag.committed_date %>)
 
 <%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.colored_total_deletions %>. <%= tag.colored_total_insertions %>.
+<%= tag.total_duration %>.
 <% else %>
 <%= project_label %> <%= tag.version %> (<%= tag.committed_date %>)
 <% if tag.version != project_version %>
@@ -12,4 +13,5 @@
 <% tag.commits.each do |commit| %><%= commit.render :commit %><% end %>
 
 <%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.colored_total_deletions %>. <%= tag.colored_total_insertions %>.
+<%= tag.total_duration %>.
 <% end %>
