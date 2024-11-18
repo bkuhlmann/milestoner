@@ -70,6 +70,7 @@ module Milestoner
     register(:git) { Gitt::Repository.new }
     register(:defaults_path) { Pathname(__dir__).join("configuration/defaults.yml") }
     register(:color) { Tone.new }
+    register :durationer, Durationer
     register(:logger) { Cogger.new id: :milestoner }
     register :io, STDOUT
   end
