@@ -24,7 +24,7 @@ module Milestoner
       end
 
       def call
-        collect.fmap { |tags| tail tags.last(settings.build_max).map(&:version) }
+        collect.fmap { |tags| adjust tags }
                .fmap { |references| slice(references).reverse }
                .bind { |tags| tags.empty? ? Failure("No tags or commits.") : Success(tags) }
       end
@@ -35,11 +35,23 @@ module Milestoner
 
       def collect = git.tagged? ? git.tags("--sort=taggerdate") : placeholder_with_commits
 
-      # :reek:FeatureEnvy
-      def tail references
-        references.append "HEAD" if settings.build_tail == "head"
-        references.prepend nil if references.one?
+      def adjust tags
+        references = tags.last(settings.build_max).map(&:version)
+
+        maybe_append_head references
+        maybe_prepend_nil references, tags
         references
+      end
+
+      def maybe_append_head references
+        references.append "HEAD" if settings.build_tail == "head"
+      end
+
+      def maybe_prepend_nil references, tags
+        max =  settings.build_max
+        tail = settings.build_tail
+
+        references.prepend nil if references.one? || (tail == "tag" && max >= tags.size)
       end
 
       def slice references
