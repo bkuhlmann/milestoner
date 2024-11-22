@@ -43,6 +43,8 @@ module Milestoner
       required(:project_uri_version).filled :string
       required(:project_version).filled Etcher::Types::Version
       required(:review_uri).filled :string
+      required(:stylesheet_path).filled :string
+      required(:stylesheet_uri).filled :string
 
       required(:syndication_categories).array(:hash) do
         required(:label).filled :string
