@@ -33,6 +33,8 @@ module Milestoner
                        :project_uri_version,
                        :project_version,
                        :review_uri,
+                       :stylesheet_path,
+                       :stylesheet_uri,
                        :syndication_categories,
                        :syndication_entry_label,
                        :syndication_entry_uri,

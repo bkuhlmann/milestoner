@@ -26,6 +26,7 @@ module Milestoner
         project_uri_logo
         project_uri_version
         project_version
+        stylesheet_uri
       ] => :settings
 
       def project_slug

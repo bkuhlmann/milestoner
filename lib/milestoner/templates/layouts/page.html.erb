@@ -25,12 +25,10 @@
             sizes="200x200">
     <% end %>
 
-    <% if build_stylesheet %>
-      <link title="<%= project_label %>: Stylesheet"
-            rel="stylesheet"
-            href="<%= build_stylesheet %>.css"
-            type="text/css">
-    <% end %>
+    <link title="<%= project_label %>: Stylesheet"
+          rel="stylesheet"
+          href="<%= stylesheet_uri %>.css"
+          type="text/css">
 
     <script src="https://unpkg.com/alpinejs@3.14.3"
             integrity="sha384-iZD2X8o1Zdq0HR5H/7oa8W30WS4No+zWCKUPD7fHRay9I1Gf+C4F8sVmw7zec1wW"

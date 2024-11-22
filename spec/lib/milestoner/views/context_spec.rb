@@ -110,4 +110,10 @@ RSpec.describe Milestoner::Views::Context do
       expect(a_context.project_version).to eq(Version("1.2.3"))
     end
   end
+
+  describe "#stylesheet_uri" do
+    it "answers stylesheet URI" do
+      expect(a_context.stylesheet_uri).to eq("../page")
+    end
+  end
 end
