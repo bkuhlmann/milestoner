@@ -10,17 +10,15 @@ module Milestoner
         class Stylesheet < Sod::Action
           include Dependencies[:settings]
 
-          description "Set stylesheet file name or relative path."
+          description "Enable/disable stylesheet."
 
-          ancillary "Only used by web format. Use false to disable."
+          ancillary "Only used by web format."
 
-          on %w[-s --stylesheet], argument: "[NAME]"
+          on "--[no-]stylesheet"
 
           default { Container[:settings].build_stylesheet }
 
-          def call name = default
-            settings.build_stylesheet = name == "false" ? false : name
-          end
+          def call(boolean) = settings.build_stylesheet = boolean
         end
       end
     end
