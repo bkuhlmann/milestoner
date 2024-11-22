@@ -149,6 +149,17 @@ RSpec.describe Milestoner::Tags::Enricher do
           )
         end
       end
+
+      it "answers all tags when build tail is tag" do
+        settings.build_tail = "tag"
+
+        git_repo_dir.change_dir do
+          `git tag 0.0.0 --message 0.0.0`
+          `git tag 0.0.1 --message 0.0.1`
+
+          expect(tagger.call.success.map(&:version)).to eq([Version("0.0.1"), Version("0.0.0")])
+        end
+      end
     end
 
     context "with invalid version" do
