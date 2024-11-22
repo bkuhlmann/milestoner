@@ -34,6 +34,9 @@ project:
     version: "%<project_uri_home>s/versions/%<id>s"
 review:
   uri: "https://github.com/%<project_owner>s/%<project_name>s/pulls/%<id>s"
+stylesheet:
+  path: "page.css"
+  uri: "../page"
 syndication:
   categories:
     - label: "Milestones"
