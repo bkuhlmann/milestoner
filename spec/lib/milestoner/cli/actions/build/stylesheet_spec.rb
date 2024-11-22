@@ -8,18 +8,13 @@ RSpec.describe Milestoner::CLI::Actions::Build::Stylesheet do
   include_context "with application dependencies"
 
   describe "#call" do
-    it "answers default stylesheet" do
-      action.call
-      expect(settings.build_stylesheet).to match("page")
+    it "answers true when true" do
+      action.call true
+      expect(settings.build_stylesheet).to be(true)
     end
 
-    it "answers custom stylesheet" do
-      action.call "other"
-      expect(settings.build_stylesheet).to eq("other")
-    end
-
-    it "answers disabled stylesheet" do
-      action.call "false"
+    it "answers false when false" do
+      action.call false
       expect(settings.build_stylesheet).to be(false)
     end
   end

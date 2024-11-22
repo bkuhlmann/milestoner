@@ -12,8 +12,8 @@ RSpec.describe Milestoner::Views::Context do
   include_context "with application dependencies"
 
   describe "#build_stylesheet" do
-    it "answers stylesheet" do
-      expect(a_context.build_stylesheet).to eq("page")
+    it "answers true" do
+      expect(a_context.build_stylesheet).to be(true)
     end
   end
 

@@ -6,7 +6,7 @@ build:
   layout: "page"
   max: 1
   output: "tmp/milestones"
-  stylesheet: "page"
+  stylesheet: true
   tail: "head"
 commit:
   categories:
