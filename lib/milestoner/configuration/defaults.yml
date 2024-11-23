@@ -3,6 +3,7 @@ avatar:
 build:
   basename: "index"
   format: "stream"
+  index: true
   layout: "page"
   max: 1
   output: "tmp/milestones"

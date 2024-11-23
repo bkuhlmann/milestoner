@@ -6,6 +6,7 @@ module Milestoner
     Model = Struct.new :avatar_uri,
                        :build_basename,
                        :build_format,
+                       :build_index,
                        :build_layout,
                        :build_max,
                        :build_output,
