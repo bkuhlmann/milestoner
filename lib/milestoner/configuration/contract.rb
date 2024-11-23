@@ -11,6 +11,7 @@ module Milestoner
       required(:avatar_uri).filled :string
       required(:build_basename).filled :string
       required(:build_format).filled :string
+      required(:build_index).filled :bool
       required(:build_layout) { str? | bool? }
       required(:build_max).filled :integer
       required(:build_output).filled Etcher::Types::Pathname
