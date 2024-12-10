@@ -117,7 +117,7 @@ RSpec.describe Milestoner::Builders::Markdown do
         expect(logger.reread).to match(/🟢.+Built: #{path}\./)
       end
 
-      it "answers build root when success" do
+      it "answers path when success" do
         expect(builder.call).to eq(Success(temp_dir))
       end
     end
@@ -145,7 +145,7 @@ RSpec.describe Milestoner::Builders::Markdown do
         )
       end
 
-      it "answers root path when success" do
+      it "answers path when success" do
         expect(builder.call).to eq(Success(temp_dir))
       end
     end

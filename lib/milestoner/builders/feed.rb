@@ -28,7 +28,7 @@ module Milestoner
       attr_reader :tagger, :syndicator
 
       def write body
-        root = settings.build_root
+        root = settings.build_output
         path = root.join(settings.build_basename).make_ancestors.sub_ext(".xml").write body
 
         logger.info { "Built: #{path}." }

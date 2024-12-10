@@ -28,7 +28,7 @@ module Milestoner
 
       def build tags
         tags.each { |tag| write tag }
-        settings.build_root
+        settings.build_output
       end
 
       def write tag
@@ -40,7 +40,7 @@ module Milestoner
 
       def make_path tag
         version = settings.build_max == 1 ? "" : tag.version
-        settings.build_root.join(version, settings.build_basename).make_ancestors.sub_ext ".md"
+        settings.build_output.join(version, settings.build_basename).make_ancestors.sub_ext ".md"
       end
 
       def failure message
