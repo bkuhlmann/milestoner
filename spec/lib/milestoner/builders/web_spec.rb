@@ -61,7 +61,7 @@ RSpec.describe Milestoner::Builders::Web do
         builder.call
 
         expect(html_path.read).to include(
-          %(<img src="https://acme.io/logo.png" alt="Logo" width="30" height="30">)
+          %(<img src="https://acme.io/logo.png" alt="Logo" width="100" height="100">)
         )
       end
 
@@ -192,7 +192,7 @@ RSpec.describe Milestoner::Builders::Web do
         )
       end
 
-      it "answers root path when success" do
+      it "answers path when success" do
         expect(builder.call).to eq(Success(temp_dir))
       end
     end
@@ -224,7 +224,7 @@ RSpec.describe Milestoner::Builders::Web do
         )
       end
 
-      it "answers root path when success" do
+      it "answers path when success" do
         expect(builder.call).to eq(Success(temp_dir))
       end
     end

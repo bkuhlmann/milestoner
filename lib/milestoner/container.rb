@@ -32,7 +32,7 @@ module Milestoner
       Etcher::Registry.new(contract: Configuration::Contract, model: Configuration::Model)
                       .add_loader(:yaml, self[:defaults_path])
                       .add_loader(:yaml, self["xdg.config"].active)
-                      .add_transformer(Configuration::Transformers::Build::Root)
+                      .add_transformer(:root, :build_output)
                       .add_transformer(Configuration::Transformers::Build::TemplatePaths.new)
                       .add_transformer(Configuration::Transformers::Gems::Label.new)
                       .add_transformer(Configuration::Transformers::Gems::Description.new)

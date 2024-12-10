@@ -26,7 +26,7 @@ RSpec.shared_context "with application dependencies" do
                                         project_name: "test",
                                         project_version: "1.2.3"
                                       ),
-      build_root: temp_dir,
+      build_output: temp_dir,
       generator_version: "3.2.1",
       loaded_at: Time.utc(2020, 1, 2, 3, 4, 5),
       project_author: "Tester",

@@ -8,7 +8,7 @@ module Milestoner
                        :build_format,
                        :build_layout,
                        :build_max,
-                       :build_root,
+                       :build_output,
                        :build_stylesheet,
                        :build_tail,
                        :build_template_paths,

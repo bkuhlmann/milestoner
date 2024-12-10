@@ -31,10 +31,10 @@ module Milestoner
         make_root
         copy_stylesheet
         tags.each { |tag| write tag }
-        settings.build_root
+        settings.build_output
       end
 
-      def make_root = settings.build_root.make_path
+      def make_root = settings.build_output.make_path
 
       def copy_stylesheet
         return unless settings.build_stylesheet
@@ -47,24 +47,24 @@ module Milestoner
         settings.build_template_paths
                 .map { |path| path.join "public/page.css.erb" }
                 .find(&:exist?)
-                .copy settings.build_root.make_path.join stylesheet_path
+                .copy settings.build_output.make_path.join stylesheet_path
       end
 
       def stylesheet_path
-        settings.build_root.join "#{Pathname(settings.build_stylesheet).name}.css"
+        settings.build_output.join "#{Pathname(settings.build_stylesheet).name}.css"
       end
 
       def write tag
         path = make_path tag
         settings.project_version = tag.version
 
-        path.write view.call(tag:, layout: settings.build_layout)
+        path.write view.call(past: tag, tag:, future: tag, layout: settings.build_layout)
         logger.info { "Built: #{path}." }
       end
 
       def make_path tag
         version = settings.build_max == 1 ? "" : tag.version
-        settings.build_root.join(version, settings.build_basename).make_ancestors.sub_ext ".html"
+        settings.build_output.join(version, settings.build_basename).make_ancestors.sub_ext ".html"
       end
 
       def failure message

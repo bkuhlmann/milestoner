@@ -5,7 +5,7 @@ build:
   format: "stream"
   layout: "page"
   max: 1
-  root: "tmp/milestones"
+  output: "tmp/milestones"
   stylesheet: "page"
   tail: "head"
 commit:
