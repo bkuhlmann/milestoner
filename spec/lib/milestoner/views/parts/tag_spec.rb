@@ -95,6 +95,12 @@ RSpec.describe Milestoner::Views::Parts::Tag do
     end
   end
 
+  describe "#index?" do
+    it "answers true by default" do
+      expect(part.index?).to be(true)
+    end
+  end
+
   describe "#insertion_count" do
     it "answers count" do
       expect(part.insertion_count).to eq(5)

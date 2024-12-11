@@ -41,6 +41,8 @@ module Milestoner
 
         def file_count = commits.sum(&:files_changed)
 
+        def index? = settings.build_index
+
         def insertion_count = commits.sum(&:insertions)
 
         def security = signature ? "🔒 Tag (secure)" : "🔓 Tag (insecure)"
