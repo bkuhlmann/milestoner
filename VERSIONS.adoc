@@ -1,5 +1,16 @@
 = Versions
 
+== 18.12.0 (2024-12-15)
+
+* 🟢 Added Tone gem - Brooke Kuhlmann
+* 🟢 Added additional commit attributes - Brooke Kuhlmann
+* 🟢 Added commit created and updated enrichment - Brooke Kuhlmann
+* 🟢 Added commit enrichers container created and updated registrations - Brooke Kuhlmann
+* 🟢 Added commit time enricher - Brooke Kuhlmann
+* 🟢 Added container color registration - Brooke Kuhlmann
+* 🔁 Refactored Circle CI timezone configuration to environment - Brooke Kuhlmann
+* 🔁 Refactored argument forwarding to super - Brooke Kuhlmann
+
 == 18.11.0 (2024-11-13)
 
 * ✅ Fixed builder requirements - Brooke Kuhlmann
