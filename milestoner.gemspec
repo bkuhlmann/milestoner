@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "lode", "~> 2.0"
   spec.add_dependency "redcarpet", "~> 3.6"
   spec.add_dependency "refinements", "~> 13.0"
-  spec.add_dependency "rouge", "~> 4.4"
+  spec.add_dependency "rouge", "~> 4.5"
   spec.add_dependency "rss", "~> 0.3"
   spec.add_dependency "runcom", "~> 12.0"
   spec.add_dependency "sanitize", "~> 6.1"
