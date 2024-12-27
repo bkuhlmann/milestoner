@@ -21,7 +21,7 @@ module Milestoner
           def call attributes
             attributes.fetch key do
               value = spec_loader.call(path).label
-              attributes.merge! key => value unless value == "Undefined"
+              attributes.merge! key => value unless value.empty?
             end
 
             Success attributes
