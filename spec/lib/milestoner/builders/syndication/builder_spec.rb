@@ -200,7 +200,7 @@ RSpec.describe Milestoner::Builders::Syndication::Builder do
       tag.committed_at = nil
 
       expect(builder.call([tag])).to match(
-        Failure("#{described_class}: Undefined method `strftime' for nil.")
+        Failure("#{described_class}: Undefined method 'strftime' for nil.")
       )
     end
   end
