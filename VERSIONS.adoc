@@ -1,6 +1,6 @@
 = Versions
 
-== 19.0.0 (2024-12-27)
+== 19.0.0 (2024-12-28)
 
 * ✅ Fixed tag enricher build max and tail calculation for first version - Brooke Kuhlmann
 * 🟢 Added ASCII Doc builder container - Brooke Kuhlmann
