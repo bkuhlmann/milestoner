@@ -39,8 +39,6 @@ module Milestoner
 
         private
 
-        attr_reader :view, :enricher
-
         def log_info(message) = logger.info { message }
       end
     end
