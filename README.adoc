@@ -37,7 +37,7 @@
 
 = Milestoner
 
-Milestoner is a pure {git_link} based Command Line Interface (CLI) for software deployment automation that is agnostic of the programming language or source control service you use (i.e. GitHub, GitLab, Bitbucket, etc). Each milestone (i.e. {git_link} tag) includes the automatic generation of feature rich release notes sourced from the {git_link} commits that make up the tag. Finally, each milestone adheres to {strict_semantic_versioning_link} so your milestones remain consistent.
+Milestoner is a pure {git_link} based Command Line Interface (CLI) for software deployment automation that is agnostic of the programming language or source control service you use (i.e. GitHub, GitLab, Bitbucket, etc). Each milestone (i.e. {git_link} tag) includes automatic generation of feature rich release notes sourced from the {git_link} commits that make up the tag. Finally, each milestone adheres to {strict_semantic_versioning_link} so your milestones remain consistent.
 
 You can use Milestoner to inspect the current state of the next milestone, celebrate the team members that contribute to each milestone, and share information with stakeholders with minimal effort. By having a tool, like Milestoner, you can automate software releases in a consistent and reliable fashion. 🎉
 
@@ -52,7 +52,7 @@ toc::[]
 
 == Screenshots
 
-The following are screenshots of using this gem to render release notes for the {lode_link} gem. Even though {lode_link} is used for example purposes, keep in mind that Milestoner can be used for _any project and/or programming language_.
+The following are screenshots of using this gem to render it's own release notes. Keep in mind that Milestoner can be used for _any project and/or programming language_.
 
 === ASCII Doc
 
@@ -101,7 +101,7 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/build-web-exp
 ** Format: `+<major>.<minor>.<patch>+`.
 ** Example: `0.0.0`.
 * Defaults to including {git_link} commits since last tag (or initialization of repository) when building release notes. This can be customized further if desired.
-* Ensures {git_link} commit messages are grouped by prefix, in order defined, for categorization. For more details, see link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject Prefix]. Defaults (can be customized):
+* Ensures {git_link} commit messages are grouped by prefix, in order defined, for categorization. For details, see link:https://alchemists.io/projects/git-lint/#_commit_subject_prefix[Git Lint Commit Subject Prefix]. These are the defaults (can be customized):
 ** image:https://alchemists.io/images/projects/milestoner/icons/added.png[Added] Added
 ** image:https://alchemists.io/images/projects/milestoner/icons/updated.png[Updated] Updated
 ** image:https://alchemists.io/images/projects/milestoner/icons/fixed.png[Fixed] Fixed
