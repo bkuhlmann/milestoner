@@ -35,6 +35,18 @@ RSpec.describe Milestoner::Views::Context do
     end
   end
 
+  describe "#organization_label" do
+    it "answers label" do
+      expect(a_context.organization_label).to eq("Undefined")
+    end
+  end
+
+  describe "#organization_uri" do
+    it "answers label" do
+      expect(a_context.organization_uri).to eq("https://undefined.io")
+    end
+  end
+
   describe "#project_author" do
     it "answers author" do
       expect(a_context.project_author).to eq("Tester")
@@ -50,6 +62,36 @@ RSpec.describe Milestoner::Views::Context do
   describe "#project_label" do
     it "answers label" do
       expect(a_context.project_label).to eq("Test")
+    end
+  end
+
+  describe "#page_title" do
+    it "answers project label, project version, and organization label" do
+      expect(a_context.page_title).to eq("Test 1.2.3 | Undefined")
+    end
+
+    it "answers project and organization label when project version is missing" do
+      settings.project_version = nil
+      expect(a_context.page_title).to eq("Test | Undefined")
+    end
+
+    it "answers project version and organization label when project label is missing" do
+      settings.project_label = nil
+      expect(a_context.page_title).to eq("1.2.3 | Undefined")
+    end
+
+    it "answers organization label when project information is missing" do
+      settings.merge! project_label: nil, project_version: nil
+      expect(a_context.page_title).to eq("Undefined")
+    end
+
+    it "answers title with custom delimiter" do
+      expect(a_context.page_title(delimiter: " - ")).to eq("Test 1.2.3 - Undefined")
+    end
+
+    it "answers emmpty string when project and organization information is missing" do
+      settings.merge! project_label: nil, project_version: nil, organization_label: nil
+      expect(a_context.page_title).to eq("")
     end
   end
 
@@ -98,9 +140,7 @@ RSpec.describe Milestoner::Views::Context do
     end
 
     it "answers empty string when label and version are missing" do
-      settings.project_label = nil
-      settings.project_version = nil
-
+      settings.merge! project_label: nil, project_version: nil
       expect(a_context.project_title).to eq("")
     end
   end
