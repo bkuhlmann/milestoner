@@ -14,9 +14,9 @@
   <ul class="list">
     <% tags.each do |tag| %>
       <li class="item">
-        <a href="<%= tag.version %>"
+        <a href="/<%= tag.version %>/"
            class="version"
-           hx-get="<%= tag.version %>"
+           hx-get="/<%= tag.version %>/"
            hx-select=".milestone"
            hx-target=".milestones"
            hx-swap="outerHTML"

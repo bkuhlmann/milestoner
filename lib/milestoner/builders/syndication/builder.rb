@@ -103,7 +103,7 @@ module Milestoner
 
           node.merge id: format(settings.syndication_id, id: version),
                      title: format(settings.syndication_entry_label, id: version),
-                     link: format(settings.syndication_entry_uri, id: version),
+                     link: format(settings.syndication_entry_uri, id: "#{version}/"),
                      rights: committed_at.strftime("%Y"),
                      published: committed_at,
                      updated: committed_at

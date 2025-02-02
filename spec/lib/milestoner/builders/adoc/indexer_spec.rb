@@ -23,8 +23,8 @@ RSpec.describe Milestoner::Builders::ADoc::Indexer do
       builder.call tags
 
       expect(path.read).to include(<<~CONTENT)
-        * link:0.1.0[0.1.0] (2024-07-05)
-        * link:0.0.0[0.0.0] (2024-07-04)
+        * link:/0.1.0/[0.1.0] (2024-07-05)
+        * link:/0.0.0/[0.0.0] (2024-07-04)
       CONTENT
     end
 
@@ -32,8 +32,8 @@ RSpec.describe Milestoner::Builders::ADoc::Indexer do
       builder.call []
 
       expect(path.read).not_to include(<<~CONTENT)
-        * link:0.1.0[0.1.0] (2024-07-05)
-        * link:0.0.0[0.0.0] (2024-07-04)
+        * link:/0.1.0/[0.1.0] (2024-07-05)
+        * link:/0.0.0/[0.0.0] (2024-07-04)
       CONTENT
     end
 

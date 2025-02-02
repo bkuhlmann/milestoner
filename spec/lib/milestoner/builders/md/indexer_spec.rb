@@ -23,8 +23,8 @@ RSpec.describe Milestoner::Builders::MD::Indexer do
       builder.call tags
 
       expect(path.read).to include(<<~CONTENT)
-        - [0.1.0](0.1.0) (2024-07-05)
-        - [0.0.0](0.0.0) (2024-07-04)
+        - [0.1.0](/0.1.0/) (2024-07-05)
+        - [0.0.0](/0.0.0/) (2024-07-04)
       CONTENT
     end
 
@@ -32,8 +32,8 @@ RSpec.describe Milestoner::Builders::MD::Indexer do
       builder.call []
 
       expect(path.read).not_to include(<<~CONTENT)
-        - [0.1.0](0.1.0) (2024-07-05)
-        - [0.0.0](0.0.0) (2024-07-04)
+        - [0.1.0](/0.1.0/) (2024-07-05)
+        - [0.0.0](/0.0.0/) (2024-07-04)
       CONTENT
     end
 

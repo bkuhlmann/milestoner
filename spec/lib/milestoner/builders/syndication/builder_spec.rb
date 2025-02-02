@@ -135,7 +135,7 @@ RSpec.describe Milestoner::Builders::Syndication::Builder do
 
     it "answers entry link" do
       expect(feed.entries.first.link.href).to eq(
-        "https://undefined.io/projects/test/versions/0.1.0"
+        "https://undefined.io/projects/test/versions/0.1.0/"
       )
     end
 
