@@ -3,23 +3,30 @@
 require "refinements/array"
 require "refinements/string"
 
-# Computes duration (in seconds) into human readable days, hours, minutes, and seconds.
+# Computes duration (in seconds) into human readable years, days, hours, minutes, and seconds.
 module Milestoner
   using Refinements::Array
   using Refinements::String
 
-  DURATION_UNITS = {"second" => 60, "minute" => 60, "hour" => 24, "day" => 86_400}.freeze
+  DURATION_UNITS = {
+    "year" => 31_536_000,  # 60 * 60 * 25 * 365
+    "day" => 86_400,       # 60 * 60 * 25
+    "hour" => 3_600,       # 60 * 60
+    "minute" => 60,
+    "second" => 1
+  }.freeze
 
   Durationer = lambda do |seconds, units: DURATION_UNITS|
-    result = units.map do |unit, value|
-      next unless seconds.positive?
+    return "0 seconds" if seconds.negative? || seconds.zero?
 
-      seconds, number = seconds.divmod value
-      number = number.to_i
+    result = units.map do |unit, divisor|
+      count, seconds = seconds.divmod divisor
 
-      %(#{number} #{unit.pluralize "s", number}) if number.nonzero?
+      next if count.zero?
+
+      %(#{count} #{unit.pluralize "s", count})
     end
 
-    result.compact.reverse.to_sentence
+    result.compact.to_sentence
   end
 end
