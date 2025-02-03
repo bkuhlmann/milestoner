@@ -8,7 +8,7 @@ module Milestoner
       # Handles the building of different milestone formats.
       class Build < Sod::Command
         include Dependencies[:settings, :logger, :io]
-        include Builders::Dependencies[:ascii_doc, :feed, :markdown, :stream, :web]
+        include Builders::Dependencies[:ascii_doc, :feed, :manifest, :markdown, :stream, :web]
 
         handle "build"
 
@@ -19,6 +19,7 @@ module Milestoner
         on Actions::Build::Index
         on Actions::Build::Label
         on Actions::Build::Layout
+        on Actions::Build::Manifest
         on Actions::Build::Max
         on Actions::Build::Output
         on Actions::Build::Stylesheet
@@ -35,6 +36,8 @@ module Milestoner
           else
             logger.abort "Invalid build format: #{format}."
           end
+
+          manifest.call
         end
 
         private

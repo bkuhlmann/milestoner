@@ -58,6 +58,13 @@ RSpec.describe Milestoner::CLI::Commands::Build do
       end
     end
 
+    it "builds manifest" do
+      settings.build_manifest = true
+      command.call
+
+      expect(temp_dir.join("manifest.json").exist?).to be(true)
+    end
+
     context "with Markdown format" do
       before do
         settings.build_format = "markdown"
