@@ -5,6 +5,7 @@ build:
   format: "stream"
   index: true
   layout: "page"
+  manifest: false
   max: 1
   output: "tmp/milestones"
   stylesheet: true

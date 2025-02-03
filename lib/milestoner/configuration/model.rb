@@ -8,6 +8,7 @@ module Milestoner
                        :build_format,
                        :build_index,
                        :build_layout,
+                       :build_manifest,
                        :build_max,
                        :build_output,
                        :build_stylesheet,

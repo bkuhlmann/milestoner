@@ -14,6 +14,7 @@ module Milestoner
       required(:build_index).filled :bool
       required(:build_layout) { str? | bool? }
       required(:build_max).filled :integer
+      required(:build_manifest).filled :bool
       required(:build_output).filled Etcher::Types::Pathname
       required(:build_stylesheet).filled :bool
       required(:build_tail).filled :string
