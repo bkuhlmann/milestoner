@@ -20,6 +20,7 @@ module Milestoner
           return Success() unless settings.build_index
 
           path_resolver.call settings.build_output.join("index.html"), logger: do |path|
+            settings.project_version = nil
             path.write view.call(tags:, layout: settings.build_layout)
           end
         end

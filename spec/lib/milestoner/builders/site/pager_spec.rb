@@ -22,7 +22,7 @@ RSpec.describe Milestoner::Builders::Site::Pager do
 
     it "includes title" do
       builder.call past, present, future
-      expect(path.read).to include("<title>Test 0.1.0</title>")
+      expect(path.read).to include("<title>Test 0.1.0 | Undefined</title>")
     end
 
     it "includes description meta" do

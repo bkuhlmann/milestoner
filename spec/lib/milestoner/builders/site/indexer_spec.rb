@@ -17,7 +17,12 @@ RSpec.describe Milestoner::Builders::Site::Indexer do
     let(:path) { temp_dir.join "index.html" }
     let(:tags_pattern) { %r(<li.+0\.1\.0.+0\.0\.0.+</li>)m }
 
-    it "includes title" do
+    it "includes title without version" do
+      builder.call tags
+      expect(path.read).to include(%(<title>Test | Undefined</title>))
+    end
+
+    it "includes label" do
       builder.call tags
 
       expect(path.read).to include(
