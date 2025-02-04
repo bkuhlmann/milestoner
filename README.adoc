@@ -171,6 +171,7 @@ build:
   format: "stream"
   index: true
   layout: "page"
+  manifest: false
   max: 1
   output: "tmp/milestones"
   stylesheet: true
@@ -236,7 +237,8 @@ The above can be customized as follows:
 ** `basename`: Required. The build file basename. Default: `index`. Used to customize the built file name.
 ** `format`: Required. The build output format. Default: `stream`. Used to determine what format to build the release notes as. Multiple formats are supported.
 ** `index`: Required. Enables (or disables) building the versions index page for web format only. Default: true.
-** `layout`: Required. The {hanami_views_link} layout used when building release notes. Default: page. This can be disabled when using `false` or customized further -- via your own {xdg_link} configuration -- when providing your own templates and/or partials.
+** `layout`: Required. The {hanami_views_link} layout used when building release notes. Default: `page`. This can be disabled when using `false` or customized further -- via your own {xdg_link} configuration -- when providing your own templates and/or partials.
+** `manifest`: Required. The JSON manifest of milestones built. Handy for when you've built/cached previous milestones and want a quick way to check for differences (if any). Default: `false`.
 ** `max`: Required. The maximum number of {git_link} tags to build. Default: 1. By default, you are limited to building release notes for changes (commits) since the last tag but you can increase the maximum to build release notes for as many tags as you like.
 ** `output`: Required. The the directory for all generated output. Default: `tmp/milestones`. This can be a relative or absolute path and defaults to the current working directory. The path is automatically created if missing.
 ** `stylesheet`: Required. Enables (or disables) building the stylesheet for web format only. Default: true.
@@ -547,6 +549,97 @@ Milestone: patch
 ....
 
 Given the above, the resulting version would be: 2.0.0. This is because the highest milestone was a _major_ milestone.
+
+==== Manifest
+
+When the manifest is enabled via the global/local {xdg_link} configuration or via the CLI, then a `manifest.json` file will be created for you in the root of your build output folder with contents similar to the following:
+
+[source,json]
+----
+{
+  "generator": {
+    "label": "Milestoner",
+    "version": "19.0.0"
+  },
+  "latest": "1.0.0",
+  "versions": [
+    "0.0.1",
+    "0.1.0",
+    "1.0.0"
+  ]
+}
+----
+
+The above breaks down as follows:
+
+* `generator`: Captures generator details at time of manifest creation.
+* `latest`: The most recent version built.
+* `versions`: The array of versions built based on max build settings.
+
+The manifest allows you to capture build details which can be useful when needing to compare differences between a previous and current build. For convience, you can use the `Milestoner::Tags::Manifest` class to manage manifests. Example:
+
+[source,ruby]
+----
+manifest = Milestoner::Tags::Manifest.new
+latest_path = Pathname "$HOME/Engineering/OSS/demo/tmp/milestones/latest.json"
+
+manifest.write generator: {label: "Milestoner", version: "19.0.0"},
+               latest: "0.0.1",
+               versions: %w[0.0.0 0.0.1]
+# $HOME/Engineering/OSS/demo/tmp/milestones/manifest.json
+
+manifest.write latest_path,
+               generator: {label: "Milestoner", version: "19.0.0"},
+               latest: "0.0.2",
+               versions: %w[0.0.0 0.0.1 0.0.2]
+# $HOME/Engineering/OSS/demo/tmp/milestones/latest.json
+
+manifest.read
+# {
+#   :generator => {
+#     :label => "Milestoner",
+#     :version => "19.0.0"
+#   },
+#   :latest => "0.0.1",
+#   :versions => [
+#     "0.0.0",
+#     "0.0.1"
+#   ]
+# }
+
+manifest.read latest_path
+# {
+#   :generator => {
+#     :label => "Milestoner",
+#     :version => "19.0.0"
+#   },
+#   :latest => "0.0.2",
+#   :versions => [
+#     "0.0.0",
+#     "0.0.1",
+#     "0.0.2"
+#   ]
+# }
+
+manifest.diff latest_path
+# {
+#   :latest => [
+#     "0.0.2",
+#     "0.0.1"
+#   ],
+#   :versions => [
+#     [
+#       "0.0.0",
+#       "0.0.1",
+#       "0.0.2"
+#     ],
+#     [
+#       "0.0.0",
+#       "0.0.1"
+#     ]
+#   ]
+# }
+----
 
 ==== Templates
 
