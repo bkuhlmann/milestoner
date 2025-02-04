@@ -10,7 +10,7 @@ module Milestoner
 
     PathResolver = lambda do |path, logger:, &block|
       if path.exist?
-        logger.warn { "Skipped (exists): #{path}." }
+        logger.warn { "Path exists: #{path}. Skipped." }
       else
         path.make_ancestors
         block.call path if block

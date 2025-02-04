@@ -18,7 +18,7 @@ RSpec.describe Milestoner::Builders::PathResolver do
       path.touch
       resolver.call(path, logger:)
 
-      expect(logger.reread).to match(/⚠️.+Skipped \(exists\): #{path}\./)
+      expect(logger.reread).to match(/⚠️.+Path exists: #{path}\. Skipped\./)
     end
 
     context "when file doesn't exist" do
