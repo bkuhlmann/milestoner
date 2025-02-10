@@ -1,14 +1,13 @@
 <details id="<%= commit.sha %>" class="row" x-bind:open="open">
   <summary class="summary <%= commit.kind %>">
-    <div class="title">
-      <img src="https://alchemists.io/images/projects/milestoner/icons/<%= commit.icon %>.png"
-           alt="<%= commit.kind %>"
-           class="icon"
-           width="24"
-           height="24"
-           loading="lazy">
-      <span class="subject"><%= commit.subject %></span>
-    </div>
+    <img src="https://alchemists.io/images/projects/milestoner/icons/<%= commit.icon %>.png"
+         alt="<%= commit.kind %>"
+         class="icon"
+         width="24"
+         height="24"
+         loading="lazy">
+
+    <span class="subject"><%= commit.subject %></span>
 
     <a href="<%= commit.author.profile_url %>" class="author">
       <%= render :avatar, user: commit.author %>
