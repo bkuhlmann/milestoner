@@ -173,7 +173,10 @@ RSpec.describe Milestoner::Builders::ADoc::Pager do
 
     it "renders previous and next links" do
       builder.call past, present, future
-      expect(path.read).to include("link:0.0.0/[Previous (0.0.0)] | link:1.0.0/[Next (1.0.0)]")
+
+      expect(path.read).to include(
+        "link:../0.0.0/[Previous (0.0.0)] | link:../1.0.0/[Next (1.0.0)]"
+      )
     end
 
     it "renders generator" do

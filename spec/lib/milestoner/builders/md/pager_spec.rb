@@ -113,7 +113,7 @@ RSpec.describe Milestoner::Builders::MD::Pager do
 
     it "renders previous and next links" do
       builder.call past, present, future
-      expect(path.read).to include("[Previous (0.0.0)](0.0.0/) | [Next (1.0.0)](1.0.0/)")
+      expect(path.read).to include("[Previous (0.0.0)](../0.0.0/) | [Next (1.0.0)](../1.0.0/)")
     end
 
     it "answers file path" do
