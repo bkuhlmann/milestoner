@@ -1,3 +1,8 @@
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Rouge (https://rouge.jneen.net) */
 .rouge.highlight {
   --color-berry: hsl(240, 18%, 40%);
@@ -477,6 +482,21 @@
       font-size: 1rem;
       margin: 0 0 1rem 0;
     }
+  }
+
+  .spinner {
+    animation: spin 1.5s linear infinite;
+    border-radius: 50%;
+    border: 0.3rem solid var(--color-grey);
+    border-top: 0.3rem solid var(--color-green);
+    height: 1rem;
+    width: 1rem;
+  }
+
+  .fragment {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
   }
 
   .toggle {
