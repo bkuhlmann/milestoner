@@ -1,16 +1,21 @@
 <article class="milestone">
   <header class="header">
     <% if tag.index? %>
-      <a href="../"
-         class="root"
-         hx-get="../"
-         hx-select=".milestones"
-         hx-trigger="click, keyup[key=='v'] from:body"
-         hx-target=".milestone"
-         hx-swap="outerHTML"
-         hx-push-url="true">
-        Versions
-      </a>
+      <div class="fragment">
+        <a href="../"
+           class="root"
+           hx-get="../"
+           hx-select=".milestones"
+           hx-trigger="click, keyup[key=='v'] from:body"
+           hx-target=".milestone"
+           hx-swap="outerHTML"
+           hx-push-url="true"
+           hx-indicator=".index">
+          Versions
+        </a>
+
+        <div class="index spinner htmx-indicator"></div>
+      </div>
     <% end %>
 
     <h1 class="title">
@@ -71,19 +76,22 @@
     </p>
 
     <ul class="actions">
-      <li>
-        <a href="/<%= past.version %>/"
+      <li class="fragment">
+        <a href="../<%= past.version %>/"
            class="action"
            data-direction="previous"
-           hx-get="/<%= past.version %>/"
+           hx-get="../<%= past.version %>/"
            hx-select=".milestone"
            hx-trigger="click, keyup[key=='ArrowLeft'] from:body"
            hx-target=".milestone"
            hx-swap="outerHTML"
-           hx-push-url="true">
+           hx-push-url="true"
+           hx-indicator=".previous">
           Previous
           (<%= past.version %>)
         </a>
+
+        <div class="previous spinner htmx-indicator"></div>
       </li>
 
       <li>
@@ -100,16 +108,19 @@
         </div>
       </li>
 
-      <li>
-        <a href="/<%= future.version %>/"
+      <li class="fragment">
+        <div class="next spinner htmx-indicator"></div>
+
+        <a href="../<%= future.version %>/"
            class="action"
            data-direction="next"
-           hx-get="/<%= future.version %>/"
+           hx-get="../<%= future.version %>/"
            hx-select=".milestone"
            hx-trigger="click, keyup[key=='ArrowRight'] from:body"
            hx-target=".milestone"
            hx-swap="outerHTML"
-           hx-push-url="true">
+           hx-push-url="true"
+           hx-indicator=".next">
           Next
           (<%= future.version %>)
         </a>
