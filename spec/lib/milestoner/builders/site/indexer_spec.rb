@@ -15,7 +15,7 @@ RSpec.describe Milestoner::Builders::Site::Indexer do
 
   describe "#call" do
     let(:path) { temp_dir.join "index.html" }
-    let(:tags_pattern) { %r(<li.+0\.1\.0.+0\.0\.0.+</li>)m }
+    let(:tags_pattern) { %r(<option.+0\.1\.0.+0\.0\.0.+</option>)m }
 
     it "includes title without version" do
       builder.call tags
@@ -26,7 +26,7 @@ RSpec.describe Milestoner::Builders::Site::Indexer do
       builder.call tags
 
       expect(path.read).to include(
-        %(<a href="https://undefined.io/projects/test" class="label">Test</a> Versions)
+        %(<a href="https://undefined.io/projects/test" class="label">Test</a>)
       )
     end
 

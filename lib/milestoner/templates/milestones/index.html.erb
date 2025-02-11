@@ -1,6 +1,6 @@
 <section class="milestones">
   <h1 class="title">
-    <a href="<%= project_uri_home %>" class="label"><%= project_label %></a> Versions
+    <a href="<%= project_uri_home %>" class="label"><%= project_label %></a>
   </h1>
 
   <p>All versions adhere to the <a href="https://alchemists.io/articles/strict_semantic_versioning">Strict Semantic Versioning</a> as enforced with <a href="https://alchemists.io/projects/versionaire">Versionaire</a> and automated by <a href="<%= generator_uri %>"><%= generator_label %></a>. Briefly, this means:</p>
@@ -11,21 +11,30 @@
     <li><strong>Patch</strong> (x.y.Z): Incremented for small, backwards compatible, bug fixes.</li>
   </ul>
 
-  <ul class="list">
-    <% tags.each do |tag| %>
-      <li class="item">
-        <a href="/<%= tag.version %>/"
-           class="version"
-           hx-get="/<%= tag.version %>/"
-           hx-select=".milestone"
-           hx-target=".milestones"
-           hx-swap="outerHTML"
-           hx-push-url="true">
-          <%= tag.version %>
-        </a>
+  <div class="selection fragment">
+    <label for="version" class="label">Version:</label>
 
-        <span class="date"><%= tag.committed_date %></span>
-      </li>
-    <% end %>
-  </ul>
+    <select id="version"
+            name="version"
+            class="versions"
+            hx-get=""
+            hx-trigger="change"
+            hx-select=".milestone"
+            hx-target=".milestones"
+            hx-swap="outerHTML"
+            hx-push-url="true"
+            hx-indicator=".spinner"
+            hx-ext="select">
+
+      <option value="" class="option">Select...</option>
+
+      <% tags.each do |tag| %>
+        <option value="<%= tag.version %>/" class="option">
+          <%= tag.version %> (<%= tag.committed_date %>)
+        </option>
+      <% end %>
+    </select>
+
+    <div class="spinner htmx-indicator"></div>
+  </div>
 </section>
