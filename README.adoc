@@ -359,7 +359,7 @@ image:https://alchemists.io/images/projects/milestoner/screenshots/no_cache.png[
 
 === Build
 
-image:https://alchemists.io/images/projects/milestoner/screenshots/usage-build.png[Usage,width=787,height=675,role=focal_point]
+image:https://alchemists.io/images/projects/milestoner/screenshots/usage-build.png[Usage,width=786,height=708,role=focal_point]
 
 The build command allows you to quickly build release notes to check the current status of your project or deploy a new milestone. By default, the build command uses either the default or custom configuration as documented in the _Configuration_ section above. This means, when using the defaults, you can immediately build the release notes for your project in a temporary directory:
 
