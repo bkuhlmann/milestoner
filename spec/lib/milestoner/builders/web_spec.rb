@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::Web do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:builder) { described_class.new tagger: }
@@ -28,7 +25,7 @@ RSpec.describe Milestoner::Builders::Web do
       end
 
       it "answers path when success" do
-        expect(builder.call).to eq(Success(temp_dir))
+        expect(builder.call).to be_success(temp_dir)
       end
     end
 
@@ -47,7 +44,7 @@ RSpec.describe Milestoner::Builders::Web do
       end
 
       it "answers path when success" do
-        expect(builder.call).to eq(Success(temp_dir))
+        expect(builder.call).to be_success(temp_dir)
       end
     end
 
@@ -62,7 +59,7 @@ RSpec.describe Milestoner::Builders::Web do
       end
 
       it "answers message" do
-        expect(builder.call).to eq(Failure("Danger!"))
+        expect(builder.call).to be_failure("Danger!")
       end
     end
   end

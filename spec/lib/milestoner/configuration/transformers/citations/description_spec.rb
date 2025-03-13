@@ -3,16 +3,14 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Configuration::Transformers::Citations::Description do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:transformer) { described_class.new }
 
   describe "#call" do
     it "answers description when key exists" do
-      expect(transformer.call({project_description: "Test"})).to eq(
-        Success(project_description: "Test")
+      expect(transformer.call({project_description: "Test"})).to be_success(
+        project_description: "Test"
       )
     end
 
@@ -23,7 +21,7 @@ RSpec.describe Milestoner::Configuration::Transformers::Citations::Description d
 
     it "answers empty hash when key is missing" do
       transformer = described_class.new path: Pathname("bogus.cff")
-      expect(transformer.call({})).to eq(Success({}))
+      expect(transformer.call({})).to be_success({})
     end
   end
 end

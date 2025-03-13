@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Cache::Create do
-  include Dry::Monads[:result]
-
   subject(:action) { described_class.new }
 
   include_context "with application dependencies"

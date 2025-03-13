@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Cache::List do
-  include Dry::Monads[:result]
-
   using Refinements::StringIO
 
   subject(:action) { described_class.new }

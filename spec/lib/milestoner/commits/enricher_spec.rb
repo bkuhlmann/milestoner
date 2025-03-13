@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Commits::Enricher do
-  include Dry::Monads[:result]
-
   using Refinements::Struct
 
   subject(:enricher) { described_class.new categorizer: }
@@ -52,43 +49,41 @@ RSpec.describe Milestoner::Commits::Enricher do
 
       body = %(<div class="paragraph">\n<p>For <a href="https://test.io">Test</a>.</p>\n</div>)
 
-      expect(enricher.call).to eq(
-        Success(
-          [
-            Milestoner::Models::Commit[
-              author: Milestoner::Models::User.new,
-              authored_at: "1672593010",
-              authored_relative_at: "1 day ago",
-              body: "For link:https://test.io[Test].",
-              body_html: body,
-              collaborators: [],
-              committed_at: "1672611315",
-              committed_relative_at: "5 minutes ago",
-              created_at: Time.new(2023, 1, 1, 10, 10, 10, "-0700"),
-              deletions: 10,
-              files_changed: 2,
-              format: "asciidoc",
-              insertions: 5,
-              issue: Milestoner::Models::Link[
-                id: "123",
-                uri: "https://github.com/tester/test/issues/123"
-              ],
-              milestone: "patch",
-              notes_html: "",
-              position: 1,
-              review: Milestoner::Models::Link[
-                id: "All",
-                uri: "https://github.com/tester/test/pulls/"
-              ],
-              sha: "180dec7d8ae8",
-              signature: "Good",
-              signers: [],
-              subject: "Added documentation",
-              updated_at: Time.new(2023, 1, 1, 15, 15, 15, "-0700"),
-              uri: "https://github.com/tester/test/commit/180dec7d8ae8"
-            ]
+      expect(enricher.call).to be_success(
+        [
+          Milestoner::Models::Commit[
+            author: Milestoner::Models::User.new,
+            authored_at: "1672593010",
+            authored_relative_at: "1 day ago",
+            body: "For link:https://test.io[Test].",
+            body_html: body,
+            collaborators: [],
+            committed_at: "1672611315",
+            committed_relative_at: "5 minutes ago",
+            created_at: Time.new(2023, 1, 1, 10, 10, 10, "-0700"),
+            deletions: 10,
+            files_changed: 2,
+            format: "asciidoc",
+            insertions: 5,
+            issue: Milestoner::Models::Link[
+              id: "123",
+              uri: "https://github.com/tester/test/issues/123"
+            ],
+            milestone: "patch",
+            notes_html: "",
+            position: 1,
+            review: Milestoner::Models::Link[
+              id: "All",
+              uri: "https://github.com/tester/test/pulls/"
+            ],
+            sha: "180dec7d8ae8",
+            signature: "Good",
+            signers: [],
+            subject: "Added documentation",
+            updated_at: Time.new(2023, 1, 1, 15, 15, 15, "-0700"),
+            uri: "https://github.com/tester/test/commit/180dec7d8ae8"
           ]
-        )
+        ]
       )
     end
   end

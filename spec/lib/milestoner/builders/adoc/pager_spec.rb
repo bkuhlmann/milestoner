@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::ADoc::Pager do
-  include Dry::Monads[:result]
-
   using Refinements::Struct
 
   subject(:builder) { described_class.new }
@@ -188,7 +185,7 @@ RSpec.describe Milestoner::Builders::ADoc::Pager do
     end
 
     it "answers path when success" do
-      expect(builder.call(past, present, future)).to eq(Success(path))
+      expect(builder.call(past, present, future)).to be_success(path)
     end
   end
 end

@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Tags::Manifest do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
   using Refinements::Struct
 

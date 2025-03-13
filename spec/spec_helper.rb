@@ -13,6 +13,7 @@ end
 
 Bundler.require :tools
 
+require "dry/monads"
 require "gitt/rspec/shared_contexts/git_commit"
 require "gitt/rspec/shared_contexts/git_repo"
 require "gitt/rspec/shared_contexts/temp_dir"
@@ -47,4 +48,6 @@ RSpec.configure do |config|
     mocks.verify_doubled_constant_names = true
     mocks.verify_partial_doubles = true
   end
+
+  config.before(:suite) { Dry::Monads.load_extensions :rspec }
 end

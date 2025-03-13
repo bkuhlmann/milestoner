@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Tags::Creator do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
   using Refinements::Struct
 
@@ -56,7 +54,7 @@ RSpec.describe Milestoner::Tags::Creator do
     end
 
     it "answers version when success" do
-      git_repo_dir.change_dir { expect(creator.call(version)).to eq(Success(version)) }
+      git_repo_dir.change_dir { expect(creator.call(version)).to be_success(version) }
     end
 
     context "with commits since last tag" do
@@ -98,7 +96,7 @@ RSpec.describe Milestoner::Tags::Creator do
     it "answers success with version when local tag exists" do
       git_repo_dir.change_dir do
         `git tag #{version}`
-        expect(creator.call(version)).to eq(Success(version))
+        expect(creator.call(version)).to be_success(version)
       end
     end
 
@@ -106,8 +104,8 @@ RSpec.describe Milestoner::Tags::Creator do
       temp_dir.change_dir do
         `git init`
 
-        expect(creator.call(version)).to eq(
-          Failure("Your current branch 'main' does not have any commits yet.")
+        expect(creator.call(version)).to be_failure(
+          "Your current branch 'main' does not have any commits yet."
         )
       end
     end

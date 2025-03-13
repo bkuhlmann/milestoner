@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Tags::Enricher do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
   using Versionaire::Cast
 
@@ -42,19 +39,17 @@ RSpec.describe Milestoner::Tags::Enricher do
       git_repo_dir.change_dir do
         `git tag 0.0.0 --message 0.0.0`
 
-        expect(tagger.call).to eq(
-          Success(
-            [
-              Milestoner::Models::Tag[
-                author: Milestoner::Models::User.new,
-                commits: [],
-                committed_at: settings.loaded_at,
-                sha: nil,
-                signature: nil,
-                version: Version("1.2.3")
-              ]
+        expect(tagger.call).to be_success(
+          [
+            Milestoner::Models::Tag[
+              author: Milestoner::Models::User.new,
+              commits: [],
+              committed_at: settings.loaded_at,
+              sha: nil,
+              signature: nil,
+              version: Version("1.2.3")
             ]
-          )
+          ]
         )
       end
     end
@@ -81,19 +76,17 @@ RSpec.describe Milestoner::Tags::Enricher do
       temp_dir.change_dir do
         `git init`
 
-        expect(tagger.call).to eq(
-          Success(
-            [
-              Milestoner::Models::Tag[
-                author: Milestoner::Models::User.new,
-                commits: [],
-                committed_at: settings.loaded_at,
-                sha: nil,
-                signature: nil,
-                version: Version("1.2.3")
-              ]
+        expect(tagger.call).to be_success(
+          [
+            Milestoner::Models::Tag[
+              author: Milestoner::Models::User.new,
+              commits: [],
+              committed_at: settings.loaded_at,
+              sha: nil,
+              signature: nil,
+              version: Version("1.2.3")
             ]
-          )
+          ]
         )
       end
     end
@@ -170,7 +163,7 @@ RSpec.describe Milestoner::Tags::Enricher do
           `git tag 0.0.0 --message 0.0.0`
           `touch a.txt && git add --all && git commit --message "Added A"`
 
-          expect(tagger.call).to eq(Failure("No tags or commits."))
+          expect(tagger.call).to be_failure("No tags or commits.")
         end
       end
 

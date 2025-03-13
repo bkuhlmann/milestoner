@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Tags::Publisher do
-  include Dry::Monads[:result]
-
   subject(:publisher) { described_class.new creator:, pusher: }
 
   include_context "with application dependencies"
@@ -26,7 +23,7 @@ RSpec.describe Milestoner::Tags::Publisher do
     end
 
     it "answers version when success" do
-      expect(publisher.call(version)).to eq(Success(version))
+      expect(publisher.call(version)).to be_success(version)
     end
 
     it "logs published version when success" do
@@ -36,12 +33,12 @@ RSpec.describe Milestoner::Tags::Publisher do
 
     it "answers failure when create fails" do
       allow(creator).to receive(:call).with(version).and_return Failure("Danger!")
-      expect(publisher.call(version)).to eq(Failure("Danger!"))
+      expect(publisher.call(version)).to be_failure("Danger!")
     end
 
     it "answers failure when push fails" do
       allow(pusher).to receive(:call).with(version).and_return Failure("Danger!")
-      expect(publisher.call(version)).to eq(Failure("Danger!"))
+      expect(publisher.call(version)).to be_failure("Danger!")
     end
   end
 end

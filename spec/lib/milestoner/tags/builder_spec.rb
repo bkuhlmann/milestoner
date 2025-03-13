@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 require "versionaire"
 
 RSpec.describe Milestoner::Tags::Builder do
-  include Dry::Monads[:result]
-
   subject(:builder) { described_class.new enricher: }
 
   include_context "with application dependencies"
@@ -32,7 +29,7 @@ RSpec.describe Milestoner::Tags::Builder do
     end
 
     it "renders content" do
-      expect(builder.call(version)).to eq(Success(proof))
+      expect(builder.call(version)).to be_success(proof)
     end
 
     context "without commits" do
@@ -64,7 +61,7 @@ RSpec.describe Milestoner::Tags::Builder do
       end
 
       it "answers message" do
-        expect(builder.call(version)).to eq(Failure("Danger!"))
+        expect(builder.call(version)).to be_failure("Danger!")
       end
     end
   end

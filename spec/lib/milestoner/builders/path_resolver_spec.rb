@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::PathResolver do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:resolver) { described_class }
@@ -42,7 +40,7 @@ RSpec.describe Milestoner::Builders::PathResolver do
       end
 
       it "answers path" do
-        expect(resolver.call(path, logger:)).to eq(Success(path))
+        expect(resolver.call(path, logger:)).to be_success(path)
       end
     end
   end

@@ -6,8 +6,6 @@ require "tone/rspec/matchers/have_color"
 require "versionaire"
 
 RSpec.describe Milestoner::Builders::Stream do
-  include Dry::Monads[:result]
-
   using Refinements::StringIO
   using Refinements::Struct
   using Versionaire::Cast
@@ -163,7 +161,7 @@ RSpec.describe Milestoner::Builders::Stream do
       end
 
       it "answers message" do
-        expect(builder.call).to eq(Failure("Danger!"))
+        expect(builder.call).to be_failure("Danger!")
       end
     end
   end

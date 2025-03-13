@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::Site::Styler do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:builder) { described_class.new }
@@ -34,7 +32,7 @@ RSpec.describe Milestoner::Builders::Site::Styler do
     end
 
     it "answers path" do
-      expect(builder.call).to eq(Success(path))
+      expect(builder.call).to be_success(path)
     end
 
     context "when disabled" do
@@ -46,7 +44,7 @@ RSpec.describe Milestoner::Builders::Site::Styler do
       end
 
       it "answers empty success" do
-        expect(builder.call).to eq(Success())
+        expect(builder.call).to be_success
       end
     end
   end

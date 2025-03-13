@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Commands::Build do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:command) { described_class.new stream:, web: }

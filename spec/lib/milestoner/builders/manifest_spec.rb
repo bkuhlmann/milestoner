@@ -4,8 +4,6 @@ require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::Manifest do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
   using Refinements::Struct
 
@@ -46,7 +44,7 @@ RSpec.describe Milestoner::Builders::Manifest do
       end
 
       it "answers path" do
-        expect(builder.call).to eq(Success(path))
+        expect(builder.call).to be_success(path)
       end
 
       it "logs info" do
@@ -67,7 +65,7 @@ RSpec.describe Milestoner::Builders::Manifest do
       end
 
       it "answers message" do
-        expect(builder.call).to eq(Failure("Danger!"))
+        expect(builder.call).to be_failure("Danger!")
       end
     end
 
@@ -80,7 +78,7 @@ RSpec.describe Milestoner::Builders::Manifest do
       end
 
       it "answers path" do
-        expect(builder.call).to eq(Success(path))
+        expect(builder.call).to be_success(path)
       end
 
       it "doesn't log info" do

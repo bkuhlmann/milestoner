@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::Site::Indexer do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:builder) { described_class.new }
@@ -49,7 +46,7 @@ RSpec.describe Milestoner::Builders::Site::Indexer do
     end
 
     it "answers path" do
-      expect(builder.call(tags)).to eq(Success(path))
+      expect(builder.call(tags)).to be_success(path)
     end
 
     context "when disabled" do
@@ -61,7 +58,7 @@ RSpec.describe Milestoner::Builders::Site::Indexer do
       end
 
       it "answers empty success" do
-        expect(builder.call(tags)).to eq(Success())
+        expect(builder.call(tags)).to be_success
       end
     end
   end

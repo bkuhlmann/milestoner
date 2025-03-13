@@ -3,20 +3,18 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Configuration::Transformers::Gems::URI do
-  include Dry::Monads[:result]
-
   subject(:transformer) { described_class.new }
 
   describe "#call" do
     it "answers URI when key exists" do
-      expect(transformer.call({project_uri: "https://demo.com"})).to eq(
-        Success(project_uri: "https://demo.com")
+      expect(transformer.call({project_uri: "https://demo.com"})).to be_success(
+        project_uri: "https://demo.com"
       )
     end
 
     it "answers specification home page URL when key is missing and specification exists" do
       transformer = described_class.new path: SPEC_ROOT.join("support/fixtures/demo.gemspec")
-      expect(transformer.call({})).to eq(Success(project_uri: "https://test.com/projects/demo"))
+      expect(transformer.call({})).to be_success(project_uri: "https://test.com/projects/demo")
     end
 
     it "answers formatted URL when specifiers are detected" do
@@ -26,29 +24,25 @@ RSpec.describe Milestoner::Configuration::Transformers::Gems::URI do
         project_uri: "%<organization_uri>s/projects/%<project_name>s"
       }
 
-      expect(transformer.call(attributes)).to eq(
-        Success(
-          organization_uri: "https://acme.io",
-          project_name: "test",
-          project_uri: "https://acme.io/projects/test"
-        )
+      expect(transformer.call(attributes)).to be_success(
+        organization_uri: "https://acme.io",
+        project_name: "test",
+        project_uri: "https://acme.io/projects/test"
       )
     end
 
     it "answers empty hash when key is missing" do
       transformer = described_class.new path: Pathname("bogus.gemspec")
-      expect(transformer.call({})).to eq(Success({}))
+      expect(transformer.call({})).to be_success({})
     end
 
     it "answers failure when string specifier is missing" do
       attributes = {project_uri: "%<organization_uri>s/projects/%<project_name>s"}
       transformer = described_class.new path: Pathname("bogus.gemspec")
 
-      expect(transformer.call(attributes)).to eq(
-        Failure(
-          step: :transform,
-          payload: %(Unable to transform :project_uri, missing specifier: "<organization_uri>".)
-        )
+      expect(transformer.call(attributes)).to be_failure(
+        step: :transform,
+        payload: %(Unable to transform :project_uri, missing specifier: "<organization_uri>".)
       )
     end
   end

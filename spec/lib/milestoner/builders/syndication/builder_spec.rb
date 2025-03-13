@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::Syndication::Builder do
-  include Dry::Monads[:result]
-
   subject(:builder) { described_class.new }
 
   include_context "with application dependencies"
@@ -187,20 +185,20 @@ RSpec.describe Milestoner::Builders::Syndication::Builder do
       tag.author = Milestoner::Models::User.new
       tag.commits.clear
 
-      expect(builder.call([tag])).to match(
-        Failure("#{described_class}: Required variables of maker.channel.author are not set: name.")
+      expect(builder.call([tag])).to be_failure(
+        "#{described_class}: Required variables of maker.channel.author are not set: name."
       )
     end
 
     it "answers failure without milestones" do
-      expect(builder.call([])).to eq(Failure("No tags or commits."))
+      expect(builder.call([])).to be_failure("No tags or commits.")
     end
 
     it "answers failure when attribute is missing" do
       tag.committed_at = nil
 
-      expect(builder.call([tag])).to match(
-        Failure("#{described_class}: Undefined method 'strftime' for nil.")
+      expect(builder.call([tag])).to be_failure(
+        "#{described_class}: Undefined method 'strftime' for nil."
       )
     end
   end

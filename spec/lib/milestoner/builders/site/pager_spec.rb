@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::Site::Pager do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
   using Refinements::Struct
 
@@ -170,7 +167,7 @@ RSpec.describe Milestoner::Builders::Site::Pager do
     end
 
     it "answers file path" do
-      expect(builder.call(past, present, future)).to eq(Success(path))
+      expect(builder.call(past, present, future)).to be_success(path)
     end
   end
 end

@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Cache::Delete do
-  include Dry::Monads[:result]
-
   subject(:action) { described_class.new }
 
   include_context "with application dependencies"
@@ -17,7 +14,7 @@ RSpec.describe Milestoner::CLI::Actions::Cache::Delete do
       cache.write(:users) { upsert record }
       action.call "Test"
 
-      expect(cache.read(:users, &:all)).to eq(Success([]))
+      expect(cache.read(:users, &:all)).to be_success([])
     end
 
     it "logs user deletion" do

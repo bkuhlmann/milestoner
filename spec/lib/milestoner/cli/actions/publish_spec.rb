@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::CLI::Actions::Publish do
-  include Dry::Monads[:result]
-
   using Refinements::Struct
   using Versionaire::Cast
 

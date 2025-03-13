@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::Feed do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:builder) { described_class.new tagger: }
@@ -23,7 +20,7 @@ RSpec.describe Milestoner::Builders::Feed do
     end
 
     it "answers path when success" do
-      expect(builder.call).to eq(Success(path))
+      expect(builder.call).to be_success(path)
     end
 
     context "with failure" do
@@ -37,7 +34,7 @@ RSpec.describe Milestoner::Builders::Feed do
       end
 
       it "answers message" do
-        expect(builder.call).to eq(Failure("Danger!"))
+        expect(builder.call).to be_failure("Danger!")
       end
     end
   end

@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "dry/monads"
 require "spec_helper"
 
 RSpec.describe Milestoner::Builders::ADoc::Indexer do
-  include Dry::Monads[:result]
-
   subject(:builder) { described_class.new }
 
   include_context "with application dependencies"
@@ -46,7 +43,7 @@ RSpec.describe Milestoner::Builders::ADoc::Indexer do
     end
 
     it "answers path" do
-      expect(builder.call(tags)).to eq(Success(path))
+      expect(builder.call(tags)).to be_success(path)
     end
   end
 end

@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Milestoner::Commits::Collector do
-  include Dry::Monads[:result]
-
   using Refinements::Pathname
 
   subject(:collector) { described_class.new }
@@ -50,8 +48,8 @@ RSpec.describe Milestoner::Commits::Collector do
       git_repo_dir.change_dir do
         `git tag 0.0.0`
 
-        expect(collector.call(min: :danger, max: :invalid)).to eq(
-          Failure("Invalid minimum and/or maximum range: danger..invalid.")
+        expect(collector.call(min: :danger, max: :invalid)).to be_failure(
+          "Invalid minimum and/or maximum range: danger..invalid."
         )
       end
     end
@@ -69,8 +67,8 @@ RSpec.describe Milestoner::Commits::Collector do
       temp_dir.change_dir do
         `git init`
 
-        expect(collector.call).to eq(
-          Failure("fatal: your current branch 'main' does not have any commits yet\n")
+        expect(collector.call).to be_failure(
+          "fatal: your current branch 'main' does not have any commits yet\n"
         )
       end
     end
