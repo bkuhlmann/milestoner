@@ -13,7 +13,6 @@ module Milestoner
         config.part_namespace = Parts
         config.paths = Container[:settings].build_template_paths
         config.scope_namespace = Scopes
-        config.scope_builder = Milestoner::Views::ScopeBuilder
         config.template = "milestones/show"
 
         expose :past, :tag, :future
