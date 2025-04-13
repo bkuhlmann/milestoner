@@ -22,7 +22,7 @@ module Milestoner
     register :cache do
       # :nocov:
       Lode.new self["xdg.cache"].passive do |config|
-        config.mode = :max
+        config.mode = :thread
         config.table = Lode::Tables::Value
         config.register :users, model: Models::User, primary_key: :name
       end
