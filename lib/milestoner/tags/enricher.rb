@@ -80,7 +80,7 @@ module Milestoner
           committed_at: committed_at(tag.committed_at),
           sha: tag.sha,
           signature: tag.signature,
-          version: Version(tag.version || settings.project_version),
+          version: Version(tag.version || settings.project_version)
         ]
       end
 
