@@ -40,7 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rouge", "~> 4.5"
   spec.add_dependency "rss", "~> 0.3"
   spec.add_dependency "runcom", "~> 12.0"
-  spec.add_dependency "sanitize", "~> 6.1"
+  spec.add_dependency "sanitize", "~> 7.0"
   spec.add_dependency "sod", "~> 1.0"
   spec.add_dependency "spek", "~> 4.0"
   spec.add_dependency "tone", "~> 2.0"
