@@ -7,8 +7,6 @@ module Milestoner
     module Milestones
       # The index view.
       class Index < Hanami::View
-        include Dependencies[:settings]
-
         config.default_context = Context.new
         config.part_namespace = Parts
         config.paths = Container[:settings].build_template_paths
