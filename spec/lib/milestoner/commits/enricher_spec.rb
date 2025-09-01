@@ -43,9 +43,9 @@ RSpec.describe Milestoner::Commits::Enricher do
 
   describe "#call" do
     it "answers commits" do
-      settings.merge! commit_uri: "https://github.com/tester/test/commit/%<id>s",
-                      review_uri: "https://github.com/tester/test/pulls/%<id>s",
-                      tracker_uri: "https://github.com/tester/test/issues/%<id>s"
+      settings.with! commit_uri: "https://github.com/tester/test/commit/%<id>s",
+                     review_uri: "https://github.com/tester/test/pulls/%<id>s",
+                     tracker_uri: "https://github.com/tester/test/issues/%<id>s"
 
       body = %(<div class="paragraph">\n<p>For <a href="https://test.io">Test</a>.</p>\n</div>)
 

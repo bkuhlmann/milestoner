@@ -81,7 +81,7 @@ RSpec.describe Milestoner::Views::Context do
     end
 
     it "answers organization label when project information is missing" do
-      settings.merge! project_label: nil, project_version: nil
+      settings.with! project_label: nil, project_version: nil
       expect(a_context.page_title).to eq("Undefined")
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Milestoner::Views::Context do
     end
 
     it "answers emmpty string when project and organization information is missing" do
-      settings.merge! project_label: nil, project_version: nil, organization_label: nil
+      settings.with! project_label: nil, project_version: nil, organization_label: nil
       expect(a_context.page_title).to eq("")
     end
   end
@@ -140,7 +140,7 @@ RSpec.describe Milestoner::Views::Context do
     end
 
     it "answers empty string when label and version are missing" do
-      settings.merge! project_label: nil, project_version: nil
+      settings.with! project_label: nil, project_version: nil
       expect(a_context.project_title).to eq("")
     end
   end

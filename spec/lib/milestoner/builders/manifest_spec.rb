@@ -37,7 +37,7 @@ RSpec.describe Milestoner::Builders::Manifest do
       end
 
       it "warns when path exists" do
-        path.deep_touch
+        path.touch_deep
         builder.call
 
         expect(logger.reread).to match(/⚠️.+Path exists: #{path}\. Skipped\./)

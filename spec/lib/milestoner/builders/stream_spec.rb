@@ -118,7 +118,7 @@ RSpec.describe Milestoner::Builders::Stream do
 
       before do
         tags.pop
-        tags.first.merge! version: Version("1.2.3")
+        tags.first.with! version: Version("1.2.3")
       end
 
       it "renders content" do
