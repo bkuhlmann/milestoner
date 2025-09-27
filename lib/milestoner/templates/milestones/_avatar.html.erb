@@ -1,6 +1,6 @@
 <img src="<%= user.avatar_url %>"
      alt="<%= user.image_alt %>"
      class="avatar"
-     width="24"
-     height="24"
+     width="<%= locals.fetch :width, 24 %>"
+     height="<%= locals.fetch :height, 24 %>"
      loading="lazy">

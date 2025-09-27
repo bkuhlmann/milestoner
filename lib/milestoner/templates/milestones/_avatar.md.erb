@@ -1,1 +1,1 @@
-<img src="<%= user.avatar_url %>" alt="<%= user.image_alt %>" width="24" height="24" loading="lazy">
+<img src="<%= user.avatar_url %>" alt="<%= user.image_alt %>" width="<%= locals.fetch :width, 24 %>" height="<%= locals.fetch :height, 24 %>" loading="lazy">

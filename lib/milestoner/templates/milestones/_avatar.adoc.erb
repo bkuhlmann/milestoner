@@ -1,1 +1,1 @@
-image:<%= user.avatar_url %>[<%= user.image_alt %>,24,24]
+image:<%= user.avatar_url %>[<%= user.image_alt %>,<%= locals.fetch :width, 24 %>,<%= locals.fetch :height, 24 %>]
