@@ -1,0 +1,7 @@
+<ul class="contributors">
+  <% contributors.each do |contributor| %>
+    <li class="contributor">
+      <%= render :contributor, user: contributor %>
+    </li>
+  <% end %>
+</ul>

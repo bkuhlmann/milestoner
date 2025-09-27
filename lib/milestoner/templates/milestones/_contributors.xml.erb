@@ -1,0 +1,5 @@
+<div style="display: inline-flex; flex-wrap: wrap; gap: 1.5rem;">
+  <% contributors.each do |contributor| %>
+    <%= render :contributor, user: contributor %>
+  <% end %>
+</div>
