@@ -8,6 +8,7 @@ require "versionaire"
 module Milestoner
   module Tags
     # Builds a collection of enriched tags and associated commits.
+    # :reek:TooManyMethods
     class Enricher
       include Milestoner::Dependencies[:git, :settings, :logger]
       include Commits::Enrichers::Dependencies[author_enricher: :author]
@@ -78,6 +79,7 @@ module Milestoner
           author: author(tag),
           commits:,
           committed_at: committed_at(tag.committed_at),
+          contributors: contributors(commits),
           sha: tag.sha,
           signature: tag.signature,
           version: Version(tag.version || settings.project_version)
@@ -94,6 +96,7 @@ module Milestoner
             author: commits.last.author,
             commits:,
             committed_at: Time.now,
+            contributors: [],
             version: settings.project_version
           ]
         ]
@@ -101,6 +104,13 @@ module Milestoner
 
       def author tag
         author_enricher.call tag.with(author_name: tag.author_name || settings.project_author)
+      end
+
+      # :reek:UtilityFunction
+      def contributors commits
+        commits.reduce([]) { |all, commit| all.append(*commit.contributors) }
+               .uniq
+               .sort_by(&:name)
       end
 
       def committed_at(at) = at ? Time.at(at.to_i) : settings.loaded_at

@@ -35,7 +35,7 @@ RSpec.describe Milestoner::Tags::Enricher do
       end
     end
 
-    it "answers milestone with empty commits when tag exists with and no new commits" do
+    it "answers milestone with empty commits when tag exists with no new commits" do
       git_repo_dir.change_dir do
         `git tag 0.0.0 --message 0.0.0`
 
@@ -45,6 +45,7 @@ RSpec.describe Milestoner::Tags::Enricher do
               author: Milestoner::Models::User.new,
               commits: [],
               committed_at: settings.loaded_at,
+              contributors: [],
               sha: nil,
               signature: nil,
               version: Version("1.2.3")
@@ -54,7 +55,7 @@ RSpec.describe Milestoner::Tags::Enricher do
       end
     end
 
-    it "answers failure when tail is tag" do
+    it "answers success with tail option" do
       settings.build_tail = "tag"
 
       git_repo_dir.change_dir do
@@ -72,7 +73,7 @@ RSpec.describe Milestoner::Tags::Enricher do
       end
     end
 
-    it "answers empty tag no tags or commits exist" do
+    it "answers empty tag when no tags or commits exist" do
       temp_dir.change_dir do
         `git init`
 
@@ -82,6 +83,7 @@ RSpec.describe Milestoner::Tags::Enricher do
               author: Milestoner::Models::User.new,
               commits: [],
               committed_at: settings.loaded_at,
+              contributors: [],
               sha: nil,
               signature: nil,
               version: Version("1.2.3")
@@ -95,8 +97,37 @@ RSpec.describe Milestoner::Tags::Enricher do
       before do
         settings.build_max = 10
 
-        cache.write :users do |table|
-          table.create Milestoner::Models::User[external_id: 1, handle: "test", name: "Test User"]
+        cache.write :users do
+          upsert({external_id: 1, handle: "test", name: "Test User"})
+          upsert({external_id: 2, handle: "collaborator", name: "Test C"})
+          upsert({external_id: 3, handle: "signer", name: "Test S"})
+        end
+      end
+
+      it "answers unique and sorted collaborators" do
+        settings.build_tail = "tag"
+
+        git_repo_dir.change_dir do
+          `touch a.txt && git add --all && git commit --message "Added A"`
+          `touch b.txt && git add --all`
+          `git commit --message "Added B" --trailer "Co-authored-by: Test C"`
+          `touch c.txt && git add --all`
+          `git commit --message "Added C" --trailer "Signed-off-by: Test S"`
+          `git tag 0.0.1 --message 0.0.1`
+
+          expect(tagger.call.success.first).to have_attributes(
+            author: Milestoner::Models::User[external_id: 1, handle: "test", name: "Test User"],
+            commits: kind_of(Array),
+            committed_at: kind_of(Time),
+            contributors: [
+              Milestoner::Models::User[external_id: 2, handle: "collaborator", name: "Test C"],
+              Milestoner::Models::User[external_id: 3, handle: "signer", name: "Test S"],
+              Milestoner::Models::User[external_id: 1, handle: "test", name: "Test User"]
+            ],
+            sha: kind_of(String),
+            signature: "",
+            version: Version("0.0.1")
+          )
         end
       end
 
@@ -143,7 +174,7 @@ RSpec.describe Milestoner::Tags::Enricher do
         end
       end
 
-      it "answers all tags when build tail is tag" do
+      it "answers all tags when build tail is a tag" do
         settings.build_tail = "tag"
 
         git_repo_dir.change_dir do
@@ -158,7 +189,7 @@ RSpec.describe Milestoner::Tags::Enricher do
     context "with invalid version" do
       before { settings.project_version = "bogus" }
 
-      it "logs error for no tags or commits" do
+      it "logs failure with no tags or commits" do
         git_repo_dir.change_dir do
           `git tag 0.0.0 --message 0.0.0`
           `touch a.txt && git add --all && git commit --message "Added A"`
@@ -167,7 +198,7 @@ RSpec.describe Milestoner::Tags::Enricher do
         end
       end
 
-      it "logs error for invalid version" do
+      it "logs error with invalid version" do
         git_repo_dir.change_dir do
           `git tag 0.0.0 --message 0.0.0`
           `touch a.txt && git add --all && git commit --message "Added A"`
