@@ -72,6 +72,18 @@ RSpec.describe Milestoner::Views::Parts::Tag do
     end
   end
 
+  describe "#contributor_names" do
+    it "answers names as a sentence" do
+      tag.contributors.append Milestoner::Models::User[name: "Inara Serra"]
+      expect(part.contributor_names).to eq("Malcolm Reynolds and Inara Serra")
+    end
+
+    it "answers empty string when there are no collaborators" do
+      tag.contributors.clear
+      expect(part.contributor_names).to eq("")
+    end
+  end
+
   describe "#deletion_count" do
     it "answers count" do
       expect(part.deletion_count).to eq(10)

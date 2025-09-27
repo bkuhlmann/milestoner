@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "hanami/view"
+require "refinements/array"
 require "refinements/string"
 
 module Milestoner
@@ -10,10 +11,12 @@ module Milestoner
       class Tag < Hanami::View::Part
         include Dependencies[:settings, :color, :durationer]
 
+        using Refinements::Array
         using Refinements::String
 
         decorate :commits
         decorate :author, as: :user
+        decorate :contributors, as: :user
 
         def colored_total_deletions(*custom)
           custom.push :green if custom.empty?
@@ -34,6 +37,8 @@ module Milestoner
         def committed_date = committed_at.strftime "%Y-%m-%d"
 
         def committed_datetime = committed_at.strftime "%Y-%m-%dT%H:%M:%S%z"
+
+        def contributor_names = contributors.map(&:name).to_sentence
 
         def deletion_count = commits.sum(&:deletions)
 
