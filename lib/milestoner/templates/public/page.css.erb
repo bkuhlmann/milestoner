@@ -3,6 +3,16 @@
   100% { transform: rotate(360deg); }
 }
 
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(html) {
+    interpolate-size: allow-keywords;
+  }
+}
+
 /* Rouge (https://rouge.jneen.net) */
 .rouge.highlight {
   --color-berry: hsl(240, 18%, 40%);
@@ -364,6 +374,10 @@
     }
   }
 
+  figcaption {
+    text-align: center;
+  }
+
   :not(pre) > code {
     background-color: var(--color-night);
     border-radius: 0.3rem;
@@ -481,6 +495,10 @@
     .sublabel {
       font-size: 1rem;
       margin: 0 0 1rem 0;
+    }
+
+    .shortcut {
+      margin: 0.5rem 0;
     }
   }
 
@@ -602,6 +620,13 @@
       }
     }
 
+    .help {
+      align-self: center;
+      background: none;
+      border: none;
+      font-size: 1rem;
+    }
+
     .overview {
       align-items: center;
       display: grid;
@@ -656,14 +681,21 @@
     }
 
     .row {
+      padding: 0.3em 0;
+
+      &[open] {
+        height: auto;
+        overflow: clip;
+      }
+
+      &[open] > .summary::before {
+        content: "\25BC";
+        width: 0.5rem;
+      }
+
       .label {
         font-weight: 600;
       }
-    }
-
-    .row[open] > .summary::before {
-      content: "\25BC";
-      width: 0.5rem;
     }
 
     .summary {
@@ -675,8 +707,11 @@
       grid-template-areas:
         "toggle icon subject subject subject subject subject subject"
         "toggle icon author files lines issue review review";
-      padding: 0.15rem 0;
-      margin: 0.25rem 0 0 0;
+
+      @media (width >= 700px) {
+        grid-template: 1fr / auto auto 4.6fr repeat(5, 1fr);
+        grid-template-areas: "toggle icon subject author files lines issue review";
+      }
 
       &::-webkit-details-marker {
         display: none;
@@ -715,10 +750,6 @@
         border-radius: 0.5rem;
       }
 
-      @media (width >= 700px) {
-        grid-template: 1fr / auto auto 5fr repeat(5, 1fr);
-        grid-template-areas: "toggle icon subject author files lines issue review";
-      }
 
       .icon {
         grid-area: icon;
@@ -899,6 +930,8 @@
     }
 
     .footer {
+      margin-top: 1rem;
+
       .totals {
         align-items: center;
         display: flex;
@@ -920,14 +953,36 @@
         }
       }
 
-      .help {
-        background: none;
-        border: none;
-        font-size: 1rem;
+      .contributions {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        margin: 3rem 0;
+
+        .message {
+          font-style: italic;
+          margin: 0;
+        }
       }
 
-      .shortcut {
-        margin: 0.5rem 0;
+      .contributors {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .profile {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
       }
 
       .actions {
