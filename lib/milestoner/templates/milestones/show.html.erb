@@ -31,6 +31,21 @@
     <time datetime="<%= tag.committed_datetime %>" class="date"><%= tag.committed_date %></time>
   </header>
 
+  <button class="help" popovertarget="po-shortcuts">ℹ️</button>
+
+  <div id="po-shortcuts" class="popover" popover="auto">
+    <h2 class="label">Keyboard Shortcuts</h2>
+
+    <ul class="shortcuts">
+      <li class="shortcut"><kbd class="key">v</kbd>: View versions.</li>
+      <li class="shortcut"><kbd class="key">TAB</kbd>: Move to next commit.</li>
+      <li class="shortcut"><kbd class="key">⇧ + TAB</kbd>: Move to previous commit.</li>
+      <li class="shortcut"><kbd class="key">ENTER</kbd>: Open or close a commit.</li>
+      <li class="shortcut"><kbd class="key">←</kbd>: View previous version.</li>
+      <li class="shortcut"><kbd class="key">→</kbd>: View next version.</li>
+    </ul>
+  </div>
+
   <% if tag.empty? %>
     <p class="dormant"></p>
   <% else %>
@@ -75,6 +90,11 @@
       <span class="duration"><%= tag.total_duration %>.</span>
     </p>
 
+    <section class="contributions">
+      <p class="message">Thanks to all who contributed to this release:</p>
+      <%= render "contributors", contributors: tag.contributors %>
+    </section>
+
     <ul class="actions">
       <li class="fragment">
         <a href="../<%= past.version %>/"
@@ -92,20 +112,6 @@
         </a>
 
         <div class="previous spinner htmx-indicator"></div>
-      </li>
-
-      <li>
-        <button class="help" popovertarget="po-shortcuts">ℹ️</button>
-
-        <div id="po-shortcuts" class="popover" popover="auto">
-          <h2 class="label">Keyboard Shortcuts</h2>
-
-          <ul>
-            <li class="shortcut"><kbd class="key">v</kbd>: View versions.</li>
-            <li class="shortcut"><kbd class="key">←</kbd>: View previous version.</li>
-            <li class="shortcut"><kbd class="key">→</kbd>: View next version.</li>
-          </ul>
-        </div>
       </li>
 
       <li class="fragment">

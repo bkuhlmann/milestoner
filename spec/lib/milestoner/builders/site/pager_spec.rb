@@ -141,7 +141,7 @@ RSpec.describe Milestoner::Builders::Site::Pager do
     end
 
     it "renders zero totals with no commits" do
-      present = Milestoner::Models::Tag[commits: [], version: "0.1.0"]
+      present = Milestoner::Models::Tag[commits: [], contributors: [], version: "0.1.0"]
       builder.call past, present, future
 
       expect(path.read).to match(
