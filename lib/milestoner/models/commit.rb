@@ -49,7 +49,7 @@ module Milestoner
         freeze
       end
 
-      def contributors = [author, *collaborators, *signers].sort_by!(&:name)
+      def contributors = [author, *collaborators, *signers].tap(&:uniq!).sort_by! { it.name.to_s }
     end
   end
 end

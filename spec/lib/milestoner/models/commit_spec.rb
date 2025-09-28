@@ -8,9 +8,11 @@ RSpec.describe Milestoner::Models::Commit do
     described_class[
       author: Milestoner::Models::User[external_id: 1, handle: "jsmith", name: "Jill Smith"],
       collaborators: [
+        Milestoner::Models::User.new,
         Milestoner::Models::User[external_id: 2, handle: "bbob", name: "Billy Bob"]
       ],
       signers: [
+        Milestoner::Models::User.new,
         Milestoner::Models::User[external_id: 3, handle: "csmith", name: "Charlie Smith"]
       ]
     ]
@@ -30,9 +32,10 @@ RSpec.describe Milestoner::Models::Commit do
   end
 
   describe "#contributors" do
-    it "answers author, collaborators, and signers sorted by name" do
+    it "answers unique author, collaborators, and signers sorted by name" do
       expect(commit.contributors).to eq(
         [
+          Milestoner::Models::User.new,
           Milestoner::Models::User[external_id: 2, handle: "bbob", name: "Billy Bob"],
           Milestoner::Models::User[external_id: 3, handle: "csmith", name: "Charlie Smith"],
           Milestoner::Models::User[external_id: 1, handle: "jsmith", name: "Jill Smith"]

@@ -110,7 +110,7 @@ module Milestoner
       def contributors commits
         commits.reduce([]) { |all, commit| all.append(*commit.contributors) }
                .uniq
-               .sort_by(&:name)
+               .sort_by { it.name.to_s }
       end
 
       def committed_at(at) = at ? Time.at(at.to_i) : settings.loaded_at
