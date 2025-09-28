@@ -15,7 +15,6 @@
   <%= scope(:content, content: commit.safe_notes).call %>
 
   <h4>Author</h4>
-
   <p><%= render :user, user: commit.author %></p>
 
   <h4>Collaborators</h4>

@@ -1,6 +1,6 @@
-<ul>
+<ul style="list-style: none; margin: 0; padding: 0;">
   <% users.each do |user| %>
-    <li style="display: inline-flex; align-items: center; gap: 0.5rem;">
+    <li>
       <%= render :user, user: %>
     </li>
   <% end %>
