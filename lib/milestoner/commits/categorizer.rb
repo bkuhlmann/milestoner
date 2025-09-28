@@ -19,7 +19,6 @@ module Milestoner
         @pattern = labels.empty? ? // : Regexp.union(labels)
       end
 
-      # :reek:NestedIterators
       def call min: Collector::MIN, max: Collector::MAX
         collect(min, max).each_value { |commits| commits.sort_by! { |_, commit| commit.subject } }
                          .values

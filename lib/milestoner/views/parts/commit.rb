@@ -7,7 +7,6 @@ module Milestoner
   module Views
     module Parts
       # The commit presentation logic.
-      # :reek:RepeatedConditional
       class Commit < Hanami::View::Part
         include Dependencies[:settings, :sanitizer, :color]
 
@@ -81,7 +80,6 @@ module Milestoner
 
         def total_deletions = format "%d", -deletions
 
-        # :reek:FeatureEnvy
         def total_insertions
           insertions.then { |total| total.positive? ? "+#{total}" : total.to_s }
         end

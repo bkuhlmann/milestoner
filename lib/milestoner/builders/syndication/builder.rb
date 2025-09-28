@@ -8,7 +8,6 @@ module Milestoner
   module Builders
     module Syndication
       # Builds feed in Atom format.
-      # :reek:DataClump
       class Builder
         include Milestoner::Dependencies[:settings]
         include Dry::Monads[:result]

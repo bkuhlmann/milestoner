@@ -3,6 +3,13 @@ exclude_paths:
   - vendor
 
 detectors:
+  DataClump:
+    exclude:
+      - Milestoner::Builders::Syndication::Builder
+  FeatureEnvy:
+    exclude:
+      - Milestoner::Tags::Manifest#content_for
+      - Milestoner::Views::Parts::Commit#total_insertions
   LongParameterList:
     enabled: false
   ModuleInitialize:
@@ -10,7 +17,11 @@ detectors:
       - Milestoner::Models
   NestedIterators:
     exclude:
+      - Milestoner::Commits::Categorizer#call
       - Milestoner::Commits::Versioner#trailer_milestones
+  RepeatedConditional:
+    exclude:
+      - Milestoner::Views::Parts::Commit
   TooManyMethods:
     exclude:
       - Milestoner::Views::Parts::Commit

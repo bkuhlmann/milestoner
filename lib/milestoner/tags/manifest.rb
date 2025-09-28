@@ -39,7 +39,6 @@ module Milestoner
 
       attr_reader :name
 
-      # :reek:FeatureEnvy
       def content_for tags
         generator.merge latest: tags.last.version, versions: tags.map(&:version)
       end
