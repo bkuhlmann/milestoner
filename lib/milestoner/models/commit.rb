@@ -48,6 +48,8 @@ module Milestoner
         super
         freeze
       end
+
+      def contributors = [author, *collaborators, *signers].sort_by!(&:name)
     end
   end
 end
