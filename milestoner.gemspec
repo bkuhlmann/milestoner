@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.signing_key = Gem.default_key_path
   spec.cert_chain = [Gem.default_cert_path]
 
-  spec.required_ruby_version = "~> 3.4"
+  spec.required_ruby_version = ">= 3.4"
   spec.add_dependency "asciidoctor", "~> 2.0"
   spec.add_dependency "cff", "~> 1.3"
   spec.add_dependency "cogger", "~> 1.0"
