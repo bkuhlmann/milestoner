@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: Please use the following metadata when citing this project in your work.
 title: Milestoner
 abstract: A command line interface for automated Git repository milestones.
-version: 19.8.1
+version: 19.9.0
 license: Hippocratic-2.1
-date-released: 2025-09-29
+date-released: 2025-11-07
 authors:
   - family-names: Kuhlmann
     given-names: Brooke
