@@ -2,7 +2,6 @@
 
 require "cff"
 require "dry/monads"
-require "pathname"
 
 module Milestoner
   module Configuration

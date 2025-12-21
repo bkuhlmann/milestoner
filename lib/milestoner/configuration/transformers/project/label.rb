@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "dry/monads"
-require "pathname"
 require "refinements/string"
 
 module Milestoner
