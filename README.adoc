@@ -661,7 +661,6 @@ lib/milestoner/templates
 │   ├── _avatar.md.erb
 │   ├── _avatar.xml.erb
 │   ├── _commit.adoc.erb
-│   ├── _commit.git.erb
 │   ├── _commit.html.erb
 │   ├── _commit.md.erb
 │   ├── _commit.stream.erb
@@ -669,6 +668,11 @@ lib/milestoner/templates
 │   ├── _content.adoc.erb
 │   ├── _content.html.erb
 │   ├── _content.xml.erb
+│   ├── _contributors.adoc.erb
+│   ├── _contributors.html.erb
+│   ├── _contributors.md.erb
+│   ├── _contributors.stream.erb
+│   ├── _contributors.xml.erb
 │   ├── _logo.adoc.erb
 │   ├── _logo.html.erb
 │   ├── _logo.md.erb
