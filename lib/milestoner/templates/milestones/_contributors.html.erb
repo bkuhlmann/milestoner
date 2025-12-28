@@ -1,7 +1,16 @@
-<ul class="contributors">
-  <% contributors.each do |contributor| %>
-    <li class="contributor">
-      <%= render :contributor, user: contributor %>
-    </li>
-  <% end %>
-</ul>
+<section class="contributions">
+  <p class="message">Thanks to all who contributed to this release:</p>
+  <ul class="contributors">
+    <% all.each do |user| %>
+      <li class="contributor">
+        <figure class="profile">
+          <%= render :avatar, user:, width: 50, height: 50 %>
+
+          <figcaption>
+            <%= render :profile, user: %>
+          </figcaption>
+        </figure>
+      </li>
+    <% end %>
+  </ul>
+</section>

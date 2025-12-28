@@ -1,5 +1,13 @@
+<p>Thanks to all who contributed to this release:</p>
+
 <div style="display: inline-flex; flex-wrap: wrap; gap: 1.5rem;">
-  <% contributors.each do |contributor| %>
-    <%= render :contributor, user: contributor %>
+  <% all.each do |user| %>
+    <figure style="display: inline-flex; align-items: center; flex-direction: column;">
+      <%= render :avatar, user:, width: 50, height: 50 %>
+
+      <figcaption>
+        <%= render :profile, user: %>
+      </figcaption>
+    </figure>
   <% end %>
 </div>
