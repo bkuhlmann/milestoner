@@ -35,14 +35,14 @@ module Milestoner
       ] => :settings
 
       def page_title delimiter: " | "
+        project_title = [project_label, project_version].compact.join " "
+
         [project_title, organization_label].compress.join delimiter
       end
 
       def project_slug
         [project_name, project_version].compact.join("_").tr ".", Core::EMPTY_STRING
       end
-
-      def project_title = [project_label, project_version].compact.join " "
     end
   end
 end

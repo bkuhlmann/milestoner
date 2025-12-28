@@ -70,6 +70,11 @@ RSpec.describe Milestoner::Views::Context do
       expect(a_context.page_title).to eq("Test 1.2.3 | Undefined")
     end
 
+    it "answers only project label and version when organization label is missing" do
+      settings.organization_label = nil
+      expect(a_context.page_title).to eq("Test 1.2.3")
+    end
+
     it "answers project and organization label when project version is missing" do
       settings.project_version = nil
       expect(a_context.page_title).to eq("Test | Undefined")
@@ -121,27 +126,6 @@ RSpec.describe Milestoner::Views::Context do
       settings.project_version = nil
 
       expect(a_context.project_slug).to eq("")
-    end
-  end
-
-  describe "#project_title" do
-    it "answers labeled version" do
-      expect(a_context.project_title).to eq("Test 1.2.3")
-    end
-
-    it "answers label only when version is missing" do
-      settings.project_version = nil
-      expect(a_context.project_title).to eq("Test")
-    end
-
-    it "answers version only when label is missing" do
-      settings.project_label = nil
-      expect(a_context.project_title).to eq("1.2.3")
-    end
-
-    it "answers empty string when label and version are missing" do
-      settings.with! project_label: nil, project_version: nil
-      expect(a_context.project_title).to eq("")
     end
   end
 
