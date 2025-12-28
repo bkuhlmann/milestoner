@@ -16,4 +16,4 @@
 <%= tag.total_duration %>.
 <% end %>
 
-Thanks to all who contributed to this release: <%= tag.contributor_names %>.
+<%= scope(:contributors, all: tag.contributors).call %>

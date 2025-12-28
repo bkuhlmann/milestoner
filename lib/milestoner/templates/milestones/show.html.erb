@@ -90,10 +90,7 @@
       <span class="duration"><%= tag.total_duration %>.</span>
     </p>
 
-    <section class="contributions">
-      <p class="message">Thanks to all who contributed to this release:</p>
-      <%= render "contributors", contributors: tag.contributors %>
-    </section>
+    <%= scope(:contributors, all: tag.contributors).call %>
 
     <ul class="actions">
       <li class="fragment">

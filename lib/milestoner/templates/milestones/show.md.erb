@@ -12,7 +12,7 @@
 **<%= tag.total_commits %>. <%= tag.total_files %>. <%= tag.total_deletions %>. <%= tag.total_insertions %>.**
 **<%= tag.total_duration %>.**
 
-Thanks to all who contributed to this release: <%= tag.contributor_names %>.
+<%= scope(:contributors, all: tag.contributors).call %>
 
 [Previous (<%= past.version %>)](../<%= past.version %>/) | [Next (<%= future.version %>)](../<%= future.version %>/)
 <% end %>

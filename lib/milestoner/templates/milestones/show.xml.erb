@@ -20,7 +20,5 @@
 
   <p><strong><%= tag.total_duration %>.</strong></p>
 
-  <p>Thanks to all who contributed to this release:</p>
-
-  <%= render "contributors", contributors: tag.contributors %>
+  <%= scope(:contributors, all: tag.contributors).call %>
 </section>
