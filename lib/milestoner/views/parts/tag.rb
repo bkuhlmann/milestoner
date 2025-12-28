@@ -38,8 +38,6 @@ module Milestoner
 
         def committed_datetime = committed_at.strftime "%Y-%m-%dT%H:%M:%S%z"
 
-        def contributor_names = contributors.map(&:name).to_sentence
-
         def deletion_count = commits.sum(&:deletions)
 
         def duration
