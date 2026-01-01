@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rss", "~> 0.3"
   spec.add_dependency "runcom", "~> 13.0"
   spec.add_dependency "sanitize", "~> 7.0"
-  spec.add_dependency "sod", "~> 1.5"
+  spec.add_dependency "sod", "~> 2.0"
   spec.add_dependency "spek", "~> 5.0"
   spec.add_dependency "tone", "~> 3.0"
   spec.add_dependency "versionaire", "~> 15.0"
