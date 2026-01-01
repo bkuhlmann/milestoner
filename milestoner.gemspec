@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "gitt", "~> 5.0"
   spec.add_dependency "hanami-view", "~> 2.2"
   spec.add_dependency "infusible", "~> 5.0"
-  spec.add_dependency "lode", "~> 2.0"
+  spec.add_dependency "lode", "~> 3.0"
   spec.add_dependency "redcarpet", "~> 3.6"
   spec.add_dependency "refinements", "~> 14.0"
   spec.add_dependency "rouge", "~> 4.5"
