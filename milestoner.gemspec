@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "asciidoctor", "~> 2.0"
   spec.add_dependency "cff", "~> 1.3"
   spec.add_dependency "cogger", "~> 2.0"
-  spec.add_dependency "containable", "~> 1.1"
+  spec.add_dependency "containable", "~> 2.0"
   spec.add_dependency "core", "~> 3.0"
   spec.add_dependency "dry-monads", "~> 1.9"
   spec.add_dependency "dry-schema", "~> 1.13"
