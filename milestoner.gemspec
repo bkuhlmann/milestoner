@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.cert_chain = [Gem.default_cert_path]
 
   spec.required_ruby_version = ">= 4.0"
+
   spec.add_dependency "asciidoctor", "~> 2.0"
   spec.add_dependency "cff", "~> 1.3"
   spec.add_dependency "cogger", "~> 2.0"
