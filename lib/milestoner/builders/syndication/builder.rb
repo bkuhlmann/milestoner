@@ -17,6 +17,7 @@ module Milestoner
         def self.authors_for tags
           tags.flat_map { |tag| tag.commits.map(&:author) }
               .then { |users| users.any? ? users : tags.map(&:author) }
+              .select(&:name)
               .uniq
         end
 

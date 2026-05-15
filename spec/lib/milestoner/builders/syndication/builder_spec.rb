@@ -186,7 +186,7 @@ RSpec.describe Milestoner::Builders::Syndication::Builder do
       tag.commits.clear
 
       expect(builder.call([tag])).to be_failure(
-        "#{described_class}: Required variables of maker.channel.author are not set: name."
+        "#{described_class}: Required variables of maker.channel are not set: author."
       )
     end
 
