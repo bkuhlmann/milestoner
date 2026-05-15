@@ -597,7 +597,7 @@
       gap: 0.5rem;
       grid-template: repeat(auto-fit, minmax(1rem, 1fr)) / 1fr;
       justify-items: center;
-      margin: 1rem 0 2rem 0;
+      margin: 1rem 0;
 
       @media (width >= 900px) {
         grid-template: 1fr / repeat(auto-fit, minmax(1rem, 1fr));
@@ -629,8 +629,36 @@
     .help {
       align-self: center;
       background: none;
-      border: none;
-      font-size: 1rem;
+      border-radius: 40px;
+      border: 2px solid;
+      box-sizing: border-box;
+      cursor: pointer;
+      display: block;
+      height: 20px;
+      margin-bottom: 1rem;
+      position: relative;
+      transform: scale(var(--ggs, 1));
+      width: 20px;
+
+      &::after, &::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 2px;
+        background: currentColor;
+        left: 7px;
+      }
+
+      &::after {
+        bottom: 2px;
+        height: 8px;
+      }
+      &::before {
+        height: 2px;
+        top: 2px;
+      }
     }
 
     .overview {
