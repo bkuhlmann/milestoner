@@ -45,7 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sod", "~> 2.0"
   spec.add_dependency "spek", "~> 5.0"
   spec.add_dependency "tone", "~> 3.0"
-  spec.add_dependency "versionaire", "~> 15.0"
+  spec.add_dependency "versionaire", "~> 15.3"
   spec.add_dependency "zeitwerk", "~> 2.8"
 
   spec.bindir = "exe"
