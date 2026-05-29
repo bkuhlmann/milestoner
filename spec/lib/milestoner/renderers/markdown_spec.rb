@@ -38,8 +38,8 @@ RSpec.describe Milestoner::Renderers::Markdown do
       CONTENT
 
       expect(html).to eq(<<~PROOF.strip)
-        <div class="highlight"><pre class="highlight ruby"><code><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">2</span>
-        </code></pre></div>
+        <pre class="highlight ruby"><code><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">2</span>
+        </code></pre>
       PROOF
     end
 
