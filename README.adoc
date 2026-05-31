@@ -292,7 +292,7 @@ The above can be customized as follows:
 * `tag`: Required. Manages tag creation.
 ** `subject`: Required. The tag subject. Default: `+Version %<project_version>s+`. Example: "Version 1.2.3". You can use a string literal or include any configuration key for a dynamic subject. In the case of `project_version` this is calculated at runtime.
 * `tracker`: Required. Manages issue tracker details.
-** `uri`: Required. The URI format for linking to issues as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit `Issue` trailer as linted by {git_lint_link}. When no ID can be found, this will default to _All_ issues.
+** `uri`: Required. The URI format for linking to issues as formatted using {string_formats_link}. Default: GitHub. The `id` is dynamically calculated via the commit `Issue` trailer as enforced by {git_lint_link}. When no ID can be found, this will default to _All_ issues.
 
 As hinted at above, all URIs (including syndication), support {string_formats_link}. This means you can use the `%<key>s` format -- replacing `key` with the key of your choice -- to customize your configuration further.
 
@@ -576,7 +576,7 @@ The above breaks down as follows:
 * `latest`: The most recent version built.
 * `versions`: The array of versions built based on max build settings.
 
-The manifest allows you to capture build details which can be useful when needing to compare differences between a previous and current build. For convience, you can use the `Milestoner::Tags::Manifest` class to manage manifests. Example:
+The manifest allows you to capture build details which can be useful when needing to compare differences between a previous and current build. For convenience, you can use the `Milestoner::Tags::Manifest` class to manage manifests. Example:
 
 [source,ruby]
 ----
