@@ -44,6 +44,13 @@ RSpec.describe Milestoner::Tags::Creator do
       end
     end
 
+    it "updates project version setting" do
+      git_repo_dir.change_dir do
+        creator.call version
+        expect(settings.project_version).to eq(version)
+      end
+    end
+
     it "creates tag with custom subject" do
       git_repo_dir.change_dir do
         settings.tag_subject = "Test"

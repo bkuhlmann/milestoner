@@ -38,6 +38,7 @@ module Milestoner
       def collect = collector.call.alt_map { |message| message.sub("fatal: y", "Y").sub("\n", ".") }
 
       def create version
+        settings.project_version = version
         builder.call(version).bind { |body| git.tag_create version, "#{subject}\n\n#{body}\n\n" }
       end
 
