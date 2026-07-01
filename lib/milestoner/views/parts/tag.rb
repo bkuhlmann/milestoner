@@ -18,12 +18,12 @@ module Milestoner
         decorate :author, as: :user
         decorate :contributors, as: :user
 
-        def colored_total_deletions(*custom)
+        def colored_total_deletions *custom
           custom.push :green if custom.empty?
           color[total_deletions, *custom]
         end
 
-        def colored_total_insertions(*custom)
+        def colored_total_insertions *custom
           custom.push :red if custom.empty?
           color[total_insertions, *custom]
         end

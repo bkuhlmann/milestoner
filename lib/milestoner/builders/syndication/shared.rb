@@ -11,7 +11,7 @@ module Milestoner
           collection.each { |attributes| build(**attributes.transform_keys(**)) }
         end
 
-        def build(**attributes)
+        def build **attributes
           node = public_send :"new_#{kind}"
           attributes.each { |key, value| node.public_send :"#{key}=", value }
         end

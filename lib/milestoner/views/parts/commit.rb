@@ -21,22 +21,22 @@ module Milestoner
           @prefixes = settings.commit_categories.pluck :label
         end
 
-        def colored_author(*custom)
+        def colored_author *custom
           custom.push :bold, :blue if custom.empty?
           color[author.name, *custom]
         end
 
-        def colored_created_relative_at(*custom)
+        def colored_created_relative_at *custom
           custom.push :bright_purple if custom.empty?
           color[authored_relative_at, *custom]
         end
 
-        def colored_updated_relative_at(*custom)
+        def colored_updated_relative_at *custom
           custom.push :cyan if custom.empty?
           color[committed_relative_at, *custom]
         end
 
-        def colored_sha(*custom)
+        def colored_sha *custom
           custom.push :yellow if custom.empty?
           color[sha[...12], *custom]
         end
