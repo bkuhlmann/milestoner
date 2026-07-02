@@ -15,7 +15,9 @@ module Milestoner
         config.scope_namespace = Scopes
         config.template = "milestones/show"
 
-        expose :past, :tag, :future
+        expose :past
+        expose :tag, decorate: true
+        expose :future
       end
     end
   end

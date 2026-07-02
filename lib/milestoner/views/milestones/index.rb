@@ -13,7 +13,7 @@ module Milestoner
         config.scope_namespace = Scopes
         config.template = "milestones/index"
 
-        expose :tags
+        expose :tags, decorate: true
       end
     end
   end
