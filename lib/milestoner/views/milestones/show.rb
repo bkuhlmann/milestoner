@@ -16,7 +16,7 @@ module Milestoner
         config.template = "milestones/show"
 
         expose :past
-        expose :tag, decorate: true
+        decorate :tag
         expose :future
       end
     end
