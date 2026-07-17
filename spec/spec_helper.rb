@@ -4,10 +4,9 @@ require "simplecov"
 require "warning"
 
 unless ENV["COVERAGE"] == "no"
-  SimpleCov.start do
-    add_filter %r(^/spec/)
-    enable_coverage :branch
-    minimum_coverage_by_file line: 95, branch: 95
+  SimpleCov.start :strict do
+    skip "lib/milestoner/builders/syndication/shared"
+    skip "lib/milestoner/templates"
   end
 end
 
