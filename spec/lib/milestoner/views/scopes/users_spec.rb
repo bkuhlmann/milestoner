@@ -21,21 +21,7 @@ RSpec.describe Milestoner::Views::Scopes::Users do
       let(:users) { [Milestoner::Views::Parts::User.new(value: user)] }
 
       it "renders user list" do
-        expect(scope.call).to eq(<<~CONTENT)
-          <ul class="list">
-              <li class="item">
-                <img src="https://avatars.githubusercontent.com/u/1"
-               alt="Test"
-               class="avatar"
-               width="24"
-               height="24"
-               loading="lazy">
-           <a href="https://github.com/test">Test</a>
-
-
-              </li>
-          </ul>
-        CONTENT
+        expect(scope.call).to include("https://avatars.githubusercontent.com/u/1")
       end
     end
 

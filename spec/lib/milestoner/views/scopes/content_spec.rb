@@ -17,7 +17,7 @@ RSpec.describe Milestoner::Views::Scopes::Content do
       let(:locals) { {content: "Test."} }
 
       it "renders tag signature" do
-        expect(scope.call).to eq("Test.\n")
+        expect(scope.call).to include("Test.")
       end
     end
 

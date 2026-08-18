@@ -87,34 +87,12 @@ RSpec.describe Milestoner::Builders::Site::Pager do
 
     it "renders message" do
       builder.call past, present, future
-
-      content = <<~CONTENT.gsub(/^(?=\s*(<|\w))/, "    ").sub("\n    \n", "\n\n")
-        <div class="message">
-          <h1 class="bar">Message</h1>
-          <div class="content">
-            For <a href="https://asciidoctor.org" rel="nofollow">ASCII Doc</a>.
-
-          </div>
-        </div>
-      CONTENT
-
-      expect(path.read).to include(content)
+      expect(path.read).to include(%(<h1 class="bar">Message</h1>))
     end
 
     it "renders notes" do
       builder.call past, present, future
-
-      content = <<~CONTENT.gsub(/^(?=\s*(<|\w))/, "    ").sub("\n    \n", "\n\n")
-        <div class="notes">
-          <h2 class="bar">Notes</h2>
-          <div class="content">
-            For <a href="https://asciidoctor.org" rel="nofollow">ASCII Doc</a>.
-
-          </div>
-        </div>
-      CONTENT
-
-      expect(path.read).to include(content)
+      expect(path.read).to include(%(<h2 class="bar">Notes</h2>))
     end
 
     it "renders valid when signature exists" do

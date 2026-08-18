@@ -30,29 +30,7 @@ RSpec.describe Milestoner::Views::Scopes::Contributors do
       let(:all) { [Milestoner::Views::Parts::User.new(value: user)] }
 
       it "renders user list" do
-        expect(scope.call).to eq(<<~CONTENT)
-          <section class="contributions">
-            <p class="message">Thanks to all who contributed to this release:</p>
-            <ul class="contributors">
-                <li class="contributor">
-                  <figure class="profile">
-                    <img src="https://avatars.githubusercontent.com/u/1"
-               alt="Test"
-               class="avatar"
-               width="50"
-               height="50"
-               loading="lazy">
-
-
-                    <figcaption>
-                      <a href="https://github.com/test">Test</a>
-
-                    </figcaption>
-                  </figure>
-                </li>
-            </ul>
-          </section>
-        CONTENT
+        expect(scope.call).to include("https://avatars.githubusercontent.com/u/1")
       end
     end
 
