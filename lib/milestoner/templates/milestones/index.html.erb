@@ -17,14 +17,13 @@
     <select id="version"
             name="version"
             class="versions"
-            hx-get=""
-            hx-trigger="change"
-            hx-select=".milestone"
-            hx-target=".milestones"
-            hx-swap="outerHTML"
-            hx-push-url="true"
-            hx-indicator=".spinner"
-            hx-ext="select">
+            data-hx-get=""
+            data-hx-trigger="change"
+            data-hx-select=".milestone"
+            data-hx-target=".milestones"
+            data-hx-swap="outerHTML"
+            data-hx-push-url="true"
+            data-hx-indicator=".spinner">
 
       <option value="" class="option">Select...</option>
 

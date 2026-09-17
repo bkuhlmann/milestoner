@@ -4,13 +4,13 @@
       <div class="fragment">
         <a href="../"
            class="root"
-           hx-get="../"
-           hx-select=".milestones"
-           hx-trigger="click, keyup[key=='v'] from:body"
-           hx-target=".milestone"
-           hx-swap="outerHTML"
-           hx-push-url="true"
-           hx-indicator=".index">
+           data-hx-get="../"
+           data-hx-select=".milestones"
+           data-hx-trigger="click, keyup[key=='v'] from:body"
+           data-hx-target=".milestone"
+           data-hx-swap="outerHTML"
+           data-hx-push-url="true"
+           data-hx-indicator=".index">
           Versions
         </a>
 
@@ -97,13 +97,13 @@
         <a href="../<%= past.version %>/"
            class="action"
            data-direction="previous"
-           hx-get="../<%= past.version %>/"
-           hx-select=".milestone"
-           hx-trigger="click, keyup[key=='ArrowLeft'] from:body"
-           hx-target=".milestone"
-           hx-swap="outerHTML"
-           hx-push-url="true"
-           hx-indicator=".previous">
+           data-hx-get="../<%= past.version %>/"
+           data-hx-select=".milestone"
+           data-hx-trigger="click, keyup[key=='ArrowLeft'] from:body"
+           data-hx-target=".milestone"
+           data-hx-swap="outerHTML"
+           data-hx-push-url="true"
+           data-hx-indicator=".previous">
           Previous
           (<%= past.version %>)
         </a>
@@ -117,13 +117,13 @@
         <a href="../<%= future.version %>/"
            class="action"
            data-direction="next"
-           hx-get="../<%= future.version %>/"
-           hx-select=".milestone"
-           hx-trigger="click, keyup[key=='ArrowRight'] from:body"
-           hx-target=".milestone"
-           hx-swap="outerHTML"
-           hx-push-url="true"
-           hx-indicator=".next">
+           data-hx-get="../<%= future.version %>/"
+           data-hx-select=".milestone"
+           data-hx-trigger="click, keyup[key=='ArrowRight'] from:body"
+           data-hx-target=".milestone"
+           data-hx-swap="outerHTML"
+           data-hx-push-url="true"
+           data-hx-indicator=".next">
           Next
           (<%= future.version %>)
         </a>
