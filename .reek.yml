@@ -30,5 +30,4 @@ detectors:
     exclude:
       - Milestoner::CLI::Shell#cli
   UnusedParameters:
-    exclude:
-      - Milestoner::Renderers::Universal#call
+    enabled: false
